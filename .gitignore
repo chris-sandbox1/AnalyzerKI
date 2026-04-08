@@ -9,6 +9,9 @@ __pycache__/
 # Heruntergeladene Videos (können sehr groß sein)
 downloads/
 
+# PDF-Cache-Zustand (wird automatisch neu erstellt)
+.pdf_cache.json
+
 # Temporäre Dateien
 *.tmp
 *.log

@@ -15,7 +15,6 @@
     .hd-logo  { font-size: 1.5rem; }
     .hd-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; }
     .hd-space { flex: 1; }
-
     #game-select {
       background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
       border-radius: 7px; padding: 7px 12px; font-size: 0.85rem; cursor: pointer;
@@ -33,7 +32,6 @@
     }
     #empty .icon { font-size: 3rem; }
 
-    /* Alles innerhalb #main wird per JS erzeugt */
     #main { padding: 14px 18px 30px; }
 
     .grid2 { display: grid; grid-template-columns: 1fr 260px; gap: 14px; margin-bottom: 14px; }
@@ -50,7 +48,7 @@
     /* Statistik */
     .score-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .team-col  { text-align: center; flex: 1; }
-    .team-name { font-size: 1.1rem; font-weight: 800; }
+    .team-name { font-size: 1.05rem; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .team-sub  { font-size: 0.62rem; color: #64748b; margin-top: 2px; }
     .score-num { font-size: 2.4rem; font-weight: 900; color: #f1f5f9; white-space: nowrap; padding: 0 10px; }
 
@@ -64,8 +62,24 @@
     .kpi    { display: flex; justify-content: space-between; font-size: 0.78rem; color: #94a3b8; padding: 3px 0; }
     .kpi-v  { font-weight: 700; color: #cbd5e1; }
 
-    .legend { margin-top: 12px; }
-    .leg-item { display: flex; align-items: center; gap: 7px; font-size: 0.7rem; color: #94a3b8; padding: 2px 0; }
+    .legend     { margin-top: 12px; }
+    .leg-item   { display: flex; align-items: center; gap: 7px; font-size: 0.7rem; color: #94a3b8; padding: 2px 0; }
+
+    /* Erweiterte Statistiken */
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 900px) { .adv-grid { grid-template-columns: repeat(3, 1fr); } }
+    .adv-tile { background: #0f172a; border-radius: 8px; padding: 10px 12px; }
+    .adv-lbl  { font-size: 0.58rem; text-transform: uppercase; letter-spacing: .07em; color: #475569; margin-bottom: 8px; }
+    .adv-vs   { display: flex; align-items: baseline; justify-content: space-between; }
+    .adv-va   { font-size: 1.1rem; font-weight: 800; }
+    .adv-vb   { font-size: 1.1rem; font-weight: 800; }
+    .adv-sep  { font-size: 0.6rem; color: #334155; padding: 0 4px; }
+    .adv-sub  { font-size: 0.58rem; color: #475569; margin-top: 4px; }
+    .adv-single { font-size: 1.3rem; font-weight: 800; color: #94a3b8; }
 
     /* Zeitstrahl */
     .tl-scroll { overflow-x: auto; padding-bottom: 4px; }
@@ -105,10 +119,7 @@
     .modal-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
     .modal-sub   { font-size: 0.75rem; color: #64748b; margin-bottom: 18px; }
     .team-cards  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-    .tc {
-      background: #0f172a; border-radius: 10px; padding: 14px;
-      border: 1px solid #334155;
-    }
+    .tc { background: #0f172a; border-radius: 10px; padding: 14px; border: 1px solid #334155; }
     .tc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .tc-dot  { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.2); flex-shrink: 0; }
     .tc-kuerzel { font-weight: 700; font-size: 0.9rem; }
@@ -137,7 +148,6 @@
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="hd-logo">🏒</div>
   <div class="hd-title">Floorball Analyzer</div>
@@ -163,7 +173,6 @@
   </div>
 </div>
 
-<!-- Leer-Zustand (initial sichtbar) -->
 <div id="empty">
   <div class="icon">📂</div>
   <p>Kein Spiel ausgewählt</p>
@@ -172,44 +181,62 @@
   </p>
 </div>
 
-<!-- Dashboard (wird per innerHTML befüllt) -->
 <div id="main" style="display:none;"></div>
 
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
-// Team-Einstellungen in localStorage
-// Format: { "SWE": { name:"Schweden", color:"#EAB308", typ:"national" }, ... }
+// Konstanten
 // ─────────────────────────────────────────────────────────────────────────────
 const SETTINGS_KEY = 'floorball_teams';
 
+// Standard-Farben bekannter Nationalteams
+const STANDARD_FARBEN = {
+  SWE:'#EAB308', FIN:'#2563EB', SUI:'#EF4444', CZE:'#22C55E',
+  GER:'#F97316', LAT:'#A855F7', RUS:'#EC4899', NOR:'#14B8A6',
+  POL:'#F43F5E', DEN:'#84CC16', USA:'#60A5FA', CAN:'#FB923C',
+};
+const FALLBACK_FARBEN = ['#EAB308','#2563EB','#EF4444','#22C55E','#F97316','#A855F7'];
+
+// Event-Konfiguration: alle bekannten Typen
+const EV_CFG = {
+  TOR:               { icon:'⚽', short:'TOR',  feld:true  },
+  TORSCHUSS:         { icon:'🏒', short:'SCH',  feld:true  },
+  BALLBESITZWECHSEL: { icon:'↔',  short:'BWW',  feld:false },
+  KONTER:            { icon:'⚡', short:'KON',  feld:true  },
+  CHANCE:            { icon:'⭐', short:'CHA',  feld:true  },
+  PENALTY:           { icon:'🟥', short:'PEN',  feld:false },
+  UEBERZAHL_TOR:     { icon:'💥', short:'ÜTR',  feld:true  },
+  UNTERZAHL_TOR:     { icon:'🌟', short:'UTR',  feld:true  },
+  PENALTY_SHOT:      { icon:'🎯', short:'PSH',  feld:true  },
+  FACE_OFF_GEWONNEN: { icon:'🤝', short:'FOG',  feld:false },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Team-Einstellungen
+// ─────────────────────────────────────────────────────────────────────────────
 function ladeSettings() {
   try { return JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}'); }
   catch(e) { return {}; }
 }
 
-function teamFarbe(kuerzel, settings, fallbacks) {
-  if (settings[kuerzel]?.color) return settings[kuerzel].color;
-  // Standard-Farben bekannter Nationalteams
-  const std = {
-    SWE:'#EAB308', FIN:'#2563EB', SUI:'#EF4444', CZE:'#22C55E',
-    GER:'#F97316', LAT:'#A855F7', RUS:'#EC4899', NOR:'#14B8A6',
-    POL:'#F43F5E', DEN:'#84CC16', USA:'#60A5FA', CAN:'#FB923C',
-  };
-  return std[kuerzel] || fallbacks.shift() || '#94a3b8';
+function teamFarbe(k, settings, fallbackListe) {
+  if (settings[k]?.color) return settings[k].color;
+  if (STANDARD_FARBEN[k]) return STANDARD_FARBEN[k];
+  return fallbackListe.shift() || '#94a3b8';
 }
 
-function teamName(kuerzel, settings) {
-  return settings[kuerzel]?.name || kuerzel;
+function teamName(k, settings) {
+  return settings[k]?.name || k;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Aktuell geladene Teams (global, für Settings-Modal)
+// Aktuell geladene Teams (für Settings-Modal)
 // ─────────────────────────────────────────────────────────────────────────────
-let aktuelleTeams = [];   // z.B. ['SWE', 'FIN']
-let aktuelleData  = null; // letztes geladenes JSON
+let aktuelleTeams = [];
+let aktuelleData  = null;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Spielliste laden & Dropdown befüllen
+// Spielliste laden
 // ─────────────────────────────────────────────────────────────────────────────
 async function init() {
   try {
@@ -222,7 +249,6 @@ async function init() {
       sel.innerHTML = '<option>Noch keine Analysen vorhanden</option>';
       return;
     }
-
     sel.innerHTML = '<option value="">– Spiel auswählen –</option>';
     liste.forEach(s => {
       const o = document.createElement('option');
@@ -230,21 +256,14 @@ async function init() {
       o.textContent = s.titel + (s.datum ? ' – ' + s.datum : '');
       sel.appendChild(o);
     });
-
-    // Erstes Spiel automatisch laden
     sel.value = liste[0].datei;
     await ladeSpiel(liste[0].datei);
-
   } catch(err) {
-    document.getElementById('game-select').innerHTML =
-      '<option>Fehler – Server läuft nicht?</option>';
-    console.error('init Fehler:', err);
+    document.getElementById('game-select').innerHTML = '<option>Fehler – Server läuft nicht?</option>';
+    console.error('init:', err);
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Spiel laden → Dashboard bauen
-// ─────────────────────────────────────────────────────────────────────────────
 async function ladeSpiel(datei) {
   if (!datei) return;
   try {
@@ -254,21 +273,19 @@ async function ladeSpiel(datei) {
     aktuelleData = data;
     baueDashboard(data);
   } catch(err) {
-    console.error('ladeSpiel Fehler:', err);
+    console.error('ladeSpiel:', err);
     alert('Fehler beim Laden: ' + err.message);
   }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Dashboard komplett neu bauen (innerHTML-Ansatz — kein DOM-Manipulation-Chaos)
+// Dashboard bauen (komplett per innerHTML)
 // ─────────────────────────────────────────────────────────────────────────────
-function bauedashboard(data) { baueDashboard(data); } // Alias
-
 function baueDashboard(data) {
-  const settings = ladeSettings();
+  const settings  = ladeSettings();
   const ereignisse = Array.isArray(data.ereignisse) ? data.ereignisse : [];
 
-  // ── Teams dynamisch ermitteln (Reihenfolge des ersten Auftretens) ───────────
+  // Teams dynamisch ermitteln (Reihenfolge des ersten Auftretens)
   const teamSet = [];
   for (const e of ereignisse) {
     const t = (e.team || '').trim();
@@ -276,22 +293,17 @@ function baueDashboard(data) {
   }
   aktuelleTeams = teamSet;
 
-  // Farben zuweisen
-  const fallbackFarben = ['#EAB308','#2563EB','#EF4444','#22C55E','#F97316','#A855F7'];
-  const teamFarben = {};
-  teamSet.forEach(k => {
-    teamFarben[k] = teamFarbe(k, settings, [...fallbackFarben]);
-  });
-
   const TA = teamSet[0] || 'A';
   const TB = teamSet[1] || 'B';
-  const CA = teamFarben[TA] || '#EAB308';
-  const CB = teamFarben[TB] || '#2563EB';
+  const fallbacks = [...FALLBACK_FARBEN];
+  const CA = teamFarbe(TA, settings, fallbacks);
+  const CB = teamFarbe(TB, settings, [...fallbacks]);
 
-  // ── Statistik aus Ereignissen zählen ────────────────────────────────────────
+  // ── Basis-Statistiken ──────────────────────────────────────────────────────
   const cnt = (typ, team) => ereignisse.filter(e => e.typ === typ && e.team === team).length;
-  const toreA   = cnt('TOR', TA);
-  const toreB   = cnt('TOR', TB);
+
+  const toreA    = cnt('TOR', TA) + cnt('UEBERZAHL_TOR', TA) + cnt('UNTERZAHL_TOR', TA);
+  const toreB    = cnt('TOR', TB) + cnt('UEBERZAHL_TOR', TB) + cnt('UNTERZAHL_TOR', TB);
   const schuessA = cnt('TORSCHUSS', TA);
   const schuessB = cnt('TORSCHUSS', TB);
   const chancenA = cnt('CHANCE', TA);
@@ -299,23 +311,55 @@ function baueDashboard(data) {
   const konter   = ereignisse.filter(e => e.typ === 'KONTER').length;
   const bww      = ereignisse.filter(e => e.typ === 'BALLBESITZWECHSEL').length;
 
-  // ── Spielfeld SVG ────────────────────────────────────────────────────────────
-  const feldSVG = baueFeld(ereignisse, TA, TB, CA, CB);
+  // ── Erweiterte Statistiken ─────────────────────────────────────────────────
+  // Schusseffizienz %: Tore / (Tore + Torschüsse)
+  const totalSchuessA = toreA + schuessA;
+  const totalSchuessB = toreB + schuessB;
+  const effA = totalSchuessA > 0 ? Math.round(toreA / totalSchuessA * 100) : null;
+  const effB = totalSchuessB > 0 ? Math.round(toreB / totalSchuessB * 100) : null;
 
-  // ── Zeitstrahl HTML ──────────────────────────────────────────────────────────
-  const zeitstrahlHTML = baueZeitstrahl(ereignisse, TA, TB, CA, CB);
+  // xGoals
+  const schussTypen = ['TOR','TORSCHUSS','CHANCE','PENALTY_SHOT','UEBERZAHL_TOR','UNTERZAHL_TOR'];
+  const xgA = ereignisse
+    .filter(e => schussTypen.includes(e.typ) && e.team === TA)
+    .reduce((s, e) => s + xGoalWert(e, TA), 0);
+  const xgB = ereignisse
+    .filter(e => schussTypen.includes(e.typ) && e.team === TB)
+    .reduce((s, e) => s + xGoalWert(e, TB), 0);
 
-  // ── Alles zusammenbauen ──────────────────────────────────────────────────────
+  // Gefährlichkeitsindex: % Schüsse aus Nahzone (<8m vom Tor)
+  const schussEvA = ereignisse.filter(e => schussTypen.includes(e.typ) && e.team === TA);
+  const schussEvB = ereignisse.filter(e => schussTypen.includes(e.typ) && e.team === TB);
+  const nahA = schussEvA.filter(e => distZumTor(e, TA) < 8).length;
+  const nahB = schussEvB.filter(e => distZumTor(e, TB) < 8).length;
+  const gefA = schussEvA.length > 0 ? Math.round(nahA / schussEvA.length * 100) : null;
+  const gefB = schussEvB.length > 0 ? Math.round(nahB / schussEvB.length * 100) : null;
+
+  // Überzahl-Effizienz: Überzahl-Tore / Strafzeiten des Gegners
+  const penaltiesA  = cnt('PENALTY', TA);   // TA bekommt Strafe → TB hat Überzahl
+  const penaltiesB  = cnt('PENALTY', TB);
+  const ppToreA     = cnt('UEBERZAHL_TOR', TA);  // TA trifft in Überzahl
+  const ppToreB     = cnt('UEBERZAHL_TOR', TB);
+  const ppEffA      = penaltiesB > 0 ? Math.round(ppToreA / penaltiesB * 100) : null;
+  const ppEffB      = penaltiesA > 0 ? Math.round(ppToreB / penaltiesA * 100) : null;
+  const hasPenalties = penaltiesA > 0 || penaltiesB > 0;
+
+  // Schüsse pro Spielminute (Intensität)
+  const letzterTs = Math.max(0, ...ereignisse.map(e => zuSekunden(e.timestamp)));
+  const minuten   = letzterTs > 0 ? letzterTs / 60 : 1;
+  const intensitaet = ((totalSchuessA + totalSchuessB) / minuten).toFixed(1);
+
+  // ── HTML zusammenbauen ─────────────────────────────────────────────────────
   document.getElementById('main').innerHTML = `
     <div class="grid2">
 
       <!-- Spielfeld -->
       <div class="card">
-        <div class="card-lbl">Schusszonen — Draufsicht</div>
-        ${feldSVG}
+        <div class="card-lbl">Schusszonen — Draufsicht (40 m × 20 m)</div>
+        ${baueFeld(ereignisse, TA, TB, CA, CB)}
       </div>
 
-      <!-- Statistiken -->
+      <!-- Basis-Statistiken -->
       <div class="card">
         <div class="card-lbl">Statistiken</div>
 
@@ -343,11 +387,19 @@ function baueDashboard(data) {
           <div class="stat-l">Chancen</div>
           <div class="val-b" style="color:${CB}">${chancenB}</div>
         </div>
+        ${hasPenalties ? `
+        <div class="stat-row">
+          <div class="val-a" style="color:${CA}">${penaltiesA}</div>
+          <div class="stat-l">Strafzeiten</div>
+          <div class="val-b" style="color:${CB}">${penaltiesB}</div>
+        </div>` : ''}
 
         <div class="divider"></div>
 
-        <div class="kpi"><span>⚡ Konter gesamt</span><span class="kpi-v">${konter}</span></div>
+        <div class="kpi"><span>⚡ Konter</span><span class="kpi-v">${konter}</span></div>
         <div class="kpi"><span>↔ Ballwechsel</span><span class="kpi-v">${bww}</span></div>
+        ${cnt('PENALTY_SHOT',TA)+cnt('PENALTY_SHOT',TB) > 0
+          ? `<div class="kpi"><span>🎯 Penalties</span><span class="kpi-v">${cnt('PENALTY_SHOT',TA)+cnt('PENALTY_SHOT',TB)}</span></div>` : ''}
 
         <div class="divider"></div>
 
@@ -366,79 +418,246 @@ function baueDashboard(data) {
               <circle cx="7" cy="7" r="6" fill="none" stroke="white" stroke-width="1.5"/>
               <circle cx="7" cy="7" r="3" fill="white"/>
             </svg>
-            Tor (Bullseye)
+            Tor
           </div>
           <div class="leg-item">
             <svg width="20" height="10">
               <line x1="1" y1="5" x2="13" y2="5" stroke="#a3e635" stroke-width="2"/>
               <polygon points="13,2 20,5 13,8" fill="#a3e635"/>
             </svg>
-            Konter (Pfeil)
+            Konter
           </div>
         </div>
       </div>
 
-    </div><!-- /grid2 -->
+    </div>
+
+    <!-- Erweiterte Statistiken -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-lbl">Erweiterte Statistiken</div>
+      <div class="adv-grid">
+
+        <!-- Schusseffizienz -->
+        <div class="adv-tile">
+          <div class="adv-lbl">Schusseffizienz</div>
+          <div class="adv-vs">
+            <span class="adv-va" style="color:${CA}">${effA !== null ? effA+'%' : '–'}</span>
+            <span class="adv-sep">vs</span>
+            <span class="adv-vb" style="color:${CB}">${effB !== null ? effB+'%' : '–'}</span>
+          </div>
+          <div class="adv-sub">Tore / Schüsse gesamt</div>
+        </div>
+
+        <!-- xGoals -->
+        <div class="adv-tile">
+          <div class="adv-lbl">Expected Goals (xG)</div>
+          <div class="adv-vs">
+            <span class="adv-va" style="color:${CA}">${xgA.toFixed(2)}</span>
+            <span class="adv-sep">vs</span>
+            <span class="adv-vb" style="color:${CB}">${xgB.toFixed(2)}</span>
+          </div>
+          <div class="adv-sub">Aus Schussposition berechnet</div>
+        </div>
+
+        <!-- Gefährlichkeitsindex -->
+        <div class="adv-tile">
+          <div class="adv-lbl">Gefährlichkeit</div>
+          <div class="adv-vs">
+            <span class="adv-va" style="color:${CA}">${gefA !== null ? gefA+'%' : '–'}</span>
+            <span class="adv-sep">vs</span>
+            <span class="adv-vb" style="color:${CB}">${gefB !== null ? gefB+'%' : '–'}</span>
+          </div>
+          <div class="adv-sub">Schüsse aus Nahzone (&lt;8m)</div>
+        </div>
+
+        <!-- Überzahl -->
+        <div class="adv-tile">
+          <div class="adv-lbl">Überzahl-Effizienz</div>
+          ${hasPenalties ? `
+          <div class="adv-vs">
+            <span class="adv-va" style="color:${CA}">${ppEffA !== null ? ppEffA+'%' : '–'}</span>
+            <span class="adv-sep">vs</span>
+            <span class="adv-vb" style="color:${CB}">${ppEffB !== null ? ppEffB+'%' : '–'}</span>
+          </div>
+          <div class="adv-sub">ÜZ-Tore / Strafzeiten Gegner</div>
+          ` : `
+          <div class="adv-single">–</div>
+          <div class="adv-sub">Keine Strafen erkannt</div>
+          `}
+        </div>
+
+        <!-- Intensität -->
+        <div class="adv-tile">
+          <div class="adv-lbl">Spielintensität</div>
+          <div class="adv-single">${intensitaet}</div>
+          <div class="adv-sub">Schüsse pro Spielminute</div>
+        </div>
+
+      </div>
+    </div>
 
     <!-- Zeitstrahl -->
-    <div class="card">
+    <div class="card" style="margin-bottom:14px;">
       <div class="card-lbl">Ereignis-Zeitstrahl</div>
       <div class="tl-scroll">
-        <div class="tl-track">${zeitstrahlHTML}</div>
+        <div class="tl-track">${baueZeitstrahl(ereignisse, TA, TB, CA, CB)}</div>
       </div>
     </div>
 
     <!-- Zusammenfassung -->
-    <div class="card" style="margin-top:14px;">
+    <div class="card">
       <div class="card-lbl">Zusammenfassung</div>
       <div class="summary-text">${esc(data.zusammenfassung || '–')}</div>
     </div>
   `;
 
-  // Leer-Zustand verstecken, Dashboard zeigen
   document.getElementById('empty').style.display = 'none';
   document.getElementById('main').style.display  = '';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Spielfeld SVG bauen
+// xGoal-Berechnung
 // ─────────────────────────────────────────────────────────────────────────────
-function baueFeld(ereignisse, TA, TB, CA, CB) {
-  // Marker für TORSCHUSS, TOR, CHANCE, KONTER erzeugen
-  const relevant = ereignisse.filter(e =>
-    ['TOR','TORSCHUSS','CHANCE','KONTER'].includes(e.typ)
-  );
+function distZumTor(ev, TA) {
+  // TA schießt aufs rechte Tor (x=40, y=10); TB aufs linke Tor (x=0, y=10)
+  const pos = ev.position;
+  if (!pos || typeof pos.x !== 'number') return 999; // kein Fallback-Wert → nicht nah
+  const torX = ev.team === TA ? 40 : 0;
+  return Math.sqrt(Math.pow(torX - pos.x, 2) + Math.pow(10 - pos.y, 2));
+}
 
+function xGoalWert(ev, TA) {
+  if (ev.typ === 'PENALTY_SHOT') return 0.70;
+  const pos = ev.position;
+  if (!pos || typeof pos.x !== 'number') {
+    // Textbasierter Fallback
+    const d = (ev.details || '').toLowerCase();
+    if (d.includes('kreis') && d.includes('nah')) return 0.25;
+    if (d.includes('kreis'))                      return 0.15;
+    if (d.includes('halbdistanz'))                return 0.08;
+    return 0.03;
+  }
+  const dist = distZumTor(ev, TA);
+  if (dist < 3)  return 0.25;  // Kreis nah
+  if (dist < 8)  return 0.15;  // Kreis weit
+  if (dist < 15) return 0.08;  // Halbdistanz
+  return 0.03;                  // Außen
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Spielfeld SVG
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Feldkoordinaten (0-40m / 0-20m) → SVG-Koordinaten
+// SVG-Spielfeld: x=55..765 (710px), y=18..382 (364px), y invertiert (y=0 unten)
+function feldZuSVG(fx, fy) {
+  return {
+    x: 55 + (fx / 40) * 710,
+    y: 382 - (fy / 20) * 364,
+  };
+}
+
+// Deterministischer Jitter (±amplitude Meter), aus Index berechnet
+function jitter(i, amplitude) {
+  const jx = (Math.sin(i * 7919.0 + 1.337) * 2 - 1) * amplitude;
+  const jy = (Math.sin(i * 3571.0 + 2.718) * 2 - 1) * amplitude;
+  return { jx, jy };
+}
+
+function schussPosXY(ev, i, TA) {
+  let fx, fy;
+
+  if (ev.typ === 'PENALTY_SHOT') {
+    // Penalty-Spot: 7m vor dem Tor
+    fx = ev.team === TA ? 33 : 7;
+    fy = 10;
+  } else if (ev.position && typeof ev.position.x === 'number' && typeof ev.position.y === 'number') {
+    // x/y-Koordinaten aus JSON mit Jitter (±1.5m)
+    const { jx, jy } = jitter(i, 1.5);
+    fx = Math.max(1, Math.min(39, ev.position.x + jx));
+    fy = Math.max(1, Math.min(19, ev.position.y + jy));
+  } else {
+    // Fallback: Zone aus Detailtext
+    return schussPosZone(ev, i, TA);
+  }
+
+  const svg = feldZuSVG(fx, fy);
+  return { x: Math.round(svg.x), y: Math.round(svg.y) };
+}
+
+// Fallback: Zone-basierte Position (kein x/y in JSON)
+function schussPosZone(ev, i, TA) {
+  const d  = (ev.details || '').toLowerCase();
+  const rx = (Math.sin(i * 7.31 + 1.2) * 0.5 + 0.5);
+  const ry = (Math.sin(i * 13.7 + 4.5) * 0.5 + 0.5);
+  let fx, fy;
+  const zone = d.includes('kreis') ? 'kreis'
+             : d.includes('außen') || d.includes('aussen') ? 'aussen'
+             : 'halbdistanz';
+  if (ev.team === TA) {
+    if      (zone === 'kreis')       { fx = 33+rx*5;  fy = 8+ry*4; }
+    else if (zone === 'halbdistanz') { fx = 25+rx*8;  fy = 5+ry*10; }
+    else                             { fx = 18+rx*6;  fy = 2+ry*16; }
+  } else {
+    if      (zone === 'kreis')       { fx = 2+rx*5;   fy = 8+ry*4; }
+    else if (zone === 'halbdistanz') { fx = 7+rx*8;   fy = 5+ry*10; }
+    else                             { fx = 16+rx*6;  fy = 2+ry*16; }
+  }
+  const svg = feldZuSVG(fx, fy);
+  return { x: Math.round(svg.x), y: Math.round(svg.y) };
+}
+
+function konterPos(ev, i, TA) {
+  const ry = (Math.sin(i * 11 + 3) * 0.5 + 0.5);
+  const y  = 80 + ry * 240;
+  if (ev.team === TA) {
+    return { x1: 260+(Math.sin(i)*0.5+0.5)*60, y1:y, x2: 390+(Math.sin(i*2)*0.5+0.5)*50, y2:y };
+  } else {
+    return { x1: 560-(Math.sin(i)*0.5+0.5)*60, y1:y, x2: 430-(Math.sin(i*2)*0.5+0.5)*50, y2:y };
+  }
+}
+
+function baueFeld(ereignisse, TA, TB, CA, CB) {
+  const fillA = hexA(CA, 0.1);
+  const fillB = hexA(CB, 0.1);
+
+  const feldEvents = ereignisse.filter(e => EV_CFG[e.typ]?.feld);
   let marker = '';
-  relevant.forEach((ev, i) => {
+
+  feldEvents.forEach((ev, i) => {
     const isTA = ev.team === TA;
     const col  = isTA ? CA : CB;
 
     if (ev.typ === 'KONTER') {
-      const p  = konterPos(ev, i, TA);
-      const mk = isTA ? 'url(#arr-a)' : 'url(#arr-b)';
+      const p = konterPos(ev, i, TA);
       marker += `<line x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}"
-        stroke="#a3e635" stroke-width="2.5" marker-end="${mk}"/>`;
+        stroke="#a3e635" stroke-width="2.5" marker-end="url(#arr-${isTA?'a':'b'})"/>`;
+      return;
+    }
+
+    const p = schussPosXY(ev, i, TA);
+
+    // Außenring-Farbe je nach Event-Typ
+    let outerCol = col;
+    if (ev.typ === 'UEBERZAHL_TOR') outerCol = '#FFD700';  // Gold = Überzahl-Tor
+    if (ev.typ === 'UNTERZAHL_TOR') outerCol = '#FFFFFF';  // Weiß = Unterzahl-Tor
+    if (ev.typ === 'PENALTY_SHOT')  outerCol = '#FB923C';  // Orange = Penalty
+
+    const isGoal = ['TOR','UEBERZAHL_TOR','UNTERZAHL_TOR','PENALTY_SHOT'].includes(ev.typ);
+
+    if (isGoal) {
+      marker += `
+        <circle cx="${p.x}" cy="${p.y}" r="14" fill="none" stroke="${outerCol}" stroke-width="2.5" opacity="0.65"/>
+        <circle cx="${p.x}" cy="${p.y}" r="7"  fill="none" stroke="${col}"      stroke-width="1.5"/>
+        <circle cx="${p.x}" cy="${p.y}" r="4"  fill="${col}"/>`;
+    } else if (ev.typ === 'CHANCE') {
+      marker += `<rect x="${p.x-7}" y="${p.y-7}" width="14" height="14" rx="2"
+        fill="${col}33" stroke="${col}" stroke-width="1.8" opacity="0.8"/>`;
     } else {
-      const p = schussPos(ev, i, TA);
-      if (ev.typ === 'TOR') {
-        marker += `
-          <circle cx="${p.x}" cy="${p.y}" r="14" fill="none" stroke="${col}" stroke-width="2.5" opacity="0.6"/>
-          <circle cx="${p.x}" cy="${p.y}" r="7"  fill="none" stroke="${col}" stroke-width="1.5"/>
-          <circle cx="${p.x}" cy="${p.y}" r="4"  fill="${col}"/>`;
-      } else if (ev.typ === 'CHANCE') {
-        marker += `<rect x="${p.x-7}" y="${p.y-7}" width="14" height="14" rx="2"
-          fill="${col}33" stroke="${col}" stroke-width="1.8" opacity="0.8"/>`;
-      } else {
-        // TORSCHUSS
-        marker += `<circle cx="${p.x}" cy="${p.y}" r="6.5" fill="${col}" opacity="0.8"/>`;
-      }
+      // TORSCHUSS → einfacher Punkt
+      marker += `<circle cx="${p.x}" cy="${p.y}" r="6.5" fill="${col}" opacity="0.8"/>`;
     }
   });
-
-  // Torfarben als rgba-String
-  const fillA = hexA(CA, 0.1);
-  const fillB = hexA(CB, 0.1);
 
   return `
   <svg class="field-svg" viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
@@ -450,105 +669,62 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
         <polygon points="0 0,8 3,0 6" fill="#a3e635"/>
       </marker>
     </defs>
-    <!-- Hintergrund -->
     <rect width="820" height="400" fill="#1e293b"/>
-    <!-- Rasen -->
     <rect x="55" y="18" width="710" height="364" fill="#14532d" rx="3"/>
-    <!-- Feldlinien -->
     <rect x="55" y="18" width="710" height="364" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" rx="3"/>
     <line x1="410" y1="18" x2="410" y2="382" stroke="rgba(255,255,255,.8)" stroke-width="1.8"/>
     <circle cx="410" cy="200" r="52" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.5"/>
     <circle cx="410" cy="200" r="3" fill="white"/>
-    <!-- D-Bögen -->
     <path d="M55,148 Q155,148 155,200 Q155,252 55,252" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
     <path d="M765,148 Q665,148 665,200 Q665,252 765,252" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
     <!-- Linkes Tor (Team A) -->
     <rect x="10" y="164" width="45" height="72" rx="3" fill="${fillA}" stroke="${CA}" stroke-width="2.5"/>
     <line x1="55" y1="164" x2="55" y2="236" stroke="${CA}" stroke-width="2.5"/>
     <text x="32" y="198" text-anchor="middle" fill="${CA}" font-size="8" font-weight="700">${esc(TA)}</text>
-    <text x="32" y="209" text-anchor="middle" fill="${CA}" font-size="7" opacity=".6">TW</text>
     <!-- Rechtes Tor (Team B) -->
     <rect x="765" y="164" width="45" height="72" rx="3" fill="${fillB}" stroke="${CB}" stroke-width="2.5"/>
     <line x1="765" y1="164" x2="765" y2="236" stroke="${CB}" stroke-width="2.5"/>
     <text x="788" y="198" text-anchor="middle" fill="${CB}" font-size="8" font-weight="700">${esc(TB)}</text>
-    <text x="788" y="209" text-anchor="middle" fill="${CB}" font-size="7" opacity=".6">TW</text>
     <!-- Wasserzeichen -->
     <text x="610" y="220" text-anchor="middle" fill="rgba(255,255,255,.04)" font-size="55" font-weight="900">${esc(TA)}</text>
     <text x="210" y="220" text-anchor="middle" fill="rgba(255,255,255,.04)" font-size="55" font-weight="900">${esc(TB)}</text>
-    <!-- Ereignis-Marker -->
     <g>${marker}</g>
   </svg>`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Zeitstrahl HTML bauen
+// Zeitstrahl
 // ─────────────────────────────────────────────────────────────────────────────
 function baueZeitstrahl(ereignisse, TA, TB, CA, CB) {
   if (!ereignisse.length) return '<span style="color:#475569;padding:12px">Keine Ereignisse.</span>';
 
-  const icons = { TOR:'⚽', TORSCHUSS:'🏒', BALLBESITZWECHSEL:'↔', KONTER:'⚡', CHANCE:'⭐' };
-  const shorts = { TOR:'TOR', TORSCHUSS:'SCH', BALLBESITZWECHSEL:'BWW', KONTER:'KON', CHANCE:'CHA' };
+  return [...ereignisse]
+    .sort((a,b) => zuSekunden(a.timestamp) - zuSekunden(b.timestamp))
+    .map(ev => {
+      const cfg  = EV_CFG[ev.typ] || { icon:'•', short:ev.typ };
+      const isTA = ev.team === TA, isTB = ev.team === TB;
+      const col  = isTA ? CA : isTB ? CB : '#64748b';
 
-  const sorted = [...ereignisse].sort((a,b) => zuSekunden(a.timestamp) - zuSekunden(b.timestamp));
+      let bg, border;
+      if      (['TOR','UEBERZAHL_TOR','UNTERZAHL_TOR'].includes(ev.typ)) { bg=col+'44'; border=col; }
+      else if (ev.typ === 'PENALTY_SHOT')  { bg='#FB923C22'; border='#FB923C'; }
+      else if (ev.typ === 'KONTER')        { bg='#a3e63522'; border='#a3e635'; }
+      else if (ev.typ === 'PENALTY')       { bg='#EF444422'; border='#EF4444'; }
+      else if (ev.typ === 'TORSCHUSS')     { bg=col+'22'; border=col; }
+      else                                  { bg='#33415533'; border='#475569'; }
 
-  return sorted.map(ev => {
-    const isTA = ev.team === TA;
-    const isTB = ev.team === TB;
-    const col  = isTA ? CA : isTB ? CB : '#64748b';
-    const icon = icons[ev.typ]  || '•';
-    const tag  = shorts[ev.typ] || ev.typ;
-    const kuerzel = (ev.team && ev.team !== 'unbekannt') ? ' ' + ev.team.slice(0,3) : '';
-
-    let bg, border;
-    if      (ev.typ === 'TOR')    { bg = col+'44'; border = col; }
-    else if (ev.typ === 'KONTER') { bg = '#a3e63522'; border = '#a3e635'; }
-    else                          { bg = col+'22'; border = col; }
-
-    return `<div class="tl-item">
-      <div class="tl-dot" style="background:${bg};border-color:${border}">${icon}</div>
-      <div class="tl-ts">${esc(ev.timestamp||'?')}</div>
-      <div class="tl-tag" style="color:${border}">${tag}${kuerzel}</div>
-    </div>`;
-  }).join('');
+      const tag = (ev.team && ev.team !== 'unbekannt') ? ' ' + ev.team.slice(0,3) : '';
+      return `<div class="tl-item" title="${esc(ev.details||'')}">
+        <div class="tl-dot" style="background:${bg};border-color:${border}">${cfg.icon}</div>
+        <div class="tl-ts">${esc(ev.timestamp||'?')}</div>
+        <div class="tl-tag" style="color:${border}">${cfg.short}${esc(tag)}</div>
+      </div>`;
+    }).join('');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Hilfsfunktionen
 // ─────────────────────────────────────────────────────────────────────────────
-
-// Deterministischer Pseudo-Zufall aus Index
-function rnd(seed) { return Math.sin(seed * 127.1 + 311.7) * 0.5 + 0.5; }
-
-function schussPos(ev, i, TA) {
-  const d = (ev.details || '').toLowerCase();
-  const zone = d.includes('kreis') ? 'kreis'
-             : d.includes('außen') || d.includes('aussen') ? 'aussen'
-             : 'halbdistanz';
-  const rx = rnd(i*7.31+1.2), ry = rnd(i*13.7+4.5);
-  let x, y;
-  if (ev.team === TA) {
-    // Team A greift nach rechts → schießt aufs rechte Tor
-    if      (zone==='kreis')       { x=672+rx*70;  y=162+ry*76; }
-    else if (zone==='halbdistanz') { x=490+rx*160; y=88+ry*224; }
-    else                           { x=410+rx*110; y=38+ry*324; }
-  } else {
-    // Team B greift nach links → schießt aufs linke Tor
-    if      (zone==='kreis')       { x=78+rx*70;   y=162+ry*76; }
-    else if (zone==='halbdistanz') { x=170+rx*160; y=88+ry*224; }
-    else                           { x=300+rx*110; y=38+ry*324; }
-  }
-  return { x: Math.round(x), y: Math.round(y) };
-}
-
-function konterPos(ev, i, TA) {
-  const y = 80 + rnd(i*11+3) * 240;
-  if (ev.team === TA) {
-    return { x1: 260+rnd(i)*60, y1:y, x2: 390+rnd(i*2)*50, y2:y };
-  } else {
-    return { x1: 560-rnd(i)*60, y1:y, x2: 430-rnd(i*2)*50, y2:y };
-  }
-}
-
 function hexA(hex, a) {
   const r = parseInt(hex.slice(1,3),16);
   const g = parseInt(hex.slice(3,5),16);
@@ -571,12 +747,6 @@ function esc(s) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Settings Modal
 // ─────────────────────────────────────────────────────────────────────────────
-const STANDARD_FARBEN = {
-  SWE:'#EAB308', FIN:'#2563EB', SUI:'#EF4444', CZE:'#22C55E',
-  GER:'#F97316', LAT:'#A855F7', RUS:'#EC4899', NOR:'#14B8A6',
-  POL:'#F43F5E', DEN:'#84CC16', USA:'#60A5FA', CAN:'#FB923C',
-};
-
 function oeffneSettings() {
   const settings = ladeSettings();
   const container = document.getElementById('modal-teams');
@@ -585,10 +755,8 @@ function oeffneSettings() {
     container.innerHTML = '<div class="no-teams-msg">Bitte zuerst ein Spiel laden.</div>';
   } else {
     container.innerHTML = aktuelleTeams.map(k => {
-      const s      = settings[k] || {};
-      const farbe  = s.color || STANDARD_FARBEN[k] || '#64748b';
-      const name   = s.name  || '';
-      const typ    = s.typ   || 'national';
+      const s     = settings[k] || {};
+      const farbe = s.color || STANDARD_FARBEN[k] || '#64748b';
       return `
         <div class="tc">
           <div class="tc-head">
@@ -600,7 +768,7 @@ function oeffneSettings() {
           </div>
           <div class="f-row">
             <label>Anzeigename</label>
-            <input type="text" id="s-name-${k}" value="${esc(name)}" placeholder="${esc(k)}" maxlength="40"/>
+            <input type="text" id="s-name-${k}" value="${esc(s.name||'')}" placeholder="${esc(k)}" maxlength="40"/>
           </div>
           <div class="f-row">
             <label>Farbe</label>
@@ -610,8 +778,8 @@ function oeffneSettings() {
           <div class="f-row">
             <label>Typ</label>
             <select id="s-typ-${k}">
-              <option value="national" ${typ==='national'?'selected':''}>🌍 Nationalmannschaft</option>
-              <option value="verein"   ${typ==='verein'  ?'selected':''}>🏟 Vereinsteam</option>
+              <option value="national" ${(s.typ||'national')==='national'?'selected':''}>🌍 Nationalmannschaft</option>
+              <option value="verein"   ${s.typ==='verein'?'selected':''}>🏟 Vereinsteam</option>
             </select>
           </div>
         </div>`;
@@ -627,28 +795,18 @@ function schliesseSettings() {
 
 function speichereSettings() {
   const settings = ladeSettings();
-
   aktuelleTeams.forEach(k => {
     const nameEl  = document.getElementById('s-name-'  + k);
     const colorEl = document.getElementById('s-color-' + k);
     const typEl   = document.getElementById('s-typ-'   + k);
     if (!nameEl) return;
-    settings[k] = {
-      name:  nameEl.value.trim() || k,
-      color: colorEl.value,
-      typ:   typEl.value,
-    };
+    settings[k] = { name: nameEl.value.trim() || k, color: colorEl.value, typ: typEl.value };
   });
-
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
   schliesseSettings();
-
-  // Dashboard sofort neu rendern mit neuen Einstellungen
   if (aktuelleData) baueDashboard(aktuelleData);
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Start
 // ─────────────────────────────────────────────────────────────────────────────
 init();
 </script>
