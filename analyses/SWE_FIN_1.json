@@ -1,0 +1,391 @@
+{
+    "zusammenfassung": "Dieses Floorball-Match zwischen Schweden (Gelb) und Finnland (Blau) war von intensiven Zweikämpfen und beeindruckenden Torwartparaden geprägt. Schweden gewann letztendlich mit 2:1 nach einer starken Defensivleistung, insbesondere durch ihren Torwart Hedlund, der zahlreiche finnische Chancen vereitelte. Trotz eines späten Anschlusstreffers konnte Finnland die schwedische Führung nicht mehr einholen.",
+    "ereignisse": [
+      {
+        "timestamp": "00:08",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #33 (Salin) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "00:08",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Salins Schuss von nah am Tor wird gehalten."
+      },
+      {
+        "timestamp": "00:11",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden erobert den Ball."
+      },
+      {
+        "timestamp": "00:12",
+        "typ": "KONTER",
+        "team": "B",
+        "details": "Schweden startet einen Konter (3 gegen 2)."
+      },
+      {
+        "timestamp": "00:17",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Schuss von #19 (Eriksson) aus dem Kreis, geht daneben."
+      },
+      {
+        "timestamp": "00:17",
+        "typ": "CHANCE",
+        "team": "B",
+        "details": "Erikssons Schuss geht knapp am Tor vorbei."
+      },
+      {
+        "timestamp": "00:30",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von Finnland aus der Halbdistanz, von einem Verteidiger geblockt."
+      },
+      {
+        "timestamp": "00:32",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "A",
+        "details": "Finnland gewinnt das Bully und behält Ballbesitz."
+      },
+      {
+        "timestamp": "00:39",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #33 (Salin) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "00:40",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden erobert den Ball nach einer Parade."
+      },
+      {
+        "timestamp": "00:42",
+        "typ": "KONTER",
+        "team": "B",
+        "details": "Schweden startet einen Konter (2 gegen 1)."
+      },
+      {
+        "timestamp": "00:46",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Schuss von #12 (Odin) aus dem Kreis, vom Torwart (Lax) gehalten."
+      },
+      {
+        "timestamp": "00:46",
+        "typ": "CHANCE",
+        "team": "B",
+        "details": "Odins Schuss von nah am Tor wird gehalten."
+      },
+      {
+        "timestamp": "00:51",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Schuss von #12 (Odin) aus dem Kreis, vom Torwart gehalten."
+      },
+      {
+        "timestamp": "00:54",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Nachschuss von #12 (Wissback) aus dem Kreis geht daneben."
+      },
+      {
+        "timestamp": "00:54",
+        "typ": "CHANCE",
+        "team": "B",
+        "details": "Nachschuss von Wissback geht knapp daneben."
+      },
+      {
+        "timestamp": "00:59",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "A",
+        "details": "Finnland im Ballbesitz."
+      },
+      {
+        "timestamp": "01:08",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Pass durch die Torgegend von Finnland, kein Abschluss."
+      },
+      {
+        "timestamp": "01:11",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "unbekannt",
+        "details": "Spiel unterbrochen vom Schiedsrichter."
+      },
+      {
+        "timestamp": "01:17",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden stiehlt den Ball von Finnland."
+      },
+      {
+        "timestamp": "01:19",
+        "typ": "KONTER",
+        "team": "B",
+        "details": "Schweden startet einen Konter (2 gegen 1)."
+      },
+      {
+        "timestamp": "01:21",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Schuss von #4 (Hagström) aus dem Kreis, vom Torwart (Lax) gehalten."
+      },
+      {
+        "timestamp": "01:21",
+        "typ": "CHANCE",
+        "team": "B",
+        "details": "Hagströms Schuss gehalten, Nachschuss verfehlt."
+      },
+      {
+        "timestamp": "01:36",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "unbekannt",
+        "details": "Spiel unterbrochen."
+      },
+      {
+        "timestamp": "01:58",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden erobert den Ball in der eigenen Hälfte."
+      },
+      {
+        "timestamp": "01:58",
+        "typ": "KONTER",
+        "team": "B",
+        "details": "Schweden startet einen Konter (2 gegen 1)."
+      },
+      {
+        "timestamp": "01:59",
+        "typ": "TOR",
+        "team": "B",
+        "details": "Tor für Schweden! #19 (Eriksson) trifft nach einem Pass von #21 (Holmgren) ins leere Tor (SWE 1 - FIN 0)."
+      },
+      {
+        "timestamp": "02:32",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden im Ballbesitz."
+      },
+      {
+        "timestamp": "02:39",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Schuss von #24 (Magnusson Lindholm) aus dem Kreis, vom Torwart (Lax) gehalten."
+      },
+      {
+        "timestamp": "02:47",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #33 (Salin) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "02:47",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Salins Schuss von nah am Tor wird gehalten."
+      },
+      {
+        "timestamp": "02:51",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #21 (Holmgren) aus dem Kreis, geht daneben."
+      },
+      {
+        "timestamp": "02:51",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Holmgrens Schuss geht knapp daneben."
+      },
+      {
+        "timestamp": "03:02",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #8 (Akkola) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "03:02",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Akkolas Schuss wird gehalten."
+      },
+      {
+        "timestamp": "03:15",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #12 (Wissback) aus der Halbdistanz, trifft den Pfosten."
+      },
+      {
+        "timestamp": "03:15",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Wissbacks Schuss trifft den Pfosten."
+      },
+      {
+        "timestamp": "03:17",
+        "typ": "TOR",
+        "team": "B",
+        "details": "Tor für Schweden! #24 (Magnusson Lindholm) schiesst von aussen, der Ball prallt vom Pfosten und dem Torwart ab und geht ins Tor (SWE 2 - FIN 0)."
+      },
+      {
+        "timestamp": "04:03",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #8 (Akkola) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "04:03",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Akkolas Schuss wird gehalten."
+      },
+      {
+        "timestamp": "04:10",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #21 (Holmgren) aus dem Kreis, geblockt."
+      },
+      {
+        "timestamp": "04:16",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #5 (Ulvickson) aus dem Kreis, geblockt."
+      },
+      {
+        "timestamp": "04:20",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #21 (Holmgren) aus dem Kreis, geblockt."
+      },
+      {
+        "timestamp": "04:33",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #10 (Lundmark) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "04:33",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Lundmarks Schuss von nah am Tor wird gehalten."
+      },
+      {
+        "timestamp": "04:46",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #10 (Lundmark) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "04:48",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Nachschuss von #12 (Wissback) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "04:48",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Doppelte Parade von Hedlund nach Schüssen von Lundmark und Wissback."
+      },
+      {
+        "timestamp": "05:08",
+        "typ": "TORSCHUSS",
+        "team": "B",
+        "details": "Penalty-Schuss von #19 (Eriksson) wird vom Torwart (Lax) gehalten."
+      },
+      {
+        "timestamp": "05:25",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von Finnland aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "05:28",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #70 (Rantala) von aussen, geht daneben."
+      },
+      {
+        "timestamp": "05:37",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #71 (Huvudinen) aus dem Kreis, vom Torwart (Hedlund) gehalten."
+      },
+      {
+        "timestamp": "05:51",
+        "typ": "TOR",
+        "team": "A",
+        "details": "Tor für Finnland! #71 (Huvudinen) trifft nach einer unglaublichen Parade von Hedlund mit einem Nachschuss (SWE 2 - FIN 1)."
+      },
+      {
+        "timestamp": "06:36",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "B",
+        "details": "Schweden erobert den Ball."
+      },
+      {
+        "timestamp": "06:37",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "A",
+        "details": "Finnland erobert den Ball zurück."
+      },
+      {
+        "timestamp": "06:38",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #71 (Huvudinen) aus der Halbdistanz, geblockt."
+      },
+      {
+        "timestamp": "06:40",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #70 (Rantala) aus der Halbdistanz, geht daneben."
+      },
+      {
+        "timestamp": "06:45",
+        "typ": "BALLBESITZWECHSEL",
+        "team": "A",
+        "details": "Finnland im Ballbesitz."
+      },
+      {
+        "timestamp": "06:46",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #70 (Rantala) aus der Halbdistanz, geht daneben."
+      },
+      {
+        "timestamp": "06:49",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #70 (Rantala) aus der Halbdistanz, geht daneben."
+      },
+      {
+        "timestamp": "07:07",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #70 (Rantala) aus dem Kreis, geblockt."
+      },
+      {
+        "timestamp": "07:14",
+        "typ": "TORSCHUSS",
+        "team": "A",
+        "details": "Schuss von #71 (Huvudinen) aus dem Kreis, geblockt."
+      },
+      {
+        "timestamp": "07:14",
+        "typ": "CHANCE",
+        "team": "A",
+        "details": "Huvudinens Schuss wird in letzter Sekunde geblockt."
+      }
+    ],
+    "statistik": {
+      "tore_team_a": 1,
+      "tore_team_b": 2,
+      "torschuesse_team_a": 22,
+      "torschuesse_team_b": 8,
+      "konter_gesamt": 4,
+      "chancen_gesamt": 14
+    }
+  }

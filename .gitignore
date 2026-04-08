@@ -1,0 +1,14 @@
+# API-Key und Secrets – NIEMALS einchecken
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Heruntergeladene Videos (können sehr groß sein)
+downloads/
+
+# Temporäre Dateien
+*.tmp
+*.log

@@ -1,0 +1,330 @@
+{
+  "zusammenfassung": "Dieses Video zeigt Höhepunkte eines Floorball-Spiels zwischen Schweden (gelb) und Finnland (blau). Schweden gewinnt das Spiel mit 2:1. Beide schwedischen Tore resultieren aus Nachschüssen oder direkten Abschlüssen nach Pässen vor dem Tor. Finnland erzielt sein einziges Tor ebenfalls durch einen Nachschuss. Das Spiel ist geprägt von zahlreichen Torschüssen und starken Torwartparaden auf beiden Seiten.",
+  "ereignisse": [
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss von Halbdistanz, gehalten"
+    },
+    {
+      "timestamp": "00:08",
+      "typ": "CHANCE",
+      "team": "FIN",
+      "details": "Nachschuss, gehalten"
+    },
+    {
+      "timestamp": "00:14",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "SWE",
+      "details": "Schweden gewinnt den Ball"
+    },
+    {
+      "timestamp": "00:16",
+      "typ": "KONTER",
+      "team": "SWE",
+      "details": "2 gegen 1 Angriff"
+    },
+    {
+      "timestamp": "00:18",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, daneben"
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FIN",
+      "details": "Finnland gewinnt den Ball"
+    },
+    {
+      "timestamp": "00:29",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss von Halbdistanz, geblockt"
+    },
+    {
+      "timestamp": "00:33",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FIN",
+      "details": "Finnland gewinnt Face-off"
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "00:45",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "00:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "SWE",
+      "details": "Schweden gewinnt den Ball"
+    },
+    {
+      "timestamp": "00:53",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "00:55",
+      "typ": "CHANCE",
+      "team": "SWE",
+      "details": "Nachschuss, geblockt"
+    },
+    {
+      "timestamp": "00:57",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "01:18",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "01:20",
+      "typ": "CHANCE",
+      "team": "SWE",
+      "details": "Nachschuss, geblockt"
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "01:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FIN",
+      "details": "Finnland gewinnt den Ball"
+    },
+    {
+      "timestamp": "01:37",
+      "typ": "CHANCE",
+      "team": "FIN",
+      "details": "Schuss geblockt"
+    },
+    {
+      "timestamp": "01:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "SWE",
+      "details": "Schweden stiehlt den Ball"
+    },
+    {
+      "timestamp": "02:01",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Pass vor dem Tor, Direktschuss"
+    },
+    {
+      "timestamp": "02:38",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "02:44",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss von Halbdistanz, gehalten"
+    },
+    {
+      "timestamp": "02:48",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "03:01",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "03:23",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Schuss von Halbdistanz, gehalten"
+    },
+    {
+      "timestamp": "03:24",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Nachschuss"
+    },
+    {
+      "timestamp": "04:03",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "04:09",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, daneben"
+    },
+    {
+      "timestamp": "04:15",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, geblockt"
+    },
+    {
+      "timestamp": "04:19",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, geblockt"
+    },
+    {
+      "timestamp": "04:28",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "04:34",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "04:47",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Penalty-Schuss, gehalten"
+    },
+    {
+      "timestamp": "04:51",
+      "typ": "CHANCE",
+      "team": "SWE",
+      "details": "Nachschuss nach Penalty, geblockt"
+    },
+    {
+      "timestamp": "05:09",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Penalty-Schuss, gehalten"
+    },
+    {
+      "timestamp": "05:25",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "05:37",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "05:52",
+      "typ": "TOR",
+      "team": "FIN",
+      "details": "Nachschuss"
+    },
+    {
+      "timestamp": "06:13",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "06:20",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "06:28",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "06:38",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "06:48",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "06:58",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:07",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:15",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:28",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:37",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:48",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:52",
+      "typ": "TORSCHUSS",
+      "team": "FIN",
+      "details": "Schuss aus dem Kreis, gehalten"
+    },
+    {
+      "timestamp": "07:52",
+      "typ": "CHANCE",
+      "team": "FIN",
+      "details": "Nachschuss, geblockt"
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 2,
+    "tore_team_b": 1,
+    "torschuesse_team_a": 11,
+    "torschuesse_team_b": 28,
+    "konter_gesamt": 1,
+    "chancen_gesamt": 6
+  },
+  "_meta": {
+    "videotitel": "Sweden vs Finland - World Games 2025 Men's FINAL",
+    "datum": "02.04.2026",
+    "dateiname": "sweden_vs_finland_-_world_games_2025_mens_final_20260402.json"
+  }
+}
