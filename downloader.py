@@ -27,7 +27,7 @@ def download_video(url: str, zielordner: str = "downloads") -> tuple:
 
     # Einstellungen für yt-dlp
     optionen = {
-        "format": "mp4/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",  # MP4 bevorzugen
+        "format": "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/best[height<=480][ext=mp4]/best[ext=mp4]",  # max. 480p
         "outtmpl": ausgabepfad,       # Dateiname-Vorlage
         "quiet": False,               # Fortschritt anzeigen
         "noplaylist": True,           # Nur einzelnes Video, keine Playlist

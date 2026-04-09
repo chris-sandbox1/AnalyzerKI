@@ -1,0 +1,276 @@
+{
+  "zusammenfassung": "Das Spiel zwischen Schweden und der Tschechischen Republik war ein spannendes Floorball-Halbfinale, das in der Verlängerung entschieden wurde. Beide Teams lieferten sich einen engen Schlagabtausch, bei dem Schweden letztendlich mit 5:4 gewann.",
+  "ereignisse": [
+    {
+      "timestamp": "00:12",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Eriksson (#19) erzielt das erste Tor für Schweden.",
+      "position": {
+        "x": 37.0,
+        "y": 12.0
+      }
+    },
+    {
+      "timestamp": "00:53",
+      "typ": "TOR",
+      "team": "CZE",
+      "details": "Zakonov (#9) gleicht für die Tschechische Republik aus.",
+      "position": {
+        "x": 36.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "01:29",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Benes (#28) schießt aufs Tor, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "01:39",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Ein Schuss von der rechten Seite wird vom Torwart geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 15.0
+      }
+    },
+    {
+      "timestamp": "01:48",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Benes (#28) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 9.0
+      }
+    },
+    {
+      "timestamp": "01:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "CZE",
+      "details": "Havlas (#13) gewinnt den Ball nach einem Sturz von Ramirez (#28)."
+    },
+    {
+      "timestamp": "02:27",
+      "typ": "TOR",
+      "team": "CZE",
+      "details": "Nemeczek (#17) bringt die Tschechische Republik in Führung.",
+      "position": {
+        "x": 3.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "02:51",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Lundmark (#12) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 9.0
+      }
+    },
+    {
+      "timestamp": "02:58",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Huvland (#65) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "03:09",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Huvland (#65) gleicht für Schweden aus.",
+      "position": {
+        "x": 37.0,
+        "y": 12.0
+      }
+    },
+    {
+      "timestamp": "03:58",
+      "typ": "TORSCHUSS",
+      "team": "CZE",
+      "details": "Langer (#29) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 3.0,
+        "y": 15.0
+      }
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "TOR",
+      "team": "CZE",
+      "details": "Bursik (#24) bringt die Tschechische Republik erneut in Führung.",
+      "position": {
+        "x": 3.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "04:50",
+      "typ": "PENALTY",
+      "team": "CZE",
+      "details": "Langer (#29) foult Spieler #87, aber es wird kein Penalty gegeben.",
+      "position": {
+        "x": 10.0,
+        "y": 1.0
+      }
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Benes (#28) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "05:20",
+      "typ": "TORSCHUSS",
+      "team": "CZE",
+      "details": "Zakonov (#9) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 3.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "05:32",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Lundmark (#12) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 12.0
+      }
+    },
+    {
+      "timestamp": "05:42",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Benes (#28) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "05:52",
+      "typ": "TORSCHUSS",
+      "team": "CZE",
+      "details": "Hemerka (#9) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 3.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "06:04",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Viceback (#12) gleicht für Schweden aus.",
+      "position": {
+        "x": 37.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "06:48",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Ulriksson (#20) bringt Schweden in Führung.",
+      "position": {
+        "x": 37.0,
+        "y": 12.0
+      }
+    },
+    {
+      "timestamp": "07:40",
+      "typ": "TOR",
+      "team": "CZE",
+      "details": "Hanak (#21) gleicht für die Tschechische Republik aus.",
+      "position": {
+        "x": 3.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "08:18",
+      "typ": "TOR",
+      "team": "CZE",
+      "details": "Nemeczek (#17) erzielt ein weiteres Tor für die Tschechische Republik.",
+      "position": {
+        "x": 3.0,
+        "y": 11.0
+      }
+    },
+    {
+      "timestamp": "08:59",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Viceback (#12) schießt aus der Distanz, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 8.0
+      }
+    },
+    {
+      "timestamp": "09:09",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Huvland (#65) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 12.0
+      }
+    },
+    {
+      "timestamp": "09:22",
+      "typ": "TORSCHUSS",
+      "team": "SWE",
+      "details": "Eriksson (#19) schießt, aber der Ball wird geblockt.",
+      "position": {
+        "x": 37.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:33",
+      "typ": "TOR",
+      "team": "SWE",
+      "details": "Ramirez (#28) erzielt das entscheidende Tor in der Verlängerung für Schweden.",
+      "position": {
+        "x": 37.0,
+        "y": 8.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 5,
+    "tore_team_b": 4,
+    "torschuesse_team_a": 11,
+    "torschuesse_team_b": 3,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0
+  },
+  "_meta": {
+    "videotitel": "Sweden vs Czechia - World Games 2025 SEMIFINAL",
+    "datum": "09.04.2026",
+    "dateiname": "sweden_vs_czechia_-_world_games_2025_semifinal_20260409.json"
+  }
+}
