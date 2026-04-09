@@ -2,37 +2,48 @@
 main.py – Einstiegspunkt des Floorball-Analyzers.
 
 Ablauf:
-1. API-Key aus .env-Datei laden
-2. YouTube-URL oder lokalen Dateinamen abfragen
-3. Video herunterladen (oder lokale Datei verwenden)
-4. Video mit Gemini analysieren
-5. Analyse als JSON in analyses/ speichern
-6. Ergebnis anzeigen
+1. Arbeitsverzeichnis auf Skript-Ordner setzen (wichtig bei Doppelklick)
+2. API-Key aus .env-Datei laden
+3. YouTube-URL oder lokalen Dateinamen abfragen
+4. Video herunterladen (oder lokale Datei verwenden)
+5. Video mit Gemini analysieren
+6. Analyse als JSON in analyses/ speichern
 """
 
 import os
 import re
 import json
+import traceback
 from datetime import datetime
 from dotenv import load_dotenv
 from downloader import download_video
 from analyzer import analyze_video
 
+# Arbeitsverzeichnis immer auf den Ordner setzen, in dem main.py liegt.
+# Ohne das schlagen alle relativen Pfade (downloads/, analyses/, .env) fehl,
+# wenn das Skript per Doppelklick oder aus einem anderen Ordner gestartet wird.
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def beenden(meldung: str = "", fehler: bool = False):
+    """Gibt eine Abschlussmeldung aus und wartet auf Enter, bevor das Fenster schließt."""
+    if meldung:
+        prefix = "\n❌ FEHLER: " if fehler else "\n"
+        print(prefix + meldung)
+    print("\n" + "─" * 50)
+    input("  Drücke Enter zum Beenden...")
+    raise SystemExit(1 if fehler else 0)
+
 
 def sanitize_filename(titel: str) -> str:
     """Erstellt einen sicheren Dateinamen aus dem Videotitel."""
-    titel = re.sub(r"[^\w\s-]", "", titel)       # Sonderzeichen entfernen
-    titel = re.sub(r"\s+", "_", titel.strip())    # Leerzeichen → Unterstriche
-    return titel[:60].lower()                      # Max 60 Zeichen, Kleinbuchstaben
+    titel = re.sub(r"[^\w\s-]", "", titel)
+    titel = re.sub(r"\s+", "_", titel.strip())
+    return titel[:60].lower()
 
 
 def speichere_analyse(analyse_text: str, video_titel: str) -> str:
-    """
-    Speichert die Analyse-JSON in den analyses/-Ordner und
-    aktualisiert analyses/index.json.
-
-    Rückgabe: Pfad zur gespeicherten Datei
-    """
+    """Speichert die Analyse-JSON in den analyses/-Ordner und aktualisiert den Index."""
     os.makedirs("analyses", exist_ok=True)
 
     datum = datetime.now().strftime("%Y%m%d")
@@ -40,16 +51,16 @@ def speichere_analyse(analyse_text: str, video_titel: str) -> str:
     dateiname = f"{sicherer_titel}_{datum}.json"
     pfad = os.path.join("analyses", dateiname)
 
-    # Falls Datei schon existiert (z.B. zweite Analyse am selben Tag), Zähler anhängen
+    # Falls Datei schon existiert (zweite Analyse am selben Tag), Zähler anhängen
     zaehler = 1
     while os.path.exists(pfad):
         dateiname = f"{sicherer_titel}_{datum}_{zaehler}.json"
         pfad = os.path.join("analyses", dateiname)
         zaehler += 1
 
-    # Sicherheits-Bereinigung: falls analyzer.py den ```json-Block nicht entfernt hat
+    # Markdown-Wrapper entfernen (```json ... ```) – greedy Match für tief verschachteltes JSON
     bereinigt = analyse_text.strip()
-    json_match = re.search(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```", bereinigt)
+    json_match = re.search(r"```(?:json)?\s*(\{[\s\S]*\})\s*```", bereinigt)
     if json_match:
         bereinigt = json_match.group(1).strip()
     else:
@@ -58,11 +69,11 @@ def speichere_analyse(analyse_text: str, video_titel: str) -> str:
         if start != -1 and end > start:
             bereinigt = bereinigt[start:end]
 
-    # JSON parsen und Metadaten ergänzen (Titel, Datum)
+    # JSON parsen und Metadaten ergänzen
     try:
         daten = json.loads(bereinigt)
     except json.JSONDecodeError:
-        daten = {"rohdaten": analyse_text}  # echter Fallback: Rohtext aufbewahren
+        daten = {"rohdaten": analyse_text}
 
     daten["_meta"] = {
         "videotitel": video_titel,
@@ -73,20 +84,12 @@ def speichere_analyse(analyse_text: str, video_titel: str) -> str:
     with open(pfad, "w", encoding="utf-8") as f:
         json.dump(daten, f, ensure_ascii=False, indent=2)
 
-    # Index aktualisieren
     aktualisiere_index()
-
     return pfad
 
 
 def aktualisiere_index():
-    """
-    Schreibt analyses/index.json (für Server-Modus) und
-    analyses/data.js (für direktes Öffnen per Doppelklick ohne Server).
-
-    data.js enthält alle Spieldaten als JavaScript-Variable, die der Browser
-    auch über file://-Protokoll laden kann — fetch() würde dort geblockt werden.
-    """
+    """Schreibt analyses/index.json (Server-Modus) und analyses/data.js (file://-Modus)."""
     ordner = "analyses"
     eintraege = []
     alle_spiele = {}
@@ -99,9 +102,9 @@ def aktualisiere_index():
                 daten = json.load(f)
             meta = daten.get("_meta", {})
             eintraege.append({
-                "datei":  datei,
-                "titel":  meta.get("videotitel", datei),
-                "datum":  meta.get("datum", ""),
+                "datei": datei,
+                "titel": meta.get("videotitel", datei),
+                "datum": meta.get("datum", ""),
             })
             alle_spiele[datei] = daten
         except Exception:
@@ -109,11 +112,9 @@ def aktualisiere_index():
 
     eintraege.reverse()  # Neueste zuerst
 
-    # index.json (für start.py / Server-Modus)
     with open(os.path.join(ordner, "index.json"), "w", encoding="utf-8") as f:
         json.dump(eintraege, f, ensure_ascii=False, indent=2)
 
-    # data.js (für direktes Öffnen ohne Server — <script src> funktioniert mit file://)
     inhalt = (
         "// Automatisch generiert von main.py – nicht manuell bearbeiten\n"
         "window.FLOORBALL_DATA = "
@@ -125,48 +126,59 @@ def aktualisiere_index():
 
 
 def main():
-    # .env-Datei laden (enthält den API-Key)
-    load_dotenv()
+    # .env aus dem Skript-Ordner laden (Pfad ist durch os.chdir oben bereits korrekt)
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
     api_key = os.getenv("GEMINI_API_KEY")
 
-    if not api_key or api_key == "dein-api-key-hier":
-        print("FEHLER: Kein gültiger Gemini API-Key gefunden.")
-        print("Bitte trage deinen API-Key in die .env-Datei ein:")
-        print("  GEMINI_API_KEY=dein-echter-key")
-        return
+    if not api_key or api_key.startswith("dein-"):
+        beenden(
+            "Kein gültiger Gemini API-Key gefunden.\n"
+            "  Bitte trage deinen Key in die .env-Datei ein:\n"
+            "  GEMINI_API_KEY=dein-echter-key",
+            fehler=True,
+        )
 
-    print("=== Floorball Video Analyzer ===\n")
-    print("Eingabe: YouTube-URL  ODER  Dateiname aus dem downloads-Ordner (z.B. 'Sweden vs Finland.mp4')")
+    print("=" * 52)
+    print("   🏒  Floorball Video Analyzer")
+    print("=" * 52)
+    print("\nEingabe: YouTube-URL  ODER  Dateiname aus dem")
+    print("downloads-Ordner (z.B. 'Sweden vs Finland.mp4')\n")
 
-    eingabe = input("\nURL oder Dateiname: ").strip()
+    eingabe = input("URL oder Dateiname: ").strip()
     if not eingabe:
-        print("Keine Eingabe. Programm wird beendet.")
-        return
+        beenden("Keine Eingabe erhalten.", fehler=True)
 
     print()
 
     # ── Schritt 1: Video besorgen ──────────────────────────────────────────────
     if eingabe.startswith("http://") or eingabe.startswith("https://"):
-        # YouTube-Download
+        print("↓  Lade Video herunter…")
         try:
             video_pfad, video_titel = download_video(eingabe)
         except Exception as fehler:
-            print(f"\nFEHLER beim Herunterladen: {fehler}")
-            return
+            print(traceback.format_exc())
+            beenden(f"Download fehlgeschlagen: {fehler}", fehler=True)
     else:
-        # Lokale Datei aus downloads/
-        video_pfad = os.path.join("downloads", eingabe)
+        # Lokale Datei — auch direkte Vollpfade akzeptieren
+        if os.path.isabs(eingabe) and os.path.exists(eingabe):
+            video_pfad = eingabe
+        else:
+            video_pfad = os.path.join("downloads", eingabe)
+
         if not os.path.exists(video_pfad):
-            print(f"FEHLER: Datei nicht gefunden: {video_pfad}")
+            hinweis = f"Datei nicht gefunden: {video_pfad}"
             if os.path.exists("downloads"):
-                dateien = [f for f in os.listdir("downloads") if f.endswith((".mp4", ".webm", ".mkv"))]
+                dateien = [
+                    f for f in os.listdir("downloads")
+                    if f.endswith((".mp4", ".webm", ".mkv"))
+                ]
                 if dateien:
-                    print("Verfügbare Dateien:")
+                    hinweis += "\n\nVerfügbare Dateien im downloads-Ordner:"
                     for d in dateien:
-                        print(f"  - {d}")
-            return
-        # Titel = Dateiname ohne Endung
-        video_titel = os.path.splitext(eingabe)[0]
+                        hinweis += f"\n  • {d}"
+            beenden(hinweis, fehler=True)
+
+        video_titel = os.path.splitext(os.path.basename(eingabe))[0]
 
     print()
 
@@ -174,24 +186,39 @@ def main():
     try:
         analyse = analyze_video(video_pfad, api_key)
     except Exception as fehler:
-        print(f"\nFEHLER bei der Analyse: {fehler}")
-        return
+        print(traceback.format_exc())
+        beenden(f"Analyse fehlgeschlagen: {fehler}", fehler=True)
 
     # ── Schritt 3: Ergebnis anzeigen ──────────────────────────────────────────
-    print("\n" + "=" * 50)
-    print("ANALYSE-ERGEBNIS:")
-    print("=" * 50)
-    print(analyse)
-    print("=" * 50)
+    print("\n" + "=" * 52)
+    print("ANALYSE-ERGEBNIS (Vorschau):")
+    print("=" * 52)
+    # Nur die ersten 800 Zeichen anzeigen (JSON kann sehr lang sein)
+    vorschau = analyse[:800] + ("…" if len(analyse) > 800 else "")
+    print(vorschau)
 
     # ── Schritt 4: Analyse speichern ──────────────────────────────────────────
     try:
         gespeichert_unter = speichere_analyse(analyse, video_titel)
-        print(f"\n✓ Analyse gespeichert: {gespeichert_unter}")
+        print("\n" + "=" * 52)
+        print(f"✓ Gespeichert: {gespeichert_unter}")
         print("  → Im Dashboard unter 'Gespeicherte Spiele' verfügbar")
     except Exception as fehler:
-        print(f"\nWarnung: Analyse konnte nicht gespeichert werden: {fehler}")
+        print(traceback.format_exc())
+        print(f"\n⚠ Warnung: Speichern fehlgeschlagen: {fehler}")
+
+    beenden()  # Wartet auf Enter vor dem Schließen
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        pass
+    except Exception:
+        # Unerwarteter Fehler – vollständigen Stacktrace zeigen
+        print("\n" + "=" * 52)
+        print("UNERWARTETER FEHLER:")
+        print("=" * 52)
+        traceback.print_exc()
+        input("\nDrücke Enter zum Beenden...")
