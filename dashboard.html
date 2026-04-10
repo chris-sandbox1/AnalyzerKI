@@ -76,6 +76,17 @@
       to   { transform: translateX(-50%) translate(15px, -20px); }
     }
 
+    /* Ecken-Blobs */
+    .corner-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    @keyframes corner-pulse {
+      0%   { opacity: .6; transform: scale(1); }
+      100% { opacity: 1;  transform: scale(1.15); }
+    }
+
     /* Scan-Lines */
     .scan-lines {
       position: absolute;
@@ -157,21 +168,17 @@
       gap: 9px;
       flex-shrink: 0;
     }
-    .logo-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #16a34a, #4ade80);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-      box-shadow: 0 0 12px rgba(74,222,128,.35);
-    }
     .logo-text {
-      font-size: .95rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      letter-spacing: -.01em;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.02em;
     }
-    .logo-text span { color: #4ade80; }
+    .logo-text span {
+      color: var(--color-a);
+      border-bottom: 1.5px solid var(--color-a);
+      padding-bottom: 1px;
+    }
 
     /* Tab-Navigation */
     .tabs {
@@ -183,8 +190,9 @@
       border: none;
       border-bottom: 2px solid transparent;
       color: rgba(255,255,255,.35);
-      font-size: .78rem;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .02em;
       padding: 5px 16px;
       border-radius: 0;
       cursor: pointer;
@@ -281,6 +289,16 @@
       gap: 20px;
       padding: 26px 28px;
       margin-bottom: 14px;
+      background: none !important;
+      border: none !important;
+      backdrop-filter: none !important;
+    }
+    .match-info {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,.3);
+      line-height: 1.6;
+      margin-top: 4px;
     }
     .team-col-a { text-align: right; }
     .team-col-b { text-align: left; }
@@ -776,6 +794,34 @@
     .btn-secondary:hover { background: rgba(255,255,255,.06); }
     .no-teams-msg { color: #475569; font-size: .82rem; padding: 8px 0; }
 
+    /* ── Cross-Highlight ───────────────────────────────────────────────────── */
+    .feld-dot { transition: filter .15s; }
+    .feld-dot.highlighted { filter: brightness(1.8) drop-shadow(0 0 4px white); }
+    .pt-dot { transition: transform .15s, box-shadow .15s; }
+    .pt-dot.highlighted {
+      transform: translateX(-50%) translateY(-50%) scale(1.8) !important;
+      box-shadow: 0 0 14px currentColor;
+      z-index: 20;
+    }
+    .zt-dot { transition: transform .15s; }
+    .zt-item:hover .zt-dot { transform: scale(1.4); }
+
+    /* ── Globaler Hover-Tooltip (Period Track + Zeitstrahl) ─────────────────── */
+    #hover-tooltip {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      z-index: 200;
+      min-width: 160px;
+      max-width: 220px;
+      background: rgba(8,12,22,.97);
+      border: 0.5px solid rgba(255,255,255,.14);
+      border-radius: 9px;
+      padding: 10px 13px;
+      font-size: .74rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.7);
+    }
+
     /* ── Spielfeld Tooltip ──────────────────────────────────────────────────── */
     .field-card { position: relative; }
     #feld-tooltip {
@@ -832,7 +878,7 @@
 
     /* ── Reduced Motion ─────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .aurora-blob, .particle,
+      .aurora-blob, .particle, .corner-blob,
       .ticker-track, .ring-pulse-a, .ring-pulse-b { animation: none !important; }
     }
   </style>
@@ -847,6 +893,11 @@
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
+  <!-- Ecken-Blobs -->
+  <div class="corner-blob" style="width:200px;height:200px;filter:blur(70px);background:rgba(16,185,129,.10);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.09);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:150px;height:150px;filter:blur(60px);background:rgba(16,185,129,.07);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:160px;height:160px;filter:blur(65px);background:rgba(249,115,22,.07);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
@@ -855,7 +906,6 @@
 <!-- Topbar -->
 <header>
   <div class="logo">
-    <div class="logo-icon">🏒</div>
     <div class="logo-text">Floorball<span>IQ</span></div>
   </div>
   <nav class="tabs">
@@ -1184,6 +1234,7 @@ function baueDashboard(data) {
 
   document.getElementById('content-zeitstrahl').innerHTML =
     baueZeitstrahl(ereignisse, TA, TB, CA, CB, tickerHTML);
+  initialisiereZtTooltips();
 
   // Leer-Div verstecken
   document.getElementById('empty').style.display = 'none';
@@ -1275,7 +1326,7 @@ function baueUebersicht(data, ereignisse, TA, TB, CA, CB,
   return `
   <div class="tab-inner">
     <!-- Score Hero -->
-    <div class="glass score-hero">
+    <div class="score-hero">
       <div class="team-col-a">
         <div class="team-kuerzel">${esc(TA)}</div>
         <div class="team-name-big" style="color:${CA}">${esc(nameA)}</div>
@@ -1283,9 +1334,9 @@ function baueUebersicht(data, ereignisse, TA, TB, CA, CB,
       </div>
       <div class="score-mid">
         <div class="vs-text">VS</div>
-        <div class="glass match-card">
-          <div class="match-title">${esc(titel)}</div>
-          <div class="match-sub">${datum ? datum + '<br>' : ''}Dauer: ${dauerMin}</div>
+        <div class="match-info">
+          <div>${esc(titel)}</div>
+          <div>${datum ? datum + ' · ' : ''}${dauerMin}</div>
         </div>
       </div>
       <div class="team-col-b">
@@ -1602,7 +1653,8 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
 
     // Gemeinsame data-Attribute für alle Dots
     function dotAttrs(extra) {
-      return `data-ts="${esc(ev.timestamp||'?')}" data-typ="${ev.typ}" data-team="${esc(ev.team||'')}" data-zone="${esc(ev.zone||'')}" data-details="${esc(ev.details||'')}" ${extra||''}`;
+      const evId = ereignisse.indexOf(ev);
+      return `data-ts="${esc(ev.timestamp||'?')}" data-typ="${ev.typ}" data-team="${esc(ev.team||'')}" data-zone="${esc(ev.zone||'')}" data-details="${esc(ev.details||'')}" data-event-id="${evId}" ${extra||''}`;
     }
 
     // KONTER: Pfeil in Teamfarbe und Richtung
@@ -1737,8 +1789,8 @@ function bauePeriodTrack(ereignisse, TA, TB, CA, CB) {
     const col  = ev.team === TA ? CA : ev.team === TB ? CB : '#64748b';
     const isGoal = ['TOR','UEBERZAHL_TOR','UNTERZAHL_TOR','PENALTY_SHOT'].includes(ev.typ);
     const r = isGoal ? 7 : 4;
-    const tooltip = `${ev.timestamp||'?'} – ${ev.typ}${ev.zone ? ' (' + zoneName(ev.zone) + ')' : ''}${ev.details ? ': '+ev.details : ''}`;
-    dots += `<div class="pt-dot" title="${esc(tooltip)}"
+    const evId = ereignisse.indexOf(ev);
+    dots += `<div class="pt-dot" data-event-id="${evId}"
       style="left:${Math.min(pct,99.5).toFixed(1)}%;width:${r*2}px;height:${r*2}px;background:${col};
       box-shadow:0 0 ${isGoal?8:4}px ${col};
       top:${isGoal?'15px':'19px'}"></div>`;
@@ -1934,9 +1986,11 @@ function baueZeitstrahl(ereignisse, TA, TB, CA, CB, tickerHTML) {
     const badgeBg  = hexA(col, .15);
     const isLast   = idx === sortiert.length - 1;
 
+    const evId = ereignisse.indexOf(ev);
+
     if (isGoal) {
       return `
-      <div class="zt-item" data-kat="${kat}">
+      <div class="zt-item" data-kat="${kat}" data-event-id="${evId}">
         <div class="zt-ts">${esc(ev.timestamp||'?')}</div>
         <div class="zt-line">
           <div class="zt-dot" style="background:${col};box-shadow:0 0 8px ${col};width:14px;height:14px"></div>
@@ -1953,7 +2007,7 @@ function baueZeitstrahl(ereignisse, TA, TB, CA, CB, tickerHTML) {
     }
 
     return `
-    <div class="zt-item" data-kat="${kat}">
+    <div class="zt-item" data-kat="${kat}" data-event-id="${evId}">
       <div class="zt-ts">${esc(ev.timestamp||'?')}</div>
       <div class="zt-line">
         <div class="zt-dot" style="background:${hexA(col,.6)}"></div>
@@ -2135,6 +2189,40 @@ function escTT(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// Gemeinsame Tooltip-HTML-Funktion (für Period Track + Zeitstrahl)
+function baueTooltipHTML(ev, col) {
+  const cfg = EV_CFG[ev.typ] || { icon: '•', short: ev.typ };
+  let html = `<div class="tt-header">
+    <span class="tt-ts" style="color:${col}">${escTT(ev.timestamp||'?')}</span>
+    <span class="tt-badge" style="background:${col}22;color:${col}">${cfg.icon} ${cfg.short}</span>
+  </div>`;
+  if (ev.team)    html += `<div class="tt-zone">${escTT(ev.team)}</div>`;
+  if (ev.zone)    html += `<div class="tt-zone">${escTT(zoneName(ev.zone))}</div>`;
+  if (ev.details) html += `<div class="tt-details">${escTT(ev.details)}</div>`;
+  return html;
+}
+
+// Positioniert und zeigt den globalen #hover-tooltip über einem Anker-Element
+function zeigeHoverTooltip(html, ankerEl) {
+  const tt = document.getElementById('hover-tooltip');
+  tt.innerHTML = html;
+  tt.style.visibility = 'hidden';
+  tt.style.display = 'block';
+  const tRect = tt.getBoundingClientRect();
+  const aRect = ankerEl.getBoundingClientRect();
+  let left = aRect.left + aRect.width / 2 - tRect.width / 2;
+  let top  = aRect.top - tRect.height - 10;
+  if (top < 8) top = aRect.bottom + 10;
+  left = Math.max(8, Math.min(left, window.innerWidth - tRect.width - 8));
+  tt.style.left = left + 'px';
+  tt.style.top  = top  + 'px';
+  tt.style.visibility = '';
+}
+
+function versteckeHoverTooltip() {
+  document.getElementById('hover-tooltip').style.display = 'none';
+}
+
 function initialisiereTooltips() {
   const fc = document.querySelector('.field-card');
   const tt = document.getElementById('feld-tooltip');
@@ -2184,16 +2272,66 @@ function initialisiereTooltips() {
 
       tt.innerHTML = html;
       tt.style.display = 'block';
+
+      // Cross-Highlight: entsprechenden Period-Track-Punkt aufleuchten lassen
+      const evId = this.dataset.eventId;
+      if (evId !== undefined) {
+        document.querySelectorAll(`.pt-dot[data-event-id="${evId}"]`)
+          .forEach(d => d.classList.add('highlighted'));
+      }
     });
 
     dot.addEventListener('mouseleave', function() {
       tt.style.display = 'none';
+      document.querySelectorAll('.pt-dot.highlighted')
+        .forEach(d => d.classList.remove('highlighted'));
     });
+  });
+
+  // Period-Track-Dots: Tooltip + Cross-Highlight auf Spielfeld-Dots
+  document.querySelectorAll('.pt-dot').forEach(dot => {
+    dot.addEventListener('mouseenter', function() {
+      const evId = this.dataset.eventId;
+      const ev   = aktuelleData?.ereignisse?.[evId];
+      if (!ev) return;
+      const col = aktuelleTeams[0] === ev.team ? CA : CB;
+      zeigeHoverTooltip(baueTooltipHTML(ev, col), this);
+      document.querySelectorAll(`.feld-dot[data-event-id="${evId}"]`)
+        .forEach(d => d.classList.add('highlighted'));
+    });
+    dot.addEventListener('mouseleave', function() {
+      versteckeHoverTooltip();
+      document.querySelectorAll('.feld-dot.highlighted')
+        .forEach(d => d.classList.remove('highlighted'));
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Zeitstrahl-Tooltips initialisieren
+// ─────────────────────────────────────────────────────────────────────────────
+function initialisiereZtTooltips() {
+  const CA = getComputedStyle(document.documentElement).getPropertyValue('--color-a').trim();
+  const CB = getComputedStyle(document.documentElement).getPropertyValue('--color-b').trim();
+  document.querySelectorAll('#zt-list-inner .zt-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      const evId = this.dataset.eventId;
+      const ev   = aktuelleData?.ereignisse?.[evId];
+      if (!ev) return;
+      const col = aktuelleTeams[0] === ev.team ? CA : CB;
+      const dot = this.querySelector('.zt-dot') || this;
+      zeigeHoverTooltip(baueTooltipHTML(ev, col), dot);
+    });
+    item.addEventListener('mouseleave', versteckeHoverTooltip);
   });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 init();
 </script>
+
+<!-- Globaler Hover-Tooltip -->
+<div id="hover-tooltip"></div>
+
 </body>
 </html>
