@@ -286,7 +286,7 @@
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      gap: 20px;
+      gap: 40px;
       padding: 26px 28px;
       margin-bottom: 14px;
       background: none !important;
@@ -521,7 +521,36 @@
 
     .field-card {
       margin: 0 20px;
-      padding: 14px;
+      padding: 8px 14px 14px;
+    }
+    .field-card-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 6px;
+    }
+    .zonen-toggle {
+      display: flex;
+      gap: 1px;
+      background: rgba(255,255,255,.05);
+      border-radius: 6px;
+      padding: 2px;
+    }
+    .ztn-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.3);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      padding: 3px 11px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background .12s, color .12s;
+    }
+    .ztn-btn:hover { color: rgba(255,255,255,.65); }
+    .ztn-btn.active {
+      background: rgba(255,255,255,.12);
+      color: #f1f5f9;
     }
     .field-svg { width: 100%; height: auto; display: block; }
 
@@ -1015,9 +1044,10 @@ function zoneName(z) {
 // ─────────────────────────────────────────────────────────────────────────────
 let aktuelleTeams = [];
 let aktuelleData  = null;
-let aktiverFilter = 'alle';   // für Spielfeld-Tab
-let aktiverZtFilter = 'alle'; // für Zeitstrahl-Tab
-let spielerSortierung = 'tore'; // für Spieler-Tab
+let aktiverFilter = 'alle';      // für Spielfeld-Tab
+let aktiverZtFilter = 'alle';    // für Zeitstrahl-Tab
+let spielerSortierung = 'tore';  // für Spieler-Tab
+let aktiverFeldModus = 'heatmap'; // heatmap | zonen | klar
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Team-Einstellungen (localStorage)
@@ -1334,9 +1364,9 @@ function baueUebersicht(data, ereignisse, TA, TB, CA, CB,
       </div>
       <div class="score-mid">
         <div class="vs-text">VS</div>
-        <div class="match-info">
-          <div>${esc(titel)}</div>
-          <div>${datum ? datum + ' · ' : ''}${dauerMin}</div>
+        <div class="glass match-card">
+          <div class="match-title">${esc(titel)}</div>
+          <div class="match-sub">${datum ? datum + '<br>' : ''}Dauer: ${dauerMin}</div>
         </div>
       </div>
       <div class="team-col-b">
@@ -1439,7 +1469,14 @@ function baueSpielfeld(ereignisse, TA, TB, CA, CB, tickerHTML) {
 
   <!-- Spielfeld -->
   <div class="glass field-card">
-    ${baueFeld(ereignisse, TA, TB, CA, CB)}
+    <div class="field-card-header">
+      <div class="zonen-toggle">
+        <button class="ztn-btn${aktiverFeldModus==='heatmap'?' active':''}" onclick="setzeZonenModus('heatmap',this)">Heatmap</button>
+        <button class="ztn-btn${aktiverFeldModus==='zonen'?' active':''}" onclick="setzeZonenModus('zonen',this)">Zonen</button>
+        <button class="ztn-btn${aktiverFeldModus==='klar'?' active':''}" onclick="setzeZonenModus('klar',this)">Klar</button>
+      </div>
+    </div>
+    <div id="feld-svg-wrap">${baueFeld(ereignisse, TA, TB, CA, CB)}</div>
     <div id="feld-tooltip"></div>
   </div>
 
@@ -1497,6 +1534,25 @@ function baueSpielfeld(ereignisse, TA, TB, CA, CB, tickerHTML) {
   <div class="ticker-strip">
     <div class="ticker-track">${tickerHTML}</div>
   </div>`;
+}
+
+// Zonen-Modus-Toggle
+function setzeZonenModus(modus, btn) {
+  aktiverFeldModus = modus;
+  document.querySelectorAll('.ztn-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const wrap = document.getElementById('feld-svg-wrap');
+  if (!wrap || !aktuelleData) return;
+  const CA = getComputedStyle(document.documentElement).getPropertyValue('--color-a').trim();
+  const CB = getComputedStyle(document.documentElement).getPropertyValue('--color-b').trim();
+  const err = aktuelleData.ereignisse || [];
+  wrap.innerHTML = baueFeld(err, aktuelleTeams[0]||'A', aktuelleTeams[1]||'B', CA, CB);
+  // Feld-Dots neu binden (mousemove + pt-dots bleiben erhalten)
+  const tt = document.getElementById('feld-tooltip');
+  const fc = document.querySelector('.field-card');
+  if (fc && tt) bindFeldDots(fc, tt, CA, CB);
+  // aktiven Filter wieder anwenden
+  setzeFilter(aktiverFilter, document.querySelector(`#tab-spielfeld .filter-btn.active`) || document.querySelector('#tab-spielfeld .filter-btn'));
 }
 
 // Filter-Button-Handler für Spielfeld
@@ -1586,51 +1642,49 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
   const fillA = hexA(CA, 0.12);
   const fillB = hexA(CB, 0.12);
 
-  // SVG-Feld: x=55..765 (710px breit), y=18..382 (364px hoch)
-  // 9 Zonen-Streifen (x-Grenzen in Feldmetern: 0,2.5,7,12,17.5,22.5,28,33,38,40)
   const zBounds = [0, 2.5, 7, 12, 17.5, 22.5, 28, 33, 38, 40];
-  const zColors = [
-    'rgba(59,130,246,',   // EIGN_TOR
-    'rgba(99,102,241,',   // EIGN_TORRAUM
-    'rgba(139,92,246,',   // EIGN_SLOT
-    'rgba(168,85,247,',   // EIGN_HALB
-    'rgba(156,163,175,',  // RUECKRAUM
-    'rgba(234,179,8,',    // GEGN_HALB
-    'rgba(249,115,22,',   // GEGN_SLOT
-    'rgba(239,68,68,',    // GEGN_TORRAUM
-    'rgba(74,222,128,',   // GEGN_TOR
-  ];
-  // Mittel- und Außen-Opazitäten pro Zone [mitte, oben/unten]
-  const zOp = [
-    [.12,.06], [.13,.07], [.10,.06], [.08,.05], [.09,.05],
-    [.10,.05], [.16,.07], [.28,.10], [.10,.05],
-  ];
+  const ZONE_IDX = {
+    EIGN_TOR:0, EIGN_TORRAUM:1, EIGN_SLOT:2, EIGN_HALB:3, RUECKRAUM:4,
+    GEGN_HALB:5, GEGN_SLOT:6, GEGN_TORRAUM:7, GEGN_TOR:8,
+  };
 
-  // Zonen-Hintergrund bauen
-  let zonenBg = '';
-  const fY = 18, fH = 364, fYm = fY + fH; // Feld-Y-Bereich
+  const fY = 18, fH = 364, fYm = fY + fH;
   const drittelH = fH / 3;
+  let zonenBg = '';
 
-  for (let z = 0; z < 9; z++) {
-    const x1 = Math.round(55 + (zBounds[z]   / 40) * 710);
-    const x2 = Math.round(55 + (zBounds[z+1] / 40) * 710);
-    const w  = x2 - x1;
-    const col = zColors[z];
-    const [opM, opR] = zOp[z];
-    // Oben (y=18, 1/3 der Höhe)
-    zonenBg += `<rect x="${x1}" y="${fY}" width="${w}" height="${Math.round(drittelH)}" fill="${col}${opR})"/>`;
-    // Mitte
-    zonenBg += `<rect x="${x1}" y="${fY+Math.round(drittelH)}" width="${w}" height="${Math.round(drittelH)}" fill="${col}${opM})"/>`;
-    // Unten
-    zonenBg += `<rect x="${x1}" y="${fY+Math.round(drittelH*2)}" width="${w}" height="${Math.round(drittelH)}" fill="${col}${opR})"/>`;
-    // Vertikale Trennlinie (außer erste)
-    if (z > 0) {
+  if (aktiverFeldModus === 'heatmap') {
+    // Events pro Zone zählen
+    const cntA = new Array(9).fill(0);
+    const cntB = new Array(9).fill(0);
+    ereignisse.forEach(ev => {
+      if (!ev.zone) return;
+      const bz = ev.zone.replace(/_(MITTE|OBEN|UNTEN)$/, '');
+      const zi = ZONE_IDX[bz];
+      if (zi === undefined) return;
+      if (ev.team === TA) cntA[zi]++;
+      else if (ev.team === TB) cntB[zi]++;
+    });
+    const maxCnt = Math.max(1, ...cntA, ...cntB);
+
+    for (let z = 0; z < 9; z++) {
+      const x1 = Math.round(55 + (zBounds[z]   / 40) * 710);
+      const x2 = Math.round(55 + (zBounds[z+1] / 40) * 710);
+      const w  = x2 - x1;
+      const intA = cntA[z] / maxCnt;
+      const intB = cntB[z] / maxCnt;
+      if (intA > 0) zonenBg += `<rect x="${x1}" y="${fY}" width="${w}" height="${fH}" fill="rgba(74,222,128,${(intA * 0.4).toFixed(3)})"/>`;
+      if (intB > 0) zonenBg += `<rect x="${x1}" y="${fY}" width="${w}" height="${fH}" fill="rgba(251,146,60,${(intB * 0.35).toFixed(3)})"/>`;
+    }
+  } else if (aktiverFeldModus === 'zonen') {
+    // Nur Rasterlinien, keine Füllung
+    for (let z = 1; z < 9; z++) {
+      const x1 = Math.round(55 + (zBounds[z] / 40) * 710);
       zonenBg += `<line x1="${x1}" y1="${fY}" x2="${x1}" y2="${fYm}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
     }
+    zonenBg += `<line x1="55" y1="${fY+Math.round(drittelH)}" x2="765" y2="${fY+Math.round(drittelH)}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+    zonenBg += `<line x1="55" y1="${fY+Math.round(drittelH*2)}" x2="765" y2="${fY+Math.round(drittelH*2)}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
   }
-  // Horizontale Zonen-Trennlinien
-  zonenBg += `<line x1="55" y1="${fY+Math.round(drittelH)}" x2="765" y2="${fY+Math.round(drittelH)}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
-  zonenBg += `<line x1="55" y1="${fY+Math.round(drittelH*2)}" x2="765" y2="${fY+Math.round(drittelH*2)}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+  // 'klar': zonenBg bleibt leer
 
   // Tor-Ringe
   const toreAEv = ereignisse.filter(e => ['TOR','UEBERZAHL_TOR','UNTERZAHL_TOR','PENALTY_SHOT'].includes(e.typ) && e.team === TA);
@@ -2223,26 +2277,8 @@ function versteckeHoverTooltip() {
   document.getElementById('hover-tooltip').style.display = 'none';
 }
 
-function initialisiereTooltips() {
-  const fc = document.querySelector('.field-card');
-  const tt = document.getElementById('feld-tooltip');
-  if (!fc || !tt) return;
-
-  const CA = getComputedStyle(document.documentElement).getPropertyValue('--color-a').trim();
-  const CB = getComputedStyle(document.documentElement).getPropertyValue('--color-b').trim();
-
-  // Tooltip folgt Mauszeiger relativ zum Field-Container
-  fc.addEventListener('mousemove', function(e) {
-    const r    = fc.getBoundingClientRect();
-    let left   = e.clientX - r.left + 16;
-    let top    = e.clientY - r.top  - 14;
-    // Nicht aus dem Container herausragen (Breite ~230px)
-    if (left + 240 > r.width)  left = e.clientX - r.left - 244;
-    if (top < 4)                top  = 4;
-    tt.style.left = left + 'px';
-    tt.style.top  = top  + 'px';
-  });
-
+// Bindet nur die .feld-dot Events — wird auch nach Zonen-Modus-Wechsel aufgerufen
+function bindFeldDots(fc, tt, CA, CB) {
   document.querySelectorAll('.feld-dot').forEach(dot => {
     dot.addEventListener('mouseenter', function() {
       const ts      = this.dataset.ts      || '?';
@@ -2273,7 +2309,6 @@ function initialisiereTooltips() {
       tt.innerHTML = html;
       tt.style.display = 'block';
 
-      // Cross-Highlight: entsprechenden Period-Track-Punkt aufleuchten lassen
       const evId = this.dataset.eventId;
       if (evId !== undefined) {
         document.querySelectorAll(`.pt-dot[data-event-id="${evId}"]`)
@@ -2287,24 +2322,50 @@ function initialisiereTooltips() {
         .forEach(d => d.classList.remove('highlighted'));
     });
   });
+}
 
-  // Period-Track-Dots: Tooltip + Cross-Highlight auf Spielfeld-Dots
-  document.querySelectorAll('.pt-dot').forEach(dot => {
-    dot.addEventListener('mouseenter', function() {
-      const evId = this.dataset.eventId;
-      const ev   = aktuelleData?.ereignisse?.[evId];
-      if (!ev) return;
-      const col = aktuelleTeams[0] === ev.team ? CA : CB;
-      zeigeHoverTooltip(baueTooltipHTML(ev, col), this);
-      document.querySelectorAll(`.feld-dot[data-event-id="${evId}"]`)
-        .forEach(d => d.classList.add('highlighted'));
+function initialisiereTooltips() {
+  const fc = document.querySelector('.field-card');
+  const tt = document.getElementById('feld-tooltip');
+  if (!fc || !tt) return;
+
+  const CA = getComputedStyle(document.documentElement).getPropertyValue('--color-a').trim();
+  const CB = getComputedStyle(document.documentElement).getPropertyValue('--color-b').trim();
+
+  // Einmalige Bindings (mousemove + pt-dots) — nur beim ersten Aufruf
+  if (!fc._ttInit) {
+    fc._ttInit = true;
+
+    fc.addEventListener('mousemove', function(e) {
+      const r    = fc.getBoundingClientRect();
+      let left   = e.clientX - r.left + 16;
+      let top    = e.clientY - r.top  - 14;
+      if (left + 240 > r.width)  left = e.clientX - r.left - 244;
+      if (top < 4)                top  = 4;
+      tt.style.left = left + 'px';
+      tt.style.top  = top  + 'px';
     });
-    dot.addEventListener('mouseleave', function() {
-      versteckeHoverTooltip();
-      document.querySelectorAll('.feld-dot.highlighted')
-        .forEach(d => d.classList.remove('highlighted'));
+
+    document.querySelectorAll('.pt-dot').forEach(dot => {
+      dot.addEventListener('mouseenter', function() {
+        const evId = this.dataset.eventId;
+        const ev   = aktuelleData?.ereignisse?.[evId];
+        if (!ev) return;
+        const col = aktuelleTeams[0] === ev.team ? CA : CB;
+        zeigeHoverTooltip(baueTooltipHTML(ev, col), this);
+        document.querySelectorAll(`.feld-dot[data-event-id="${evId}"]`)
+          .forEach(d => d.classList.add('highlighted'));
+      });
+      dot.addEventListener('mouseleave', function() {
+        versteckeHoverTooltip();
+        document.querySelectorAll('.feld-dot.highlighted')
+          .forEach(d => d.classList.remove('highlighted'));
+      });
     });
-  });
+  }
+
+  // Feld-Dots immer neu binden (nach Render)
+  bindFeldDots(fc, tt, CA, CB);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
