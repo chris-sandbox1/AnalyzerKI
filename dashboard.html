@@ -283,6 +283,20 @@ async function ladeSpiel(datei) {
 // ─────────────────────────────────────────────────────────────────────────────
 function baueDashboard(data) {
   const settings  = ladeSettings();
+
+  // Fallback: ältere Dateien haben manchmal "rohdaten" statt geparsten Feldern.
+  // Versuche den JSON-String darin zu extrahieren und zu nutzen.
+  if (data.rohdaten && !data.ereignisse) {
+    try {
+      const roh = typeof data.rohdaten === 'string' ? JSON.parse(data.rohdaten) : data.rohdaten;
+      if (roh && Array.isArray(roh.ereignisse)) {
+        data = Object.assign({}, data, roh);
+      }
+    } catch(e) {
+      console.warn('rohdaten konnte nicht geparst werden:', e);
+    }
+  }
+
   const ereignisse = Array.isArray(data.ereignisse) ? data.ereignisse : [];
 
   // Teams dynamisch ermitteln (Reihenfolge des ersten Auftretens)
@@ -302,8 +316,10 @@ function baueDashboard(data) {
   // ── Basis-Statistiken ──────────────────────────────────────────────────────
   const cnt = (typ, team) => ereignisse.filter(e => e.typ === typ && e.team === team).length;
 
-  const toreA    = cnt('TOR', TA) + cnt('UEBERZAHL_TOR', TA) + cnt('UNTERZAHL_TOR', TA);
-  const toreB    = cnt('TOR', TB) + cnt('UEBERZAHL_TOR', TB) + cnt('UNTERZAHL_TOR', TB);
+  // Endergebnis immer aus den Statistik-Feldern (nicht aus Event-Zählung)
+  const stat  = data.statistik || {};
+  const toreA = stat.tore_team_a ?? 0;
+  const toreB = stat.tore_team_b ?? 0;
   const schuessA = cnt('TORSCHUSS', TA);
   const schuessB = cnt('TORSCHUSS', TB);
   const chancenA = cnt('CHANCE', TA);
@@ -374,6 +390,7 @@ function baueDashboard(data) {
             <div class="team-sub">${TB !== teamName(TB,settings) ? TB+' · ' : ''}greift ← an</div>
           </div>
         </div>
+        ${data.warnung ? `<div style="font-size:0.65rem;color:#f59e0b;text-align:center;margin:-4px 0 8px;line-height:1.4">⚠ Hinweis: Einzelne Events möglicherweise ungenau — Endergebnis aus Spielstatistik</div>` : ''}
 
         <div class="divider"></div>
 

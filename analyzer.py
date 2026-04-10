@@ -168,7 +168,7 @@ def analyze_video(video_pfad: str, api_key: str, periode_info: str = "") -> str:
         ],
         config=types.GenerateContentConfig(
             max_output_tokens=65536,
-            temperature=0.2,
+            temperature=0.1,
         ),
     )
 

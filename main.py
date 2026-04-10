@@ -372,6 +372,57 @@ def analysiere_mit_aufteilung(
     return zusammenfuehren_analysen(teile_ergebnisse)
 
 
+# ── Plausibilitätsprüfung ─────────────────────────────────────────────────────
+
+def _pruefe_tor_plausibilitaet(analyse_obj: dict):
+    """
+    Vergleicht die gezählten TOR-Events mit den Statistik-Feldern.
+    Bei Abweichung: Warnfeld in analyse_obj einfügen + Terminal-Warnung.
+    Zählt TOR, UEBERZAHL_TOR und UNTERZAHL_TOR als Tore.
+    """
+    ereignisse = analyse_obj.get("ereignisse", [])
+    statistik  = analyse_obj.get("statistik", {})
+
+    if not ereignisse or not statistik:
+        return
+
+    # Team-Namen aus den Ereignissen ermitteln (die zwei häufigsten)
+    teams = {}
+    for e in ereignisse:
+        t = e.get("team", "")
+        if t and t != "unbekannt":
+        	teams[t] = teams.get(t, 0) + 1
+    top_teams = sorted(teams, key=teams.get, reverse=True)[:2]
+    if len(top_teams) < 2:
+        return
+
+    ta, tb = top_teams[0], top_teams[1]
+    tor_typen = {"TOR", "UEBERZAHL_TOR", "UNTERZAHL_TOR"}
+
+    ev_a = sum(1 for e in ereignisse if e.get("typ") in tor_typen and e.get("team") == ta)
+    ev_b = sum(1 for e in ereignisse if e.get("typ") in tor_typen and e.get("team") == tb)
+
+    stat_a = int(statistik.get("tore_team_a", 0))
+    stat_b = int(statistik.get("tore_team_b", 0))
+
+    if ev_a != stat_a or ev_b != stat_b:
+        warnung = (
+            f"Ereignis-Zählung weicht vom Statistik-Feld ab: "
+            f"Ereignisse zeigen {ev_a}:{ev_b} ({ta}:{tb}), "
+            f"Statistik zeigt {stat_a}:{stat_b} — "
+            f"möglicherweise ein Event falsch klassifiziert."
+        )
+        analyse_obj["warnung"] = warnung
+
+        print("\n" + "!" * 52)
+        print("  ⚠ PLAUSIBILITÄTS-WARNUNG:")
+        print(f"  Ereignisse:  {ta} {ev_a} : {ev_b} {tb}")
+        print(f"  Statistik:   Team A {stat_a} : {stat_b} Team B")
+        print("  → Einzelne Events möglicherweise falsch klassifiziert.")
+        print("  → Endergebnis im Dashboard kommt aus den Statistik-Feldern.")
+        print("!" * 52)
+
+
 # ── Speichern ─────────────────────────────────────────────────────────────────
 
 def speichere_analyse(analyse_obj: dict, video_titel: str) -> str:
@@ -576,7 +627,10 @@ def main():
             except Exception:
                 pass
 
-    # ── Schritt 5: Ergebnis anzeigen ──────────────────────────────────────────
+    # ── Schritt 5: Tor-Plausibilitätsprüfung ─────────────────────────────────
+    _pruefe_tor_plausibilitaet(analyse_obj)
+
+    # ── Schritt 6: Ergebnis anzeigen ──────────────────────────────────────────
     print_schritt("Analyse abgeschlossen – Vorschau:")
     vorschau = json.dumps(analyse_obj, ensure_ascii=False, indent=2)
     print(vorschau[:800] + ("…" if len(vorschau) > 800 else ""))
