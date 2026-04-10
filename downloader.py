@@ -31,6 +31,7 @@ def download_video(url: str, zielordner: str = "downloads") -> tuple:
         "outtmpl": ausgabepfad,       # Dateiname-Vorlage
         "quiet": False,               # Fortschritt anzeigen
         "noplaylist": True,           # Nur einzelnes Video, keine Playlist
+        "restrictfilenames": True,    # Nur ASCII-Zeichen im Dateinamen (verhindert UnicodeEncodeError)
     }
 
     print(f"Lade Video herunter: {url}")

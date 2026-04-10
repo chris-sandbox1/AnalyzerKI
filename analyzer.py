@@ -16,34 +16,51 @@ import re
 PROMPT_VORLAGE = """
 Du analysierst ein Floorball-Spiel.{periode_kontext}
 
-SPIELFELD-KOORDINATENSYSTEM (40 m × 20 m):
-  x = 0  → linkes Tor      x = 40 → rechtes Tor
-  y = 0  → untere Bande    y = 20 → obere Bande    Mitte: x=20, y=10
-  Team A greift nach rechts (Ziel: Tor bei x=40)
-  Team B greift nach links  (Ziel: Tor bei x=0)
+SPIELFELD-ZONEN-SYSTEM (immer aus Team-A-Perspektive):
+  Team A = erstes Team das du in Ereignissen nennst. Team A greift immer nach rechts.
+  Team B greift immer nach links.
+  OBEN = obere Feldhälfte (Bande oben), UNTEN = untere Feldhälfte, MITTE = zentral.
+
+  9 Bereiche von links (eigenes Tor Team A) nach rechts (gegnerisches Tor Team A):
+  EIGN_TOR     – direkt vor eigenem Tor (Torwartbereich Team A)
+  EIGN_TORRAUM – eigener Strafraum Team A
+  EIGN_SLOT    – zwischen eigenem Strafraum und Mittellinie (nah)
+  EIGN_HALB    – eigene Halbdistanz
+  RUECKRAUM    – Mittelfeld / um die Mittellinie
+  GEGN_HALB    – gegnerische Halbdistanz
+  GEGN_SLOT    – gegnerischer Slot (nah vor Strafraum)
+  GEGN_TORRAUM – gegnerischer Strafraum
+  GEGN_TOR     – direkt hinter gegnerischem Tor
 
 ERKENNE DIESE EREIGNISSE (Zeitstempel: MM:SS):
 
-  TOR               – Ball überquert vollständig die Torlinie. Position PFLICHT.
-  TORSCHUSS         – Gezielter Schuss aufs Tor (auch gehalten/daneben). Position PFLICHT.
-  BALLBESITZWECHSEL – Klar erkennbarer Wechsel des Ballbesitzes.
-  KONTER            – Schneller Gegenangriff nach Ballgewinn ("X gegen Y" in Details).
-  CHANCE            – Klare Torchance ohne Abschluss. Position falls erkennbar.
-  PENALTY           – Zeitstrafe. Details: Spieler + Vergehen + Dauer (2 oder 5 Min).
-  UEBERZAHL_TOR     – Tor erzielt während Gegner eine Zeitstrafe verbüßt. Position PFLICHT.
-  UNTERZAHL_TOR     – Tor erzielt obwohl eigenes Team in Unterzahl spielt. Position PFLICHT.
-  PENALTY_SHOT      – Direkter Penalty (1-gegen-1 mit Torwart). Position PFLICHT.
-  FACE_OFF_GEWONNEN – Gewonnenes Bully. Details: Zone (eigene/Mitte/gegnerische Hälfte).
+  TOR               – Ball überquert vollständig die Torlinie. Zone PFLICHT.
+  TORSCHUSS         – Gezielter Schuss aufs Tor (auch gehalten/daneben). Zone PFLICHT.
+  BALLBESITZWECHSEL – Klar erkennbarer Wechsel des Ballbesitzes. Keine Zone.
+  KONTER            – Schneller Gegenangriff nach Ballgewinn. Zone = wo der Ball gewonnen wurde.
+  CHANCE            – Klare Torchance ohne Abschluss. Zone PFLICHT.
+  PENALTY           – Zeitstrafe. Keine Zone. Details: Spieler + Vergehen + Dauer (2 oder 5 Min).
+  UEBERZAHL_TOR     – Tor in Überzahl. Zone PFLICHT.
+  UNTERZAHL_TOR     – Tor in Unterzahl. Zone PFLICHT.
+  PENALTY_SHOT      – Direkter Penalty (1-gegen-1). Zone immer PENALTY.
+  FACE_OFF_GEWONNEN – Gewonnenes Bully. Keine Zone. Details: Feldbereich.
+  ZWEIKAMPF         – Zwei Spieler kämpfen um den Ball, einer gewinnt ihn. Zone PFLICHT.
 
-POSITIONS-PFLICHT für TOR, TORSCHUSS, CHANCE, UEBERZAHL_TOR, UNTERZAHL_TOR, PENALTY_SHOT:
-  Schätze die Schussposition in Feldmetern. Referenzpunkte:
-  – Nahschuss rechtes Tor (Team A):  {"x": 35, "y": 10}
-  – Nahschuss linkes Tor  (Team B):  {"x":  5, "y": 10}
-  – Halbdistanz rechts, oben:        {"x": 28, "y": 16}
-  – Halbdistanz links, unten:        {"x": 12, "y":  4}
-  – Außenschuss, Mitte:              {"x": 20, "y": 10}
-  – Penalty aufs rechte Tor (7m):    {"x": 33, "y": 10}
-  – Penalty aufs linke Tor (7m):     {"x":  7, "y": 10}
+ZONEN-REGELN:
+
+  Für TOR, TORSCHUSS, CHANCE, UEBERZAHL_TOR, UNTERZAHL_TOR:
+    Zone = Bereich + Suffix _MITTE / _OBEN / _UNTEN
+    Beispiele: GEGN_TORRAUM_MITTE, GEGN_SLOT_OBEN, RUECKRAUM_UNTEN
+    Penalty-Schuss: zone = "PENALTY"
+
+  Für ZWEIKAMPF, KONTER:
+    Zone = nur Bereich ohne Suffix
+    Beispiele: RUECKRAUM, GEGN_HALB, EIGN_SLOT
+
+  Für ZWEIKAMPF zusätzliche Felder:
+    gewonnen: true wenn das genannte team den Ball gewinnt, false wenn verliert
+    spieler_gewinner: Trikotnummer + Name wenn erkennbar ('#19 Eriksson'), sonst weglassen
+    spieler_verlierer: Trikotnummer + Name des Gegners wenn erkennbar, sonst weglassen
 
 Antworte AUSSCHLIESSLICH mit folgendem JSON-Objekt (kein Text davor oder danach):
 
@@ -51,11 +68,28 @@ Antworte AUSSCHLIESSLICH mit folgendem JSON-Objekt (kein Text davor oder danach)
   "zusammenfassung": "2-3 Sätze zum Spielverlauf",
   "ereignisse": [
     {
-      "timestamp": "MM:SS",
+      "timestamp": "02:01",
       "typ": "TOR",
-      "team": "Teamname oder unbekannt",
-      "details": "Beschreibung auf Deutsch",
-      "position": {"x": 35.0, "y": 10.0}
+      "team": "SWE",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Pass vor das Tor, Direktschuss ins kurze Eck"
+    },
+    {
+      "timestamp": "03:15",
+      "typ": "ZWEIKAMPF",
+      "team": "SWE",
+      "zone": "RUECKRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#19 Eriksson",
+      "spieler_verlierer": "#9",
+      "details": "Eriksson gewinnt Ball gegen #9 an der Mittellinie"
+    },
+    {
+      "timestamp": "04:22",
+      "typ": "KONTER",
+      "team": "SWE",
+      "zone": "EIGN_HALB",
+      "details": "2-gegen-1 nach Ballgewinn in eigener Hälfte"
     }
   ],
   "statistik": {
@@ -144,6 +178,7 @@ def analyze_video(video_pfad: str, api_key: str, periode_info: str = "") -> str:
     prompt = PROMPT_VORLAGE.replace("{periode_kontext}", kontext_block)
 
     # Video hochladen
+    # Dateinamen werden immer ASCII-sicher erzeugt (main.py/downloader.py nutzen ascii_dateiname())
     groesse_mb = os.path.getsize(video_pfad) / (1024 * 1024)
     print(f"  Lade Video hoch ({groesse_mb:.1f} MB)...")
     video_datei = client.files.upload(file=video_pfad)

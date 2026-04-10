@@ -25,6 +25,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from downloader import download_video
 from analyzer import analyze_video
+from stats_engine import berechne_stats, zusammenfuehren_zweikampf_stats
 
 # Arbeitsverzeichnis immer auf den Ordner setzen, in dem main.py liegt.
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -49,11 +50,31 @@ def beenden(meldung: str = "", fehler: bool = False):
     raise SystemExit(1 if fehler else 0)
 
 
+def ascii_dateiname(name: str) -> str:
+    """
+    Wandelt einen beliebigen String in einen ASCII-sicheren Dateinamen um.
+    Umlaute werden ausgeschrieben, verbleibende Nicht-ASCII-Zeichen entfernt,
+    Leerzeichen und Sonderzeichen durch Underscore ersetzt.
+    """
+    ersetzungen = {
+        'ä': 'ae', 'ö': 'oe', 'ü': 'ue',
+        'Ä': 'Ae', 'Ö': 'Oe', 'Ü': 'Ue',
+        'ß': 'ss', 'é': 'e', 'è': 'e',
+        'ê': 'e', 'à': 'a', 'â': 'a',
+        'ô': 'o', 'î': 'i', 'ï': 'i',
+        'ç': 'c', 'ñ': 'n',
+    }
+    for orig, ersatz in ersetzungen.items():
+        name = name.replace(orig, ersatz)
+    name = name.encode('ascii', 'ignore').decode('ascii')
+    name = re.sub(r'[^\w\-.]', '_', name)
+    name = re.sub(r'_+', '_', name)
+    return name[:60].strip('_').lower()
+
+
 def sanitize_filename(titel: str) -> str:
-    """Erstellt einen sicheren Dateinamen aus dem Videotitel."""
-    titel = re.sub(r"[^\w\s-]", "", titel)
-    titel = re.sub(r"\s+", "_", titel.strip())
-    return titel[:60].lower()
+    """Rückwärtskompatibel — intern wird ascii_dateiname() genutzt."""
+    return ascii_dateiname(titel)
 
 
 def _repariere_json_main(text: str):
@@ -225,13 +246,25 @@ def zusammenfuehren_analysen(teile: list) -> dict:
     gesamt_ereignisse = []
     gesamt_zusammenfassung_teile = []
 
+    # Integer-Statistik-Keys die einfach addiert werden
     stat_keys = [
         "tore_team_a", "tore_team_b",
         "torschuesse_team_a", "torschuesse_team_b",
         "konter_gesamt", "chancen_gesamt",
         "penalties_team_a", "penalties_team_b",
+        "zweikampf_gesamt_a", "zweikampf_gesamt_b",
     ]
     gesamt_statistik = {k: 0 for k in stat_keys}
+
+    # Dict-Statistik-Keys (Zonen-Verteilungen) die zusammengeführt werden
+    dict_stat_keys = [
+        "zweikampf_zonen_a", "zweikampf_zonen_b",
+        "konter_zonen_a", "konter_zonen_b",
+    ]
+    for k in dict_stat_keys:
+        gesamt_statistik[k] = {}
+
+    teile_stats = []  # für Zweikampf-Quote-Berechnung
 
     for teil in teile:
         daten = teil["daten"]
@@ -251,16 +284,33 @@ def zusammenfuehren_analysen(teile: list) -> dict:
                 neu["timestamp"] = offset_zeitstempel(neu["timestamp"], offset)
             gesamt_ereignisse.append(neu)
 
-        # Statistiken addieren
+        # Integer-Statistiken addieren
         stat = daten.get("statistik", {})
         for k in stat_keys:
             gesamt_statistik[k] += int(stat.get(k, 0))
 
-    return {
+        # Dict-Statistiken zusammenführen (Zonen-Counts addieren)
+        for k in dict_stat_keys:
+            teildict = stat.get(k, {})
+            if isinstance(teildict, dict):
+                for zone, count in teildict.items():
+                    gesamt_statistik[k][zone] = gesamt_statistik[k].get(zone, 0) + count
+
+        teile_stats.append(stat)
+
+    # Zweikampf-Quoten aus allen Teilen zusammenführen
+    zk_merged = zusammenfuehren_zweikampf_stats(teile_stats)
+    gesamt_statistik['zweikampf_quote_a'] = zk_merged['zweikampf_quote_a']
+    gesamt_statistik['zweikampf_quote_b'] = zk_merged['zweikampf_quote_b']
+
+    # Spieler-Zweikampfdaten aus dem Gesamtobjekt neu berechnen
+    gesamt_obj = {
         "zusammenfassung": " | ".join(gesamt_zusammenfassung_teile),
         "ereignisse": gesamt_ereignisse,
         "statistik": gesamt_statistik,
     }
+    # Nochmal stats_engine aufrufen um spieler_zweikampf korrekt zu aggregieren
+    return berechne_stats(gesamt_obj)
 
 
 # ── Analyse-Steuerung ─────────────────────────────────────────────────────────
@@ -271,7 +321,8 @@ def analysiere_direkt(video_pfad: str, api_key: str, periode_info: str = "") -> 
     obj = _repariere_json_main(roh)
     if obj is None:
         return {"rohdaten": roh}
-    return obj
+    # Statistiken berechnen und Koordinaten aus Zonen ableiten
+    return berechne_stats(obj)
 
 
 def analysiere_mit_aufteilung(
