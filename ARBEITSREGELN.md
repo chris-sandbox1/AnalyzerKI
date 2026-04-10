@@ -1,5 +1,44 @@
 # Arbeitsregeln – Floorball Analyzer Projekt
 
+## Projektstruktur (alle Dateien in `floorball-analyzer/`)
+
+| Datei | Zweck |
+|---|---|
+| `main.py` | Einstiegspunkt: Video besorgen, Auflösung/Länge prüfen, Analyse steuern, JSON speichern |
+| `analyzer.py` | Gemini-API-Aufruf: Video hochladen, Prompt senden, JSON zurückgeben |
+| `downloader.py` | yt-dlp: YouTube-Video auf max. 480p herunterladen |
+| `start.py` | HTTP-Server auf Port 8080, liefert `/analyses`-Route |
+| `dashboard.html` | Web-UI, läuft unter `localhost:8080/dashboard.html` |
+| `analyses/` | Gespeicherte Spiel-JSONs + `index.json` + `data.js` |
+| `.env` | `GEMINI_API_KEY=...` (nicht im Repo) |
+| `ARBEITSREGELN.md` | Diese Datei |
+
+**Starten:** Zuerst `python start.py`, dann Browser auf `localhost:8080/dashboard.html`. Neue Analyse: `python main.py` in separatem Terminal.
+
+## Gemini-Output-Format
+
+Gemini gibt JSON zurück mit diesen Feldern:
+```json
+{
+  "zusammenfassung": "...",
+  "ereignisse": [
+    { "timestamp": "MM:SS", "typ": "TOR", "team": "TeamA", "x": 38.0, "y": 10.0, "beschreibung": "..." }
+  ],
+  "statistik": {
+    "tore_team_a": 3, "tore_team_b": 2,
+    "torschuesse_team_a": 12, "torschuesse_team_b": 8,
+    "konter_gesamt": 4, "chancen_gesamt": 6,
+    "penalties_team_a": 1, "penalties_team_b": 2
+  }
+}
+```
+
+**Erlaubte Event-Typen:** `TOR`, `TORSCHUSS`, `BALLBESITZWECHSEL`, `KONTER`, `CHANCE`, `PENALTY`, `UEBERZAHL_TOR`, `UNTERZAHL_TOR`, `PENALTY_SHOT`, `FACE_OFF_GEWONNEN`
+
+**Wichtig:** Statistik-Felder aus Gemini sind unzuverlässig. Im Dashboard werden Schusseffizienz, xGoals etc. immer selbst aus den Events berechnet. Nur `tore_team_a`/`tore_team_b` werden aus der Statistik übernommen (und mit Event-Zählung verglichen).
+
+
+
 ## Kommunikation & Planung
 - Bevor du anfängst zu coden: Erkläre deinen Plan in verständlicher Sprache
 - Warte auf meine explizite Bestätigung, bevor du Änderungen machst
