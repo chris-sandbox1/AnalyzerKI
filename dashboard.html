@@ -12,8 +12,8 @@
       --color-a: #4ade80;
       --color-b: #fb923c;
       --bg: #080810;
-      --glass-bg: rgba(255,255,255,.05);
-      --glass-border: rgba(255,255,255,.1);
+      --glass-bg: rgba(255,255,255,.04);
+      --glass-border: rgba(255,255,255,.09);
       --topbar-h: 54px;
     }
 
@@ -136,32 +136,13 @@
       100% { transform: translateY(-220px) translateX(var(--dx)); opacity: 0; }
     }
 
-    /* ── Ecken-Glow ─────────────────────────────────────────────────────────── */
-    #corner-glows { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-    .corner {
-      position: absolute;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      opacity: 0;
-      animation: corner-pulse 4s ease-in-out infinite alternate;
-    }
-    .corner.tl { top: -60px;  left: -60px;  background: radial-gradient(circle, var(--color-a) 0%, transparent 70%); animation-duration: 3.5s; }
-    .corner.bl { bottom: -60px; left: -60px; background: radial-gradient(circle, var(--color-a) 0%, transparent 70%); animation-duration: 5s; animation-delay: .8s; }
-    .corner.tr { top: -60px;  right: -60px; background: radial-gradient(circle, var(--color-b) 0%, transparent 70%); animation-duration: 4.2s; animation-delay: .4s; }
-    .corner.br { bottom: -60px; right: -60px; background: radial-gradient(circle, var(--color-b) 0%, transparent 70%); animation-duration: 3.8s; animation-delay: 1.2s; }
-    @keyframes corner-pulse {
-      from { opacity: .15; transform: scale(1); }
-      to   { opacity: .45; transform: scale(1.2); }
-    }
-
     /* ── Topbar ─────────────────────────────────────────────────────────────── */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: var(--topbar-h);
       z-index: 100;
-      background: rgba(8,8,16,.85);
-      backdrop-filter: blur(12px);
+      background: rgba(8,8,16,.92);
       border-bottom: 0.5px solid rgba(255,255,255,.08);
       display: flex;
       align-items: center;
@@ -195,27 +176,25 @@
     /* Tab-Navigation */
     .tabs {
       display: flex;
-      gap: 2px;
-      background: rgba(255,255,255,.04);
-      border-radius: 8px;
-      padding: 3px;
+      gap: 0;
     }
     .tab {
       background: transparent;
       border: none;
-      color: rgba(255,255,255,.45);
+      border-bottom: 2px solid transparent;
+      color: rgba(255,255,255,.35);
       font-size: .78rem;
       font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 6px;
+      padding: 5px 16px;
+      border-radius: 0;
       cursor: pointer;
-      transition: background .15s, color .15s;
+      transition: color .15s, border-color .15s;
       white-space: nowrap;
     }
-    .tab:hover { color: rgba(255,255,255,.75); }
+    .tab:hover { color: rgba(255,255,255,.65); }
     .tab.active {
-      background: rgba(255,255,255,.1);
-      color: #f1f5f9;
+      color: rgba(255,255,255,1);
+      border-bottom: 2px solid var(--color-a);
     }
 
     .hd-space { flex: 1; }
@@ -265,7 +244,7 @@
     /* ── Glasskarte ─────────────────────────────────────────────────────────── */
     .glass {
       background: var(--glass-bg);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(4px);
       border: 0.5px solid var(--glass-border);
       border-radius: 10px;
     }
@@ -315,13 +294,13 @@
       margin-bottom: 3px;
     }
     .team-name-big {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       margin-bottom: 8px;
       opacity: .85;
     }
     .score-num {
-      font-size: 88px;
+      font-size: 96px;
       font-weight: 900;
       line-height: 1;
       letter-spacing: -.06em;
@@ -347,6 +326,7 @@
       padding: 10px 18px;
       text-align: center;
       min-width: 160px;
+      background: rgba(255,255,255,.03) !important;
     }
     .match-title {
       font-size: 11px;
@@ -405,24 +385,39 @@
       color: rgba(255,255,255,.3);
     }
     .sbr-bars {
-      display: flex;
-      gap: 2px;
+      position: relative;
       height: 6px;
+      overflow: hidden;
     }
     .sbr-bar-a {
+      position: absolute;
+      right: 0;
       height: 100%;
       border-radius: 3px 0 0 3px;
       background: var(--color-a);
-      margin-left: auto;
-      animation: bar-grow .8s ease-out forwards;
-      width: 0;
+      width: var(--target-w);
+      transform-origin: right center;
+      transform: scaleX(0);
+      animation: bar-grow-a .8s ease-out forwards;
     }
     .sbr-bar-b {
+      position: absolute;
+      left: 0;
       height: 100%;
       border-radius: 0 3px 3px 0;
       background: var(--color-b);
-      animation: bar-grow .8s ease-out forwards;
-      width: 0;
+      width: var(--target-w);
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: bar-grow-b .8s ease-out forwards;
+    }
+    @keyframes bar-grow-a {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes bar-grow-b {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
     }
     @keyframes bar-grow {
       from { width: 0; }
@@ -781,9 +776,63 @@
     .btn-secondary:hover { background: rgba(255,255,255,.06); }
     .no-teams-msg { color: #475569; font-size: .82rem; padding: 8px 0; }
 
+    /* ── Spielfeld Tooltip ──────────────────────────────────────────────────── */
+    .field-card { position: relative; }
+    #feld-tooltip {
+      position: absolute;
+      display: none;
+      pointer-events: none;
+      z-index: 50;
+      min-width: 170px;
+      max-width: 230px;
+      background: rgba(8,12,22,.97);
+      border: 0.5px solid rgba(255,255,255,.14);
+      border-radius: 9px;
+      padding: 10px 13px;
+      font-size: .74rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.7);
+      transition: opacity .1s;
+    }
+    .tt-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 7px;
+    }
+    .tt-ts {
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+    .tt-badge {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .tt-zone {
+      color: rgba(255,255,255,.45);
+      margin-bottom: 4px;
+      font-size: .71rem;
+    }
+    .tt-xg {
+      color: rgba(255,255,255,.4);
+      margin-bottom: 3px;
+    }
+    .tt-xg strong { color: rgba(255,255,255,.85); font-weight: 700; }
+    .tt-details {
+      color: rgba(255,255,255,.5);
+      line-height: 1.45;
+      margin-top: 5px;
+      padding-top: 5px;
+      border-top: 0.5px solid rgba(255,255,255,.07);
+    }
+
     /* ── Reduced Motion ─────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .aurora-blob, .particle, .corner,
+      .aurora-blob, .particle,
       .ticker-track, .ring-pulse-a, .ring-pulse-b { animation: none !important; }
     }
   </style>
@@ -802,14 +851,6 @@
 
 <!-- Partikel -->
 <div id="particles"></div>
-
-<!-- Ecken-Glow -->
-<div id="corner-glows">
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
-</div>
 
 <!-- Topbar -->
 <header>
@@ -986,20 +1027,6 @@ function erstellePartikel(CA, CB) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Ecken-Glow nach Teamfarben setzen
-// ─────────────────────────────────────────────────────────────────────────────
-function setzeEckenGlow(CA, CB) {
-  const tl = document.querySelector('.corner.tl');
-  const bl = document.querySelector('.corner.bl');
-  const tr = document.querySelector('.corner.tr');
-  const br = document.querySelector('.corner.br');
-  if (tl) tl.style.background = `radial-gradient(circle, ${CA} 0%, transparent 70%)`;
-  if (bl) bl.style.background = `radial-gradient(circle, ${CA} 0%, transparent 70%)`;
-  if (tr) tr.style.background = `radial-gradient(circle, ${CB} 0%, transparent 70%)`;
-  if (br) br.style.background = `radial-gradient(circle, ${CB} 0%, transparent 70%)`;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Spielliste laden
 // ─────────────────────────────────────────────────────────────────────────────
 async function init() {
@@ -1132,9 +1159,8 @@ function baueDashboard(data) {
   const nameA   = teamName(TA, settings);
   const nameB   = teamName(TB, settings);
 
-  // Partikel und Ecken neu setzen
+  // Partikel neu setzen
   erstellePartikel(CA, CB);
-  setzeEckenGlow(CA, CB);
 
   // Ticker-Inhalt
   const tickerHTML = baueTickerHTML({
@@ -1151,6 +1177,7 @@ function baueDashboard(data) {
 
   document.getElementById('content-spielfeld').innerHTML =
     baueSpielfeld(ereignisse, TA, TB, CA, CB, tickerHTML);
+  initialisiereTooltips();
 
   document.getElementById('content-spieler').innerHTML =
     baueSpieler(ereignisse, TA, TB, CA, CB, toreA, toreB, schuessA, schuessB, tickerHTML);
@@ -1213,7 +1240,7 @@ function baueUebersicht(data, ereignisse, TA, TB, CA, CB,
     return `
     <div class="stat-bar-row">
       <div class="sbr-val-a">${esc(String(row.a))}</div>
-      <div class="sbr-bars" style="justify-content:flex-end">
+      <div class="sbr-bars">
         <div class="sbr-bar-a" style="--target-w:${pctA}%;animation-delay:${delay}s"></div>
       </div>
       <div class="sbr-label">${row.lbl}</div>
@@ -1362,6 +1389,7 @@ function baueSpielfeld(ereignisse, TA, TB, CA, CB, tickerHTML) {
   <!-- Spielfeld -->
   <div class="glass field-card">
     ${baueFeld(ereignisse, TA, TB, CA, CB)}
+    <div id="feld-tooltip"></div>
   </div>
 
   <!-- Perioden-Zeitstrahl -->
@@ -1572,23 +1600,25 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
     const isTA = ev.team === TA;
     const col  = isTA ? CA : CB;
 
+    // Gemeinsame data-Attribute für alle Dots
+    function dotAttrs(extra) {
+      return `data-ts="${esc(ev.timestamp||'?')}" data-typ="${ev.typ}" data-team="${esc(ev.team||'')}" data-zone="${esc(ev.zone||'')}" data-details="${esc(ev.details||'')}" ${extra||''}`;
+    }
+
     // KONTER: Pfeil in Teamfarbe und Richtung
     if (ev.typ === 'KONTER') {
       const p = schussPosXY(ev, i, TA); // Position aus zone/position
-      const tooltip = `${ev.timestamp||'?'} – Konter – ${ev.team||'?'}\n${zoneName(ev.zone)}${ev.details ? '\n' + ev.details : ''}`;
-      // Pfeil: Team A = nach rechts, Team B = nach links
       const ax = isTA ? 14 : -14;
-      marker += `<g class="feld-dot" data-typ="KONTER" style="cursor:default">
-        <title>${esc(tooltip)}</title>
+      marker += `<g class="feld-dot" ${dotAttrs()} style="cursor:pointer">
         <line x1="${p.x - ax/2}" y1="${p.y}" x2="${p.x + ax/2}" y2="${p.y}" stroke="${col}" stroke-width="2.5"/>
         <polygon points="${p.x+ax/2},${p.y-4} ${p.x+ax/2+6*Math.sign(ax)},${p.y} ${p.x+ax/2},${p.y+4}" fill="${col}"/>
+        <circle cx="${p.x}" cy="${p.y}" r="10" fill="transparent"/>
       </g>`;
       return;
     }
 
     // ZWEIKAMPF: Raute (◆)
     if (ev.typ === 'ZWEIKAMPF') {
-      // Zweikampf-Jitter: ±1.5m x, ±2.5m y
       let fx = 20, fy = 10;
       if (ev.position && typeof ev.position.x === 'number') {
         const jx = (Math.sin(i * 7919.0 + 1.337) * 2 - 1) * 1.5;
@@ -1599,20 +1629,18 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
         return; // kein Position-Fallback für Zweikämpfe
       }
       const p = feldZuSVG(fx, fy);
-      const gewonnen = ev.gewonnen !== false; // default true wenn nicht gesetzt
+      const gewonnen = ev.gewonnen !== false;
       const opacity  = gewonnen ? 0.85 : 0.3;
-      const tooltip  = `${ev.timestamp||'?'} – Zweikampf – ${ev.team||'?'} (${gewonnen ? 'gewonnen' : 'verloren'})\n${zoneName(ev.zone)}${ev.details ? '\n' + ev.details : ''}`;
       const px = Math.round(p.x), py = Math.round(p.y);
-      marker += `<g class="feld-dot" data-typ="ZWEIKAMPF" style="cursor:default">
-        <title>${esc(tooltip)}</title>
-        <polygon points="${px},${py-6} ${px+6},${py} ${px},${py+6} ${px-6},${py}" fill="${col}" opacity="${opacity}"/>
+      marker += `<g class="feld-dot" ${dotAttrs(`data-gewonnen="${gewonnen}"`)} style="cursor:pointer">
+        <polygon points="${px},${py-7} ${px+7},${py} ${px},${py+7} ${px-7},${py}" fill="${col}" opacity="${opacity}"/>
       </g>`;
       return;
     }
 
     // Schuss / Tor / Chance
     const p = schussPosXY(ev, i, TA);
-    const tooltip = `${ev.timestamp||'?'} – ${ev.typ} – ${ev.team||'?'}\n${zoneName(ev.zone)}${ev.details ? '\n' + ev.details : ''}`;
+    const xg = xGoalWert(ev, TA);
     const isGoal  = ['TOR','UEBERZAHL_TOR','UNTERZAHL_TOR','PENALTY_SHOT'].includes(ev.typ);
 
     let shape = '';
@@ -1629,8 +1657,7 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
         filter="url(#glow-${isTA?'a':'b'})"/>`;
     }
 
-    marker += `<g class="feld-dot" data-typ="${ev.typ}" style="cursor:default">
-      <title>${esc(tooltip)}</title>
+    marker += `<g class="feld-dot" ${dotAttrs(`data-xg="${xg.toFixed(2)}"`)} style="cursor:pointer">
       ${shape}
     </g>`;
   });
@@ -2099,6 +2126,70 @@ function esc(s) {
   return String(s||'')
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Spielfeld-Tooltips initialisieren (nach innerHTML-Render aufgerufen)
+// ─────────────────────────────────────────────────────────────────────────────
+function escTT(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function initialisiereTooltips() {
+  const fc = document.querySelector('.field-card');
+  const tt = document.getElementById('feld-tooltip');
+  if (!fc || !tt) return;
+
+  const CA = getComputedStyle(document.documentElement).getPropertyValue('--color-a').trim();
+  const CB = getComputedStyle(document.documentElement).getPropertyValue('--color-b').trim();
+
+  // Tooltip folgt Mauszeiger relativ zum Field-Container
+  fc.addEventListener('mousemove', function(e) {
+    const r    = fc.getBoundingClientRect();
+    let left   = e.clientX - r.left + 16;
+    let top    = e.clientY - r.top  - 14;
+    // Nicht aus dem Container herausragen (Breite ~230px)
+    if (left + 240 > r.width)  left = e.clientX - r.left - 244;
+    if (top < 4)                top  = 4;
+    tt.style.left = left + 'px';
+    tt.style.top  = top  + 'px';
+  });
+
+  document.querySelectorAll('.feld-dot').forEach(dot => {
+    dot.addEventListener('mouseenter', function() {
+      const ts      = this.dataset.ts      || '?';
+      const typ     = this.dataset.typ     || '';
+      const team    = this.dataset.team    || '';
+      const zone    = this.dataset.zone    || '';
+      const details = this.dataset.details || '';
+      const xg      = this.dataset.xg;
+      const gewon   = this.dataset.gewonnen;
+
+      const cfg = EV_CFG[typ] || { icon: '•', short: typ };
+      const col = aktuelleTeams[0] === team ? CA : CB;
+
+      let html = `<div class="tt-header">
+        <span class="tt-ts" style="color:${col}">${escTT(ts)}</span>
+        <span class="tt-badge" style="background:${col}22;color:${col}">${cfg.icon} ${cfg.short}</span>
+      </div>`;
+
+      if (team)    html += `<div class="tt-zone">${escTT(team)}</div>`;
+      if (zone)    html += `<div class="tt-zone">${escTT(zoneName(zone))}</div>`;
+      if (xg)      html += `<div class="tt-xg">xG: <strong>${xg}</strong></div>`;
+      if (gewon !== undefined) {
+        const gewonText = gewon === 'true' ? '✓ Gewonnen' : '✗ Verloren';
+        html += `<div class="tt-xg" style="color:${gewon==='true'?col:'rgba(255,255,255,.35)'}">${gewonText}</div>`;
+      }
+      if (details) html += `<div class="tt-details">${escTT(details)}</div>`;
+
+      tt.innerHTML = html;
+      tt.style.display = 'block';
+    });
+
+    dot.addEventListener('mouseleave', function() {
+      tt.style.display = 'none';
+    });
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
