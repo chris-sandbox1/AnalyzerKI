@@ -14,6 +14,8 @@ import re
 # ── Analyse-Prompt ────────────────────────────────────────────────────────────
 
 PROMPT_VORLAGE = """
+Analysiere das Video frame-genau und chronologisch von Anfang bis Ende. Erfinde keine Events und wiederhole keine Events. Jedes Event das du ausgibst muss auf einer real im Video sichtbaren Aktion basieren. Wenn du dir bei einem Event nicht sicher bist, lasse es weg — ein fehlendes Event ist besser als ein erfundenes oder wiederholtes.
+
 Du analysierst ein Floorball-Spiel.{periode_kontext}
 
 SPIELFELD-ZONEN-SYSTEM (immer aus Team-A-Perspektive):
