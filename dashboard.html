@@ -1057,19 +1057,40 @@
     .na-selected-info strong { color: rgba(255,255,255,.8); }
     .na-seq-zeile {
       display: grid;
-      grid-template-columns: 90px 90px 1fr 28px;
+      grid-template-columns: 90px 90px 1fr auto 28px;
       gap: 6px;
       align-items: center;
     }
     .na-seq-label-col { font-size: 10px; color: rgba(255,255,255,.25); text-align: center; }
     .na-seq-header {
       display: grid;
-      grid-template-columns: 90px 90px 1fr 28px;
+      grid-template-columns: 90px 90px 1fr auto 28px;
       gap: 6px;
       padding-bottom: 4px;
       border-bottom: 0.5px solid rgba(255,255,255,.06);
       margin-bottom: 4px;
     }
+    .na-seq-seiten {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      font-size: 11px;
+      color: rgba(255,255,255,.4);
+      cursor: pointer;
+      user-select: none;
+    }
+    .na-seq-seiten input[type=checkbox] {
+      accent-color: var(--color-a);
+      width: 13px;
+      height: 13px;
+      cursor: pointer;
+    }
+    .na-seq-seiten.referenz {
+      color: rgba(255,255,255,.18);
+      cursor: default;
+    }
+    .na-seq-seiten.referenz input { cursor: default; }
     .na-seq-del {
       background: transparent;
       border: none;
@@ -1214,6 +1235,7 @@
           <span class="na-seq-label-col">Start</span>
           <span class="na-seq-label-col">Ende</span>
           <span class="na-seq-label-col">Label (optional)</span>
+          <span class="na-seq-label-col">Seiten ↔</span>
           <span></span>
         </div>
         <div id="na-seq-liste"></div>
@@ -2765,6 +2787,11 @@ function naAddSeq() {
   const header = document.getElementById('na-seq-header');
   if (header) header.style.display = '';
 
+  const istErste = naSequenzen.length === 1;
+  const seitenClass = istErste ? 'na-seq-seiten referenz' : 'na-seq-seiten';
+  const cbDisabled  = istErste ? 'disabled' : '';
+  const cbTitle     = istErste ? 'Referenz — Team A greift immer nach rechts' : 'Seiten gegenüber vorheriger Sequenz tauschen';
+
   const zeile = document.createElement('div');
   zeile.className = 'na-seq-zeile';
   zeile.id = `na-seq-${id}`;
@@ -2772,6 +2799,9 @@ function naAddSeq() {
     <input type="text" class="na-input" placeholder="00:00" id="na-seq-start-${id}">
     <input type="text" class="na-input" placeholder="MM:SS" id="na-seq-end-${id}">
     <input type="text" class="na-input" placeholder="z.B. Drittel 1" id="na-seq-label-${id}">
+    <label class="${seitenClass}" title="${cbTitle}">
+      <input type="checkbox" id="na-seq-seiten-${id}" ${cbDisabled}>↔
+    </label>
     <button class="na-seq-del" onclick="naRemoveSeq(${id})" title="Entfernen">×</button>`;
   document.getElementById('na-seq-liste').appendChild(zeile);
 }
@@ -2792,11 +2822,12 @@ async function naStartAnalyse() {
   const statusEl = document.getElementById('na-analyse-status');
   const btn      = document.getElementById('na-start-btn');
 
-  // Sequenzen aus dem DOM lesen
+  // Sequenzen aus dem DOM lesen (inkl. Seitentausch-Checkbox)
   const sequenzen = naSequenzen.map(id => ({
-    start: (document.getElementById(`na-seq-start-${id}`)?.value || '').trim(),
-    end:   (document.getElementById(`na-seq-end-${id}`)?.value   || '').trim(),
-    label: (document.getElementById(`na-seq-label-${id}`)?.value || '').trim(),
+    start:          (document.getElementById(`na-seq-start-${id}`)?.value  || '').trim(),
+    end:            (document.getElementById(`na-seq-end-${id}`)?.value    || '').trim(),
+    label:          (document.getElementById(`na-seq-label-${id}`)?.value  || '').trim(),
+    seitengetauscht: document.getElementById(`na-seq-seiten-${id}`)?.checked ?? false,
   })).filter(s => s.start || s.end);  // Zeilen ohne Start+Ende ignorieren
 
   btn.disabled = true;

@@ -229,6 +229,7 @@ def _analyse_pipeline(video_datei: str, sequenzen: list, video_titel: str) -> st
 
         elif len(sequenzen) == 1:
             # Eine Sequenz → schneiden und analysieren, kein Merging
+            # Erste Sequenz ist immer Referenz: Team A greift nach rechts
             seq = sequenzen[0]
             start_sek = parse_zeit(seq.get("start", "00:00"))
             end_sek   = parse_zeit(seq.get("end",   "00:00"))
@@ -239,18 +240,29 @@ def _analyse_pipeline(video_datei: str, sequenzen: list, video_titel: str) -> st
                 _schneide_video(video_pfad, start_sek, end_sek - start_sek, clip)
             else:
                 clip = video_pfad
-            ergebnis = _analysiere_clip(clip, f"Dies ist {label}.")
+            richtung = "Team A greift in diesem Clip nach rechts (Tor bei x=40), Team B nach links (Tor bei x=0)."
+            ergebnis = _analysiere_clip(clip, f"{richtung} Dies ist {label}.")
             ergebnis = berechne_stats(ergebnis)
 
         else:
             # Mehrere Sequenzen → schneiden, analysieren, zusammenführen
             teilergebnisse = []
+            greift_rechts = True  # Seq 1 ist immer Referenz; jedes "seitengetauscht" dreht um
+            gesamt = len(sequenzen)
             for i, seq in enumerate(sequenzen):
                 start_sek = parse_zeit(seq.get("start", "00:00"))
                 end_sek   = parse_zeit(seq.get("end",   "00:00"))
                 label = seq.get("label") or f"Teil {i + 1}"
-                gesamt = len(sequenzen)
                 print(f"Sequenz {i + 1}/{gesamt}: {label}...")
+
+                # Richtung akkumulieren: erste Seq immer rechts, jedes "↔" dreht um
+                if i > 0 and seq.get("seitengetauscht", False):
+                    greift_rechts = not greift_rechts
+
+                if greift_rechts:
+                    richtung = "Team A greift in diesem Clip nach rechts (Tor bei x=40), Team B nach links (Tor bei x=0)."
+                else:
+                    richtung = "Team A greift in diesem Clip nach links (Tor bei x=0), Team B nach rechts (Tor bei x=40)."
 
                 if end_sek > start_sek:
                     clip = os.path.join(tmp, f"seq_{i + 1}.mp4")
@@ -258,7 +270,7 @@ def _analyse_pipeline(video_datei: str, sequenzen: list, video_titel: str) -> st
                 else:
                     clip = video_pfad
 
-                periode_info = f"Dies ist {label} ({i + 1} von {gesamt})."
+                periode_info = f"{richtung} Dies ist {label} ({i + 1} von {gesamt})."
                 obj = _analysiere_clip(clip, periode_info)
                 teilergebnisse.append(obj)
 
