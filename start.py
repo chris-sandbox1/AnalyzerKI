@@ -193,6 +193,25 @@ def _analyse_pipeline(video_datei: str, sequenzen: list, video_titel: str) -> st
                 continue
         return None
 
+    def _spiegel_zonen(obj: dict):
+        """
+        Kehrt EIGN↔GEGN in allen Zonennamen um.
+        Nötig wenn Team A in einer Sequenz nach links angreift:
+        Gemini folgt dem absoluten Zonen-System (EIGN=links, GEGN=rechts),
+        daher landen Team-A-Angriffe fälschlich in EIGN statt GEGN.
+        RUECKRAUM und PENALTY bleiben unverändert.
+        """
+        def _spiegel(zone: str) -> str:
+            if zone.startswith('EIGN_'):
+                return 'GEGN_' + zone[5:]
+            if zone.startswith('GEGN_'):
+                return 'EIGN_' + zone[5:]
+            return zone
+
+        for ev in obj.get('ereignisse', []):
+            if ev.get('zone'):
+                ev['zone'] = _spiegel(ev['zone'])
+
     def _analysiere_clip(clip_pfad, periode_info):
         """Analysiert einen Clip (skaliert ggf. auf 480p) und gibt das geparste JSON zurück."""
         hoehe = _ermittle_videohoehe(clip_pfad)
@@ -272,6 +291,8 @@ def _analyse_pipeline(video_datei: str, sequenzen: list, video_titel: str) -> st
 
                 periode_info = f"{richtung} Dies ist {label} ({i + 1} von {gesamt})."
                 obj = _analysiere_clip(clip, periode_info)
+                if not greift_rechts:
+                    _spiegel_zonen(obj)  # EIGN↔GEGN korrigieren wenn Team A nach links angreift
                 teilergebnisse.append(obj)
 
             ergebnis = merge_ergebnisse(teilergebnisse, sequenzen)
