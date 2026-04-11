@@ -910,6 +910,201 @@
       .aurora-blob, .particle, .corner-blob,
       .ticker-track, .ring-pulse-a, .ring-pulse-b { animation: none !important; }
     }
+
+    /* ── TAB 5: NEUE ANALYSE ─────────────────────────────────────────────────── */
+    .na-container {
+      max-width: 680px;
+      margin: 28px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 0 20px;
+    }
+    .na-phase {
+      background: var(--glass-bg);
+      border: 0.5px solid var(--glass-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .na-phase-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      padding: 10px 16px 8px;
+      border-bottom: 0.5px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .na-phase-body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .na-row {
+      display: flex;
+      gap: 8px;
+    }
+    .na-input {
+      flex: 1;
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      border-radius: 7px;
+      color: #f1f5f9;
+      font-size: 13px;
+      padding: 7px 11px;
+      outline: none;
+      font-family: inherit;
+    }
+    .na-input:focus {
+      border-color: rgba(255,255,255,.25);
+    }
+    .na-btn {
+      background: rgba(255,255,255,.09);
+      border: 0.5px solid rgba(255,255,255,.15);
+      border-radius: 7px;
+      color: #f1f5f9;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      transition: background .12s;
+    }
+    .na-btn:hover { background: rgba(255,255,255,.14); }
+    .na-btn:disabled { opacity: .4; cursor: default; }
+    .na-btn-primary {
+      background: var(--color-a);
+      border: none;
+      border-radius: 8px;
+      color: #050a05;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 22px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .12s;
+      align-self: flex-start;
+    }
+    .na-btn-primary:hover { opacity: .85; }
+    .na-btn-primary:disabled { opacity: .4; cursor: default; }
+    .na-btn-ghost {
+      background: transparent;
+      border: 0.5px dashed rgba(255,255,255,.15);
+      border-radius: 7px;
+      color: rgba(255,255,255,.4);
+      font-size: 12px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color .12s, color .12s;
+      align-self: flex-start;
+    }
+    .na-btn-ghost:hover { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.7); }
+    .na-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,.25);
+      line-height: 1.5;
+    }
+    .na-hint code {
+      background: rgba(255,255,255,.07);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .na-status {
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+      min-height: 16px;
+    }
+    .na-status.fehler { color: #f87171; }
+    .na-status.ok { color: var(--color-a); }
+    .na-video-liste {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .na-video-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .na-video-row:hover { background: rgba(255,255,255,.06); }
+    .na-video-row.selected { background: rgba(74,222,128,.08); border: 0.5px solid rgba(74,222,128,.2); }
+    .na-video-name { flex: 1; font-size: 13px; color: #e2e8f0; }
+    .na-video-meta { font-size: 11px; color: rgba(255,255,255,.3); white-space: nowrap; }
+    .na-refresh {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.3);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    .na-refresh:hover { color: rgba(255,255,255,.7); }
+    .na-selected-info {
+      font-size: 12px;
+      color: rgba(255,255,255,.4);
+    }
+    .na-selected-info strong { color: rgba(255,255,255,.8); }
+    .na-seq-zeile {
+      display: grid;
+      grid-template-columns: 90px 90px 1fr 28px;
+      gap: 6px;
+      align-items: center;
+    }
+    .na-seq-label-col { font-size: 10px; color: rgba(255,255,255,.25); text-align: center; }
+    .na-seq-header {
+      display: grid;
+      grid-template-columns: 90px 90px 1fr 28px;
+      gap: 6px;
+      padding-bottom: 4px;
+      border-bottom: 0.5px solid rgba(255,255,255,.06);
+      margin-bottom: 4px;
+    }
+    .na-seq-del {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.2);
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+      padding: 0;
+    }
+    .na-seq-del:hover { color: #f87171; }
+    .na-titel-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 4px;
+      border-top: 0.5px solid rgba(255,255,255,.06);
+    }
+    .na-titel-row label {
+      font-size: 12px;
+      color: rgba(255,255,255,.4);
+      white-space: nowrap;
+    }
+    @keyframes na-spin {
+      to { transform: rotate(360deg); }
+    }
+    .na-spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,.15);
+      border-top-color: var(--color-a);
+      border-radius: 50%;
+      animation: na-spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
   </style>
 </head>
 <body>
@@ -942,13 +1137,13 @@
     <button class="tab" data-tab="spielfeld" onclick="zeigeTab('spielfeld')">Spielfeld</button>
     <button class="tab" data-tab="spieler" onclick="zeigeTab('spieler')">Spieler</button>
     <button class="tab" data-tab="zeitstrahl" onclick="zeigeTab('zeitstrahl')">Zeitstrahl</button>
+    <button class="tab" data-tab="neuanalyse" onclick="zeigeTab('neuanalyse')">+ Analyse</button>
   </nav>
   <div class="hd-space"></div>
   <select id="game-select" onchange="ladeSpiel(this.value)">
     <option>Lade…</option>
   </select>
   <button class="btn-topbar" onclick="oeffneSettings()">⚙ Teams</button>
-  <button class="btn-topbar" onclick="zeigeNeuesSpielInfo()">+ Neues Spiel</button>
 </header>
 
 <!-- Leer-Zustand -->
@@ -978,6 +1173,69 @@
 <!-- TAB 4: Zeitstrahl -->
 <section id="tab-zeitstrahl" class="tab-content">
   <div id="content-zeitstrahl"></div>
+</section>
+
+<!-- TAB 5: Neue Analyse -->
+<section id="tab-neuanalyse" class="tab-content">
+  <div class="na-container">
+
+    <!-- Phase 1: Video bereitstellen -->
+    <div class="na-phase">
+      <div class="na-phase-title">1 — Video bereitstellen</div>
+      <div class="na-phase-body">
+        <div class="na-row">
+          <input type="text" id="na-url" class="na-input" placeholder="YouTube-URL einfügen…">
+          <button class="na-btn" id="na-dl-btn" onclick="naDownload()">Herunterladen</button>
+        </div>
+        <div id="na-dl-status" class="na-status"></div>
+        <div class="na-hint">Oder: Videodatei direkt in den <code>downloads/</code>-Ordner legen — dann in Phase 2 aktualisieren.</div>
+      </div>
+    </div>
+
+    <!-- Phase 2: Video auswählen -->
+    <div class="na-phase">
+      <div class="na-phase-title">
+        2 — Video auswählen
+        <button class="na-refresh" onclick="naLadeVideos()" title="Aktualisieren">↻</button>
+      </div>
+      <div class="na-phase-body">
+        <div id="na-video-liste" class="na-video-liste">
+          <div class="na-hint">Liste wird geladen…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3: Schnitte definieren (wird nach Auswahl eingeblendet) -->
+    <div class="na-phase" id="na-phase3" style="display:none">
+      <div class="na-phase-title">3 — Schnitte &amp; Titel</div>
+      <div class="na-phase-body">
+        <div class="na-selected-info">Ausgewählt: <strong id="na-sel-name"></strong></div>
+        <div id="na-seq-header" class="na-seq-header" style="display:none">
+          <span class="na-seq-label-col">Start</span>
+          <span class="na-seq-label-col">Ende</span>
+          <span class="na-seq-label-col">Label (optional)</span>
+          <span></span>
+        </div>
+        <div id="na-seq-liste"></div>
+        <button class="na-btn-ghost" onclick="naAddSeq()">+ Sequenz hinzufügen</button>
+        <div class="na-hint">Ohne Sequenzen: Das ganze Video wird in einem Stück analysiert.</div>
+        <div class="na-titel-row">
+          <label>Spieltitel:</label>
+          <input type="text" id="na-titel" class="na-input" placeholder="z.B. SWE vs FIN WM 2024">
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4: Analyse starten -->
+    <div class="na-phase" id="na-phase4" style="display:none">
+      <div class="na-phase-title">4 — Analyse starten</div>
+      <div class="na-phase-body">
+        <button class="na-btn-primary" id="na-start-btn" onclick="naStartAnalyse()">Analyse starten</button>
+        <div id="na-analyse-status" class="na-status"></div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- Settings Modal -->
@@ -1047,7 +1305,7 @@ let aktuelleData  = null;
 let aktiverFilter = 'alle';      // für Spielfeld-Tab
 let aktiverZtFilter = 'alle';    // für Zeitstrahl-Tab
 let spielerSortierung = 'tore';  // für Spieler-Tab
-let aktiverFeldModus = 'heatmap'; // heatmap | zonen | klar
+let aktiverFeldModus = 'klar'; // klar | zonen | heatmap
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Team-Einstellungen (localStorage)
@@ -1109,26 +1367,35 @@ function erstellePartikel(CA, CB) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Spielliste laden
 // ─────────────────────────────────────────────────────────────────────────────
+async function ladeSpielliste() {
+  const r = await fetch('/analyses');
+  if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+  const liste = await r.json();
+  const sel = document.getElementById('game-select');
+  if (liste.length === 0) {
+    sel.innerHTML = '<option>Noch keine Analysen vorhanden</option>';
+    return liste;
+  }
+  const aktuell = sel.value;
+  sel.innerHTML = '<option value="">– Spiel auswählen –</option>';
+  liste.forEach(s => {
+    const o = document.createElement('option');
+    o.value = s.datei;
+    o.textContent = s.titel + (s.datum ? ' – ' + s.datum : '');
+    sel.appendChild(o);
+  });
+  // vorherige Auswahl wiederherstellen falls noch vorhanden
+  if (aktuell && [...sel.options].some(o => o.value === aktuell)) sel.value = aktuell;
+  return liste;
+}
+
 async function init() {
   try {
-    const r = await fetch('/analyses');
-    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-    const liste = await r.json();
-
-    const sel = document.getElementById('game-select');
-    if (liste.length === 0) {
-      sel.innerHTML = '<option>Noch keine Analysen vorhanden</option>';
-      return;
+    const liste = await ladeSpielliste();
+    if (liste && liste.length > 0) {
+      document.getElementById('game-select').value = liste[0].datei;
+      await ladeSpiel(liste[0].datei);
     }
-    sel.innerHTML = '<option value="">– Spiel auswählen –</option>';
-    liste.forEach(s => {
-      const o = document.createElement('option');
-      o.value = s.datei;
-      o.textContent = s.titel + (s.datum ? ' – ' + s.datum : '');
-      sel.appendChild(o);
-    });
-    sel.value = liste[0].datei;
-    await ladeSpiel(liste[0].datei);
   } catch(err) {
     document.getElementById('game-select').innerHTML = '<option>Fehler – Server läuft nicht?</option>';
     console.error('init:', err);
@@ -1153,7 +1420,7 @@ async function ladeSpiel(datei) {
 // Neues-Spiel-Info
 // ─────────────────────────────────────────────────────────────────────────────
 function zeigeNeuesSpielInfo() {
-  alert('Neue Analyse starten:\n\n1. Terminal öffnen\n2. cd floorball-analyzer\n3. python main.py\n\nDann YouTube-URL oder lokale Videodatei eingeben.');
+  zeigeTab('neuanalyse');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1471,9 +1738,9 @@ function baueSpielfeld(ereignisse, TA, TB, CA, CB, tickerHTML) {
   <div class="glass field-card">
     <div class="field-card-header">
       <div class="zonen-toggle">
-        <button class="ztn-btn${aktiverFeldModus==='heatmap'?' active':''}" onclick="setzeZonenModus('heatmap',this)">Heatmap</button>
-        <button class="ztn-btn${aktiverFeldModus==='zonen'?' active':''}" onclick="setzeZonenModus('zonen',this)">Zonen</button>
         <button class="ztn-btn${aktiverFeldModus==='klar'?' active':''}" onclick="setzeZonenModus('klar',this)">Klar</button>
+        <button class="ztn-btn${aktiverFeldModus==='zonen'?' active':''}" onclick="setzeZonenModus('zonen',this)">Zonen</button>
+        <button class="ztn-btn${aktiverFeldModus==='heatmap'?' active':''}" onclick="setzeZonenModus('heatmap',this)">Heatmap</button>
       </div>
     </div>
     <div id="feld-svg-wrap">${baueFeld(ereignisse, TA, TB, CA, CB)}</div>
@@ -1653,28 +1920,46 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
   let zonenBg = '';
 
   if (aktiverFeldModus === 'heatmap') {
-    // Events pro Zone zählen
-    const cntA = new Array(9).fill(0);
-    const cntB = new Array(9).fill(0);
+    // Events pro Zone × Reihe zählen (9 Zonen × 3 Reihen: OBEN=0, MITTE=1, UNTEN=2)
+    const cntA = Array.from({length:9}, () => [0,0,0]);
+    const cntB = Array.from({length:9}, () => [0,0,0]);
+    const SUFFIX_IDX = { OBEN:0, MITTE:1, UNTEN:2 };
     ereignisse.forEach(ev => {
       if (!ev.zone) return;
-      const bz = ev.zone.replace(/_(MITTE|OBEN|UNTEN)$/, '');
-      const zi = ZONE_IDX[bz];
+      const m = ev.zone.match(/^(.+?)(?:_(OBEN|MITTE|UNTEN))?$/);
+      if (!m) return;
+      const zi = ZONE_IDX[m[1]];
       if (zi === undefined) return;
-      if (ev.team === TA) cntA[zi]++;
-      else if (ev.team === TB) cntB[zi]++;
+      if (m[2]) {
+        // Suffix bekannt → genau eine Reihe
+        const si = SUFFIX_IDX[m[2]];
+        if (ev.team === TA) cntA[zi][si]++;
+        else if (ev.team === TB) cntB[zi][si]++;
+      } else {
+        // Kein Suffix (z.B. Zweikampf, Konter) → gleichmäßig auf alle 3 Reihen verteilen
+        const share = 1 / 3;
+        if (ev.team === TA) { cntA[zi][0]+=share; cntA[zi][1]+=share; cntA[zi][2]+=share; }
+        else if (ev.team === TB) { cntB[zi][0]+=share; cntB[zi][1]+=share; cntB[zi][2]+=share; }
+      }
     });
-    const maxCnt = Math.max(1, ...cntA, ...cntB);
+    const maxCnt = Math.max(1, ...cntA.flat(), ...cntB.flat());
 
+    // Rects pro Zelle zeichnen, Blur-Filter erzeugt das sanfte Glühen
+    let hmRects = '';
     for (let z = 0; z < 9; z++) {
       const x1 = Math.round(55 + (zBounds[z]   / 40) * 710);
       const x2 = Math.round(55 + (zBounds[z+1] / 40) * 710);
       const w  = x2 - x1;
-      const intA = cntA[z] / maxCnt;
-      const intB = cntB[z] / maxCnt;
-      if (intA > 0) zonenBg += `<rect x="${x1}" y="${fY}" width="${w}" height="${fH}" fill="rgba(74,222,128,${(intA * 0.4).toFixed(3)})"/>`;
-      if (intB > 0) zonenBg += `<rect x="${x1}" y="${fY}" width="${w}" height="${fH}" fill="rgba(251,146,60,${(intB * 0.35).toFixed(3)})"/>`;
+      for (let s = 0; s < 3; s++) {
+        const y1 = fY + Math.round(s * drittelH);
+        const h  = Math.round(drittelH);
+        const intA = cntA[z][s] / maxCnt;
+        const intB = cntB[z][s] / maxCnt;
+        if (intA > 0) hmRects += `<rect x="${x1}" y="${y1}" width="${w}" height="${h}" fill="rgba(74,222,128,${(intA * 0.6).toFixed(3)})"/>`;
+        if (intB > 0) hmRects += `<rect x="${x1}" y="${y1}" width="${w}" height="${h}" fill="rgba(251,146,60,${(intB * 0.55).toFixed(3)})"/>`;
+      }
     }
+    zonenBg = `<g filter="url(#hm-blur)">${hmRects}</g>`;
   } else if (aktiverFeldModus === 'zonen') {
     // Nur Rasterlinien, keine Füllung
     for (let z = 1; z < 9; z++) {
@@ -1778,6 +2063,9 @@ function baueFeld(ereignisse, TA, TB, CA, CB) {
       <filter id="glow-b" x="-50%" y="-50%" width="200%" height="200%">
         <feGaussianBlur stdDeviation="3" result="blur"/>
         <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="hm-blur" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="25 20"/>
       </filter>
       <radialGradient id="field-glow" cx="50%" cy="100%" r="60%">
         <stop offset="0%" stop-color="rgba(74,222,128,.07)"/>
@@ -2389,6 +2677,168 @@ function initialisiereZtTooltips() {
 
 // ─────────────────────────────────────────────────────────────────────────────
 init();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 5: NEUE ANALYSE
+// ─────────────────────────────────────────────────────────────────────────────
+
+let naGewaehltesDatei = '';   // aktuell ausgewähltes Video
+let naSequenzen = [];         // aktuell definierte Sequenz-Zeilen (DOM-IDs)
+let naSeqZaehler = 0;         // für eindeutige Zeilen-IDs
+
+// Wird aufgerufen wenn der Tab erstmals angezeigt wird
+document.querySelector('[data-tab="neuanalyse"]').addEventListener('click', () => {
+  naLadeVideos();
+});
+
+async function naLadeVideos() {
+  const liste = document.getElementById('na-video-liste');
+  if (!liste) return;
+  liste.innerHTML = '<div class="na-hint">Lade…</div>';
+  try {
+    const res  = await fetch('/api/videos');
+    const data = await res.json();
+    if (!data.length) {
+      liste.innerHTML = '<div class="na-hint">Keine Videos im <code>downloads/</code>-Ordner gefunden.</div>';
+      return;
+    }
+    liste.innerHTML = data.map(v => `
+      <div class="na-video-row${naGewaehltesDatei === v.name ? ' selected' : ''}"
+           onclick="naWaehleVideo('${esc(v.name)}', this)">
+        <span class="na-video-name">${esc(v.name)}</span>
+        <span class="na-video-meta">${v.groesse_mb} MB &nbsp;·&nbsp; ${v.datum}</span>
+      </div>`).join('');
+  } catch (e) {
+    liste.innerHTML = '<div class="na-status fehler">Fehler beim Laden der Video-Liste.</div>';
+  }
+}
+
+function naWaehleVideo(datei, zeilenEl) {
+  naGewaehltesDatei = datei;
+  // Selektion visuell markieren
+  document.querySelectorAll('.na-video-row').forEach(r => r.classList.remove('selected'));
+  zeilenEl.classList.add('selected');
+
+  // Spieltitel vorausfüllen (Dateiname ohne Endung, _ durch Leerzeichen)
+  const titelInput = document.getElementById('na-titel');
+  if (titelInput && !titelInput.value) {
+    titelInput.value = datei.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+  }
+
+  document.getElementById('na-sel-name').textContent = datei;
+  document.getElementById('na-phase3').style.display = '';
+  document.getElementById('na-phase4').style.display = '';
+}
+
+async function naDownload() {
+  const url   = document.getElementById('na-url').value.trim();
+  const status = document.getElementById('na-dl-status');
+  const btn   = document.getElementById('na-dl-btn');
+  if (!url) { naStatus(status, 'Bitte eine YouTube-URL eingeben.', 'fehler'); return; }
+
+  btn.disabled = true;
+  naStatus(status, '<span class="na-spinner"></span>Wird heruntergeladen… (kann einige Minuten dauern)');
+  try {
+    const res  = await fetch('/api/download', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({url}),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      naStatus(status, `Gespeichert: ${data.datei}`, 'ok');
+      document.getElementById('na-url').value = '';
+      naLadeVideos();
+    } else {
+      naStatus(status, `Fehler: ${data.fehler}`, 'fehler');
+    }
+  } catch (e) {
+    naStatus(status, 'Verbindungsfehler.', 'fehler');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function naAddSeq() {
+  const id = ++naSeqZaehler;
+  naSequenzen.push(id);
+  const header = document.getElementById('na-seq-header');
+  if (header) header.style.display = '';
+
+  const zeile = document.createElement('div');
+  zeile.className = 'na-seq-zeile';
+  zeile.id = `na-seq-${id}`;
+  zeile.innerHTML = `
+    <input type="text" class="na-input" placeholder="00:00" id="na-seq-start-${id}">
+    <input type="text" class="na-input" placeholder="MM:SS" id="na-seq-end-${id}">
+    <input type="text" class="na-input" placeholder="z.B. Drittel 1" id="na-seq-label-${id}">
+    <button class="na-seq-del" onclick="naRemoveSeq(${id})" title="Entfernen">×</button>`;
+  document.getElementById('na-seq-liste').appendChild(zeile);
+}
+
+function naRemoveSeq(id) {
+  naSequenzen = naSequenzen.filter(x => x !== id);
+  const el = document.getElementById(`na-seq-${id}`);
+  if (el) el.remove();
+  if (!naSequenzen.length) {
+    const header = document.getElementById('na-seq-header');
+    if (header) header.style.display = 'none';
+  }
+}
+
+async function naStartAnalyse() {
+  if (!naGewaehltesDatei) { return; }
+  const titel   = document.getElementById('na-titel').value.trim() || naGewaehltesDatei;
+  const statusEl = document.getElementById('na-analyse-status');
+  const btn      = document.getElementById('na-start-btn');
+
+  // Sequenzen aus dem DOM lesen
+  const sequenzen = naSequenzen.map(id => ({
+    start: (document.getElementById(`na-seq-start-${id}`)?.value || '').trim(),
+    end:   (document.getElementById(`na-seq-end-${id}`)?.value   || '').trim(),
+    label: (document.getElementById(`na-seq-label-${id}`)?.value || '').trim(),
+  })).filter(s => s.start || s.end);  // Zeilen ohne Start+Ende ignorieren
+
+  btn.disabled = true;
+  const seqText = sequenzen.length
+    ? `${sequenzen.length} Sequenz${sequenzen.length > 1 ? 'en' : ''}`
+    : 'gesamtes Video';
+  naStatus(statusEl, `<span class="na-spinner"></span>Analyse läuft (${seqText})… bitte warten.`);
+
+  try {
+    const res  = await fetch('/api/analyse', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({video: naGewaehltesDatei, titel, sequenzen}),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      naStatus(statusEl, `Analyse abgeschlossen: ${data.datei}`, 'ok');
+      // Spielliste neu laden und das neue Spiel direkt anzeigen
+      await ladeSpielliste();
+      const sel = document.getElementById('game-select');
+      if (sel) {
+        for (const opt of sel.options) {
+          if (opt.value === data.datei) { sel.value = data.datei; break; }
+        }
+        ladeSpiel(data.datei);
+        zeigeTab('uebersicht');
+      }
+    } else {
+      naStatus(statusEl, `Fehler: ${data.fehler}`, 'fehler');
+    }
+  } catch (e) {
+    naStatus(statusEl, 'Verbindungsfehler oder Timeout.', 'fehler');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function naStatus(el, html, typ) {
+  if (!el) return;
+  el.className = 'na-status' + (typ ? ' ' + typ : '');
+  el.innerHTML = html;
+}
 </script>
 
 <!-- Globaler Hover-Tooltip -->
