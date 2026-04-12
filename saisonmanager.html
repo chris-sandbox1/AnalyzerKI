@@ -212,7 +212,7 @@
     /* ── Tab-Content ────────────────────────────────────────────────────────── */
     .tab-content {
       display: none;
-      padding-top: var(--topbar-h);
+      padding-top: calc(var(--topbar-h) + var(--subbar-h));
       min-height: 100vh;
       position: relative;
       z-index: 5;
@@ -632,7 +632,52 @@
     .res-otwin  { color: var(--color-a); font-weight: 600; opacity: .7; }
     .res-otloss { color: var(--color-b); font-weight: 600; opacity: .7; }
 
-    /* Fehler-Box */
+    /* ── Liga-Auswahlleiste ─────────────────────────────────────────────────── */
+    :root { --subbar-h: 44px; }
+
+    #liga-bar {
+      position: fixed;
+      top: var(--topbar-h);
+      left: 0; right: 0;
+      height: var(--subbar-h);
+      z-index: 90;
+      background: rgba(8,8,16,.88);
+      border-bottom: 0.5px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+    }
+
+    .liga-bar-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.22);
+      white-space: nowrap;
+    }
+
+    .liga-select {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-size: .78rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .liga-select:hover { border-color: rgba(255,255,255,.22); }
+
+    .liga-bar-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,.08);
+      margin: 0 4px;
+    }
+
+    /* ── Fehler-Box ─────────────────────────────────────────────────────────── */
     .error-box {
       margin: 20px;
       padding: 12px 16px;
@@ -675,9 +720,22 @@
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
   </nav>
   <div class="hd-space"></div>
-  <button class="btn-topbar" onclick="ladeDaten(true)">↺ Aktualisieren</button>
+  <button class="btn-topbar" onclick="datenGeladen=false;ladeDaten()">↺ Aktualisieren</button>
   <a class="btn-topbar" href="dashboard.html">← Analysen</a>
 </header>
+
+<!-- Liga-Auswahlleiste -->
+<div id="liga-bar">
+  <span class="liga-bar-lbl">Verband</span>
+  <select class="liga-select" id="verband-select" onchange="onVerband()">
+    <option>Lädt…</option>
+  </select>
+  <div class="liga-bar-sep"></div>
+  <span class="liga-bar-lbl">Liga</span>
+  <select class="liga-select" id="liga-select" onchange="onLiga()">
+    <option>Lädt…</option>
+  </select>
+</div>
 
 <!-- TAB 1: TABELLE -->
 <section id="tab-tabelle" class="tab-content active">
@@ -690,7 +748,9 @@
 <section id="tab-spielplan" class="tab-content">
   <div class="filters" id="spielplan-filters">
     <button class="filter-btn active" onclick="setSpielfFilter('alle', this)">Alle Spiele</button>
-    <button class="filter-btn"        onclick="setSpielfFilter('schenefeld', this)">Nur Schenefeld</button>
+    <select class="liga-select" id="spielplan-team-filter" onchange="renderSpielplan()" style="border-radius:20px;padding:5px 14px;font-size:.75rem">
+      <option value="">Alle Teams</option>
+    </select>
   </div>
   <div id="content-spielplan">
     <div class="lade-info"><div class="spinner"></div><span>Spielplan lädt…</span></div>
@@ -728,21 +788,20 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Konstanten
 // ─────────────────────────────────────────────────────────────────────────────
-const API_BASE    = 'https://saisonmanager.de';
-const LIGA_ID     = 1890;
-const SCHN_ID     = 7598;
-const SCHN_NAME   = 'Blau-Weiß 96 Schenefeld';
+const API_BASE = 'https://saisonmanager.de';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // State
 // ─────────────────────────────────────────────────────────────────────────────
+let alleligen    = [];
+let aktiveLigaId = 1890;
 let tabelle   = [];
 let spielplan = [];
 let scorer    = [];
-let aktiverTab       = 'tabelle';
-let spielfilter      = 'alle';
-let scorerSort       = 'punkte';
-let datenGeladen     = false;
+let aktiverTab   = 'tabelle';
+let spielfilter  = 'alle';
+let scorerSort   = 'punkte';
+let datenGeladen = false;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Partikel
@@ -788,13 +847,75 @@ async function fetchJSON(url) {
   return r.json();
 }
 
-async function ladeDaten(force = false) {
-  if (datenGeladen && !force) return;
+// Alle Ligen laden und Dropdowns befüllen
+async function ladeLigen() {
+  try {
+    alleligen = await fetchJSON(`${API_BASE}/api/v2/leagues.json`);
+  } catch (e) {
+    console.error('Ligen konnten nicht geladen werden:', e);
+    alleligen = [];
+  }
+
+  // Einzigartige Verbände — sortiert
+  const verbände = [...new Set(alleligen.map(l => l.game_operation))].sort();
+  const vSel = document.getElementById('verband-select');
+  vSel.innerHTML = verbände.map(v =>
+    `<option value="${v}" ${v === 'Floorball Deutschland' ? 'selected' : ''}>${v}</option>`
+  ).join('');
+
+  // Liga-Dropdown für Standard-Verband befüllen
+  befuelleLigaDropdown('Floorball Deutschland');
+
+  // Standard-Liga auf 1. FBL (ID 1890) setzen
+  const lSel = document.getElementById('liga-select');
+  const opt1890 = [...lSel.options].find(o => o.value === '1890');
+  if (opt1890) lSel.value = '1890';
+
+  // Daten laden
+  await ladeDaten();
+}
+
+// Liga-Dropdown für gewählten Verband neu befüllen
+function befuelleLigaDropdown(verband) {
+  const ligen = alleligen
+    .filter(l => l.game_operation === verband)
+    .sort((a, b) => a.name.localeCompare(b.name, 'de'));
+  const lSel = document.getElementById('liga-select');
+  lSel.innerHTML = ligen.map(l =>
+    `<option value="${l.id}">${l.name}${l.season ? ' – ' + l.season : ''}</option>`
+  ).join('');
+  if (ligen.length) aktiveLigaId = ligen[0].id;
+}
+
+// Verband gewechselt
+function onVerband() {
+  const verband = document.getElementById('verband-select').value;
+  befuelleLigaDropdown(verband);
+  onLiga();
+}
+
+// Liga gewechselt
+function onLiga() {
+  const val = document.getElementById('liga-select').value;
+  if (!val) return;
+  aktiveLigaId  = parseInt(val);
+  datenGeladen  = false;
+  spielfilter   = 'alle';
+  // Spinner in alle Tabs
+  const spinner = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
+  ['tabelle','spielplan','scorer','detail'].forEach(id => {
+    document.getElementById('content-' + id).innerHTML = spinner;
+  });
+  ladeDaten();
+}
+
+async function ladeDaten() {
+  if (datenGeladen) return;
   try {
     [tabelle, spielplan, scorer] = await Promise.all([
-      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/table.json`),
-      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/schedule.json`),
-      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/scorer.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/table.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/schedule.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/scorer.json`),
     ]);
     datenGeladen = true;
     befuelleTeamDropdowns();
@@ -848,15 +969,14 @@ function renderTabelle() {
   const sorted = [...tabelle].sort((a, b) => a.position - b.position);
 
   let rows = sorted.map(t => {
-    const isSchn = t.team_id === SCHN_ID;
-    const logo   = logoUrl(t.team_logo_small || t.team_logo);
-    const diff   = t.goals_diff;
+    const logo    = logoUrl(t.team_logo_small || t.team_logo);
+    const diff    = t.goals_diff;
     const diffCls = diff > 0 ? 't-diff-pos' : diff < 0 ? 't-diff-neg' : '';
     const diffTxt = diff > 0 ? '+' + diff : String(diff);
     const posCls  = t.position === 1 ? 'pos-1' : t.position === 2 ? 'pos-2' : t.position === 3 ? 'pos-3' : '';
 
     return `
-    <tr class="${isSchn ? 'row-highlight' : ''}">
+    <tr>
       <td><span class="t-pos ${posCls}">${t.position}</span></td>
       <td>
         <div class="t-team">
@@ -910,12 +1030,12 @@ function setSpielfFilter(f, btn) {
 }
 
 function renderSpielplan() {
+  const teamFilter = document.getElementById('spielplan-team-filter')?.value || '';
   let spiele = spielplan;
 
-  if (spielfilter === 'schenefeld') {
+  if (teamFilter) {
     spiele = spiele.filter(s =>
-      (s.home_team_id === SCHN_ID || s.guest_team_id === SCHN_ID) ||
-      s.home_team_name.includes('Schenefeld') || s.guest_team_name.includes('Schenefeld')
+      s.home_team_name === teamFilter || s.guest_team_name === teamFilter
     );
   }
 
@@ -943,8 +1063,6 @@ function renderSpielplan() {
 
     g.spiele.forEach(s => {
       const verg    = istVergangen(s);
-      const heimSchn = s.home_team_name.includes('Schenefeld') || s.home_team_id === SCHN_ID;
-      const gastSchn = s.guest_team_name.includes('Schenefeld') || s.guest_team_id === SCHN_ID;
       const heimLogo = logoUrl(s.home_team_small_logo || s.home_team_logo);
       const gastLogo = logoUrl(s.guest_team_small_logo || s.guest_team_logo);
 
@@ -977,13 +1095,13 @@ function renderSpielplan() {
           ${s.time && !verg ? s.time : ''}
         </div>
         <div class="spiel-team spiel-team-heim">
-          <span class="spiel-team-name ${heimSchn ? 'schenefeld-highlight' : ''}">${s.home_team_name}</span>
+          <span class="spiel-team-name">${s.home_team_name}</span>
           ${heimLogo ? `<img class="spiel-team-logo" src="${heimLogo}" alt="" onerror="this.style.display='none'">` : ''}
         </div>
         <div class="spiel-mid">${mitteHTML}</div>
         <div class="spiel-team spiel-team-gast">
           ${gastLogo ? `<img class="spiel-team-logo" src="${gastLogo}" alt="" onerror="this.style.display='none'">` : ''}
-          <span class="spiel-team-name ${gastSchn ? 'schenefeld-highlight' : ''}">${s.guest_team_name}</span>
+          <span class="spiel-team-name">${s.guest_team_name}</span>
         </div>
         <div style="font-size:.65rem;color:rgba(255,255,255,.2);text-align:right">${s.arena_short || ''}</div>
       </div>`;
@@ -1007,17 +1125,25 @@ function setScorerSort(s, btn) {
 }
 
 function befuelleTeamDropdowns() {
-  // Scorer Team-Filter
-  const teams = [...new Set(scorer.map(s => s.team_name))].sort();
-  const sel = document.getElementById('scorer-team-filter');
-  sel.innerHTML = '<option value="">Alle Teams</option>' +
-    teams.map(t => `<option value="${t}" ${t.includes('Schenefeld') ? 'selected' : ''}>${t}</option>`).join('');
-
-  // Team-Detail Dropdown
-  const tSel = document.getElementById('detail-team-select');
   const tableTeams = [...tabelle].sort((a, b) => a.position - b.position);
-  tSel.innerHTML = tableTeams.map(t =>
-    `<option value="${t.team_id}" ${t.team_id === SCHN_ID ? 'selected' : ''}>${t.team_name}</option>`
+  const teamOptionen = tableTeams.map(t =>
+    `<option value="${t.team_name}">${t.team_name}</option>`
+  ).join('');
+
+  // Spielplan Team-Filter
+  const spSel = document.getElementById('spielplan-team-filter');
+  if (spSel) spSel.innerHTML = '<option value="">Alle Teams</option>' + teamOptionen;
+
+  // Scorer Team-Filter (nach team_name aus scorer-Daten)
+  const scorerTeams = [...new Set(scorer.map(s => s.team_name))].sort();
+  const sSel = document.getElementById('scorer-team-filter');
+  if (sSel) sSel.innerHTML = '<option value="">Alle Teams</option>' +
+    scorerTeams.map(t => `<option value="${t}">${t}</option>`).join('');
+
+  // Team-Detail Dropdown (nach Position sortiert, erstes Team vorgewählt)
+  const tSel = document.getElementById('detail-team-select');
+  if (tSel) tSel.innerHTML = tableTeams.map((t, i) =>
+    `<option value="${t.team_id}" ${i === 0 ? 'selected' : ''}>${t.team_name}</option>`
   ).join('');
 }
 
@@ -1033,10 +1159,9 @@ function renderScorer() {
   });
 
   const rows = data.map((s, i) => {
-    const isSchn = s.team_id === SCHN_ID;
     const punkte = s.goals + s.assists;
     return `
-    <tr class="${isSchn ? 'row-highlight' : ''}">
+    <tr>
       <td><span class="scorer-rank">${i + 1}</span></td>
       <td><span class="scorer-name">${s.first_name} ${s.last_name}</span></td>
       <td><span class="scorer-team">${s.team_name}</span></td>
@@ -1075,7 +1200,7 @@ function renderScorer() {
 // ─────────────────────────────────────────────────────────────────────────────
 function renderDetail() {
   const sel = document.getElementById('detail-team-select');
-  const teamId = parseInt(sel?.value || SCHN_ID);
+  const teamId = parseInt(sel?.value || 0);
   const teamRow = tabelle.find(t => t.team_id === teamId);
   if (!teamRow) return;
 
@@ -1233,7 +1358,7 @@ function renderDetail() {
 // ─────────────────────────────────────────────────────────────────────────────
 // Init
 // ─────────────────────────────────────────────────────────────────────────────
-ladeDaten();
+ladeLigen();
 </script>
 </body>
 </html>
