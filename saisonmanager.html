@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FloorballIQ – Liga</title>
+  <style>
+    /* ── Reset & Basis ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-a: #4ade80;
+      --color-b: #fb923c;
+      --bg: #080810;
+      --glass-bg: rgba(255,255,255,.04);
+      --glass-border: rgba(255,255,255,.09);
+      --topbar-h: 54px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: #e2e8f0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Hintergrund-Ebene ──────────────────────────────────────────────────── */
+    #bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .blob-left {
+      width: 420px; height: 420px;
+      background: rgba(16,185,129,.22);
+      filter: blur(80px);
+      left: -60px; top: 10%;
+      animation: blob-drift-l 10s ease-in-out infinite alternate;
+    }
+    .blob-right {
+      width: 380px; height: 380px;
+      background: rgba(249,115,22,.20);
+      filter: blur(75px);
+      right: -40px; top: 5%;
+      animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
+    }
+    .blob-center {
+      width: 200px; height: 200px;
+      background: rgba(99,102,241,.14);
+      filter: blur(60px);
+      left: 50%; bottom: 10%;
+      transform: translateX(-50%);
+      animation: blob-drift-c 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes blob-drift-l {
+      from { transform: translate(0,0); }
+      to   { transform: translate(28px,20px); }
+    }
+    @keyframes blob-drift-r {
+      from { transform: translate(0,0); }
+      to   { transform: translate(-20px,28px); }
+    }
+    @keyframes blob-drift-c {
+      from { transform: translateX(-50%) translate(0,0); }
+      to   { transform: translateX(-50%) translate(15px,-20px); }
+    }
+
+    .corner-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    @keyframes corner-pulse {
+      0%   { opacity: .6; transform: scale(1); }
+      100% { opacity: 1;  transform: scale(1.15); }
+    }
+
+    .scan-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 2px,
+        rgba(0,0,0,.07) 2px, rgba(0,0,0,.07) 3px
+      );
+      pointer-events: none;
+    }
+
+    .diagonal-split {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        110deg,
+        rgba(0,18,8,.5) 0%, rgba(0,18,8,.5) 45%,
+        transparent 45%, transparent 55%,
+        rgba(18,6,0,.45) 55%, rgba(18,6,0,.45) 100%
+      );
+    }
+    .diagonal-line {
+      position: absolute;
+      top: -20%; left: 50%;
+      width: 1.5px; height: 140%;
+      background: rgba(255,255,255,.1);
+      transform: rotate(11deg) translateX(-50%);
+      transform-origin: top center;
+    }
+
+    /* ── Partikel ───────────────────────────────────────────────────────────── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+    }
+    @keyframes float-up {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      15%  { opacity: .8; }
+      85%  { opacity: .5; }
+      100% { transform: translateY(-220px) translateX(var(--dx)); opacity: 0; }
+    }
+
+    /* ── Topbar ─────────────────────────────────────────────────────────────── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--topbar-h);
+      z-index: 100;
+      background: rgba(8,8,16,.92);
+      border-bottom: 0.5px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 18px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-text {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.02em;
+    }
+    .logo-text span {
+      color: var(--color-a);
+      border-bottom: 1.5px solid var(--color-a);
+      padding-bottom: 1px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+    }
+    .tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: rgba(255,255,255,.35);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .02em;
+      padding: 5px 16px;
+      border-radius: 0;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .tab:hover { color: rgba(255,255,255,.65); }
+    .tab.active {
+      color: rgba(255,255,255,1);
+      border-bottom: 2px solid var(--color-a);
+    }
+
+    .hd-space { flex: 1; }
+
+    .btn-topbar {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.6);
+      border-radius: 8px;
+      padding: 6px 13px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-topbar:hover { background: rgba(255,255,255,.1); color: #f1f5f9; }
+
+    /* ── Tab-Content ────────────────────────────────────────────────────────── */
+    .tab-content {
+      display: none;
+      padding-top: var(--topbar-h);
+      min-height: 100vh;
+      position: relative;
+      z-index: 5;
+    }
+    .tab-content.active { display: block; }
+
+    /* ── Glass-Karte ────────────────────────────────────────────────────────── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(4px);
+      border: 0.5px solid var(--glass-border);
+      border-radius: 10px;
+    }
+
+    /* ── Filter-Buttons ─────────────────────────────────────────────────────── */
+    .filters {
+      display: flex;
+      gap: 8px;
+      padding: 14px 20px 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      background: rgba(255,255,255,.05);
+      border: 0.5px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.45);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-btn:hover { color: rgba(255,255,255,.8); border-color: rgba(255,255,255,.25); }
+    .filter-btn.active {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.3);
+      color: #f1f5f9;
+    }
+
+    .card-lbl {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      margin-bottom: 10px;
+    }
+
+    /* ── Lade-Spinner ───────────────────────────────────────────────────────── */
+    .lade-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 80px 20px;
+      color: rgba(255,255,255,.3);
+      font-size: .85rem;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border: 2px solid rgba(255,255,255,.1);
+      border-top-color: var(--color-a);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── TAB 1: TABELLE ─────────────────────────────────────────────────────── */
+    .tabelle-wrap {
+      padding: 18px 20px 24px;
+    }
+    .tabelle-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .tabelle-table th {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      padding: 8px 10px;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.07);
+    }
+    .tabelle-table th:first-child,
+    .tabelle-table th:nth-child(2) { text-align: left; }
+    .tabelle-table td {
+      padding: 9px 10px;
+      font-size: .8rem;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+    }
+    .tabelle-table td:first-child { text-align: center; width: 32px; }
+    .tabelle-table td:nth-child(2) { text-align: left; }
+    .tabelle-table tr:last-child td { border-bottom: none; }
+    .tabelle-table tr:hover td { background: rgba(255,255,255,.025); }
+
+    .t-pos {
+      font-size: .72rem;
+      color: rgba(255,255,255,.35);
+      font-weight: 700;
+    }
+    .t-team {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .t-logo {
+      width: 22px; height: 22px;
+      object-fit: contain;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .t-logo-placeholder {
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,.06);
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .t-name {
+      font-size: .82rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .t-pkt {
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+    .t-diff-pos { color: var(--color-a); }
+    .t-diff-neg { color: var(--color-b); }
+
+    /* Schenefeld-Highlight */
+    .row-highlight td {
+      background: rgba(74,222,128,.05) !important;
+    }
+    .row-highlight:hover td {
+      background: rgba(74,222,128,.09) !important;
+    }
+    .row-highlight .t-name {
+      color: var(--color-a);
+      font-weight: 700;
+    }
+    .row-highlight td:first-child::before {
+      content: '';
+    }
+
+    /* Positions-Abstufungsfarben */
+    .pos-1 { color: #fbbf24 !important; }
+    .pos-2 { color: #94a3b8 !important; }
+    .pos-3 { color: #92400e !important; }
+
+    /* ── TAB 2: SPIELPLAN ───────────────────────────────────────────────────── */
+    .spielplan-wrap {
+      padding: 0 20px 24px;
+    }
+    .spieltag-gruppe {
+      margin-bottom: 18px;
+    }
+    .spieltag-header {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.2);
+      padding: 14px 0 8px;
+    }
+    .spiel-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto 1fr 80px;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+    }
+    .spiel-item.vergangen {
+      opacity: .6;
+    }
+    .spiel-item.aktuell {
+      border-color: rgba(74,222,128,.2) !important;
+      background: rgba(74,222,128,.04) !important;
+    }
+    .spiel-datum {
+      font-size: .72rem;
+      color: rgba(255,255,255,.4);
+      line-height: 1.5;
+    }
+    .spiel-datum strong {
+      display: block;
+      font-size: .78rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.65);
+    }
+    .spiel-team {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .8rem;
+      font-weight: 500;
+    }
+    .spiel-team-heim { justify-content: flex-end; }
+    .spiel-team-gast { justify-content: flex-start; }
+    .spiel-team-logo {
+      width: 20px; height: 20px;
+      object-fit: contain;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .spiel-mid {
+      text-align: center;
+      min-width: 80px;
+    }
+    .spiel-ergebnis {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: #f1f5f9;
+    }
+    .spiel-postfix {
+      font-size: .65rem;
+      color: rgba(255,255,255,.3);
+      margin-top: 1px;
+    }
+    .spiel-drittel {
+      font-size: .62rem;
+      color: rgba(255,255,255,.25);
+      margin-top: 2px;
+      letter-spacing: .02em;
+    }
+    .spiel-uhrzeit {
+      font-size: .8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.55);
+    }
+    .spiel-arena {
+      font-size: .65rem;
+      color: rgba(255,255,255,.25);
+      margin-top: 1px;
+    }
+    .schenefeld-highlight .spiel-team-name {
+      color: var(--color-a);
+      font-weight: 700;
+    }
+
+    /* ── TAB 3: SCORER ──────────────────────────────────────────────────────── */
+    .scorer-controls {
+      display: flex;
+      gap: 8px;
+      padding: 14px 20px 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .scorer-sep {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,.1);
+      margin: 0 4px;
+    }
+    .scorer-select {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: .75rem;
+      cursor: pointer;
+      outline: none;
+      max-width: 200px;
+    }
+    .scorer-select:hover { border-color: rgba(255,255,255,.22); }
+
+    .scorer-wrap {
+      padding: 0 20px 24px;
+    }
+    .scorer-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .scorer-table th {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      padding: 8px 10px;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.07);
+      cursor: pointer;
+      user-select: none;
+    }
+    .scorer-table th:first-child { text-align: center; width: 32px; cursor: default; }
+    .scorer-table th:nth-child(2),
+    .scorer-table th:nth-child(3) { text-align: left; cursor: default; }
+    .scorer-table th.sort-active { color: var(--color-a); }
+    .scorer-table th.sort-active::after { content: ' ▼'; }
+    .scorer-table td {
+      padding: 9px 10px;
+      font-size: .8rem;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+    }
+    .scorer-table td:first-child { text-align: center; }
+    .scorer-table td:nth-child(2),
+    .scorer-table td:nth-child(3) { text-align: left; }
+    .scorer-table tr:last-child td { border-bottom: none; }
+    .scorer-table tr:hover td { background: rgba(255,255,255,.025); }
+    .scorer-table tr.row-highlight td { background: rgba(74,222,128,.05) !important; }
+    .scorer-table tr.row-highlight:hover td { background: rgba(74,222,128,.09) !important; }
+    .scorer-rank {
+      font-size: .72rem;
+      color: rgba(255,255,255,.3);
+      font-weight: 700;
+    }
+    .scorer-name { font-weight: 600; }
+    .scorer-team {
+      font-size: .72rem;
+      color: rgba(255,255,255,.35);
+      white-space: nowrap;
+    }
+    .scorer-goals { font-weight: 800; color: var(--color-a); }
+    .scorer-pkt { font-weight: 800; color: #f1f5f9; }
+
+    /* ── TAB 4: TEAM-DETAIL ─────────────────────────────────────────────────── */
+    .detail-controls {
+      padding: 14px 20px 0;
+    }
+    .team-dropdown {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: .82rem;
+      cursor: pointer;
+      outline: none;
+      min-width: 260px;
+    }
+    .team-dropdown:hover { border-color: rgba(255,255,255,.22); }
+
+    .detail-wrap {
+      padding: 16px 20px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 700px) {
+      .detail-wrap { grid-template-columns: 1fr; }
+    }
+    .detail-full { grid-column: 1 / -1; }
+
+    .detail-card {
+      padding: 16px 18px;
+    }
+    .detail-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+      font-size: .8rem;
+    }
+    .detail-stat-row:last-child { border-bottom: none; }
+    .detail-stat-lbl { color: rgba(255,255,255,.4); }
+    .detail-stat-val { font-weight: 700; }
+
+    /* Form-Kugeln */
+    .form-strip {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .form-ball {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .form-W  { background: rgba(74,222,128,.25); color: var(--color-a); }
+    .form-OW { background: rgba(74,222,128,.12); color: var(--color-a); border: 1px solid rgba(74,222,128,.3); }
+    .form-L  { background: rgba(249,115,22,.22); color: var(--color-b); }
+    .form-OL { background: rgba(249,115,22,.10); color: var(--color-b); border: 1px solid rgba(249,115,22,.3); }
+    .form-empty { background: rgba(255,255,255,.05); color: rgba(255,255,255,.2); }
+
+    /* Team-Spiele Tabelle */
+    .team-spiele-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .team-spiele-table th {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 0.5px solid rgba(255,255,255,.07);
+    }
+    .team-spiele-table th:last-child { text-align: right; }
+    .team-spiele-table td {
+      padding: 7px 8px;
+      font-size: .76rem;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+    }
+    .team-spiele-table td:last-child { text-align: right; }
+    .team-spiele-table tr:last-child td { border-bottom: none; }
+    .team-spiele-table tr:hover td { background: rgba(255,255,255,.02); }
+    .res-win  { color: var(--color-a); font-weight: 700; }
+    .res-loss { color: var(--color-b); font-weight: 700; }
+    .res-otwin  { color: var(--color-a); font-weight: 600; opacity: .7; }
+    .res-otloss { color: var(--color-b); font-weight: 600; opacity: .7; }
+
+    /* Fehler-Box */
+    .error-box {
+      margin: 20px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(239,68,68,.1);
+      border: 0.5px solid rgba(239,68,68,.3);
+      font-size: .8rem;
+      color: #f87171;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hintergrund -->
+<div id="bg-layer">
+  <div class="aurora-blob blob-left"></div>
+  <div class="aurora-blob blob-right"></div>
+  <div class="aurora-blob blob-center"></div>
+  <div class="scan-lines"></div>
+  <div class="diagonal-split"></div>
+  <div class="diagonal-line"></div>
+  <div class="corner-blob" style="width:200px;height:200px;filter:blur(70px);background:rgba(16,185,129,.10);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.09);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:150px;height:150px;filter:blur(60px);background:rgba(16,185,129,.07);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:160px;height:160px;filter:blur(65px);background:rgba(249,115,22,.07);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+</div>
+
+<!-- Partikel -->
+<div id="particles"></div>
+
+<!-- Topbar -->
+<header>
+  <a class="logo" href="dashboard.html">
+    <div class="logo-text">Floorball<span>IQ</span></div>
+  </a>
+  <nav class="tabs">
+    <button class="tab active" onclick="zeigeTab('tabelle')">Tabelle</button>
+    <button class="tab"        onclick="zeigeTab('spielplan')">Spielplan</button>
+    <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
+    <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
+  </nav>
+  <div class="hd-space"></div>
+  <button class="btn-topbar" onclick="ladeDaten(true)">↺ Aktualisieren</button>
+  <a class="btn-topbar" href="dashboard.html">← Analysen</a>
+</header>
+
+<!-- TAB 1: TABELLE -->
+<section id="tab-tabelle" class="tab-content active">
+  <div id="content-tabelle">
+    <div class="lade-info"><div class="spinner"></div><span>Tabelle lädt…</span></div>
+  </div>
+</section>
+
+<!-- TAB 2: SPIELPLAN -->
+<section id="tab-spielplan" class="tab-content">
+  <div class="filters" id="spielplan-filters">
+    <button class="filter-btn active" onclick="setSpielfFilter('alle', this)">Alle Spiele</button>
+    <button class="filter-btn"        onclick="setSpielfFilter('schenefeld', this)">Nur Schenefeld</button>
+  </div>
+  <div id="content-spielplan">
+    <div class="lade-info"><div class="spinner"></div><span>Spielplan lädt…</span></div>
+  </div>
+</section>
+
+<!-- TAB 3: SCORER -->
+<section id="tab-scorer" class="tab-content">
+  <div class="scorer-controls" id="scorer-controls">
+    <button class="filter-btn active" onclick="setScorerSort('punkte', this)">Nach Punkten</button>
+    <button class="filter-btn"        onclick="setScorerSort('tore', this)">Nach Toren</button>
+    <div class="scorer-sep"></div>
+    <select class="scorer-select" id="scorer-team-filter" onchange="renderScorer()">
+      <option value="">Alle Teams</option>
+    </select>
+  </div>
+  <div id="content-scorer">
+    <div class="lade-info"><div class="spinner"></div><span>Scorerliste lädt…</span></div>
+  </div>
+</section>
+
+<!-- TAB 4: TEAM-DETAIL -->
+<section id="tab-detail" class="tab-content">
+  <div class="detail-controls">
+    <select class="team-dropdown" id="detail-team-select" onchange="renderDetail()">
+      <option value="">Lade Teams…</option>
+    </select>
+  </div>
+  <div id="content-detail">
+    <div class="lade-info" style="padding-top:60px"><div class="spinner"></div><span>Daten lädt…</span></div>
+  </div>
+</section>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// Konstanten
+// ─────────────────────────────────────────────────────────────────────────────
+const API_BASE    = 'https://saisonmanager.de';
+const LIGA_ID     = 1890;
+const SCHN_ID     = 7598;
+const SCHN_NAME   = 'Blau-Weiß 96 Schenefeld';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────────────────────────────────────
+let tabelle   = [];
+let spielplan = [];
+let scorer    = [];
+let aktiverTab       = 'tabelle';
+let spielfilter      = 'alle';
+let scorerSort       = 'punkte';
+let datenGeladen     = false;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Partikel
+// ─────────────────────────────────────────────────────────────────────────────
+(function() {
+  const c = document.getElementById('particles');
+  const colors = ['#4ade80','#86efac','#fb923c','#fcd34d','#818cf8'];
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const sz = 2 + Math.random() * 3;
+    p.style.cssText = [
+      `width:${sz}px`, `height:${sz}px`,
+      `left:${Math.random()*100}%`,
+      `bottom:${Math.random()*30}%`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `animation:float-up ${6+Math.random()*10}s ${Math.random()*8}s ease-out infinite`,
+      `--dx:${(Math.random()-0.5)*60}px`,
+    ].join(';');
+    c.appendChild(p);
+  }
+})();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Tab-Navigation
+// ─────────────────────────────────────────────────────────────────────────────
+function zeigeTab(id) {
+  aktiverTab = id;
+  document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('header .tab').forEach((b, i) => {
+    const ids = ['tabelle','spielplan','scorer','detail'];
+    b.classList.toggle('active', ids[i] === id);
+  });
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// API
+// ─────────────────────────────────────────────────────────────────────────────
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${url}`);
+  return r.json();
+}
+
+async function ladeDaten(force = false) {
+  if (datenGeladen && !force) return;
+  try {
+    [tabelle, spielplan, scorer] = await Promise.all([
+      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/table.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/schedule.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${LIGA_ID}/scorer.json`),
+    ]);
+    datenGeladen = true;
+    befuelleTeamDropdowns();
+    renderTabelle();
+    renderSpielplan();
+    renderScorer();
+    renderDetail();
+  } catch (e) {
+    console.error(e);
+    const msg = `<div class="error-box">Fehler beim Laden der Daten: ${e.message}</div>`;
+    ['tabelle','spielplan','scorer','detail'].forEach(id => {
+      document.getElementById('content-' + id).innerHTML = msg;
+    });
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Hilfsfunktionen
+// ─────────────────────────────────────────────────────────────────────────────
+function logoUrl(path) {
+  if (!path) return null;
+  return path.startsWith('http') ? path : API_BASE + path;
+}
+
+function logoEl(url, name) {
+  if (url) return `<img class="t-logo" src="${url}" alt="${name}" onerror="this.style.display='none'">`;
+  return `<div class="t-logo-placeholder"></div>`;
+}
+
+function formatDatum(dateStr) {
+  if (!dateStr) return '–';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+}
+
+function istVergangen(spiel) {
+  return spiel.ended === true || spiel.state === 'ended';
+}
+
+function pim(s) {
+  return (s.penalty_2 || 0) * 2
+       + (s.penalty_2and2 || 0) * 4
+       + (s.penalty_5 || 0) * 5
+       + (s.penalty_10 || 0) * 10;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 1: TABELLE
+// ─────────────────────────────────────────────────────────────────────────────
+function renderTabelle() {
+  const sorted = [...tabelle].sort((a, b) => a.position - b.position);
+
+  let rows = sorted.map(t => {
+    const isSchn = t.team_id === SCHN_ID;
+    const logo   = logoUrl(t.team_logo_small || t.team_logo);
+    const diff   = t.goals_diff;
+    const diffCls = diff > 0 ? 't-diff-pos' : diff < 0 ? 't-diff-neg' : '';
+    const diffTxt = diff > 0 ? '+' + diff : String(diff);
+    const posCls  = t.position === 1 ? 'pos-1' : t.position === 2 ? 'pos-2' : t.position === 3 ? 'pos-3' : '';
+
+    return `
+    <tr class="${isSchn ? 'row-highlight' : ''}">
+      <td><span class="t-pos ${posCls}">${t.position}</span></td>
+      <td>
+        <div class="t-team">
+          ${logoEl(logo, t.team_name)}
+          <span class="t-name">${t.team_name}</span>
+        </div>
+      </td>
+      <td>${t.games}</td>
+      <td>${t.won}</td>
+      <td>${t.won_ot}</td>
+      <td>${t.lost_ot}</td>
+      <td>${t.lost}</td>
+      <td>${t.goals_scored}:${t.goals_received}</td>
+      <td class="${diffCls}">${diffTxt}</td>
+      <td class="t-pkt">${t.points}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('content-tabelle').innerHTML = `
+  <div class="tabelle-wrap">
+    <div class="glass">
+      <table class="tabelle-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th title="Spiele">Sp</th>
+            <th title="Siege">S</th>
+            <th title="Overtime-Siege">OTS</th>
+            <th title="Overtime-Niederlagen">OTN</th>
+            <th title="Niederlagen">N</th>
+            <th>T:G</th>
+            <th title="Tordifferenz">Diff</th>
+            <th>Pkt</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 2: SPIELPLAN
+// ─────────────────────────────────────────────────────────────────────────────
+function setSpielfFilter(f, btn) {
+  spielfilter = f;
+  document.querySelectorAll('#spielplan-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSpielplan();
+}
+
+function renderSpielplan() {
+  let spiele = spielplan;
+
+  if (spielfilter === 'schenefeld') {
+    spiele = spiele.filter(s =>
+      (s.home_team_id === SCHN_ID || s.guest_team_id === SCHN_ID) ||
+      s.home_team_name.includes('Schenefeld') || s.guest_team_name.includes('Schenefeld')
+    );
+  }
+
+  // Gruppieren nach Spieltag
+  const gruppen = {};
+  spiele.forEach(s => {
+    const key = s.game_day || 0;
+    if (!gruppen[key]) gruppen[key] = { label: `${s.game_day}. Spieltag`, datum: s.date, spiele: [] };
+    gruppen[key].spiele.push(s);
+  });
+
+  const spieltagKeys = Object.keys(gruppen).map(Number).sort((a, b) => a - b);
+  const heute = new Date().toISOString().slice(0, 10);
+
+  let html = '<div class="spielplan-wrap">';
+
+  if (spieltagKeys.length === 0) {
+    html += '<div class="lade-info" style="padding:60px 0"><span>Keine Spiele gefunden.</span></div>';
+  }
+
+  spieltagKeys.forEach(key => {
+    const g = gruppen[key];
+    html += `<div class="spieltag-gruppe">`;
+    html += `<div class="spieltag-header">${g.label} &nbsp;·&nbsp; ${formatDatum(g.datum)}</div>`;
+
+    g.spiele.forEach(s => {
+      const verg    = istVergangen(s);
+      const heimSchn = s.home_team_name.includes('Schenefeld') || s.home_team_id === SCHN_ID;
+      const gastSchn = s.guest_team_name.includes('Schenefeld') || s.guest_team_id === SCHN_ID;
+      const heimLogo = logoUrl(s.home_team_small_logo || s.home_team_logo);
+      const gastLogo = logoUrl(s.guest_team_small_logo || s.guest_team_logo);
+
+      let mitteHTML;
+      if (verg && s.result) {
+        const r = s.result;
+        const pf = r.postfix ? r.postfix.short : '';
+        let drittelStr = '';
+        if (r.home_goals_period && r.home_goals_period.length >= 3) {
+          const hd = r.home_goals_period;
+          const gd = r.guest_goals_period;
+          const parts = [0, 1, 2].map(i => `${hd[i]}:${gd[i]}`);
+          if (hd[3] > 0 || (gd[3] > 0)) parts.push(`${hd[3]}:${gd[3]}`);
+          drittelStr = `<div class="spiel-drittel">${parts.join(' · ')}</div>`;
+        }
+        mitteHTML = `
+          <div class="spiel-ergebnis">${r.home_goals}:${r.guest_goals}</div>
+          ${pf ? `<div class="spiel-postfix">${pf}</div>` : ''}
+          ${drittelStr}`;
+      } else {
+        mitteHTML = `
+          <div class="spiel-uhrzeit">${s.time || '–'}</div>
+          ${s.arena_short ? `<div class="spiel-arena">${s.arena_short}</div>` : ''}`;
+      }
+
+      html += `
+      <div class="glass spiel-item ${verg ? 'vergangen' : ''}">
+        <div class="spiel-datum">
+          <strong>${formatDatum(s.date)}</strong>
+          ${s.time && !verg ? s.time : ''}
+        </div>
+        <div class="spiel-team spiel-team-heim">
+          <span class="spiel-team-name ${heimSchn ? 'schenefeld-highlight' : ''}">${s.home_team_name}</span>
+          ${heimLogo ? `<img class="spiel-team-logo" src="${heimLogo}" alt="" onerror="this.style.display='none'">` : ''}
+        </div>
+        <div class="spiel-mid">${mitteHTML}</div>
+        <div class="spiel-team spiel-team-gast">
+          ${gastLogo ? `<img class="spiel-team-logo" src="${gastLogo}" alt="" onerror="this.style.display='none'">` : ''}
+          <span class="spiel-team-name ${gastSchn ? 'schenefeld-highlight' : ''}">${s.guest_team_name}</span>
+        </div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.2);text-align:right">${s.arena_short || ''}</div>
+      </div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  html += '</div>';
+  document.getElementById('content-spielplan').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 3: SCORER
+// ─────────────────────────────────────────────────────────────────────────────
+function setScorerSort(s, btn) {
+  scorerSort = s;
+  document.querySelectorAll('#scorer-controls .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScorer();
+}
+
+function befuelleTeamDropdowns() {
+  // Scorer Team-Filter
+  const teams = [...new Set(scorer.map(s => s.team_name))].sort();
+  const sel = document.getElementById('scorer-team-filter');
+  sel.innerHTML = '<option value="">Alle Teams</option>' +
+    teams.map(t => `<option value="${t}" ${t.includes('Schenefeld') ? 'selected' : ''}>${t}</option>`).join('');
+
+  // Team-Detail Dropdown
+  const tSel = document.getElementById('detail-team-select');
+  const tableTeams = [...tabelle].sort((a, b) => a.position - b.position);
+  tSel.innerHTML = tableTeams.map(t =>
+    `<option value="${t.team_id}" ${t.team_id === SCHN_ID ? 'selected' : ''}>${t.team_name}</option>`
+  ).join('');
+}
+
+function renderScorer() {
+  const teamFilter = document.getElementById('scorer-team-filter')?.value || '';
+  let data = [...scorer];
+
+  if (teamFilter) data = data.filter(s => s.team_name === teamFilter);
+
+  data.sort((a, b) => {
+    if (scorerSort === 'tore') return b.goals - a.goals;
+    return (b.goals + b.assists) - (a.goals + a.assists) || b.goals - a.goals;
+  });
+
+  const rows = data.map((s, i) => {
+    const isSchn = s.team_id === SCHN_ID;
+    const punkte = s.goals + s.assists;
+    return `
+    <tr class="${isSchn ? 'row-highlight' : ''}">
+      <td><span class="scorer-rank">${i + 1}</span></td>
+      <td><span class="scorer-name">${s.first_name} ${s.last_name}</span></td>
+      <td><span class="scorer-team">${s.team_name}</span></td>
+      <td>${s.games}</td>
+      <td class="scorer-goals">${s.goals}</td>
+      <td>${s.assists}</td>
+      <td class="scorer-pkt">${punkte}</td>
+      <td>${pim(s)}'</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('content-scorer').innerHTML = `
+  <div class="scorer-wrap">
+    <div class="glass">
+      <table class="scorer-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Team</th>
+            <th title="Spiele">Sp</th>
+            <th class="${scorerSort === 'tore' ? 'sort-active' : ''}" onclick="setScorerSort('tore', this)" title="Tore">G</th>
+            <th>A</th>
+            <th class="${scorerSort === 'punkte' ? 'sort-active' : ''}" onclick="setScorerSort('punkte', this)" title="Punkte (Tore+Assists)">Pkt</th>
+            <th title="Strafminuten">PIM</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 4: TEAM-DETAIL
+// ─────────────────────────────────────────────────────────────────────────────
+function renderDetail() {
+  const sel = document.getElementById('detail-team-select');
+  const teamId = parseInt(sel?.value || SCHN_ID);
+  const teamRow = tabelle.find(t => t.team_id === teamId);
+  if (!teamRow) return;
+
+  // Team-Spiele aus Spielplan
+  const teamSpiele = spielplan.filter(s =>
+    s.home_team_id === teamId || s.guest_team_id === teamId ||
+    s.home_team_name === teamRow.team_name ||
+    s.guest_team_name === teamRow.team_name
+  ).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  const gespielt = teamSpiele.filter(istVergangen);
+
+  // Bilanz
+  let heimS = 0, heimN = 0, heimSp = 0;
+  let ausS  = 0, ausN  = 0, ausSp  = 0;
+  let formListe = []; // 'W','OW','L','OL'
+
+  gespielt.forEach(s => {
+    const heimTeam = s.home_team_id === teamId || s.home_team_name === teamRow.team_name;
+    const r = s.result;
+    if (!r) return;
+    const hg = r.home_goals;
+    const gg = r.guest_goals;
+    const ot = r.overtime || (r.postfix && r.postfix.short && r.postfix.short !== '');
+
+    let win, winOT;
+    if (heimTeam) {
+      heimSp++;
+      win   = hg > gg;
+      winOT = ot;
+      if (win && !winOT) heimS++;
+      else if (!win && !winOT) heimN++;
+    } else {
+      ausSp++;
+      win   = gg > hg;
+      winOT = ot;
+      if (win && !winOT) ausS++;
+      else if (!win && !winOT) ausN++;
+    }
+
+    if (win && !winOT) formListe.push('W');
+    else if (win && winOT) formListe.push('OW');
+    else if (!win && winOT) formListe.push('OL');
+    else formListe.push('L');
+  });
+
+  const letzten5 = formListe.slice(-5);
+  while (letzten5.length < 5) letzten5.unshift(null);
+
+  const formHTML = letzten5.map(f => {
+    if (!f) return `<div class="form-ball form-empty">–</div>`;
+    const labels = { W: 'S', OW: 'OT', L: 'N', OL: 'OT' };
+    return `<div class="form-ball form-${f}">${labels[f]}</div>`;
+  }).join('');
+
+  // Team-Scorer
+  const teamScorer = scorer
+    .filter(s => s.team_id === teamId || s.team_name === teamRow.team_name)
+    .sort((a, b) => (b.goals + b.assists) - (a.goals + a.assists) || b.goals - a.goals);
+
+  const scorerRows = teamScorer.map((s, i) => `
+    <tr>
+      <td style="color:rgba(255,255,255,.3)">${i+1}</td>
+      <td>${s.first_name} ${s.last_name}</td>
+      <td style="text-align:right;font-weight:700;color:var(--color-a)">${s.goals}</td>
+      <td style="text-align:right">${s.assists}</td>
+      <td style="text-align:right;font-weight:700">${s.goals + s.assists}</td>
+      <td style="text-align:right;color:rgba(255,255,255,.4)">${pim(s)}'</td>
+    </tr>`).join('');
+
+  // Spiele-Tabelle (letzte 10 gespielt)
+  const letzteSpiele = [...gespielt].slice(-10).reverse();
+  const spieleRows = letzteSpiele.map(s => {
+    const heimTeam = s.home_team_id === teamId || s.home_team_name === teamRow.team_name;
+    const r = s.result;
+    if (!r) return '';
+    const hg = r.home_goals, gg = r.guest_goals;
+    const win = heimTeam ? hg > gg : gg > hg;
+    const ot  = r.overtime || (r.postfix && r.postfix.short);
+    const resCls = win ? (ot ? 'res-otwin' : 'res-win') : (ot ? 'res-otloss' : 'res-loss');
+    const gegner  = heimTeam ? s.guest_team_name : s.home_team_name;
+    const haSign  = heimTeam ? 'H' : 'A';
+    const ergebnis = heimTeam ? `${hg}:${gg}` : `${gg}:${hg}`;
+    const pf = ot && r.postfix ? ` ${r.postfix.short}` : '';
+    return `
+    <tr>
+      <td style="color:rgba(255,255,255,.3)">${formatDatum(s.date)}</td>
+      <td style="color:rgba(255,255,255,.35);font-size:.68rem">${haSign}</td>
+      <td>${gegner}</td>
+      <td class="${resCls}">${ergebnis}${pf}</td>
+    </tr>`;
+  }).join('');
+
+  const logo = logoUrl(teamRow.team_logo || teamRow.team_logo_small);
+
+  document.getElementById('content-detail').innerHTML = `
+  <div class="detail-wrap">
+
+    <!-- Übersicht-Karte -->
+    <div class="glass detail-card">
+      <div class="card-lbl">Saison-Bilanz</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        ${logo ? `<img style="width:32px;height:32px;object-fit:contain" src="${logo}" alt="" onerror="this.style.display='none'">` : ''}
+        <span style="font-size:1rem;font-weight:700">${teamRow.team_name}</span>
+      </div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Spiele</span><span class="detail-stat-val">${teamRow.games}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Siege</span><span class="detail-stat-val" style="color:var(--color-a)">${teamRow.won}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">OT-Siege</span><span class="detail-stat-val" style="color:var(--color-a);opacity:.7">${teamRow.won_ot}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">OT-Niederlagen</span><span class="detail-stat-val" style="color:var(--color-b);opacity:.7">${teamRow.lost_ot}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Niederlagen</span><span class="detail-stat-val" style="color:var(--color-b)">${teamRow.lost}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Tore</span><span class="detail-stat-val">${teamRow.goals_scored}:${teamRow.goals_received}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Tordifferenz</span><span class="detail-stat-val ${teamRow.goals_diff >= 0 ? 't-diff-pos' : 't-diff-neg'}">${teamRow.goals_diff > 0 ? '+' : ''}${teamRow.goals_diff}</span></div>
+      <div class="detail-stat-row"><span class="detail-stat-lbl">Punkte</span><span class="detail-stat-val" style="font-size:1.1rem">${teamRow.points}</span></div>
+    </div>
+
+    <!-- Heimsieg/Auswärtsbilanz + Form -->
+    <div>
+      <div class="glass detail-card" style="margin-bottom:14px">
+        <div class="card-lbl">Heim / Auswärts</div>
+        <div class="detail-stat-row"><span class="detail-stat-lbl">Heim: Siege</span><span class="detail-stat-val">${heimS} / ${heimSp}</span></div>
+        <div class="detail-stat-row"><span class="detail-stat-lbl">Heim: Niederlagen</span><span class="detail-stat-val">${heimN} / ${heimSp}</span></div>
+        <div class="detail-stat-row"><span class="detail-stat-lbl">Auswärts: Siege</span><span class="detail-stat-val">${ausS} / ${ausSp}</span></div>
+        <div class="detail-stat-row"><span class="detail-stat-lbl">Auswärts: Niederlagen</span><span class="detail-stat-val">${ausN} / ${ausSp}</span></div>
+      </div>
+      <div class="glass detail-card">
+        <div class="card-lbl">Formkurve (letzte 5)</div>
+        <div class="form-strip">${formHTML}</div>
+        <div style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:8px">S = Sieg · OT = Overtime · N = Niederlage</div>
+      </div>
+    </div>
+
+    <!-- Letzte Spiele -->
+    <div class="glass detail-card detail-full">
+      <div class="card-lbl">Letzte Spiele</div>
+      ${letzteSpiele.length === 0 ? '<div style="color:rgba(255,255,255,.3);font-size:.8rem">Noch keine Spiele gespielt.</div>' : `
+      <table class="team-spiele-table">
+        <thead><tr><th>Datum</th><th>H/A</th><th>Gegner</th><th style="text-align:right">Ergebnis</th></tr></thead>
+        <tbody>${spieleRows}</tbody>
+      </table>`}
+    </div>
+
+    <!-- Scorer -->
+    <div class="glass detail-card detail-full">
+      <div class="card-lbl">Scorer</div>
+      ${teamScorer.length === 0 ? '<div style="color:rgba(255,255,255,.3);font-size:.8rem">Keine Scorer-Daten.</div>' : `
+      <table class="scorer-table">
+        <thead><tr><th>#</th><th>Spieler</th><th>G</th><th>A</th><th>Pkt</th><th>PIM</th></tr></thead>
+        <tbody>${scorerRows}</tbody>
+      </table>`}
+    </div>
+
+  </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────────────────────────────────────────
+ladeDaten();
+</script>
+</body>
+</html>
