@@ -1006,6 +1006,13 @@ function befuelleLigaDropdown(verband) {
 function onVerband() {
   const verband = document.getElementById('verband-select').value;
   befuelleLigaDropdown(verband);
+  // Alltime-Reset: Verband bestimmt die Alltime-Quelle
+  alltimeGeladen = false;
+  alltimeDaten   = null;
+  const spinner  = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
+  document.getElementById('content-alltime').innerHTML = spinner;
+  document.getElementById('gender-hint').innerHTML = '';
+  if (aktiverTab === 'alltime') ladeAlltimeDaten();
   onLiga();
 }
 
@@ -1013,20 +1020,15 @@ function onVerband() {
 function onLiga() {
   const val = document.getElementById('liga-select').value;
   if (!val) return;
-  aktiveLigaId   = parseInt(val);
-  datenGeladen   = false;
-  alltimeGeladen = false;
-  alltimeDaten   = null;
-  spielfilter    = 'alle';
-  // Spinner in alle Tabs
+  aktiveLigaId = parseInt(val);
+  datenGeladen = false;
+  spielfilter  = 'alle';
+  // Spinner nur in den liga-spezifischen Tabs (Alltime bleibt unberührt)
   const spinner = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
-  ['tabelle','spielplan','scorer','detail','alltime'].forEach(id => {
+  ['tabelle','spielplan','scorer','detail'].forEach(id => {
     document.getElementById('content-' + id).innerHTML = spinner;
   });
-  document.getElementById('gender-hint').innerHTML = '';
   ladeDaten();
-  // Alltime neu laden falls Tab gerade aktiv
-  if (aktiverTab === 'alltime') ladeAlltimeDaten();
 }
 
 async function ladeDaten() {
@@ -1483,19 +1485,17 @@ function istDamen(ligaName) {
   return /damen|frauen/i.test(ligaName);
 }
 
-// Alle Saisons der aktiven Liga (gleicher name + game_operation)
-function getAktiveLigaSaisons() {
-  const aktLiga = alleligen.find(l => l.id === aktiveLigaId);
-  if (!aktLiga) return [];
-  return alleligen.filter(l =>
-    l.name === aktLiga.name && l.game_operation === aktLiga.game_operation
-  );
+// Alle Saisons aller Ligen des aktiven Verbands
+function getAktivVerbandSaisons() {
+  const verband = document.getElementById('verband-select')?.value || '';
+  if (!verband) return [];
+  return alleligen.filter(l => l.game_operation === verband);
 }
 
 // Alltime-Daten parallel laden
 async function ladeAlltimeDaten() {
   if (alltimeGeladen) return;
-  const saisons = getAktiveLigaSaisons();
+  const saisons = getAktivVerbandSaisons();
   if (!saisons.length) {
     document.getElementById('content-alltime').innerHTML =
       '<div class="error-box">Keine Saisons für diese Liga gefunden.</div>';
@@ -1603,26 +1603,26 @@ function aggregiereAlltime(ergebnisse) {
   return { spieler, teams };
 }
 
-// Haupt-Render: Geschlechter-Hinweis + beide Bereiche
+// Haupt-Render: Geschlechter-Filter + beide Bereiche
 function renderAlltime() {
   if (!alltimeDaten) return;
-  const aktLiga = alleligen.find(l => l.id === aktiveLigaId);
-  const ligaIstDamen = aktLiga ? istDamen(aktLiga.name) : false;
-  const ligaGender   = ligaIstDamen ? 'damen' : 'herren';
+  const saisons  = getAktivVerbandSaisons();
+  const verband  = document.getElementById('verband-select')?.value || '';
 
-  // Geschlechter-Hinweis
+  // Geschlechter-Info
+  const anzHerren = saisons.filter(s => !istDamen(s.name)).length;
+  const anzDamen  = saisons.filter(s =>  istDamen(s.name)).length;
   const hint = document.getElementById('gender-hint');
-  if (alltimeGender !== 'alle' && alltimeGender !== ligaGender) {
-    hint.innerHTML = `<div class="gender-hint">Diese Liga ist eine ${ligaGender === 'damen' ? 'Damen' : 'Herren'}-Liga — keine ${alltimeGender === 'damen' ? 'Damen' : 'Herren'}-Daten verfügbar.</div>`;
-    document.getElementById('content-alltime').innerHTML = '';
-    return;
-  }
-  hint.innerHTML = '';
+  hint.innerHTML = `<div class="gender-hint">
+    ${verband} &nbsp;·&nbsp; ${saisons.length} Saisons gesamt
+    &nbsp;·&nbsp; ${anzHerren} Herren &nbsp;·&nbsp; ${anzDamen} Damen
+  </div>`;
 
   const suche = alltimeSuche.toLowerCase();
 
   // ── Scorer filtern + sortieren ────────────────────────────────────────────
   let spieler = alltimeDaten.spieler;
+  if (alltimeGender !== 'alle') spieler = spieler.filter(s => s.ligaGender === alltimeGender);
   if (suche) spieler = spieler.filter(s =>
     `${s.first_name} ${s.last_name}`.toLowerCase().includes(suche) ||
     s.teams.toLowerCase().includes(suche)
@@ -1652,6 +1652,7 @@ function renderAlltime() {
 
   // ── Teams filtern + sortieren ─────────────────────────────────────────────
   let teams = alltimeDaten.teams;
+  if (alltimeGender !== 'alle') teams = teams.filter(t => t.ligaGender === alltimeGender);
   if (suche) teams = teams.filter(t =>
     t.team_name.toLowerCase().includes(suche)
   );
@@ -1693,7 +1694,7 @@ function renderAlltime() {
 
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
-    <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler &nbsp;·&nbsp; ${saisons.length} Saisons</div>
+    <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler</div>
     <div class="glass">
       <table class="at-table">
         <thead><tr>
