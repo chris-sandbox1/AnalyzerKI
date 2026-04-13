@@ -677,6 +677,96 @@
       margin: 0 4px;
     }
 
+    /* ── TAB 5: ALLTIME ─────────────────────────────────────────────────────── */
+    .alltime-controls {
+      display: flex;
+      gap: 8px;
+      padding: 14px 20px 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .alltime-search {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      outline: none;
+      width: 180px;
+    }
+    .alltime-search::placeholder { color: rgba(255,255,255,.25); }
+    .alltime-search:focus { border-color: rgba(255,255,255,.28); }
+
+    .alltime-sep {
+      width: 1px; height: 20px;
+      background: rgba(255,255,255,.1);
+      margin: 0 4px;
+    }
+
+    .alltime-section {
+      padding: 0 20px 24px;
+    }
+    .alltime-section-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.2);
+      padding: 14px 0 8px;
+    }
+
+    /* Alltime-Tabellen */
+    .at-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .at-table th {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      padding: 8px 10px;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.07);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .at-table th:first-child { text-align: center; width: 32px; cursor: default; }
+    .at-table th:nth-child(2),
+    .at-table th:nth-child(3) { text-align: left; cursor: default; }
+    .at-table th.at-sort-active { color: var(--color-a); }
+    .at-table th.at-sort-active::after { content: ' ▼'; }
+    .at-table td {
+      padding: 8px 10px;
+      font-size: .78rem;
+      text-align: right;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+    }
+    .at-table td:first-child { text-align: center; color: rgba(255,255,255,.3); font-weight: 700; }
+    .at-table td:nth-child(2) { text-align: left; font-weight: 600; }
+    .at-table td:nth-child(3) { text-align: left; font-size: .7rem; color: rgba(255,255,255,.35); }
+    .at-table tr:last-child td { border-bottom: none; }
+    .at-table tr:hover td { background: rgba(255,255,255,.025); }
+
+    .at-goals  { color: var(--color-a); font-weight: 800; }
+    .at-pkt    { color: #f1f5f9; font-weight: 800; }
+    .at-diff-pos { color: var(--color-a); }
+    .at-diff-neg { color: var(--color-b); }
+
+    /* Geschlechter-Hinweis */
+    .gender-hint {
+      margin: 8px 20px 0;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(99,102,241,.1);
+      border: 0.5px solid rgba(99,102,241,.25);
+      font-size: .72rem;
+      color: rgba(255,255,255,.5);
+    }
+
     /* ── Fehler-Box ─────────────────────────────────────────────────────────── */
     .error-box {
       margin: 20px;
@@ -718,6 +808,7 @@
     <button class="tab"        onclick="zeigeTab('spielplan')">Spielplan</button>
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
+    <button class="tab"        onclick="zeigeTab('alltime')">Alltime</button>
   </nav>
   <div class="hd-space"></div>
   <button class="btn-topbar" onclick="datenGeladen=false;ladeDaten()">↺ Aktualisieren</button>
@@ -784,6 +875,21 @@
   </div>
 </section>
 
+<!-- TAB 5: ALLTIME -->
+<section id="tab-alltime" class="tab-content">
+  <div class="alltime-controls" id="alltime-controls">
+    <button class="filter-btn active" onclick="setAlltimeGender('alle', this)">Alle</button>
+    <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
+    <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
+    <div class="alltime-sep"></div>
+    <input class="alltime-search" type="text" id="alltime-suche" placeholder="Spieler oder Team suchen…" oninput="onAlltimeSuche(this.value)">
+  </div>
+  <div id="gender-hint"></div>
+  <div id="content-alltime">
+    <div class="lade-info"><div class="spinner"></div><span>Alltime-Daten laden…</span></div>
+  </div>
+</section>
+
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
 // Konstanten
@@ -802,6 +908,14 @@ let aktiverTab   = 'tabelle';
 let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
 let datenGeladen = false;
+
+// Alltime-State
+let alltimeDaten   = null;
+let alltimeGeladen = false;
+let alltimeSortS   = 'tore';    // Scorer-Sortierung
+let alltimeSortT   = 'punkte';  // Tabellen-Sortierung
+let alltimeGender  = 'alle';
+let alltimeSuche   = '';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Partikel
@@ -832,10 +946,11 @@ function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('header .tab').forEach((b, i) => {
-    const ids = ['tabelle','spielplan','scorer','detail'];
+    const ids = ['tabelle','spielplan','scorer','detail','alltime'];
     b.classList.toggle('active', ids[i] === id);
   });
   document.getElementById('tab-' + id).classList.add('active');
+  if (id === 'alltime' && !alltimeGeladen) ladeAlltimeDaten();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -898,15 +1013,20 @@ function onVerband() {
 function onLiga() {
   const val = document.getElementById('liga-select').value;
   if (!val) return;
-  aktiveLigaId  = parseInt(val);
-  datenGeladen  = false;
-  spielfilter   = 'alle';
+  aktiveLigaId   = parseInt(val);
+  datenGeladen   = false;
+  alltimeGeladen = false;
+  alltimeDaten   = null;
+  spielfilter    = 'alle';
   // Spinner in alle Tabs
   const spinner = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
-  ['tabelle','spielplan','scorer','detail'].forEach(id => {
+  ['tabelle','spielplan','scorer','detail','alltime'].forEach(id => {
     document.getElementById('content-' + id).innerHTML = spinner;
   });
+  document.getElementById('gender-hint').innerHTML = '';
   ladeDaten();
+  // Alltime neu laden falls Tab gerade aktiv
+  if (aktiverTab === 'alltime') ladeAlltimeDaten();
 }
 
 async function ladeDaten() {
@@ -1353,6 +1473,289 @@ function renderDetail() {
     </div>
 
   </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 5: ALLTIME
+// ─────────────────────────────────────────────────────────────────────────────
+
+function istDamen(ligaName) {
+  return /damen|frauen/i.test(ligaName);
+}
+
+// Alle Saisons der aktiven Liga (gleicher name + game_operation)
+function getAktiveLigaSaisons() {
+  const aktLiga = alleligen.find(l => l.id === aktiveLigaId);
+  if (!aktLiga) return [];
+  return alleligen.filter(l =>
+    l.name === aktLiga.name && l.game_operation === aktLiga.game_operation
+  );
+}
+
+// Alltime-Daten parallel laden
+async function ladeAlltimeDaten() {
+  if (alltimeGeladen) return;
+  const saisons = getAktiveLigaSaisons();
+  if (!saisons.length) {
+    document.getElementById('content-alltime').innerHTML =
+      '<div class="error-box">Keine Saisons für diese Liga gefunden.</div>';
+    return;
+  }
+
+  // Fortschritts-Anzeige
+  document.getElementById('content-alltime').innerHTML =
+    `<div class="lade-info"><div class="spinner"></div><span id="alltime-progress">Lade Saison 0/${saisons.length}…</span></div>`;
+
+  let fertig = 0;
+  try {
+    const ergebnisse = await Promise.all(
+      saisons.map(s =>
+        Promise.all([
+          fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => []),
+          fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => []),
+        ]).then(([sc, ta]) => {
+          fertig++;
+          const el = document.getElementById('alltime-progress');
+          if (el) el.textContent = `Lade Saison ${fertig}/${saisons.length}…`;
+          return { saison: s.season || String(s.id), ligaName: s.name, scorer: sc, table: ta };
+        })
+      )
+    );
+
+    alltimeDaten   = aggregiereAlltime(ergebnisse);
+    alltimeGeladen = true;
+    renderAlltime();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('content-alltime').innerHTML =
+      `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
+  }
+}
+
+// Aggregation: scorer + table über alle Saisons zusammenführen
+function aggregiereAlltime(ergebnisse) {
+  const spielerMap = {};
+  const teamMap    = {};
+
+  ergebnisse.forEach(({ saison, ligaName, scorer: sc, table: ta }) => {
+    // ── Spieler ───────────────────────────────────────────────────────────────
+    (sc || []).forEach(s => {
+      const key = s.player_id;
+      if (!spielerMap[key]) {
+        spielerMap[key] = {
+          player_id:  key,
+          first_name: s.first_name,
+          last_name:  s.last_name,
+          games:  0, goals: 0, assists: 0, pim: 0,
+          teams:  new Set(),
+          ligaGender: istDamen(ligaName) ? 'damen' : 'herren',
+        };
+      }
+      const sp = spielerMap[key];
+      // Letzten bekannten Namen behalten
+      sp.first_name = s.first_name;
+      sp.last_name  = s.last_name;
+      sp.games   += (s.games   || 0);
+      sp.goals   += (s.goals   || 0);
+      sp.assists += (s.assists || 0);
+      sp.pim     += pim(s);
+      if (s.team_name) sp.teams.add(s.team_name);
+    });
+
+    // ── Teams ─────────────────────────────────────────────────────────────────
+    (ta || []).forEach(t => {
+      const key = t.team_id;
+      if (!teamMap[key]) {
+        teamMap[key] = {
+          team_id:   key,
+          team_name: t.team_name,
+          team_logo: t.team_logo_small || t.team_logo,
+          saisons: 0, games: 0, won: 0, won_ot: 0,
+          lost_ot: 0, lost: 0,
+          goals_scored: 0, goals_received: 0, points: 0,
+          ligaGender: istDamen(ligaName) ? 'damen' : 'herren',
+        };
+      }
+      const tm = teamMap[key];
+      tm.saisons       += 1;
+      tm.games         += (t.games          || 0);
+      tm.won           += (t.won            || 0);
+      tm.won_ot        += (t.won_ot         || 0);
+      tm.lost_ot       += (t.lost_ot        || 0);
+      tm.lost          += (t.lost           || 0);
+      tm.goals_scored  += (t.goals_scored   || 0);
+      tm.goals_received+= (t.goals_received || 0);
+      tm.points        += (t.points         || 0);
+    });
+  });
+
+  // Maps → Arrays, teams.Set → String
+  const spieler = Object.values(spielerMap).map(s => ({
+    ...s,
+    punkte: s.goals + s.assists,
+    teams:  [...s.teams].join(', '),
+  }));
+  const teams = Object.values(teamMap).map(t => ({
+    ...t,
+    goals_diff: t.goals_scored - t.goals_received,
+  }));
+
+  return { spieler, teams };
+}
+
+// Haupt-Render: Geschlechter-Hinweis + beide Bereiche
+function renderAlltime() {
+  if (!alltimeDaten) return;
+  const aktLiga = alleligen.find(l => l.id === aktiveLigaId);
+  const ligaIstDamen = aktLiga ? istDamen(aktLiga.name) : false;
+  const ligaGender   = ligaIstDamen ? 'damen' : 'herren';
+
+  // Geschlechter-Hinweis
+  const hint = document.getElementById('gender-hint');
+  if (alltimeGender !== 'alle' && alltimeGender !== ligaGender) {
+    hint.innerHTML = `<div class="gender-hint">Diese Liga ist eine ${ligaGender === 'damen' ? 'Damen' : 'Herren'}-Liga — keine ${alltimeGender === 'damen' ? 'Damen' : 'Herren'}-Daten verfügbar.</div>`;
+    document.getElementById('content-alltime').innerHTML = '';
+    return;
+  }
+  hint.innerHTML = '';
+
+  const suche = alltimeSuche.toLowerCase();
+
+  // ── Scorer filtern + sortieren ────────────────────────────────────────────
+  let spieler = alltimeDaten.spieler;
+  if (suche) spieler = spieler.filter(s =>
+    `${s.first_name} ${s.last_name}`.toLowerCase().includes(suche) ||
+    s.teams.toLowerCase().includes(suche)
+  );
+  spieler = [...spieler].sort((a, b) => {
+    if (alltimeSortS === 'tore')    return b.goals - a.goals;
+    if (alltimeSortS === 'assists') return b.assists - a.assists;
+    if (alltimeSortS === 'spiele')  return b.games - a.games;
+    if (alltimeSortS === 'pim')     return b.pim - a.pim;
+    return b.punkte - a.punkte || b.goals - a.goals; // punkte
+  });
+
+  const scorerRows = spieler.map((s, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td>${s.first_name} ${s.last_name}</td>
+      <td>${s.teams}</td>
+      <td>${s.games}</td>
+      <td class="at-goals">${s.goals}</td>
+      <td>${s.assists}</td>
+      <td class="at-pkt">${s.punkte}</td>
+      <td>${s.pim}'</td>
+    </tr>`).join('');
+
+  const sHdr = (key, label) =>
+    `<th class="${alltimeSortS === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortS('${key}')">${label}</th>`;
+
+  // ── Teams filtern + sortieren ─────────────────────────────────────────────
+  let teams = alltimeDaten.teams;
+  if (suche) teams = teams.filter(t =>
+    t.team_name.toLowerCase().includes(suche)
+  );
+  teams = [...teams].sort((a, b) => {
+    if (alltimeSortT === 'diff') return b.goals_diff - a.goals_diff;
+    return b.points - a.points || b.goals_diff - a.goals_diff; // punkte
+  });
+
+  const teamRows = teams.map((t, i) => {
+    const diff    = t.goals_diff;
+    const diffCls = diff > 0 ? 'at-diff-pos' : diff < 0 ? 'at-diff-neg' : '';
+    const diffTxt = diff > 0 ? '+' + diff : String(diff);
+    const logo    = logoUrl(t.team_logo);
+    return `
+    <tr>
+      <td>${i + 1}</td>
+      <td>
+        <div class="t-team">
+          ${logo ? `<img class="t-logo" src="${logo}" alt="" onerror="this.style.display='none'">` : '<div class="t-logo-placeholder"></div>'}
+          <span>${t.team_name}</span>
+        </div>
+      </td>
+      <td>${t.saisons}</td>
+      <td>${t.games}</td>
+      <td>${t.won}</td>
+      <td>${t.won_ot}</td>
+      <td>${t.lost_ot}</td>
+      <td>${t.lost}</td>
+      <td>${t.goals_scored}:${t.goals_received}</td>
+      <td class="${diffCls}">${diffTxt}</td>
+      <td class="at-pkt">${t.points}</td>
+    </tr>`;
+  }).join('');
+
+  const tHdr = (key, label) =>
+    `<th class="${alltimeSortT === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortT('${key}')">${label}</th>`;
+
+  const saisons = getAktiveLigaSaisons();
+
+  document.getElementById('content-alltime').innerHTML = `
+  <div class="alltime-section">
+    <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler &nbsp;·&nbsp; ${saisons.length} Saisons</div>
+    <div class="glass">
+      <table class="at-table">
+        <thead><tr>
+          <th>#</th>
+          <th>Spieler</th>
+          <th>Team(s)</th>
+          ${sHdr('spiele','Sp')}
+          ${sHdr('tore','G')}
+          ${sHdr('assists','A')}
+          ${sHdr('punkte','Pkt')}
+          ${sHdr('pim','PIM')}
+        </tr></thead>
+        <tbody>${scorerRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+      </table>
+    </div>
+
+    <div class="alltime-section-title" style="margin-top:8px">Ewige Teamtabelle &nbsp;·&nbsp; ${teams.length} Teams</div>
+    <div class="glass">
+      <table class="at-table">
+        <thead><tr>
+          <th>#</th>
+          <th>Team</th>
+          <th title="Saisons">Sai</th>
+          <th title="Spiele">Sp</th>
+          <th title="Siege">S</th>
+          <th title="OT-Siege">OTS</th>
+          <th title="OT-Niederlagen">OTN</th>
+          <th title="Niederlagen">N</th>
+          <th>T:G</th>
+          ${tHdr('diff','Diff')}
+          ${tHdr('punkte','Pkt')}
+        </tr></thead>
+        <tbody>${teamRows || '<tr><td colspan="11" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// Geschlechter-Filter
+function setAlltimeGender(g, btn) {
+  alltimeGender = g;
+  document.querySelectorAll('#alltime-controls .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAlltime();
+}
+
+// Scorer-Spalte sortieren
+function setAlltimeSortS(key) {
+  alltimeSortS = key;
+  renderAlltime();
+}
+
+// Team-Spalte sortieren
+function setAlltimeSortT(key) {
+  alltimeSortT = key;
+  renderAlltime();
+}
+
+// Suche
+function onAlltimeSuche(val) {
+  alltimeSuche = val;
+  renderAlltime();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
