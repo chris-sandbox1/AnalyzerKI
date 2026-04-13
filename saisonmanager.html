@@ -1690,8 +1690,6 @@ function renderAlltime() {
   const tHdr = (key, label) =>
     `<th class="${alltimeSortT === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortT('${key}')">${label}</th>`;
 
-  const saisons = getAktiveLigaSaisons();
-
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler</div>
