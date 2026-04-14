@@ -1,10 +1,9 @@
 """
-start.py – Startet lokalen Webserver auf Port 8080 und öffnet das Dashboard.
+start.py – Startet lokalen Webserver auf Port 8080 und öffnet den Saisonmanager.
 
 Routen:
-  GET /dashboard.html       → Dashboard
   GET /analyses             → JSON-Liste aller gespeicherten Spiele
-  GET /analyses/<datei>     → Einzelne Analyse-JSON-Datei
+  GET /data/alltime.json    → Alltime-Statistiken (generiert durch tools/alltime.py)
   GET /*                    → Sonstige statische Dateien
 """
 
@@ -23,12 +22,26 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 class DashboardHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
-        # Spezialroute: /analyses → Liste aller Spiele als JSON
         if self.path in ('/analyses', '/analyses/'):
             self._serve_analyses_list()
+        elif self.path in ('/data/alltime.json',):
+            self._serve_json_file(os.path.join('data', 'alltime.json'))
         else:
-            # Alles andere als statische Datei ausliefern
             super().do_GET()
+
+    def _serve_json_file(self, pfad):
+        """Liefert eine JSON-Datei direkt aus."""
+        if not os.path.exists(pfad):
+            self.send_error(404, f'Datei nicht gefunden: {pfad}')
+            return
+        with open(pfad, 'rb') as f:
+            body = f.read()
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(body)))
+        self.send_header('Cache-Control', 'no-cache')
+        self.end_headers()
+        self.wfile.write(body)
 
     def _serve_analyses_list(self):
         """Liest alle Analyse-JSON-Dateien und gibt eine sortierte Liste zurück."""
@@ -72,15 +85,14 @@ def server_starten():
 # Server im Hintergrund-Thread starten
 threading.Thread(target=server_starten, daemon=True).start()
 
-url_dashboard      = f'http://localhost:{PORT}/dashboard.html'
-url_saisonmanager  = f'http://localhost:{PORT}/saisonmanager.html'
+url_saisonmanager = f'http://localhost:{PORT}/saisonmanager.html'
+url_dashboard     = f'http://localhost:{PORT}/dashboard.html'
 
-print(f'  Spielanalyse:   {url_dashboard}')
 print(f'  Saisonmanager:  {url_saisonmanager}')
-webbrowser.open(url_dashboard)
+print(f'  Spielanalyse:   {url_dashboard}')
+webbrowser.open(url_saisonmanager)
 
 print('Server läuft. Mit Strg+C beenden.')
-print('Hinweis: Saisonmanager immer über den Server öffnen, nicht per Doppelklick.')
 try:
     while True:
         import time
