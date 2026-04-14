@@ -1820,6 +1820,10 @@ async function ladeStaticAlltime() {
   }
 }
 
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function renderStaticAlltime() {
   if (!staticDaten) return;
   const suche = staticSuche.trim().toLowerCase();
