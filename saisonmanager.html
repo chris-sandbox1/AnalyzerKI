@@ -1810,7 +1810,12 @@ async function ladeStaticAlltime() {
     renderStaticAlltime();
   } catch(e) {
     document.getElementById('content-static').innerHTML =
-      `<div class="error-box">alltime.json nicht gefunden – bitte zuerst alltime.py ausführen.<br><small>${e.message}</small></div>`;
+      `<div class="error-box">
+        data/alltime.json nicht erreichbar.<br>
+        <small>Mögliche Ursachen:<br>
+        1. Seite per Doppelklick geöffnet → bitte über <b>start.py</b> öffnen (http://localhost:8080)<br>
+        2. alltime.json noch nicht generiert → <b>python tools/alltime.py</b> ausführen</small>
+      </div>`;
   }
 }
 

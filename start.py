@@ -72,11 +72,15 @@ def server_starten():
 # Server im Hintergrund-Thread starten
 threading.Thread(target=server_starten, daemon=True).start()
 
-url = f'http://localhost:{PORT}/dashboard.html'
-print(f'Floorball Dashboard: {url}')
-webbrowser.open(url)
+url_dashboard      = f'http://localhost:{PORT}/dashboard.html'
+url_saisonmanager  = f'http://localhost:{PORT}/saisonmanager.html'
+
+print(f'  Spielanalyse:   {url_dashboard}')
+print(f'  Saisonmanager:  {url_saisonmanager}')
+webbrowser.open(url_dashboard)
 
 print('Server läuft. Mit Strg+C beenden.')
+print('Hinweis: Saisonmanager immer über den Server öffnen, nicht per Doppelklick.')
 try:
     while True:
         import time
