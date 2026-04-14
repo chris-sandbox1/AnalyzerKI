@@ -12,9 +12,6 @@ downloads/
 # PDF-Cache-Zustand (wird automatisch neu erstellt)
 .pdf_cache.json
 
-# Generierte Alltime-Daten (wird durch tools/alltime.py erstellt)
-data/alltime.json
-
 # Temporäre Dateien
 *.tmp
 *.log
