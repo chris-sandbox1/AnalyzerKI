@@ -1,0 +1,566 @@
+{
+  "zusammenfassung": "Das Spiel endete nach regulärer Spielzeit 3-3. Im anschließenden Penalty-Schießen gewann Storvreta (Team B) mit 2-0.",
+  "ereignisse": [
+    {
+      "timestamp": "00:01",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "00:06",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "00:19",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_SLOT_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "00:20",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #14, Torwart hält"
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "TOR",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Tor durch #88 Daggala"
+    },
+    {
+      "timestamp": "00:38",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "00:47",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TOR",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Tor durch #22 Lundmark"
+    },
+    {
+      "timestamp": "01:15",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "01:18",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_SLOT_MITTE",
+      "details": "Schuss von #14, Torwart hält"
+    },
+    {
+      "timestamp": "01:20",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #14, Torwart hält"
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "PENALTY",
+      "team": "TEAM_A",
+      "details": "2 Minuten Strafe für #86 Ruud wegen Roughing"
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "PENALTY",
+      "team": "TEAM_B",
+      "details": "2 Minuten Strafe für #17 wegen Roughing"
+    },
+    {
+      "timestamp": "01:36",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "01:42",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #86, Torwart hält"
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TOR",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Tor durch #22 Lundmark"
+    },
+    {
+      "timestamp": "02:21",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "02:27",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TOR",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Tor durch #79 Kohonen"
+    },
+    {
+      "timestamp": "02:52",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "02:58",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Schuss von #79 Kohonen, Torwart hält"
+    },
+    {
+      "timestamp": "03:03",
+      "typ": "TOR",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Tor durch #79 Kohonen"
+    },
+    {
+      "timestamp": "03:25",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "03:46",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "TOR",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Tor von #14 Lundmark wird nach Videobeweis annulliert"
+    },
+    {
+      "timestamp": "04:16",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "04:25",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "04:27",
+      "typ": "TOR",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Tor durch #79 Kohonen"
+    },
+    {
+      "timestamp": "04:51",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "04:56",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:00",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:06",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:13",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:17",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:20",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:22",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:25",
+      "typ": "ZWEIKAMPF",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#88",
+      "details": "Zweikampf um den Ball, #88 gewinnt"
+    },
+    {
+      "timestamp": "05:34",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "05:38",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:43",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "05:48",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:50",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "05:57",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "06:00",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "06:02",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "06:12",
+      "typ": "TOR",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Tor durch #71 Öhgren"
+    },
+    {
+      "timestamp": "06:35",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "06:37",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "06:40",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_B",
+      "zone": "TEAM_A_TORRAUM_MITTE",
+      "details": "Schuss von #79, Torwart hält"
+    },
+    {
+      "timestamp": "06:44",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "TEAM_A",
+      "details": "Team A gewinnt das Bully in der Mittellinie"
+    },
+    {
+      "timestamp": "06:52",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "06:55",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "07:00",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "07:08",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Nachschuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "07:12",
+      "typ": "TORSCHUSS",
+      "team": "TEAM_A",
+      "zone": "TEAM_B_TORRAUM_MITTE",
+      "details": "Schuss von #88, Torwart hält"
+    },
+    {
+      "timestamp": "07:36",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_B",
+      "zone": "PENALTY",
+      "details": "Tor durch #19 Eriksson",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:53",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_A",
+      "zone": "PENALTY",
+      "details": "Schuss von #86 Ruud, Torwart hält",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:14",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_B",
+      "zone": "PENALTY",
+      "details": "Tor durch #79 Kohonen",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:45",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_A",
+      "zone": "PENALTY",
+      "details": "Schuss von #65 Kalentun, Torwart hält",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:05",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_B",
+      "zone": "PENALTY",
+      "details": "Schuss von #7 Weidman, verfehlt das Tor",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:25",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_A",
+      "zone": "PENALTY",
+      "details": "Schuss von #22 Lundmark, verfehlt das Tor",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:44",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_B",
+      "zone": "PENALTY",
+      "details": "Schuss von #18 Öhgren, Torwart hält",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:05",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_A",
+      "zone": "PENALTY",
+      "details": "Schuss von #22 Lundmark, Torwart hält",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:28",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_B",
+      "zone": "PENALTY",
+      "details": "Schuss von #20 Öhgren, verfehlt das Tor",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:53",
+      "typ": "PENALTY_SHOT",
+      "team": "TEAM_A",
+      "zone": "PENALTY",
+      "details": "Schuss von #22 Lundmark, Torwart hält",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 3,
+    "tore_team_b": 3,
+    "torschuesse_team_a": 29,
+    "torschuesse_team_b": 2,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 1,
+    "penalties_team_b": 1,
+    "zweikampf_quote_a": 100,
+    "zweikampf_quote_b": 0,
+    "zweikampf_gesamt_a": 1,
+    "zweikampf_gesamt_b": 0,
+    "zweikampf_zonen_a": {
+      "TEAM_B_TORRAUM": 1
+    },
+    "zweikampf_zonen_b": {},
+    "konter_zonen_a": {},
+    "konter_zonen_b": {}
+  },
+  "spieler_zweikampf": {
+    "#88": {
+      "team": "TEAM_A",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "TEAM_B_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    }
+  },
+  "warnung": "Ereignis-Zählung weicht vom Statistik-Feld ab: Ereignisse zeigen 4:4 (TEAM_A:TEAM_B), Statistik zeigt 3:3 — möglicherweise ein Event falsch klassifiziert.",
+  "_meta": {
+    "videotitel": "Falun_vs_Storvreta_-_Champions_Cup_FINAL_Highlights",
+    "datum": "12.04.2026",
+    "dateiname": "falun_vs_storvreta_-_champions_cup_final_highlights_20260412_1.json"
+  }
+}

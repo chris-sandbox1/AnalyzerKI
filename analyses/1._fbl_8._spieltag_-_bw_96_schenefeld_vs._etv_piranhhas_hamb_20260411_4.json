@@ -1,0 +1,2314 @@
+{
+  "zusammenfassung": "[Teil 1] Die ersten drei Minuten des Spiels waren geprägt von einem schnellen Hin und Her mit zahlreichen Torschüssen auf beiden Seiten. Trotz vieler Versuche gelang es keinem Team, den Ball im Netz unterzubringen, da beide Torhüter starke Paraden zeigten. Das Spiel blieb in dieser Phase torlos. | [Teil 2] Das Spiel ist geprägt von vielen Torschüssen beider Teams, die jedoch meist vom gegnerischen Torwart gehalten werden. Besonders auffällig sind die zahlreichen Schussversuche von ETVP-Spieler #8 Roter und 1FBL-Spieler #29 Paul Dall. Eine 2-Minuten-Strafe gegen ETVP #8 Roter unterbricht das Spielgeschehen kurz vor Ende des analysierten Abschnitts.",
+  "ereignisse": [
+    {
+      "timestamp": "00:07",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Bully im Mittelkreis gewonnen.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:09",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:10",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:12",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:13",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:15",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:18",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:19",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:21",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:22",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:27",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:28",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:30",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:33",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:34",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:36",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:39",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:40",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:42",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:43",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:49",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:51",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:52",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:54",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #13, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:55",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:57",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #22, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:58",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:02",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:05",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:07",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:08",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:10",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:13",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:14",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:16",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:17",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:19",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:20",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:25",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:31",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:32",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:34",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:37",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:38",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:43",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:44",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:47",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:49",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:50",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:55",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:58",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:05",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:07",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:08",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:10",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:13",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:14",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:16",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:17",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:19",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:20",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:31",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:32",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:34",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:37",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:38",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:44",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:46",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:47",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:49",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:50",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:55",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "02:58",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:02",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:05",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:07",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:08",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:10",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:13",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:14",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:16",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:17",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:19",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:20",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:25",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:32",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:34",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:37",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:38",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:43",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:44",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:46",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:49",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:50",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:55",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "03:58",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:02",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:05",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:07",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:08",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:13",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:14",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:16",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:17",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:19",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:20",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:25",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:31",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:32",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:34",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:37",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:38",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:43",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:44",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:46",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:47",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:49",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:50",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:55",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "Ballbesitz wechselt zu ETVP.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #20, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "1FBL",
+      "details": "Ballbesitz wechselt zu 1FBL.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "05:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von 1FBL #17, vom Torhüter gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:26",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #8 Roter geblockt.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:28",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:30",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten von Julian Maiberg.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:36",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:51",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:52",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:53",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:54",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:55",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:56",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:57",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:58",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:59",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:00",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:01",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Nachschuss von #8 Roter, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:03",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:05",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:07",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:09",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:11",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:13",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:15",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:17",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:19",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:21",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:23",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:25",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:27",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:29",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:31",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:33",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:35",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:37",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:39",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von #4 Lindemann, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:41",
+      "typ": "TORSCHUSS",
+      "team": "1FBL",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von #29 Paul Dall, gehalten.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 0,
+    "tore_team_b": 0,
+    "torschuesse_team_a": 25,
+    "torschuesse_team_b": 25,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 0,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {},
+    "konter_zonen_a": {},
+    "konter_zonen_b": {},
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 0
+  },
+  "_meta": {
+    "videotitel": "1. FBL 8. Spieltag - BW 96 Schenefeld vs. ETV Piranhhas Hamburg",
+    "datum": "11.04.2026",
+    "dateiname": "1._fbl_8._spieltag_-_bw_96_schenefeld_vs._etv_piranhhas_hamb_20260411_4.json",
+    "team_a": "1. FBL 8. Spieltag - BW 96 Schenefeld",
+    "team_b": "ETV Piranhhas Hamburg",
+    "team_a_kuerzel": "1FBL",
+    "team_b_kuerzel": "ETVP"
+  }
+}

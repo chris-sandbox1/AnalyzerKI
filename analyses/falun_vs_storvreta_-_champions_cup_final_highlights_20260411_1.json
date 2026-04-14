@@ -1,0 +1,760 @@
+{
+  "zusammenfassung": "Das Floorball-Spiel zwischen Falun und Storvreta war ein spannendes Duell, das nach einem 3:3-Unentschieden in der regulären Spielzeit und einer torlosen Verlängerung im Penaltyschießen entschieden wurde. Falun legte einen starken Start hin und führte früh mit 2:0, doch Storvreta kämpfte sich zurück und glich das Spiel aus. Im Penaltyschießen behielt Falun die Nerven und sicherte sich den Sieg.",
+  "ereignisse": [
+    {
+      "timestamp": "00:02",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:20",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Weitschuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:22",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FALUN",
+      "details": "Ballbesitzwechsel zu Falun"
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "KONTER",
+      "team": "FALUN",
+      "zone": "EIGN_HALB",
+      "details": "Schneller Gegenangriff von Falun",
+      "position": {
+        "x": 16.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "TOR",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Omar Aldeeb (#88) erzielt das 1:0 für Falun mit einem Sweep-Schuss.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FALUN",
+      "details": "Ballbesitzwechsel zu Falun nach Fehlpass von Storvreta"
+    },
+    {
+      "timestamp": "00:47",
+      "typ": "KONTER",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Schneller Gegenangriff von Falun",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TOR",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Malte Lundmark (#14) erhöht auf 2:0 für Falun nach einem schnellen Gegenangriff.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:14",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STORVRETA",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Storvreta gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:19",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Weitschuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "ZWEIKAMPF",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#86 Ruud",
+      "spieler_verlierer": "#17 Schmied",
+      "details": "Ruud gewinnt den Ball gegen Schmied vor dem Tor",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "PENALTY",
+      "team": "FALUN",
+      "details": "2-Minuten-Strafe für #86 Ruud (FALUN) wegen übertriebener Härte."
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "PENALTY",
+      "team": "STORVRETA",
+      "details": "2-Minuten-Strafe für #17 Schmied (STORVRETA) wegen übertriebener Härte."
+    },
+    {
+      "timestamp": "01:38",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:42",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "ZWEIKAMPF",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#86 Ruud",
+      "spieler_verlierer": "#20 Dahlgren",
+      "details": "Ruud gewinnt den Ball gegen Dahlgren vor dem Tor",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:50",
+      "typ": "PENALTY",
+      "team": "FALUN",
+      "details": "2-Minuten-Strafe für #14 Lundmark (FALUN) wegen übertriebener Härte."
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TOR",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Bergman (#22) erzielt das 3:0 für Falun nach einem Rebound.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:21",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:29",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STORVRETA",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Storvreta gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TOR",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Kohonen (#79) erzielt das 3:1 für Storvreta mit einem präzisen Schuss nach Querpass.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:08",
+      "typ": "GOAL_REVIEW",
+      "team": "FALUN",
+      "details": "Tor von Falun wird überprüft."
+    },
+    {
+      "timestamp": "03:24",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STORVRETA",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Storvreta gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:34",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:46",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "TOR",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Malte Lundmark (#14) erzielt das 4:1 für Falun nach mehreren Versuchen.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:55",
+      "typ": "GOAL_REVIEW",
+      "team": "FALUN",
+      "details": "Tor von Falun wird überprüft."
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "GOAL_REVIEW",
+      "team": "FALUN",
+      "details": "Tor von Falun wird nach Überprüfung annulliert."
+    },
+    {
+      "timestamp": "04:15",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STORVRETA",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Storvreta gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:26",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:28",
+      "typ": "TOR",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Dahlgren (#20) verkürzt auf 3:2 für Storvreta mit einem schnellen Schuss.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:51",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:06",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:16",
+      "typ": "ZWEIKAMPF",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#20 Dahlgren",
+      "spieler_verlierer": "#86 Ruud",
+      "details": "Dahlgren gewinnt den Ball vor dem Tor",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:20",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:22",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:25",
+      "typ": "ZWEIKAMPF",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#20 Dahlgren",
+      "spieler_verlierer": "#86 Ruud",
+      "details": "Dahlgren gewinnt den Ball vor dem Tor, Ruud liegt verletzt am Boden.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:38",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:48",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:50",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:57",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:02",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "STORVRETA",
+      "details": "Storvreta zieht den Torwart für einen zusätzlichen Feldspieler"
+    },
+    {
+      "timestamp": "06:11",
+      "typ": "TOR",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Eriksson (#71) erzielt das 3:3 für Storvreta ins leere Tor.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:34",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FALUN",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Falun gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:39",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:44",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STORVRETA",
+      "zone": "RUECKRAUM",
+      "details": "Bully von Storvreta gewonnen",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:51",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:55",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:08",
+      "typ": "TORSCHUSS",
+      "team": "FALUN",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, gehalten vom Torwart von Storvreta",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:12",
+      "typ": "TORSCHUSS",
+      "team": "STORVRETA",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, gehalten vom Torwart von Falun",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:27",
+      "typ": "PENALTY_SHOT",
+      "team": "FALUN",
+      "zone": "PENALTY",
+      "details": "Eriksson (#19) verwandelt den Penalty für Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:49",
+      "typ": "PENALTY_SHOT",
+      "team": "FALUN",
+      "zone": "PENALTY",
+      "details": "Ruud (#86) verwandelt den Penalty für Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:13",
+      "typ": "PENALTY_SHOT",
+      "team": "STORVRETA",
+      "zone": "PENALTY",
+      "details": "Kohonen (#79) verwandelt den Penalty für Storvreta.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:45",
+      "typ": "PENALTY_SHOT",
+      "team": "STORVRETA",
+      "zone": "PENALTY",
+      "details": "Kalentun (#65) scheitert am Torwart von Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:05",
+      "typ": "PENALTY_SHOT",
+      "team": "STORVRETA",
+      "zone": "PENALTY",
+      "details": "Weidman (#7) schießt am Tor vorbei.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:25",
+      "typ": "PENALTY_SHOT",
+      "team": "FALUN",
+      "zone": "PENALTY",
+      "details": "Aldeeb (#88) verwandelt den Penalty für Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:43",
+      "typ": "PENALTY_SHOT",
+      "team": "STORVRETA",
+      "zone": "PENALTY",
+      "details": "Lundmark (#14) scheitert am Torwart von Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:04",
+      "typ": "PENALTY_SHOT",
+      "team": "STORVRETA",
+      "zone": "PENALTY",
+      "details": "Dahlgren (#20) scheitert am Torwart von Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:28",
+      "typ": "PENALTY_SHOT",
+      "team": "FALUN",
+      "zone": "PENALTY",
+      "details": "Lundmark (#22) verwandelt den entscheidenden Penalty für Falun.",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 3,
+    "tore_team_b": 3,
+    "torschuesse_team_a": 8,
+    "torschuesse_team_b": 15,
+    "konter_gesamt": 2,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 2,
+    "penalties_team_b": 1,
+    "zweikampf_quote_a": 100,
+    "zweikampf_quote_b": 100,
+    "zweikampf_gesamt_a": 2,
+    "zweikampf_gesamt_b": 2,
+    "zweikampf_zonen_a": {
+      "GEGN_TORRAUM": 2
+    },
+    "zweikampf_zonen_b": {
+      "GEGN_TORRAUM": 2
+    },
+    "konter_zonen_a": {
+      "EIGN_HALB": 1,
+      "RUECKRAUM": 1
+    },
+    "konter_zonen_b": {}
+  },
+  "spieler_zweikampf": {
+    "#86 Ruud": {
+      "team": "FALUN",
+      "zweikampf_gewonnen": 2,
+      "zweikampf_verloren": 2,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 4
+      },
+      "zweikampf_gesamt": 4,
+      "zweikampf_quote": 50
+    },
+    "#17 Schmied": {
+      "team": "STORVRETA",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    },
+    "#20 Dahlgren": {
+      "team": "STORVRETA",
+      "zweikampf_gewonnen": 2,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 3
+      },
+      "zweikampf_gesamt": 3,
+      "zweikampf_quote": 67
+    }
+  },
+  "_meta": {
+    "videotitel": "Falun vs Storvreta - Champions Cup FINAL Highlights",
+    "datum": "11.04.2026",
+    "dateiname": "falun_vs_storvreta_-_champions_cup_final_highlights_20260411_1.json"
+  }
+}

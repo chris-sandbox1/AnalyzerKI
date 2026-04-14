@@ -1,0 +1,613 @@
+{
+  "zusammenfassung": "[Drittel 1] Das Spiel begann mit einem schnellen Tor von Falun, gefolgt von einem weiteren Treffer, der ihnen eine frühe 2:0-Führung verschaffte. Falun baute die Führung auf 3:0 aus, bevor Storvreta im zweiten und dritten Drittel aufholte und zwei Tore erzielte. Falun konnte seine Führung behaupten und gewann das Spiel mit 3:2. | [Drittel 2] Der Clip zeigt das Ende des 3. Drittels, in dem STO mit einem Überzahltor bei leerem gegnerischem Tor den Ausgleich erzielt und das Spiel in die Verlängerung zwingt. Die Verlängerung endet torlos, woraufhin das Spiel in ein Penaltyschiessen übergeht, bei dem beide Teams ihre ersten Penaltys verwandeln.",
+  "ereignisse": [
+    {
+      "timestamp": "00:02",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STO",
+      "details": "Bully in der Mitte gewonnen",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "00:04",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #14, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:05",
+      "typ": "KONTER",
+      "team": "FAL",
+      "zone": "RUECKRAUM",
+      "details": "Schneller Gegenangriff nach Ballgewinn",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #14, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:11",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #22, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:19",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Weitschuss durch #20, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss ins Tor durch #88",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:45",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FAL",
+      "details": "Ballgewinn in eigener Hälfte",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "KONTER",
+      "team": "FAL",
+      "zone": "EIGN_HALB",
+      "details": "Schneller Gegenangriff nach Ballgewinn",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 16.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "2-gegen-1, Pass und Direktschuss durch #29",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:18",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #19, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #17, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:27",
+      "typ": "ZWEIKAMPF",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#86 Ruud",
+      "spieler_verlierer": "#17",
+      "details": "Ballgewinn nach Gerangel",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:37",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #22, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:40",
+      "typ": "KONTER",
+      "team": "FAL",
+      "zone": "RUECKRAUM",
+      "details": "Schneller Gegenangriff nach Ballgewinn",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:42",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #24, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "ZWEIKAMPF",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#14 Lundmark",
+      "spieler_verlierer": "#20",
+      "details": "Ballgewinn nach Gerangel an der Bande",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #22, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:03",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Rebound-Tor durch #22",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #14, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:34",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #19, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:38",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #17, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Pass und Direktschuss durch #20",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #79, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:40",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #14, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:45",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #22, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #14, nach Videobeweis nicht gegeben",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:16",
+      "typ": "KONTER",
+      "team": "FAL",
+      "zone": "RUECKRAUM",
+      "details": "Schneller Gegenangriff nach Ballgewinn",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:17",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #20, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:20",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss aufs Tor durch #10, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:26",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss ins Tor durch #20",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:56",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #88, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor durch #20, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:00",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss von STO, geht knapp vorbei",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:11",
+      "typ": "UEBERZAHL_TOR",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "STO erzielt Ausgleichstor mit leerem Tor des Gegners (6 gegen 5)",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:47",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von FAL, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:51",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von FAL, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:55",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von FAL, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:58",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von FAL, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:00",
+      "typ": "KONTER",
+      "team": "STO",
+      "zone": "EIGN_HALB",
+      "details": "STO startet schnellen Gegenangriff nach Ballgewinn",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 16.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:02",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss von STO, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:06",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss von STO, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:09",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss von STO, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:37",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Eriksson (#19) verwandelt Penalty für FAL",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:54",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Rud (#86) verwandelt Penalty für STO",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 3,
+    "tore_team_b": 3,
+    "torschuesse_team_a": 10,
+    "torschuesse_team_b": 17,
+    "konter_gesamt": 5,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 2,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {
+      "GEGN_TORRAUM": 2
+    },
+    "konter_zonen_a": {
+      "EIGN_HALB": 1
+    },
+    "konter_zonen_b": {
+      "RUECKRAUM": 3,
+      "EIGN_HALB": 1
+    },
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 100
+  },
+  "spieler_zweikampf": {
+    "#86 Ruud": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#17": {
+      "team": "STO",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    },
+    "#14 Lundmark": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#20": {
+      "team": "STO",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "_meta": {
+    "videotitel": "Falun vs Storvreta - Champions Cup FINAL Highlights",
+    "datum": "11.04.2026",
+    "dateiname": "falun_vs_storvreta_-_champions_cup_final_highlights_20260411.json"
+  }
+}

@@ -1,0 +1,2525 @@
+{
+  "zusammenfassung": "[Drittel 1] Die ersten Minuten des Floorball-Spiels zwischen Blau-Weiß 96 Schenefeld und ETV Piranhas Hamburg waren geprägt von einer starken Offensive der Piranhas, die zahlreiche Torschüsse abgaben. Der Torhüter von Schenefeld konnte jedoch alle Versuche abwehren. Schenefeld selbst kam zu einem Torschuss und verursachte mehrere Fouls. | [Teil 2] Das Video zeigt eine sich wiederholende Sequenz eines Floorballspiels im zweiten Drittel. Blau-Weiß 96 Schenefeld führt weiterhin mit 1:0. Die Spielzüge bestehen hauptsächlich aus Schüssen auf das Tor beider Teams, gefolgt von Paraden und Ballbesitzwechseln. Die Kommentatoren sprechen über die Zuschauerzahlen und die allgemeine Atmosphäre. | [Teil 3] Blau-Weiß 96 Schenefeld setzte seine offensive Dominanz fort und feuerte zahlreiche Schüsse auf das Tor ab, die jedoch alle vom Torwart der ETV Piranhhas Hamburg pariert wurden. Die ETV Piranhhas Hamburg konnte nach einem Rebound ihren ersten Treffer des Spiels erzielen. | [Teil 4] Das Spiel beginnt mit einem gewonnenen Bully für Blau-Weiß 96 Schenefeld. Die Mannschaft hält den Ballbesitz über die gesamte Dauer des Videos, ohne dass es zu weiteren nennenswerten Aktionen wie Torschüssen, Chancen oder Ballbesitzwechseln kommt. Das Spielgeschehen konzentriert sich auf Passspiel im Mittelfeld.",
+  "ereignisse": [
+    {
+      "timestamp": "00:22",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:26",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:31",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:33",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:39",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:41",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:44",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:50",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:52",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:56",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:58",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:00",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:00",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:02",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:06",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:09",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:11",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:13",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:15",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:17",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:18",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:20",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:22",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:26",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:28",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:32",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:34",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:36",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:36",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:38",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:45",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:47",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:49",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:51",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:53",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:56",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:58",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:00",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:06",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:08",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:10",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:12",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:12",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:14",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:18",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:19",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:21",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:23",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:27",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:29",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:32",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:34",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:36",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:38",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:40",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:44",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:46",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:47",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:48",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:50",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:55",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:57",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:59",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:01",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:03",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:05",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:06",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:08",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:10",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:12",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:14",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:16",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:18",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:20",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:22",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:24",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:24",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:26",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:33",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:37",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:39",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:41",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:44",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:46",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:50",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:52",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:56",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:58",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:59",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:00",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:00",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:02",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:06",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:09",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #5 Jonas Jens, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:09",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:11",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:13",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:15",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:17",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:18",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:20",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:22",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:24",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:26",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:28",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:32",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:34",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:35",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Foul, Freischlag für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:36",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:36",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:38",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:45",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:47",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:49",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:51",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:53",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:56",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #10 Mario Schwarz, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #22 Luka Vogel, gehalten",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:04",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bully gewonnen",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:08",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #13, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:37",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Ballbesitzwechsel zu Blau-Weiß 96 Schenefeld",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:43",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #22, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:45",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:51",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #22, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Ballbesitzwechsel zu Blau-Weiß 96 Schenefeld",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:59",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #22, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #36, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:09",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Ballbesitzwechsel zu Blau-Weiß 96 Schenefeld",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:15",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #29, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:17",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:23",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #36, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:25",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Ballbesitzwechsel zu Blau-Weiß 96 Schenefeld",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:31",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #29, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:33",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:39",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #36, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Ballbesitzwechsel zu Blau-Weiß 96 Schenefeld",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:47",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #29, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:49",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETV Piranhas Hamburg",
+      "details": "Ballbesitzwechsel zu ETV Piranhas Hamburg",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:53",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #13, gehalten",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:29",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhhas Hamburg",
+      "zone": "RUECKRAUM_MITTE",
+      "details": "Schuss von #5, geht weit daneben.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:43",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:46",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:50",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:53",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:56",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:00",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:04",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:08",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:12",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:16",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:20",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:24",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:28",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:32",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:36",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:40",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:44",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:48",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:52",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:56",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:00",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:04",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:08",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:12",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:16",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:20",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:24",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:28",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:32",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #7, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:34",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Face-off gewonnen in RUECKRAUM.",
+      "sequenz": "Teil 3"
+    },
+    {
+      "timestamp": "12:35",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #15, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:39",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:43",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:47",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #5, vom Torwart gehalten.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:49",
+      "typ": "TOR",
+      "team": "ETV Piranhhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor durch #5 nach Rebound.",
+      "sequenz": "Teil 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:00",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "RUECKRAUM",
+      "details": "Bully in der Mitte gewonnen",
+      "sequenz": "Teil 4",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 0,
+    "tore_team_b": 1,
+    "torschuesse_team_a": 34,
+    "torschuesse_team_b": 155,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 0,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {},
+    "konter_zonen_a": {},
+    "konter_zonen_b": {},
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 0
+  },
+  "_meta": {
+    "videotitel": "1._FBL_8._Spieltag_-_BW_96_Schenefeld_vs._ETV_Piranhhas_Hamburg",
+    "datum": "11.04.2026",
+    "dateiname": "1._fbl_8._spieltag_-_bw_96_schenefeld_vs._etv_piranhhas_hamb_20260411.json"
+  }
+}

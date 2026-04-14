@@ -1,0 +1,1528 @@
+{
+  "zusammenfassung": "[Drittel 1] Das erste Drittel beginnt mit einem gewonnenen Bully für ETV Piranhas Hamburg, die sofort Druck auf das Tor von Blau-Weiß 96 Schenefeld ausüben und mehrere Torschüsse abgeben. Schenefeld kann den Ballbesitz gewinnen und startet eigene Angriffe, die ebenfalls zu Torschüssen führen. Das Spiel ist in den ersten Minuten von vielen Torschüssen auf beiden Seiten geprägt, wobei die Torhüter bisher alle Versuche abwehren konnten. | [Drittel 2] Das zweite Drittel begann mit einer längeren Ballbesitzphase der ETV Piranhas Hamburg, die mehrere Torschüsse abgaben, aber am Torwart von Blau-Weiß 96 Schenefeld scheiterten. Das Spiel war geprägt von vielen Zweikämpfen im Mittelfeld und vor den Toren, wobei beide Teams um den Ballbesitz kämpften. Trotz einiger guter Chancen auf beiden Seiten blieb das Ergebnis unverändert. | [Drittel 3] Das dritte Drittel begann mit einem intensiven Schlagabtausch beider Teams. ETV Piranhas Hamburg erzielte bei 03:48 ihr erstes Tor des Spiels, doch Blau-Weiß 96 Schenefeld antwortete schnell mit einem weiteren Treffer bei 04:21, wodurch der Spielstand auf 6-1 erhöht wurde. Beide Torhüter zeigten starke Leistungen und wehrten zahlreiche Torschüsse ab.",
+  "ereignisse": [
+    {
+      "timestamp": "00:23",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "RUECKRAUM",
+      "details": "Bullygewinn für ETV Piranhas Hamburg",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:26",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:27",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:28",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:29",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:31",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:32",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:33",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:34",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:36",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:38",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:39",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:40",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:41",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:44",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:45",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:47",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:49",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:50",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:51",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:52",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:53",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #10, gehalten vom Torwart",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:05",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Schuss von #22, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:06",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #22, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Dritter Schuss von #22, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:08",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #13, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:09",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #97, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:37",
+      "typ": "ZWEIKAMPF",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_HALB",
+      "gewonnen": true,
+      "spieler_gewinner": "#8",
+      "spieler_verlierer": "#19",
+      "details": "Zweikampf um den Ball, gewonnen von #8",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:39",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:40",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:41",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:42",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:44",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:45",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:46",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:47",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:49",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:50",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:51",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:52",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:53",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:54",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:55",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:56",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:57",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:58",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:59",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:00",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:01",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:02",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:03",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:04",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschuss von #8, vom Torwart gehalten",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:03",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:13",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_UNTEN",
+      "details": "Schuss von #3, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 15.5
+      }
+    },
+    {
+      "timestamp": "10:25",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:32",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #6, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:41",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:48",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:55",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #18, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:00",
+      "typ": "ZWEIKAMPF",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT",
+      "gewonnen": true,
+      "spieler_gewinner": "#17",
+      "spieler_verlierer": "#18",
+      "details": "ETV #17 gewinnt Ball gegen Schenefeld #18",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:00",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:06",
+      "typ": "ZWEIKAMPF",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#18",
+      "spieler_verlierer": "#17",
+      "details": "Schenefeld #18 gewinnt Ball gegen ETV #17",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:06",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:07",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von #18, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:12",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:22",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:27",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, geblockt von #36",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:30",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:36",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:48",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:55",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:00",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:13",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:19",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:25",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:31",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:37",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:43",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:49",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:55",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:01",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:07",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:12",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:17",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, prallt vom Pfosten ab",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:24",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:36",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:48",
+      "typ": "TOR",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Tor durch #17 Meinhard Wadetzkie",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:47",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Bully in der Mitte gewonnen",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:51",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:57",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:03",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:09",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:15",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:21",
+      "typ": "TOR",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Tor durch #29 Timo Roter",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:50",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "details": "Bully in der Mitte gewonnen",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:54",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:59",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:06",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:11",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:18",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:23",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:30",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:35",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:42",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:47",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:54",
+      "typ": "TORSCHUSS",
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #22, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:59",
+      "typ": "TORSCHUSS",
+      "team": "ETV Piranhas Hamburg",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von #17, gehalten vom Torwart",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 1,
+    "tore_team_b": 1,
+    "torschuesse_team_a": 27,
+    "torschuesse_team_b": 24,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0,
+    "zweikampf_gesamt_a": 2,
+    "zweikampf_gesamt_b": 1,
+    "zweikampf_zonen_a": {
+      "GEGN_HALB": 1,
+      "GEGN_SLOT": 1
+    },
+    "zweikampf_zonen_b": {
+      "GEGN_TORRAUM": 1
+    },
+    "konter_zonen_a": {},
+    "konter_zonen_b": {},
+    "zweikampf_quote_a": 100,
+    "zweikampf_quote_b": 100
+  },
+  "spieler_zweikampf": {
+    "#8": {
+      "team": "ETV Piranhas Hamburg",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "GEGN_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#19": {
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    },
+    "#17": {
+      "team": "ETV Piranhas Hamburg",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_SLOT": 1,
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 2,
+      "zweikampf_quote": 50
+    },
+    "#18": {
+      "team": "Blau-Weiß 96 Schenefeld",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_SLOT": 1,
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 2,
+      "zweikampf_quote": 50
+    }
+  },
+  "_meta": {
+    "videotitel": "1. FBL 8. Spieltag - BW 96 Schenefeld vs. ETV Piranhhas Hamburg",
+    "datum": "11.04.2026",
+    "dateiname": "1._fbl_8._spieltag_-_bw_96_schenefeld_vs._etv_piranhhas_hamb_20260411_1.json"
+  }
+}

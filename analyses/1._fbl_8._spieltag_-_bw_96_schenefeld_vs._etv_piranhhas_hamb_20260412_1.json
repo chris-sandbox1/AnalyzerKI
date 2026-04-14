@@ -1,0 +1,2734 @@
+{
+  "zusammenfassung": "[Drittel 1] Die ersten Minuten des Spiels sind geprägt von zahlreichen Face-offs, gefolgt von schnellen Torschüssen beider Teams, die jedoch alle von den jeweiligen Torhütern pariert werden konnten. Es gab keine Tore, Strafen oder Konter in diesem Abschnitt. | [Drittel 2] Das Video zeigt Ausschnitte aus dem zweiten Drittel eines Floorballspiels zwischen Blau-Weiß 96 Schenefeld und ETV Piranhas Hamburg. ETVP dominiert die Angriffe und erzielt mehrere Torschüsse, die jedoch alle vom BW96-Torwart gehalten werden. BW96 gelingt ein Torschuss. Das Video endet mit einer 2-Minuten-Strafe gegen ETVP. | [Drittel 3] Das dritte Drittel begann mit einem Powerplay-Tor für Blau-Weiß 96 Schenefeld, das die Führung auf 2:0 ausbaute. Anschließend entwickelte sich ein Spiel mit vielen Torschüssen auf beiden Seiten, die jedoch von den Torhütern pariert wurden.",
+  "ereignisse": [
+    {
+      "timestamp": "00:07",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "00:19",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:22",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "00:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:59",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:00",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:13",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:21",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:22",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:27",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:28",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:34",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:35",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:41",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:42",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:48",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:49",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "01:55",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:56",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:03",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:09",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:10",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:16",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:17",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:23",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:29",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:30",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:36",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:37",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:44",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:50",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:51",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "02:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:58",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:05",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:11",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:12",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:18",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:19",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:25",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:26",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:33",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:39",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:40",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:46",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "03:53",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:54",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:00",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:01",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:08",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:14",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:15",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:21",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:22",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:29",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:35",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:36",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:43",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:49",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:50",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "Face-off gewonnen von ETVP in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "04:56",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP, vom Torwart gehalten.",
+      "sequenz": "Drittel 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:57",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "Face-off gewonnen von BW96 in der Mitte des Spielfelds.",
+      "sequenz": "Drittel 1"
+    },
+    {
+      "timestamp": "05:24",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "ETVP #8 (Paul Dall) schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:27",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "ETVP #18 schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt Ball nach Torschuss",
+      "sequenz": "Drittel 2"
+    },
+    {
+      "timestamp": "05:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt Ball in RUECKRAUM",
+      "sequenz": "Drittel 2"
+    },
+    {
+      "timestamp": "05:33",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "ETVP #18 schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:34",
+      "typ": "ZWEIKAMPF",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#20",
+      "spieler_verlierer": "#18",
+      "details": "BW96 #20 gewinnt Zweikampf gegen ETVP #18",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:03",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "ETVP #8 (Paul Dall) schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt Ball in RUECKRAUM",
+      "sequenz": "Drittel 2"
+    },
+    {
+      "timestamp": "09:08",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "ETVP #18 schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:14",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "BW96_HALB_MITTE",
+      "details": "BW96 #3 (Felix Braun) schießt, Goalie hält",
+      "sequenz": "Drittel 2",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:05",
+      "typ": "PENALTY",
+      "team": "ETVP",
+      "details": "2 Minuten Strafe gegen ETVP",
+      "sequenz": "Drittel 2"
+    },
+    {
+      "timestamp": "10:04",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #8, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:07",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #7, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:08",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Nachschuss von #7, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:09",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Nachschuss von #21, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:10",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96-Torwart sichert den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "10:24",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "BW96 gewinnt das Bully im Rückraum.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "10:40",
+      "typ": "UEBERZAHL_TOR",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Tor durch #27 Mario Schwarz im Powerplay. Assist von #26 Freddie Tiele und #22 Kilian Meiberg.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:20",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "BW96",
+      "details": "BW96 gewinnt das Bully im Rückraum.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:23",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:27",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:28",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:32",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #18, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "11:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "11:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "12:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "12:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "13:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "13:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "14:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "14:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "15:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "15:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "16:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "16:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "17:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "17:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:21",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:26",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:31",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:41",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:47",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:51",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:52",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "18:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "18:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "19:01",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "19:02",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "19:06",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "19:07",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "19:11",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "details": "ETVP gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "19:12",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von #20, gehalten vom BW96-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "19:16",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "details": "BW96 gewinnt den Ball.",
+      "sequenz": "Drittel 3"
+    },
+    {
+      "timestamp": "19:17",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von #11, gehalten vom ETVP-Torwart.",
+      "sequenz": "Drittel 3",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 1,
+    "tore_team_b": 0,
+    "torschuesse_team_a": 65,
+    "torschuesse_team_b": 69,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 0,
+    "penalties_team_b": 1,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 1,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {
+      "ETVP_TORRAUM": 1
+    },
+    "konter_zonen_a": {},
+    "konter_zonen_b": {},
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 100
+  },
+  "spieler_zweikampf": {
+    "#20": {
+      "team": "BW96",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "ETVP_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#18": {
+      "team": "ETVP",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "ETVP_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "_meta": {
+    "videotitel": "1. FBL 8. Spieltag - BW 96 Schenefeld vs. ETV Piranhhas Hamburg",
+    "datum": "12.04.2026",
+    "dateiname": "1._fbl_8._spieltag_-_bw_96_schenefeld_vs._etv_piranhhas_hamb_20260412_1.json",
+    "team_a": "BW 96 Schenefeld",
+    "team_b": "ETV Piranhhas Hamburg",
+    "team_a_kuerzel": "BW96",
+    "team_b_kuerzel": "ETVP"
+  }
+}

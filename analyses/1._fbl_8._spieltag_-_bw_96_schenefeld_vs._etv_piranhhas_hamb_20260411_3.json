@@ -1,0 +1,1409 @@
+{
+  "zusammenfassung": "[Teil 1] Die ersten drei Minuten des Spiels sind geprägt von vielen Torschüssen beider Teams, wobei die Torhüter alle Versuche abwehren konnten. ETVP hatte eine frühe Torchance und erhielt eine Zeitstrafe. | [Teil 2] Das Spiel ist geprägt von vielen Torschüssen beider Teams, die jedoch alle vom jeweiligen Torwart gehalten werden. Es gibt keine Tore oder Strafen in diesem Ausschnitt, aber einige Ballbesitzwechsel und Zweikämpfe.",
+  "ereignisse": [
+    {
+      "timestamp": "00:07",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "ETVP",
+      "details": "ETVP gewinnt das Bully im Rückraum.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "00:13",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #22, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:18",
+      "typ": "CHANCE",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #13, vom Torwart gehalten. Kommentator erwähnt 'erste Möglichkeit'.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:24",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von BW96 #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:28",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_TORRAUM_MITTE",
+      "details": "Schuss von BW96 #13, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:33",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #36, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:37",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:41",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #28, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:43",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #11, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:49",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:53",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:55",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #28, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:57",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:58",
+      "typ": "PENALTY",
+      "team": "ETVP",
+      "details": "Foul von ETVP #10, 2 Minuten Strafe.",
+      "sequenz": "Teil 1"
+    },
+    {
+      "timestamp": "01:02",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:06",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:10",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:13",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #13, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:16",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #28, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:18",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:22",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:25",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:27",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:31",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:35",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:39",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:43",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #23, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #15, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:48",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:52",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:56",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:00",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:08",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:10",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #28, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:14",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:18",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:24",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:28",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:36",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #15, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:49",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:53",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:01",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:05",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:09",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:11",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #28, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:14",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:18",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:22",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #5, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:24",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:28",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:32",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:36",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:40",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:42",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #15, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:49",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:53",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:57",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:01",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:05",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:09",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:13",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:17",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #23, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:19",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #15, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:21",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:25",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:29",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:33",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:37",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:41",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:45",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:47",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_SLOT_MITTE",
+      "details": "Schuss von ETVP #15, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:50",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_TORRAUM_MITTE",
+      "details": "Schuss von ETVP #10, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:54",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #17, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "BW96_HALB_MITTE",
+      "details": "Schuss von ETVP #20, vom Torwart gehalten.",
+      "sequenz": "Teil 1",
+      "position": {
+        "x": 15.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:24",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #36, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:27",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von BW96 #29, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:29",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:32",
+      "typ": "ZWEIKAMPF",
+      "team": "BW96",
+      "zone": "ETVP_HALB",
+      "gewonnen": true,
+      "spieler_gewinner": "#29",
+      "spieler_verlierer": "#8",
+      "details": "BW96 #29 gewinnt den Ball gegen ETVP #8.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:32",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:34",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von BW96 #19, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:36",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:41",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:43",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "05:51",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:54",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_SLOT_MITTE",
+      "details": "Schuss von BW96 #29, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:56",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:01",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:03",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:11",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:13",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:21",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:31",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:33",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:41",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:43",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "06:51",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:01",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:03",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:11",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:13",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:21",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:23",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:31",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:33",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:41",
+      "typ": "TORSCHUSS",
+      "team": "ETVP",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von ETVP #17, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:43",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "BW96",
+      "zone": null,
+      "details": "BW96 gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    },
+    {
+      "timestamp": "07:51",
+      "typ": "TORSCHUSS",
+      "team": "BW96",
+      "zone": "ETVP_HALB_MITTE",
+      "details": "Schuss von BW96 #8, gehalten vom Torwart.",
+      "sequenz": "Teil 2",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:53",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "ETVP",
+      "zone": null,
+      "details": "ETVP gewinnt Ballbesitz.",
+      "sequenz": "Teil 2"
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 0,
+    "tore_team_b": 0,
+    "torschuesse_team_a": 19,
+    "torschuesse_team_b": 28,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 1,
+    "penalties_team_a": 0,
+    "penalties_team_b": 1,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 1,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {
+      "ETVP_HALB": 1
+    },
+    "konter_zonen_a": {},
+    "konter_zonen_b": {},
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 100
+  },
+  "spieler_zweikampf": {
+    "#29": {
+      "team": "BW96",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "ETVP_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#8": {
+      "team": "ETVP",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "ETVP_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "_meta": {
+    "videotitel": "1. FBL 8. Spieltag - BW 96 Schenefeld vs. ETV Piranhhas Hamburg",
+    "datum": "11.04.2026",
+    "dateiname": "1._fbl_8._spieltag_-_bw_96_schenefeld_vs._etv_piranhhas_hamb_20260411_3.json",
+    "team_a": "BW 96 Schenefeld",
+    "team_b": "ETV Piranhhas Hamburg",
+    "team_a_kuerzel": "BW96",
+    "team_b_kuerzel": "ETVP"
+  }
+}

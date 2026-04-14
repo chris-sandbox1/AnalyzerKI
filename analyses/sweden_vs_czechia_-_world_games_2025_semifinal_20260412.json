@@ -1,0 +1,351 @@
+{
+  "zusammenfassung": "In einem spannenden Halbfinale zwischen Schweden und Tschechien fielen die Tore abwechselnd. Schweden ging zweimal in Führung, doch Tschechien glich jeweils aus. In der Verlängerung konnte Schweden schließlich den entscheidenden Treffer erzielen und sich den Sieg sichern.",
+  "ereignisse": [
+    {
+      "timestamp": "00:11",
+      "typ": "TOR",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Direktschuss von #19 Eriksson nach Pass von #28.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:44",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #21, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:51",
+      "typ": "TOR",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #9 Zakonov nach Pass von #13 Havlas.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:24",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #13 Havlas, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:25",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:29",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #28 Eriksson, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:33",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #19, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:35",
+      "typ": "PENALTY",
+      "team": "SWED",
+      "details": "#28 Ramirez, Tripping, 2 Minuten."
+    },
+    {
+      "timestamp": "01:47",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:49",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:42",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:08",
+      "typ": "TOR",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #65 Höglund nach Pass von #12 Lundmark.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:58",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #29 Langer, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:09",
+      "typ": "TOR",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #24 Bursik nach Pass von #17 Nemecek.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:49",
+      "typ": "ZWEIKAMPF",
+      "team": "CZEC",
+      "zone": "CZEC_HALB",
+      "gewonnen": true,
+      "spieler_gewinner": "#9 Hemerka",
+      "spieler_verlierer": "#87",
+      "details": "Hemerka gewinnt den Ball gegen #87.",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:05",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:18",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:20",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:29",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:42",
+      "typ": "TORSCHUSS",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark, vom Torwart gehalten.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:04",
+      "typ": "TOR",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #12 Lundmark.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:47",
+      "typ": "TOR",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #20 Ulriksson nach Pass von #12 Lundmark.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:12",
+      "typ": "TORSCHUSS",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #8 Benes, vom Torwart gehalten.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:39",
+      "typ": "TOR",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #21 Hanak nach Pass von #8 Benes.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:18",
+      "typ": "TOR",
+      "team": "CZEC",
+      "zone": "SWED_TORRAUM_MITTE",
+      "details": "Schuss von #17 Nemecek nach Pass von #8 Benes.",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:34",
+      "typ": "TOR",
+      "team": "SWED",
+      "zone": "CZEC_TORRAUM_MITTE",
+      "details": "Schuss von #28 Ramirez.",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 4,
+    "tore_team_b": 4,
+    "torschuesse_team_a": 24,
+    "torschuesse_team_b": 6,
+    "konter_gesamt": 0,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 1,
+    "penalties_team_b": 0,
+    "zweikampf_quote_a": 0,
+    "zweikampf_quote_b": 100,
+    "zweikampf_gesamt_a": 0,
+    "zweikampf_gesamt_b": 1,
+    "zweikampf_zonen_a": {},
+    "zweikampf_zonen_b": {
+      "CZEC_HALB": 1
+    },
+    "konter_zonen_a": {},
+    "konter_zonen_b": {}
+  },
+  "spieler_zweikampf": {
+    "#9 Hemerka": {
+      "team": "CZEC",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "CZEC_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#87": {
+      "team": "SWED",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "CZEC_HALB": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "_meta": {
+    "videotitel": "Sweden vs Czechia - World Games 2025 SEMIFINAL",
+    "datum": "12.04.2026",
+    "dateiname": "sweden_vs_czechia_-_world_games_2025_semifinal_20260412.json",
+    "team_a": "Sweden",
+    "team_b": "Czechia - World Games",
+    "team_a_kuerzel": "SWED",
+    "team_b_kuerzel": "CZEC"
+  }
+}

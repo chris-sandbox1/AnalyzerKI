@@ -1,0 +1,546 @@
+{
+  "zusammenfassung": "In einem spannenden Floorball-Spiel führte Falun früh mit 3:0. Storvreta kämpfte sich jedoch zurück und glich in der dritten Periode aus, was zu einer Verlängerung führte. Nach einer torlosen Verlängerung gewann Falun das Penaltyschiessen mit 3:1.",
+  "ereignisse": [
+    {
+      "timestamp": "00:03",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STO",
+      "details": "Face-off gewonnen im Rückraum"
+    },
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:20",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_SLOT_MITTE",
+      "details": "Weitschuss, geblockt",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor durch #88 Dagall",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:49",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor durch #14 Lundmark",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:19",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_SLOT_MITTE",
+      "details": "Weitschuss, geblockt",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:25",
+      "typ": "ZWEIKAMPF",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#86 Ruud",
+      "spieler_verlierer": "#17",
+      "details": "Zweikampf an der Bande, Ruud gewinnt den Ball",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "PENALTY",
+      "team": "STO",
+      "details": "Unsportliches Verhalten, #86 Ruud, 2 Minuten"
+    },
+    {
+      "timestamp": "01:30",
+      "typ": "PENALTY",
+      "team": "FAL",
+      "details": "Unsportliches Verhalten, #17, 2 Minuten"
+    },
+    {
+      "timestamp": "01:43",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:02",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:04",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor durch #22 Lundmark",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:25",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:33",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_SLOT_MITTE",
+      "details": "Weitschuss, gehalten",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:37",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_SLOT_MITTE",
+      "details": "Weitschuss, gehalten",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Tor durch #79 Kohonen",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:45",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Tor durch #14 Lundmark (nach Videobeweis annulliert)",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FAL",
+      "details": "Tor von Storvreta nach Videobeweis annulliert"
+    },
+    {
+      "timestamp": "04:25",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:27",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Tor durch #20",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:01",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:13",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:16",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:19",
+      "typ": "ZWEIKAMPF",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM",
+      "gewonnen": false,
+      "spieler_verlierer": "#86 Ruud",
+      "details": "Ruud liegt nach Zweikampf am Boden",
+      "position": {
+        "x": 5.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:38",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:58",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:12",
+      "typ": "UEBERZAHL_TOR",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Tor durch #71 bei leerem Tor",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:51",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:00",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_SLOT_MITTE",
+      "details": "Weitschuss, knapp vorbei",
+      "position": {
+        "x": 9.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:08",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:12",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "EIGN_TORRAUM_MITTE",
+      "details": "Schuss aufs Tor, gehalten",
+      "position": {
+        "x": 4.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:37",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Tor durch #19 Eriksson",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:54",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Tor durch #86 Ruud",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:15",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Tor durch #79 Kohonen",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:46",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Schuss gehalten durch #1 Lindblom",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:06",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Schuss daneben durch #7 Weidman",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:25",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Schuss gehalten durch #94 Parsjo",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:44",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Tor durch #18",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:05",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Schuss nicht ausgeführt durch #22 Lundmark",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:29",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Schuss daneben durch #20",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:54",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Schuss gehalten durch #94 Parsjo",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 3,
+    "tore_team_b": 3,
+    "torschuesse_team_a": 6,
+    "torschuesse_team_b": 18,
+    "konter_gesamt": 1,
+    "chancen_gesamt": 0,
+    "penalties_team_a": 1,
+    "penalties_team_b": 1,
+    "zweikampf_quote_a": 50,
+    "zweikampf_quote_b": 0,
+    "zweikampf_gesamt_a": 2,
+    "zweikampf_gesamt_b": 0,
+    "zweikampf_zonen_a": {
+      "GEGN_TORRAUM": 1,
+      "EIGN_TORRAUM": 1
+    },
+    "zweikampf_zonen_b": {},
+    "konter_zonen_a": {},
+    "konter_zonen_b": {}
+  },
+  "spieler_zweikampf": {
+    "#86 Ruud": {
+      "team": "STO",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1,
+        "EIGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 2,
+      "zweikampf_quote": 50
+    },
+    "#17": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "warnung": "Ereignis-Zählung weicht vom Statistik-Feld ab: Ereignisse zeigen 4:3 (STO:FAL), Statistik zeigt 3:3 — möglicherweise ein Event falsch klassifiziert.",
+  "_meta": {
+    "videotitel": "Falun_vs_Storvreta_-_Champions_Cup_FINAL_Highlights",
+    "datum": "11.04.2026",
+    "dateiname": "falun_vs_storvreta_-_champions_cup_final_highlights_20260411_2.json"
+  }
+}

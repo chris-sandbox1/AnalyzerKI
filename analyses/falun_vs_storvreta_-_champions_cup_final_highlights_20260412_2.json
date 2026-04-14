@@ -1,0 +1,593 @@
+{
+  "zusammenfassung": "In einem spannenden Floorball-Spiel gewinnt Falun nach einem 3:0-Vorsprung, den Storvreta auf 3:3 aufholen konnte, im Penaltyschiessen. Storvreta zeigte eine beeindruckende Aufholjagd, konnte aber im Penaltyschiessen nicht die entscheidenden Tore erzielen, während Falun die Nerven behielt.",
+  "ereignisse": [
+    {
+      "timestamp": "00:03",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "FAL",
+      "details": "Falun gewinnt das Bully im Mittelkreis"
+    },
+    {
+      "timestamp": "00:07",
+      "typ": "TORSCHUSS",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Falun, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:10",
+      "typ": "FACE_OFF_GEWONNEN",
+      "team": "STO",
+      "details": "Storvreta gewinnt das Bully im Mittelkreis"
+    },
+    {
+      "timestamp": "00:20",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Weitschuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:25",
+      "typ": "KONTER",
+      "team": "FAL",
+      "zone": "EIGN_HALB",
+      "details": "Falun startet einen schnellen Gegenangriff",
+      "position": {
+        "x": 16.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:26",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Falun durch #88 Omar Aldeeb",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "00:46",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "FAL",
+      "details": "Storvreta verliert den Ball in der eigenen Hälfte"
+    },
+    {
+      "timestamp": "00:48",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Falun durch #14 Malte Lundmark",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:19",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Weitschuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:29",
+      "typ": "ZWEIKAMPF",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": true,
+      "spieler_gewinner": "#86 Ruud",
+      "spieler_verlierer": "#17",
+      "details": "Rauferei nach dem Pfiff, Spieler #86 Ruud und #17 geraten aneinander",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:43",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_SLOT_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 31.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:46",
+      "typ": "CHANCE",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschusschance für Storvreta, aber der Ball wird geblockt",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "01:48",
+      "typ": "ZWEIKAMPF",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": false,
+      "spieler_verlierer": "#14 Lundmark",
+      "details": "Spieler #14 Lundmark wird über die Bande geschubst, es kommt zu einer weiteren Auseinandersetzung",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:03",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Falun durch #22 Tobias Bergfors",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:26",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "02:43",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Storvreta durch #79 Gabriel Kohonen",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:31",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:47",
+      "typ": "TOR",
+      "team": "FAL",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Falun durch #14 Malte Lundmark",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "03:55",
+      "typ": "GOAL_REVIEW",
+      "team": "FAL",
+      "details": "Tor für Falun wird überprüft"
+    },
+    {
+      "timestamp": "04:10",
+      "typ": "BALLBESITZWECHSEL",
+      "team": "STO",
+      "details": "Tor für Falun wird nach Videobeweis annulliert"
+    },
+    {
+      "timestamp": "04:27",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Storvreta durch #79 Gabriel Kohonen",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "04:58",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:06",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:10",
+      "typ": "CHANCE",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Chance für Storvreta nach Abpraller",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:13",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, geblockt",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:17",
+      "typ": "CHANCE",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Weitere Chance für Storvreta, aber der Ball geht nicht rein",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:25",
+      "typ": "ZWEIKAMPF",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM",
+      "gewonnen": false,
+      "spieler_verlierer": "#65",
+      "details": "Spieler #65 von Storvreta liegt verletzt am Boden, das Spiel läuft weiter",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:38",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:48",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:50",
+      "typ": "CHANCE",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Nachschusschance für Storvreta, aber der Torwart hält erneut",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "05:58",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:02",
+      "typ": "EMPTY_NET",
+      "team": "STO",
+      "details": "Storvreta spielt mit leerem Tor für einen zusätzlichen Feldspieler"
+    },
+    {
+      "timestamp": "06:12",
+      "typ": "TOR",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Tor für Storvreta durch #71 Emil Ruud ins leere Tor",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:41",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Letzter Schuss von Storvreta vor dem Ende der regulären Spielzeit",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:51",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "06:55",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, geblockt",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:01",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_HALB_MITTE",
+      "details": "Weitschuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 25.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:08",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Schuss von Storvreta, vom Torwart gehalten",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:13",
+      "typ": "TORSCHUSS",
+      "team": "STO",
+      "zone": "GEGN_TORRAUM_MITTE",
+      "details": "Letzter Schuss von Storvreta in der Verlängerung",
+      "position": {
+        "x": 36.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:37",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Eriksson verwandelt den Penalty für Falun",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "07:55",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Ruud verwandelt den Penalty für Storvreta",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:15",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Kohonen verwandelt den Penalty für Falun",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "08:46",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Kalentun scheitert am Torwart von Falun",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:06",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Weidman verfehlt das Tor für Falun",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:26",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Aldeeb scheitert am Torwart von Falun",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "09:45",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Öhgren scheitert am Torwart von Storvreta",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:06",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Lundmark verfehlt das Tor für Storvreta",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:30",
+      "typ": "PENALTY_SHOT",
+      "team": "FAL",
+      "zone": "PENALTY",
+      "details": "Dalagård scheitert am Torwart von Storvreta",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    },
+    {
+      "timestamp": "10:54",
+      "typ": "PENALTY_SHOT",
+      "team": "STO",
+      "zone": "PENALTY",
+      "details": "Bergfors scheitert am Torwart von Falun, Falun gewinnt das Spiel",
+      "position": {
+        "x": 35.0,
+        "y": 10.0
+      }
+    }
+  ],
+  "statistik": {
+    "tore_team_a": 3,
+    "tore_team_b": 3,
+    "torschuesse_team_a": 1,
+    "torschuesse_team_b": 15,
+    "konter_gesamt": 1,
+    "chancen_gesamt": 3,
+    "penalties_team_a": 0,
+    "penalties_team_b": 0,
+    "zweikampf_quote_a": 100,
+    "zweikampf_quote_b": 0,
+    "zweikampf_gesamt_a": 1,
+    "zweikampf_gesamt_b": 2,
+    "zweikampf_zonen_a": {
+      "GEGN_TORRAUM": 1
+    },
+    "zweikampf_zonen_b": {
+      "GEGN_TORRAUM": 2
+    },
+    "konter_zonen_a": {
+      "EIGN_HALB": 1
+    },
+    "konter_zonen_b": {}
+  },
+  "spieler_zweikampf": {
+    "#86 Ruud": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 1,
+      "zweikampf_verloren": 0,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 100
+    },
+    "#17": {
+      "team": "STO",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    },
+    "#14 Lundmark": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    },
+    "#65": {
+      "team": "FAL",
+      "zweikampf_gewonnen": 0,
+      "zweikampf_verloren": 1,
+      "zweikampf_zonen": {
+        "GEGN_TORRAUM": 1
+      },
+      "zweikampf_gesamt": 1,
+      "zweikampf_quote": 0
+    }
+  },
+  "warnung": "Ereignis-Zählung weicht vom Statistik-Feld ab: Ereignisse zeigen 3:4 (STO:FAL), Statistik zeigt 3:3 — möglicherweise ein Event falsch klassifiziert.",
+  "_meta": {
+    "videotitel": "Falun_vs_Storvreta_-_Champions_Cup_FINAL_Highlights",
+    "datum": "12.04.2026",
+    "dateiname": "falun_vs_storvreta_-_champions_cup_final_highlights_20260412_2.json"
+  }
+}
