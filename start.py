@@ -8,6 +8,7 @@ Routen:
 """
 
 import http.server
+import socketserver
 import webbrowser
 import threading
 import os
@@ -24,24 +25,8 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path in ('/analyses', '/analyses/'):
             self._serve_analyses_list()
-        elif self.path in ('/data/alltime.json',):
-            self._serve_json_file(os.path.join('data', 'alltime.json'))
         else:
             super().do_GET()
-
-    def _serve_json_file(self, pfad):
-        """Liefert eine JSON-Datei direkt aus."""
-        if not os.path.exists(pfad):
-            self.send_error(404, f'Datei nicht gefunden: {pfad}')
-            return
-        with open(pfad, 'rb') as f:
-            body = f.read()
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json; charset=utf-8')
-        self.send_header('Content-Length', str(len(body)))
-        self.send_header('Cache-Control', 'no-cache')
-        self.end_headers()
-        self.wfile.write(body)
 
     def _serve_analyses_list(self):
         """Liest alle Analyse-JSON-Dateien und gibt eine sortierte Liste zurück."""
@@ -77,8 +62,12 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         pass  # Keine Konsolenausgabe pro Anfrage
 
 
+class ThreadingServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    """Jede Anfrage bekommt einen eigenen Thread — kein gegenseitiges Blockieren."""
+    daemon_threads = True
+
 def server_starten():
-    with http.server.HTTPServer(('', PORT), DashboardHandler) as server:
+    with ThreadingServer(('', PORT), DashboardHandler) as server:
         server.serve_forever()
 
 
