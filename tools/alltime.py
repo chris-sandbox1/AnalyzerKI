@@ -10,6 +10,7 @@ import os
 import re
 import sys
 import time
+import threading
 from datetime import date
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.request import urlopen
@@ -20,20 +21,38 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 API_BASE   = 'https://saisonmanager.de/api/v2'
 TIMEOUT    = 15   # Sekunden bis ein einzelner Request aufgibt
-MAX_WORKER = 10   # Maximale gleichzeitige Verbindungen (konservativer gegen Rate-Limiting)
+MAX_WORKER = 8    # Gleichzeitige Verbindungen
+REQ_PRO_SEK = 6  # Globales Request-Limit (verhindert Rate-Limiting)
+
+# ── Globaler Rate-Limiter ─────────────────────────────────────────────────────
+_rate_lock      = threading.Lock()
+_letzter_request = 0.0
+
+def rate_wait():
+    """Stellt sicher dass nie mehr als REQ_PRO_SEK Requests pro Sekunde gesendet werden."""
+    global _letzter_request
+    min_abstand = 1.0 / REQ_PRO_SEK
+    with _rate_lock:
+        jetzt = time.time()
+        warten = min_abstand - (jetzt - _letzter_request)
+        if warten > 0:
+            time.sleep(warten)
+        _letzter_request = time.time()
 
 
 def fetch_json(url, versuche=4):
     """Lädt eine URL mit bis zu `versuche` Wiederholungen bei Fehlern."""
     for i in range(versuche):
+        rate_wait()
         try:
             with urlopen(url, timeout=TIMEOUT) as resp:
-                return json.loads(resp.read().decode('utf-8'))
+                data = resp.read()
+                return json.loads(data.decode('utf-8'))
         except HTTPError:
             return None   # 404 etc. → Liga hat keine Daten, kein Retry nötig
         except Exception:
             if i < versuche - 1:
-                time.sleep(1.0 * (i + 1))  # 1s, 2s, 3s Pause zwischen Versuchen
+                time.sleep(2.0 * (i + 1))  # 2s, 4s, 6s Pause bei echten Fehlern
     return None
 
 
@@ -209,4 +228,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"\nUNERWARTETER FEHLER: {e}")
+        import traceback
+        traceback.print_exc()
+    input("\nDrücke Enter zum Beenden…")
