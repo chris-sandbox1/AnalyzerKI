@@ -148,15 +148,25 @@ def main():
                     'tore':         0,
                     'assists':      0,
                     'strafminuten': 0,
+                    'p2':     0,
+                    'p2and2': 0,
+                    'p5':     0,
+                    'p10':    0,
+                    'ms':     0,
                     'geschlecht':   geschlecht,
                 }
             sp = spieler_map[pid]
             sp['first_name'] = s.get('first_name') or sp['first_name']
             sp['last_name']  = s.get('last_name')  or sp['last_name']
-            sp['spiele']       += s.get('games')   or 0
-            sp['tore']         += s.get('goals')   or 0
-            sp['assists']      += s.get('assists')  or 0
+            sp['spiele']       += s.get('games')         or 0
+            sp['tore']         += s.get('goals')         or 0
+            sp['assists']      += s.get('assists')        or 0
             sp['strafminuten'] += pim(s)
+            sp['p2']           += s.get('penalty_2')     or 0
+            sp['p2and2']       += s.get('penalty_2and2') or 0
+            sp['p5']           += s.get('penalty_5')     or 0
+            sp['p10']          += s.get('penalty_10')    or 0
+            sp['ms']           += s.get('penalty_match') or 0
             if s.get('team_name'):
                 sp['teams'].add(s['team_name'])
             if sp['geschlecht'] != geschlecht:

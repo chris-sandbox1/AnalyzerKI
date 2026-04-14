@@ -855,6 +855,9 @@
     <button class="filter-btn active" onclick="setScorerSort('punkte', this)">Nach Punkten</button>
     <button class="filter-btn"        onclick="setScorerSort('tore', this)">Nach Toren</button>
     <div class="scorer-sep"></div>
+    <button class="filter-btn" id="scorer-strafen-btn" onclick="toggleStrafenDetails('scorer')">Strafen Details</button>
+    <button class="filter-btn" id="scorer-pergame-btn" onclick="togglePerGame('scorer')">Pro Spiel</button>
+    <div class="scorer-sep"></div>
     <select class="scorer-select" id="scorer-team-filter" onchange="renderScorer()">
       <option value="">Alle Teams</option>
     </select>
@@ -883,6 +886,9 @@
     <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
     <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
     <div class="alltime-sep"></div>
+    <button class="filter-btn" id="alltime-strafen-btn" onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
+    <button class="filter-btn" id="alltime-pergame-btn" onclick="togglePerGame('alltime')">Pro Spiel</button>
+    <div class="alltime-sep"></div>
     <input class="alltime-search" type="text" id="alltime-suche" placeholder="Spieler oder Team suchen…" oninput="onAlltimeSuche(this.value)">
   </div>
   <div id="gender-hint"></div>
@@ -897,6 +903,9 @@
     <button class="filter-btn active" onclick="setStaticGender('alle',  this)">Alle</button>
     <button class="filter-btn"        onclick="setStaticGender('herren',this)">Herren</button>
     <button class="filter-btn"        onclick="setStaticGender('damen', this)">Damen</button>
+    <div class="alltime-sep"></div>
+    <button class="filter-btn" id="static-strafen-btn" onclick="toggleStrafenDetails('static')">Strafen Details</button>
+    <button class="filter-btn" id="static-pergame-btn" onclick="togglePerGame('static')">Pro Spiel</button>
     <div class="alltime-sep"></div>
     <input class="alltime-search" type="text" id="static-suche"
            placeholder="Spieler oder Team suchen…" oninput="onStaticSuche(this.value)">
@@ -940,6 +949,15 @@ let staticSortS   = 'punkte';
 let staticSortT   = 'punkte';
 let staticGender  = 'alle';
 let staticSuche   = '';
+
+// Toggle: Strafdetails + Pro-Spiel-Spalten
+let scorerStrafenDetails  = false;
+let scorerPerGame         = false;
+let alltimeStrafenDetails = false;
+let alltimePerGame        = false;
+let staticStrafenDetails  = false;
+let staticPerGame         = false;
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Partikel
@@ -1268,7 +1286,42 @@ function setScorerSort(s, btn) {
   scorerSort = s;
   document.querySelectorAll('#scorer-controls .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  // Re-sync toggle buttons (they're not sort buttons but share the class)
+  document.getElementById('scorer-strafen-btn')?.classList.toggle('active', scorerStrafenDetails);
+  document.getElementById('scorer-pergame-btn')?.classList.toggle('active', scorerPerGame);
   renderScorer();
+}
+
+function toggleStrafenDetails(context) {
+  if (context === 'scorer') {
+    scorerStrafenDetails = !scorerStrafenDetails;
+    document.getElementById('scorer-strafen-btn')?.classList.toggle('active', scorerStrafenDetails);
+    renderScorer();
+  } else if (context === 'alltime') {
+    alltimeStrafenDetails = !alltimeStrafenDetails;
+    document.getElementById('alltime-strafen-btn')?.classList.toggle('active', alltimeStrafenDetails);
+    renderAlltime();
+  } else if (context === 'static') {
+    staticStrafenDetails = !staticStrafenDetails;
+    document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
+    renderStaticAlltime();
+  }
+}
+
+function togglePerGame(context) {
+  if (context === 'scorer') {
+    scorerPerGame = !scorerPerGame;
+    document.getElementById('scorer-pergame-btn')?.classList.toggle('active', scorerPerGame);
+    renderScorer();
+  } else if (context === 'alltime') {
+    alltimePerGame = !alltimePerGame;
+    document.getElementById('alltime-pergame-btn')?.classList.toggle('active', alltimePerGame);
+    renderAlltime();
+  } else if (context === 'static') {
+    staticPerGame = !staticPerGame;
+    document.getElementById('static-pergame-btn')?.classList.toggle('active', staticPerGame);
+    renderStaticAlltime();
+  }
 }
 
 function befuelleTeamDropdowns() {
@@ -1306,7 +1359,9 @@ function renderScorer() {
   });
 
   const rows = data.map((s, i) => {
-    const punkte = s.goals + s.assists;
+    const punkte   = s.goals + s.assists;
+    const pimTotal = pim(s);
+    const sp       = s.games || 1;
     return `
     <tr>
       <td><span class="scorer-rank">${i + 1}</span></td>
@@ -1316,7 +1371,13 @@ function renderScorer() {
       <td class="scorer-goals">${s.goals}</td>
       <td>${s.assists}</td>
       <td class="scorer-pkt">${punkte}</td>
-      <td>${pim(s)}'</td>
+      ${scorerStrafenDetails
+        ? `<td>${s.penalty_2 || 0}</td><td>${s.penalty_2and2 || 0}</td><td>${s.penalty_5 || 0}</td><td>${s.penalty_10 || 0}</td><td>${s.penalty_match || 0}</td>`
+        : ''}
+      <td>${pimTotal}'</td>
+      ${scorerPerGame
+        ? `<td>${(punkte / sp).toFixed(2)}</td><td>${(s.goals / sp).toFixed(2)}</td><td>${(s.assists / sp).toFixed(2)}</td><td>${(pimTotal / sp).toFixed(2)}'</td>`
+        : ''}
     </tr>`;
   }).join('');
 
@@ -1333,7 +1394,13 @@ function renderScorer() {
             <th class="${scorerSort === 'tore' ? 'sort-active' : ''}" onclick="setScorerSort('tore', this)" title="Tore">G</th>
             <th>A</th>
             <th class="${scorerSort === 'punkte' ? 'sort-active' : ''}" onclick="setScorerSort('punkte', this)" title="Punkte (Tore+Assists)">Pkt</th>
-            <th title="Strafminuten">PIM</th>
+            ${scorerStrafenDetails
+              ? `<th title="2-Minuten-Strafen">2'</th><th title="2+2-Minuten-Strafen">2+2</th><th title="5-Minuten-Strafen">5'</th><th title="10-Minuten-Strafen">10'</th><th title="Matchstrafen">MS</th>`
+              : ''}
+            <th title="Strafminuten gesamt">PIM</th>
+            ${scorerPerGame
+              ? `<th title="Punkte pro Spiel">Pkt/Sp</th><th title="Tore pro Spiel">G/Sp</th><th title="Assists pro Spiel">A/Sp</th><th title="PIM pro Spiel">PIM/Sp</th>`
+              : ''}
           </tr>
         </thead>
         <tbody>${rows}</tbody>
@@ -1586,6 +1653,7 @@ function aggregiereAlltime(ergebnisse) {
           first_name: s.first_name,
           last_name:  s.last_name,
           games:  0, goals: 0, assists: 0, pim: 0,
+          p2: 0, p2and2: 0, p5: 0, p10: 0, ms: 0,
           teams:  new Set(),
           ligaGender: istDamen(ligaName) ? 'damen' : 'herren',
         };
@@ -1598,6 +1666,11 @@ function aggregiereAlltime(ergebnisse) {
       sp.goals   += (s.goals   || 0);
       sp.assists += (s.assists || 0);
       sp.pim     += pim(s);
+      sp.p2      += (s.penalty_2     || 0);
+      sp.p2and2  += (s.penalty_2and2 || 0);
+      sp.p5      += (s.penalty_5     || 0);
+      sp.p10     += (s.penalty_10    || 0);
+      sp.ms      += (s.penalty_match || 0);
       if (s.team_name) sp.teams.add(s.team_name);
     });
 
@@ -1675,7 +1748,9 @@ function renderAlltime() {
     return b.punkte - a.punkte || b.goals - a.goals; // punkte
   });
 
-  const scorerRows = spieler.map((s, i) => `
+  const scorerRows = spieler.map((s, i) => {
+    const sp = s.games || 1;
+    return `
     <tr>
       <td>${i + 1}</td>
       <td>${s.first_name} ${s.last_name}</td>
@@ -1684,8 +1759,15 @@ function renderAlltime() {
       <td class="at-goals">${s.goals}</td>
       <td>${s.assists}</td>
       <td class="at-pkt">${s.punkte}</td>
+      ${alltimeStrafenDetails
+        ? `<td>${s.p2 || 0}</td><td>${s.p2and2 || 0}</td><td>${s.p5 || 0}</td><td>${s.p10 || 0}</td><td>${s.ms || 0}</td>`
+        : ''}
       <td>${s.pim}'</td>
-    </tr>`).join('');
+      ${alltimePerGame
+        ? `<td>${(s.punkte / sp).toFixed(2)}</td><td>${(s.goals / sp).toFixed(2)}</td><td>${(s.assists / sp).toFixed(2)}</td><td>${(s.pim / sp).toFixed(2)}'</td>`
+        : ''}
+    </tr>`;
+  }).join('');
 
   const sHdr = (key, label) =>
     `<th class="${alltimeSortS === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortS('${key}')">${label}</th>`;
@@ -1697,7 +1779,15 @@ function renderAlltime() {
     t.team_name.toLowerCase().includes(suche)
   );
   teams = [...teams].sort((a, b) => {
-    if (alltimeSortT === 'diff') return b.goals_diff - a.goals_diff;
+    if (alltimeSortT === 'diff')           return b.goals_diff    - a.goals_diff;
+    if (alltimeSortT === 'saisons')        return b.saisons       - a.saisons;
+    if (alltimeSortT === 'games')          return b.games         - a.games;
+    if (alltimeSortT === 'won')            return b.won           - a.won;
+    if (alltimeSortT === 'won_ot')         return b.won_ot        - a.won_ot;
+    if (alltimeSortT === 'lost_ot')        return b.lost_ot       - a.lost_ot;
+    if (alltimeSortT === 'lost')           return b.lost          - a.lost;
+    if (alltimeSortT === 'goals_scored')   return b.goals_scored  - a.goals_scored;
+    if (alltimeSortT === 'goals_received') return b.goals_received - a.goals_received;
     return b.points - a.points || b.goals_diff - a.goals_diff; // punkte
   });
 
@@ -1730,6 +1820,9 @@ function renderAlltime() {
   const tHdr = (key, label) =>
     `<th class="${alltimeSortT === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortT('${key}')">${label}</th>`;
 
+  const scorerColCount = 8 + (alltimeStrafenDetails ? 5 : 0) + (alltimePerGame ? 4 : 0);
+  const teamColCount   = 11;
+
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler</div>
@@ -1743,9 +1836,15 @@ function renderAlltime() {
           ${sHdr('tore','G')}
           ${sHdr('assists','A')}
           ${sHdr('punkte','Pkt')}
+          ${alltimeStrafenDetails
+            ? `<th title="2-Minuten-Strafen">2'</th><th title="2+2-Minuten-Strafen">2+2</th><th title="5-Minuten-Strafen">5'</th><th title="10-Minuten-Strafen">10'</th><th title="Matchstrafen">MS</th>`
+            : ''}
           ${sHdr('pim','PIM')}
+          ${alltimePerGame
+            ? `<th title="Punkte pro Spiel">Pkt/Sp</th><th title="Tore pro Spiel">G/Sp</th><th title="Assists pro Spiel">A/Sp</th><th title="PIM pro Spiel">PIM/Sp</th>`
+            : ''}
         </tr></thead>
-        <tbody>${scorerRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+        <tbody>${scorerRows || `<tr><td colspan="${scorerColCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
 
@@ -1755,17 +1854,17 @@ function renderAlltime() {
         <thead><tr>
           <th>#</th>
           <th>Team</th>
-          <th title="Saisons">Sai</th>
-          <th title="Spiele">Sp</th>
-          <th title="Siege">S</th>
-          <th title="OT-Siege">OTS</th>
-          <th title="OT-Niederlagen">OTN</th>
-          <th title="Niederlagen">N</th>
+          ${tHdr('saisons','Sai')}
+          ${tHdr('games','Sp')}
+          ${tHdr('won','S')}
+          ${tHdr('won_ot','OTS')}
+          ${tHdr('lost_ot','OTN')}
+          ${tHdr('lost','N')}
           <th>T:G</th>
           ${tHdr('diff','Diff')}
           ${tHdr('punkte','Pkt')}
         </tr></thead>
-        <tbody>${teamRows || '<tr><td colspan="11" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+        <tbody>${teamRows || `<tr><td colspan="${teamColCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
   </div>`;
@@ -1776,6 +1875,8 @@ function setAlltimeGender(g, btn) {
   alltimeGender = g;
   document.querySelectorAll('#alltime-controls .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('alltime-strafen-btn')?.classList.toggle('active', alltimeStrafenDetails);
+  document.getElementById('alltime-pergame-btn')?.classList.toggle('active', alltimePerGame);
   renderAlltime();
 }
 
@@ -1854,17 +1955,24 @@ function renderStaticAlltime() {
 
   // ── Scorer-Zeilen ─────────────────────────────────────────────────────────
   const scorerRows = spieler.map((s, i) => {
-    const name  = `${s.first_name} ${s.last_name}`;
-    const teams = (s.teams || []).join(', ') || '—';
+    const name    = `${s.first_name} ${s.last_name}`;
+    const teamStr = (s.teams || []).join(', ') || '—';
+    const sp      = s.spiele || 1;
     return `<tr>
       <td class="at-rank">${i + 1}</td>
       <td class="at-name">${esc(name)}</td>
-      <td class="at-team" title="${esc(teams)}">${esc(teams.length > 40 ? teams.slice(0,38)+'…' : teams)}</td>
+      <td class="at-team" title="${esc(teamStr)}">${esc(teamStr.length > 40 ? teamStr.slice(0,38)+'…' : teamStr)}</td>
       <td>${s.spiele}</td>
       <td>${s.tore}</td>
       <td>${s.assists}</td>
       <td class="at-pkt">${s.punkte}</td>
-      <td>${s.strafminuten}</td>
+      ${staticStrafenDetails
+        ? `<td>${s.p2 || 0}</td><td>${s.p2and2 || 0}</td><td>${s.p5 || 0}</td><td>${s.p10 || 0}</td><td>${s.ms || 0}</td>`
+        : ''}
+      <td>${s.strafminuten}'</td>
+      ${staticPerGame
+        ? `<td>${(s.punkte / sp).toFixed(2)}</td><td>${(s.tore / sp).toFixed(2)}</td><td>${(s.assists / sp).toFixed(2)}</td><td>${(s.strafminuten / sp).toFixed(2)}'</td>`
+        : ''}
     </tr>`;
   }).join('');
 
@@ -1890,6 +1998,8 @@ function renderStaticAlltime() {
     ? `Stand: ${staticDaten.generiert} · ${staticDaten.ligen_gesamt} Ligen`
     : '';
 
+  const scorerColCount = 8 + (staticStrafenDetails ? 5 : 0) + (staticPerGame ? 4 : 0);
+
   document.getElementById('content-static').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title">
@@ -1906,9 +2016,15 @@ function renderStaticAlltime() {
           ${sHdr('tore','G')}
           ${sHdr('assists','A')}
           ${sHdr('punkte','Pkt')}
+          ${staticStrafenDetails
+            ? `<th title="2-Minuten-Strafen">2'</th><th title="2+2-Minuten-Strafen">2+2</th><th title="5-Minuten-Strafen">5'</th><th title="10-Minuten-Strafen">10'</th><th title="Matchstrafen">MS</th>`
+            : ''}
           ${sHdr('strafminuten','PIM')}
+          ${staticPerGame
+            ? `<th title="Punkte pro Spiel">Pkt/Sp</th><th title="Tore pro Spiel">G/Sp</th><th title="Assists pro Spiel">A/Sp</th><th title="PIM pro Spiel">PIM/Sp</th>`
+            : ''}
         </tr></thead>
-        <tbody>${scorerRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+        <tbody>${scorerRows || `<tr><td colspan="${scorerColCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
 
@@ -1920,7 +2036,7 @@ function renderStaticAlltime() {
         <thead><tr>
           <th>#</th>
           <th>Team</th>
-          <th title="Saisons">Sai</th>
+          ${tHdr('saisons','Sai')}
           ${tHdr('spiele','Sp')}
           ${tHdr('siege','S')}
           <th>T:G</th>
@@ -1937,6 +2053,8 @@ function setStaticGender(g, btn) {
   staticGender = g;
   document.querySelectorAll('#static-controls .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
+  document.getElementById('static-pergame-btn')?.classList.toggle('active', staticPerGame);
   renderStaticAlltime();
 }
 function setStaticSortS(key) { staticSortS = key; renderStaticAlltime(); }
