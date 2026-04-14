@@ -9,17 +9,17 @@ import json
 import os
 import re
 import sys
-import time
 from datetime import date
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
 
 # Projektverzeichnis (eine Ebene über tools/)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-API_BASE = 'https://saisonmanager.de/api/v2'
-DELAY    = 0.15   # Sekunden zwischen Requests (0.15s × 2 pro Liga = 0.3s gesamt)
-TIMEOUT  = 15     # Sekunden bis Request aufgibt
+API_BASE   = 'https://saisonmanager.de/api/v2'
+TIMEOUT    = 15   # Sekunden bis ein einzelner Request aufgibt
+MAX_WORKER = 20   # Maximale gleichzeitige Verbindungen
 
 
 def fetch_json(url):
@@ -27,10 +27,18 @@ def fetch_json(url):
     try:
         with urlopen(url, timeout=TIMEOUT) as resp:
             return json.loads(resp.read().decode('utf-8'))
-    except HTTPError as e:
+    except HTTPError:
         return None   # 404 etc. → Liga hat keine Daten, kein Problem
     except (URLError, Exception):
         return None
+
+
+def lade_liga(liga):
+    """Lädt scorer.json + table.json für eine Liga (wird parallel aufgerufen)."""
+    liga_id = liga['id']
+    scorer  = fetch_json(f'{API_BASE}/leagues/{liga_id}/scorer.json')
+    tabelle = fetch_json(f'{API_BASE}/leagues/{liga_id}/table.json')
+    return liga, scorer, tabelle
 
 
 def pim(s):
@@ -68,44 +76,45 @@ def main():
     duplikate = len(alle_ligen) - len(ligen)
     print(f"  {len(alle_ligen)} Einträge geladen → {len(ligen)} eindeutige Ligen"
           + (f" ({duplikate} Duplikate entfernt)" if duplikate else ""))
-    print()
+    print(f"  Lade Daten mit {MAX_WORKER} parallelen Verbindungen…\n")
 
-    # ── 2. Pro Liga: scorer.json + table.json laden und aggregieren ───────────
-    spieler_map = {}   # player_id → dict
-    team_map    = {}   # team_id   → dict
+    # ── 2. Alle Ligen parallel laden ──────────────────────────────────────────
+    ergebnisse  = []   # (liga, scorer, tabelle)
     fehler_ligen = []
+    fertig = 0
 
-    for i, liga in enumerate(ligen, 1):
-        liga_id    = liga['id']
-        liga_name  = liga.get('name', f'Liga {liga_id}')
-        game_op    = liga.get('game_operation', '—')
+    with ThreadPoolExecutor(max_workers=MAX_WORKER) as pool:
+        futures = {pool.submit(lade_liga, liga): liga for liga in ligen}
+        for future in as_completed(futures):
+            fertig += 1
+            liga, scorer, tabelle = future.result()
+            liga_name = liga.get('name', f"Liga {liga['id']}")
+            game_op   = liga.get('game_operation', '—')
+
+            if scorer is None and tabelle is None:
+                fehler_ligen.append(f"{liga_name} (ID {liga['id']})")
+                status = 'FEHLER'
+            else:
+                ergebnisse.append((liga, scorer, tabelle))
+                status = f"{len(scorer or []):>3} Scorer, {len(tabelle or []):>3} Teams"
+
+            print(f"  [{fertig:>3}/{len(ligen)}] {liga_name:<38} [{game_op[:20]:<20}]  {status}",
+                  flush=True)
+
+    # ── 3. Aggregieren ────────────────────────────────────────────────────────
+    print("\nAggregiere…", flush=True)
+    spieler_map = {}
+    team_map    = {}
+
+    for liga, scorer, tabelle in ergebnisse:
+        liga_name  = liga.get('name', '')
         geschlecht = 'damen' if ist_damen(liga_name) else 'herren'
 
-        print(f"  Liga {i:>4}/{len(ligen)}: {liga_name:<40} [{game_op}]", end='', flush=True)
-
-        # Scorer laden
-        scorer  = fetch_json(f'{API_BASE}/leagues/{liga_id}/scorer.json')
-        time.sleep(DELAY)
-
-        # Tabelle laden
-        tabelle = fetch_json(f'{API_BASE}/leagues/{liga_id}/table.json')
-        time.sleep(DELAY)
-
-        if scorer is None and tabelle is None:
-            print(f'  → FEHLER')
-            fehler_ligen.append(f'{liga_name} (ID {liga_id})')
-            continue
-
-        n_scorer  = len(scorer  or [])
-        n_tabelle = len(tabelle or [])
-        print(f'  → {n_scorer} Scorer, {n_tabelle} Teams')
-
-        # ── Spieler aggregieren ───────────────────────────────────────────────
+        # ── Spieler ───────────────────────────────────────────────────────────
         for s in (scorer or []):
             pid = s.get('player_id')
             if not pid:
-                continue   # Eintrag ohne player_id überspringen
-
+                continue
             if pid not in spieler_map:
                 spieler_map[pid] = {
                     'player_id':    pid,
@@ -118,9 +127,7 @@ def main():
                     'strafminuten': 0,
                     'geschlecht':   geschlecht,
                 }
-
             sp = spieler_map[pid]
-            # Neuesten Namen übernehmen
             sp['first_name'] = s.get('first_name') or sp['first_name']
             sp['last_name']  = s.get('last_name')  or sp['last_name']
             sp['spiele']       += s.get('games')   or 0
@@ -129,16 +136,14 @@ def main():
             sp['strafminuten'] += pim(s)
             if s.get('team_name'):
                 sp['teams'].add(s['team_name'])
-            # Wenn Spieler in Damen- UND Herren-Liga → gemischt
             if sp['geschlecht'] != geschlecht:
                 sp['geschlecht'] = 'gemischt'
 
-        # ── Teams aggregieren ─────────────────────────────────────────────────
+        # ── Teams ─────────────────────────────────────────────────────────────
         for t in (tabelle or []):
             tid = t.get('team_id')
             if not tid:
-                continue   # Eintrag ohne team_id überspringen
-
+                continue
             if tid not in team_map:
                 team_map[tid] = {
                     'team_id':    tid,
@@ -151,18 +156,17 @@ def main():
                     'punkte':     0,
                     'geschlecht': geschlecht,
                 }
-
             tm = team_map[tid]
             tm['saisons']   += 1
             tm['spiele']    += t.get('games')          or 0
-            tm['siege']     += (t.get('won')   or 0) + (t.get('won_ot') or 0)
+            tm['siege']     += (t.get('won') or 0) + (t.get('won_ot') or 0)
             tm['tore']      += t.get('goals_scored')   or 0
             tm['gegentore'] += t.get('goals_received') or 0
             tm['punkte']    += t.get('points')         or 0
             if tm['geschlecht'] != geschlecht:
                 tm['geschlecht'] = 'gemischt'
 
-    # ── 3. Finalisieren: Sets → Listen, Punkte berechnen, sortieren ───────────
+    # ── 4. Finalisieren ───────────────────────────────────────────────────────
     scorer_liste = []
     for sp in spieler_map.values():
         sp['teams']  = sorted(sp['teams'])
@@ -172,7 +176,7 @@ def main():
 
     team_liste = sorted(team_map.values(), key=lambda x: x['punkte'], reverse=True)
 
-    # ── 4. alltime.json speichern ─────────────────────────────────────────────
+    # ── 5. Speichern ──────────────────────────────────────────────────────────
     ergebnis = {
         'generiert':    str(date.today()),
         'ligen_gesamt': len(ligen),
@@ -180,11 +184,12 @@ def main():
         'teams':        team_liste,
     }
 
-    output = os.path.join(ROOT, 'alltime.json')
+    output = os.path.join(ROOT, 'data', 'alltime.json')
+    os.makedirs(os.path.dirname(output), exist_ok=True)
     with open(output, 'w', encoding='utf-8') as f:
         json.dump(ergebnis, f, ensure_ascii=False, indent=2)
 
-    # ── 5. Zusammenfassung ────────────────────────────────────────────────────
+    # ── 6. Zusammenfassung ────────────────────────────────────────────────────
     print()
     print(f"{'─'*60}")
     print(f"  Fertig!")

@@ -13,7 +13,7 @@ downloads/
 .pdf_cache.json
 
 # Generierte Alltime-Daten (wird durch tools/alltime.py erstellt)
-alltime.json
+data/alltime.json
 
 # Temporäre Dateien
 *.tmp

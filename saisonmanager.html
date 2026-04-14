@@ -1805,7 +1805,7 @@ async function ladeStaticAlltime() {
   document.getElementById('content-static').innerHTML =
     '<div class="lade-info"><div class="spinner"></div><span>Lade alltime.json…</span></div>';
   try {
-    staticDaten   = await fetchJSON('alltime.json');
+    staticDaten   = await fetchJSON('data/alltime.json');
     staticGeladen = true;
     renderStaticAlltime();
   } catch(e) {
