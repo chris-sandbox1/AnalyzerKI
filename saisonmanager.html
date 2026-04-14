@@ -809,6 +809,7 @@
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
     <button class="tab"        onclick="zeigeTab('alltime')">Alltime</button>
+    <button class="tab"        onclick="zeigeTab('static')">🇩🇪 Alltime DE</button>
   </nav>
   <div class="hd-space"></div>
   <button class="btn-topbar" onclick="datenGeladen=false;ladeDaten()">↺ Aktualisieren</button>
@@ -890,6 +891,21 @@
   </div>
 </section>
 
+<!-- TAB 6: ALLTIME DEUTSCHLAND (statisch aus alltime.json) -->
+<section id="tab-static" class="tab-content">
+  <div class="alltime-controls" id="static-controls">
+    <button class="filter-btn active" onclick="setStaticGender('alle',  this)">Alle</button>
+    <button class="filter-btn"        onclick="setStaticGender('herren',this)">Herren</button>
+    <button class="filter-btn"        onclick="setStaticGender('damen', this)">Damen</button>
+    <div class="alltime-sep"></div>
+    <input class="alltime-search" type="text" id="static-suche"
+           placeholder="Spieler oder Team suchen…" oninput="onStaticSuche(this.value)">
+  </div>
+  <div id="content-static">
+    <div class="lade-info"><div class="spinner"></div><span>Lade alltime.json…</span></div>
+  </div>
+</section>
+
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
 // Konstanten
@@ -909,13 +925,21 @@ let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
 let datenGeladen = false;
 
-// Alltime-State
+// Alltime-State (live, per Verband)
 let alltimeDaten   = null;
 let alltimeGeladen = false;
 let alltimeSortS   = 'tore';    // Scorer-Sortierung
 let alltimeSortT   = 'punkte';  // Tabellen-Sortierung
 let alltimeGender  = 'alle';
 let alltimeSuche   = '';
+
+// Static-Alltime-State (aus alltime.json)
+let staticDaten   = null;
+let staticGeladen = false;
+let staticSortS   = 'punkte';
+let staticSortT   = 'punkte';
+let staticGender  = 'alle';
+let staticSuche   = '';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Partikel
@@ -946,11 +970,12 @@ function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('header .tab').forEach((b, i) => {
-    const ids = ['tabelle','spielplan','scorer','detail','alltime'];
+    const ids = ['tabelle','spielplan','scorer','detail','alltime','static'];
     b.classList.toggle('active', ids[i] === id);
   });
   document.getElementById('tab-' + id).classList.add('active');
   if (id === 'alltime' && !alltimeGeladen) ladeAlltimeDaten();
+  if (id === 'static'  && !staticGeladen)  ladeStaticAlltime();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1485,11 +1510,16 @@ function istDamen(ligaName) {
   return /damen|frauen/i.test(ligaName);
 }
 
-// Alle Saisons aller Ligen des aktiven Verbands
+// Alle Saisons aller Ligen des aktiven Verbands — dedupliziert nach id
 function getAktivVerbandSaisons() {
   const verband = document.getElementById('verband-select')?.value || '';
   if (!verband) return [];
-  return alleligen.filter(l => l.game_operation === verband);
+  const seen = new Set();
+  return alleligen.filter(l => {
+    if (l.game_operation !== verband || seen.has(l.id)) return false;
+    seen.add(l.id);
+    return true;
+  });
 }
 
 // Alltime-Daten parallel laden
@@ -1506,21 +1536,29 @@ async function ladeAlltimeDaten() {
   document.getElementById('content-alltime').innerHTML =
     `<div class="lade-info"><div class="spinner"></div><span id="alltime-progress">Lade Saison 0/${saisons.length}…</span></div>`;
 
-  let fertig = 0;
+  let fertig = 0, fehler = 0;
+  const BATCH = 10; // max. gleichzeitige Anfragen → verhindert Rate-Limiting
   try {
-    const ergebnisse = await Promise.all(
-      saisons.map(s =>
-        Promise.all([
-          fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => []),
-          fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => []),
-        ]).then(([sc, ta]) => {
-          fertig++;
-          const el = document.getElementById('alltime-progress');
-          if (el) el.textContent = `Lade Saison ${fertig}/${saisons.length}…`;
-          return { saison: s.season || String(s.id), ligaName: s.name, scorer: sc, table: ta };
-        })
-      )
-    );
+    const ergebnisse = [];
+    for (let i = 0; i < saisons.length; i += BATCH) {
+      const batch = saisons.slice(i, i + BATCH);
+      const batchResults = await Promise.all(
+        batch.map(s =>
+          Promise.all([
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => { fehler++; return []; }),
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => { fehler++; return []; }),
+          ]).then(([sc, ta]) => {
+            fertig++;
+            const el = document.getElementById('alltime-progress');
+            if (el) el.textContent = `Lade Saison ${fertig}/${saisons.length}…`;
+            return { saison: s.season || String(s.id), ligaName: s.name, scorer: sc, table: ta };
+          })
+        )
+      );
+      ergebnisse.push(...batchResults);
+    }
+    if (fehler > 0) console.warn(`Alltime: ${fehler} Requests fehlgeschlagen (von ${saisons.length * 2} gesamt)`);
+
 
     alltimeDaten   = aggregiereAlltime(ergebnisse);
     alltimeGeladen = true;
@@ -1541,6 +1579,7 @@ function aggregiereAlltime(ergebnisse) {
     // ── Spieler ───────────────────────────────────────────────────────────────
     (sc || []).forEach(s => {
       const key = s.player_id;
+      if (!key) return;
       if (!spielerMap[key]) {
         spielerMap[key] = {
           player_id:  key,
@@ -1565,6 +1604,7 @@ function aggregiereAlltime(ergebnisse) {
     // ── Teams ─────────────────────────────────────────────────────────────────
     (ta || []).forEach(t => {
       const key = t.team_id;
+      if (!key) return;
       if (!teamMap[key]) {
         teamMap[key] = {
           team_id:   key,
@@ -1756,6 +1796,142 @@ function onAlltimeSuche(val) {
   alltimeSuche = val;
   renderAlltime();
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 6: ALLTIME DEUTSCHLAND — alltime.json laden und anzeigen
+// ─────────────────────────────────────────────────────────────────────────────
+async function ladeStaticAlltime() {
+  if (staticGeladen) return;
+  document.getElementById('content-static').innerHTML =
+    '<div class="lade-info"><div class="spinner"></div><span>Lade alltime.json…</span></div>';
+  try {
+    staticDaten   = await fetchJSON('alltime.json');
+    staticGeladen = true;
+    renderStaticAlltime();
+  } catch(e) {
+    document.getElementById('content-static').innerHTML =
+      `<div class="error-box">alltime.json nicht gefunden – bitte zuerst alltime.py ausführen.<br><small>${e.message}</small></div>`;
+  }
+}
+
+function renderStaticAlltime() {
+  if (!staticDaten) return;
+  const suche = staticSuche.trim().toLowerCase();
+
+  // ── Spieler filtern + sortieren ───────────────────────────────────────────
+  let spieler = staticDaten.scorer || [];
+  if (staticGender !== 'alle') spieler = spieler.filter(s => s.geschlecht === staticGender);
+  if (suche) spieler = spieler.filter(s =>
+    (s.first_name + ' ' + s.last_name).toLowerCase().includes(suche) ||
+    (s.teams || []).some(t => t.toLowerCase().includes(suche))
+  );
+  spieler = [...spieler].sort((a, b) => (b[staticSortS] || 0) - (a[staticSortS] || 0));
+
+  // ── Teams filtern + sortieren ─────────────────────────────────────────────
+  let teams = staticDaten.teams || [];
+  if (staticGender !== 'alle') teams = teams.filter(t => t.geschlecht === staticGender);
+  if (suche) teams = teams.filter(t => (t.team_name || '').toLowerCase().includes(suche));
+  const teamVal = t => staticSortT === 'diff'
+    ? (t.tore || 0) - (t.gegentore || 0)
+    : (t[staticSortT] || 0);
+  teams = [...teams].sort((a, b) => teamVal(b) - teamVal(a));
+
+  // ── Hilfsfunktionen für sortierbare Spaltenköpfe ─────────────────────────
+  const sHdr = (key, label) =>
+    `<th class="${staticSortS===key?'at-sort-active':''}" onclick="setStaticSortS('${key}')">${label}</th>`;
+  const tHdr = (key, label) =>
+    `<th class="${staticSortT===key?'at-sort-active':''}" onclick="setStaticSortT('${key}')">${label}</th>`;
+
+  // ── Scorer-Zeilen ─────────────────────────────────────────────────────────
+  const scorerRows = spieler.map((s, i) => {
+    const name  = `${s.first_name} ${s.last_name}`;
+    const teams = (s.teams || []).join(', ') || '—';
+    return `<tr>
+      <td class="at-rank">${i + 1}</td>
+      <td class="at-name">${esc(name)}</td>
+      <td class="at-team" title="${esc(teams)}">${esc(teams.length > 40 ? teams.slice(0,38)+'…' : teams)}</td>
+      <td>${s.spiele}</td>
+      <td>${s.tore}</td>
+      <td>${s.assists}</td>
+      <td class="at-pkt">${s.punkte}</td>
+      <td>${s.strafminuten}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Team-Zeilen ───────────────────────────────────────────────────────────
+  const teamRows = teams.map((t, i) => {
+    const diff    = (t.tore || 0) - (t.gegentore || 0);
+    const diffCls = diff > 0 ? 'at-pos' : diff < 0 ? 'at-neg' : '';
+    const diffTxt = diff > 0 ? `+${diff}` : String(diff);
+    return `<tr>
+      <td class="at-rank">${i + 1}</td>
+      <td class="at-name">${esc(t.team_name)}</td>
+      <td>${t.saisons}</td>
+      <td>${t.spiele}</td>
+      <td>${t.siege}</td>
+      <td>${t.tore}:${t.gegentore}</td>
+      <td class="${diffCls}">${diffTxt}</td>
+      <td class="at-pkt">${t.punkte}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Stand-Info ────────────────────────────────────────────────────────────
+  const stand = staticDaten.generiert
+    ? `Stand: ${staticDaten.generiert} · ${staticDaten.ligen_gesamt} Ligen`
+    : '';
+
+  document.getElementById('content-static').innerHTML = `
+  <div class="alltime-section">
+    <div class="alltime-section-title">
+      🇩🇪 Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler
+      <span style="font-size:.72rem;font-weight:400;color:rgba(255,255,255,.35);margin-left:12px">${stand}</span>
+    </div>
+    <div class="glass">
+      <table class="at-table">
+        <thead><tr>
+          <th>#</th>
+          <th>Spieler</th>
+          <th>Team(s)</th>
+          ${sHdr('spiele','Sp')}
+          ${sHdr('tore','G')}
+          ${sHdr('assists','A')}
+          ${sHdr('punkte','Pkt')}
+          ${sHdr('strafminuten','PIM')}
+        </tr></thead>
+        <tbody>${scorerRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+      </table>
+    </div>
+
+    <div class="alltime-section-title" style="margin-top:8px">
+      🇩🇪 Ewige Teamtabelle &nbsp;·&nbsp; ${teams.length} Teams
+    </div>
+    <div class="glass">
+      <table class="at-table">
+        <thead><tr>
+          <th>#</th>
+          <th>Team</th>
+          <th title="Saisons">Sai</th>
+          ${tHdr('spiele','Sp')}
+          ${tHdr('siege','S')}
+          <th>T:G</th>
+          ${tHdr('diff','Diff')}
+          ${tHdr('punkte','Pkt')}
+        </tr></thead>
+        <tbody>${teamRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function setStaticGender(g, btn) {
+  staticGender = g;
+  document.querySelectorAll('#static-controls .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderStaticAlltime();
+}
+function setStaticSortS(key) { staticSortS = key; renderStaticAlltime(); }
+function setStaticSortT(key) { staticSortT = key; renderStaticAlltime(); }
+function onStaticSuche(val)  { staticSuche = val; renderStaticAlltime(); }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Init

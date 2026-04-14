@@ -27,8 +27,9 @@ from downloader import download_video
 from analyzer import analyze_video
 from stats_engine import berechne_stats, zusammenfuehren_zweikampf_stats
 
-# Arbeitsverzeichnis immer auf den Ordner setzen, in dem main.py liegt.
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+# Wurzelverzeichnis des Projekts (eine Ebene über backend/)
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(ROOT)
 
 
 # ── Hilfsfunktionen ───────────────────────────────────────────────────────────
@@ -546,7 +547,7 @@ def aktualisiere_index():
 
 def main():
     # .env laden
-    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+    load_dotenv(os.path.join(ROOT, ".env"))
     api_key = os.getenv("GEMINI_API_KEY")
 
     if not api_key or api_key.startswith("dein-"):
