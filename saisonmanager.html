@@ -2446,14 +2446,13 @@ function renderStaticKader() {
       </div>`;
   }
 
-  // ── Autocomplete-Liste ────────────────────────────────────────────────────
-  const maxListe = 30;
-  const listeItems = gefilterte.slice(0, maxListe).map(n =>
+  // ── Autocomplete-Liste — alle Teams, kein Limit ──────────────────────────
+  const listeItems = gefilterte.map(n =>
     `<div class="kader-team-item${n===staticKaderTeam?' kader-team-selected':''}" onclick="waehleKaderTeam('${esc(n).replace(/'/g,"\\'")}')">${esc(n)}</div>`
   ).join('');
-  const mehrInfo = gefilterte.length > maxListe
-    ? `<div style="padding:6px 10px;color:rgba(255,255,255,.3);font-size:.72rem">${gefilterte.length - maxListe} weitere → Suche verfeinern</div>`
-    : '';
+
+  // Focus-Zustand vor dem Re-Render merken
+  const hatteSearchFokus = document.activeElement?.id === 'kader-suche';
 
   el.innerHTML = `
   <div class="alltime-section">
@@ -2467,7 +2466,6 @@ function renderStaticKader() {
                oninput="staticKaderSuche=this.value;renderStaticKader()">
         <div class="glass" style="max-height:480px;overflow-y:auto;padding:4px 0">
           ${listeItems || '<div style="padding:10px;color:rgba(255,255,255,.3);font-size:.8rem">Keine Teams gefunden</div>'}
-          ${mehrInfo}
         </div>
       </div>
 
@@ -2479,6 +2477,15 @@ function renderStaticKader() {
       </div>
     </div>
   </div>`;
+
+  // Focus nach Re-Render wiederherstellen
+  if (hatteSearchFokus) {
+    const inp = document.getElementById('kader-suche');
+    if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  }
+
+  // Selektiertes Team in der Liste sichtbar scrollen
+  document.querySelector('.kader-team-selected')?.scrollIntoView({ block: 'nearest' });
 
   // Toggle-Buttons nochmal syncen (wegen class-Reihenfolge im innerHTML)
   document.getElementById('kader-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
