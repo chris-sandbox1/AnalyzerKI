@@ -131,6 +131,7 @@ def main():
 
     for liga, scorer, tabelle in ergebnisse:
         liga_name  = liga.get('name', '')
+        game_op    = liga.get('game_operation', '')
         geschlecht = 'damen' if ist_damen(liga_name) else 'herren'
 
         # ── Spieler ───────────────────────────────────────────────────────────
@@ -144,6 +145,7 @@ def main():
                     'first_name':   s.get('first_name', ''),
                     'last_name':    s.get('last_name',  ''),
                     'teams':        set(),
+                    'verbaende':    set(),
                     'spiele':       0,
                     'tore':         0,
                     'assists':      0,
@@ -166,9 +168,18 @@ def main():
             sp['p2and2']       += s.get('penalty_2and2') or 0
             sp['p5']           += s.get('penalty_5')     or 0
             sp['p10']          += s.get('penalty_10')    or 0
-            sp['ms']           += s.get('penalty_match') or 0
+            # Alle Matchstraf-Typen in einer Zahl zusammenfassen
+            sp['ms'] += (
+                (s.get('penalty_match')   or 0) +
+                (s.get('penalty_ms_tech') or 0) +
+                (s.get('penalty_ms_full') or 0) +
+                (s.get('penalty_ms1')     or 0) +
+                (s.get('penalty_ms2')     or 0)
+            )
             if s.get('team_name'):
                 sp['teams'].add(s['team_name'])
+            if game_op:
+                sp['verbaende'].add(game_op)
             if sp['geschlecht'] != geschlecht:
                 sp['geschlecht'] = 'gemischt'
 
@@ -202,8 +213,9 @@ def main():
     # ── 4. Finalisieren ───────────────────────────────────────────────────────
     scorer_liste = []
     for sp in spieler_map.values():
-        sp['teams']  = sorted(sp['teams'])
-        sp['punkte'] = sp['tore'] + sp['assists']
+        sp['teams']    = sorted(sp['teams'])
+        sp['verbaende']= sorted(sp['verbaende'])
+        sp['punkte']   = sp['tore'] + sp['assists']
         scorer_liste.append(sp)
     scorer_liste.sort(key=lambda x: x['punkte'], reverse=True)
 

@@ -1807,10 +1807,20 @@ function renderAlltimeSpieler() {
     s.teams.toLowerCase().includes(suche)
   );
   spieler = [...spieler].sort((a, b) => {
-    if (alltimeSortS === 'tore')    return b.goals   - a.goals;
-    if (alltimeSortS === 'assists') return b.assists  - a.assists;
-    if (alltimeSortS === 'spiele')  return b.games    - a.games;
-    if (alltimeSortS === 'pim')     return b.pim      - a.pim;
+    const sp = x => x.games || 1;
+    if (alltimeSortS === 'tore')    return b.goals         - a.goals;
+    if (alltimeSortS === 'assists') return b.assists        - a.assists;
+    if (alltimeSortS === 'spiele')  return b.games          - a.games;
+    if (alltimeSortS === 'pim')     return (b.pim||0)       - (a.pim||0);
+    if (alltimeSortS === 'p2')      return (b.p2||0)        - (a.p2||0);
+    if (alltimeSortS === 'p2and2')  return (b.p2and2||0)    - (a.p2and2||0);
+    if (alltimeSortS === 'p5')      return (b.p5||0)        - (a.p5||0);
+    if (alltimeSortS === 'p10')     return (b.p10||0)       - (a.p10||0);
+    if (alltimeSortS === 'ms')      return (b.ms||0)        - (a.ms||0);
+    if (alltimeSortS === 'pkt_sp')  return b.punkte/sp(b)   - a.punkte/sp(a);
+    if (alltimeSortS === 'g_sp')    return b.goals/sp(b)    - a.goals/sp(a);
+    if (alltimeSortS === 'a_sp')    return b.assists/sp(b)  - a.assists/sp(a);
+    if (alltimeSortS === 'pim_sp')  return (b.pim||0)/sp(b) - (a.pim||0)/sp(a);
     return b.punkte - a.punkte || b.goals - a.goals;
   });
 
@@ -1855,11 +1865,11 @@ function renderAlltimeSpieler() {
           ${sHdr('assists','A','Assists')}
           ${sHdr('punkte','Pkt','Punkte')}
           ${alltimeStrafenDetails
-            ? `<th title="2-Minuten-Strafen">2'</th><th title="2+2-Minuten-Strafen">2+2</th><th title="5-Minuten-Strafen">5'</th><th title="10-Minuten-Strafen">10'</th><th title="Matchstrafen">MS</th>`
+            ? `${sHdr('p2',"2'",'2-Minuten-Strafen')}${sHdr('p2and2','2+2','2+2-Minuten-Strafen')}${sHdr('p5',"5'",'5-Minuten-Strafen')}${sHdr('p10',"10'",'10-Minuten-Strafen')}${sHdr('ms','MS','Matchstrafen (alle Arten)')}`
             : ''}
           ${sHdr('pim','PIM','Strafminuten')}
           ${alltimePerGame
-            ? `<th title="Punkte pro Spiel">Pkt/Sp</th><th title="Tore pro Spiel">G/Sp</th><th title="Assists pro Spiel">A/Sp</th><th title="PIM pro Spiel">PIM/Sp</th>`
+            ? `${sHdr('pkt_sp','Pkt/Sp','Punkte pro Spiel')}${sHdr('g_sp','G/Sp','Tore pro Spiel')}${sHdr('a_sp','A/Sp','Assists pro Spiel')}${sHdr('pim_sp','PIM/Sp','PIM pro Spiel')}`
             : ''}
         </tr></thead>
         <tbody>${rows || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
@@ -2147,7 +2157,14 @@ function renderStaticAlltime() {
     (s.first_name + ' ' + s.last_name).toLowerCase().includes(suche) ||
     (s.teams || []).some(t => t.toLowerCase().includes(suche))
   );
-  spieler = [...spieler].sort((a, b) => (b[staticSortS] || 0) - (a[staticSortS] || 0));
+  spieler = [...spieler].sort((a, b) => {
+    const sp = x => x.spiele || 1;
+    if (staticSortS === 'pkt_sp') return b.punkte/sp(b)        - a.punkte/sp(a);
+    if (staticSortS === 'g_sp')   return b.tore/sp(b)          - a.tore/sp(a);
+    if (staticSortS === 'a_sp')   return b.assists/sp(b)       - a.assists/sp(a);
+    if (staticSortS === 'pim_sp') return b.strafminuten/sp(b)  - a.strafminuten/sp(a);
+    return (b[staticSortS] || 0) - (a[staticSortS] || 0);
+  });
 
   // ── Teams filtern + sortieren ─────────────────────────────────────────────
   let teams = staticDaten.teams || [];
@@ -2228,11 +2245,11 @@ function renderStaticAlltime() {
           ${sHdr('assists','A')}
           ${sHdr('punkte','Pkt')}
           ${staticStrafenDetails
-            ? `<th title="2-Minuten-Strafen">2'</th><th title="2+2-Minuten-Strafen">2+2</th><th title="5-Minuten-Strafen">5'</th><th title="10-Minuten-Strafen">10'</th><th title="Matchstrafen">MS</th>`
+            ? `${sHdr('p2',"2'",'2-Minuten-Strafen')}${sHdr('p2and2','2+2','2+2-Minuten-Strafen')}${sHdr('p5',"5'",'5-Minuten-Strafen')}${sHdr('p10',"10'",'10-Minuten-Strafen')}${sHdr('ms','MS','Matchstrafen (alle Arten)')}`
             : ''}
           ${sHdr('strafminuten','PIM')}
           ${staticPerGame
-            ? `<th title="Punkte pro Spiel">Pkt/Sp</th><th title="Tore pro Spiel">G/Sp</th><th title="Assists pro Spiel">A/Sp</th><th title="PIM pro Spiel">PIM/Sp</th>`
+            ? `${sHdr('pkt_sp','Pkt/Sp','Punkte pro Spiel')}${sHdr('g_sp','G/Sp','Tore pro Spiel')}${sHdr('a_sp','A/Sp','Assists pro Spiel')}${sHdr('pim_sp','PIM/Sp','PIM pro Spiel')}`
             : ''}
         </tr></thead>
         <tbody>${scorerRows || `<tr><td colspan="${scorerColCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
