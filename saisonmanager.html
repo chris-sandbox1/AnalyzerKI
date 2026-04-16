@@ -756,6 +756,25 @@
     .at-diff-pos { color: var(--color-a); }
     .at-diff-neg { color: var(--color-b); }
 
+    /* Team-Kader-Auswahl */
+    .kader-team-item {
+      padding: 7px 12px;
+      font-size: .78rem;
+      cursor: pointer;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background .12s;
+    }
+    .kader-team-item:hover { background: rgba(255,255,255,.06); }
+    .kader-team-item:last-child { border-bottom: none; }
+    .kader-team-selected {
+      color: var(--color-a);
+      font-weight: 700;
+      background: rgba(16,185,129,.08);
+    }
+
     /* Geschlechter-Hinweis */
     .gender-hint {
       margin: 8px 20px 0;
@@ -903,13 +922,18 @@
 <!-- TAB 6: ALLTIME DEUTSCHLAND (statisch aus alltime.json) -->
 <section id="tab-static" class="tab-content">
   <div class="alltime-controls" id="static-controls">
-    <button class="filter-btn active" onclick="setStaticGender('alle',  this)">Alle</button>
-    <button class="filter-btn"        onclick="setStaticGender('herren',this)">Herren</button>
-    <button class="filter-btn"        onclick="setStaticGender('damen', this)">Damen</button>
+    <button class="filter-btn active" id="static-view-scorerteams" onclick="setStaticView('scorerteams')">Scorer &amp; Teams</button>
+    <button class="filter-btn"        id="static-view-kader"       onclick="setStaticView('kader')">Team-Kader</button>
     <div class="alltime-sep"></div>
+    <span id="static-gender-btns">
+      <button class="filter-btn active" id="static-gender-alle"   onclick="setStaticGender('alle',  this)">Alle</button>
+      <button class="filter-btn"        id="static-gender-herren" onclick="setStaticGender('herren',this)">Herren</button>
+      <button class="filter-btn"        id="static-gender-damen"  onclick="setStaticGender('damen', this)">Damen</button>
+    </span>
+    <div class="alltime-sep" id="static-toggle-sep"></div>
     <button class="filter-btn" id="static-strafen-btn" onclick="toggleStrafenDetails('static')">Strafen Details</button>
     <button class="filter-btn" id="static-pergame-btn" onclick="togglePerGame('static')">Pro Spiel</button>
-    <div class="alltime-sep"></div>
+    <div class="alltime-sep" id="static-suche-sep"></div>
     <input class="alltime-search" type="text" id="static-suche"
            placeholder="Spieler oder Team suchen…" oninput="onStaticSuche(this.value)">
   </div>
@@ -949,12 +973,18 @@ let alltimeTeamMode    = 'total';   // 'total' | 'best'
 let alltimeTeamBestSort= 'punkte';  // Sort-Key für Beste-Saison-Ansicht
 
 // Static-Alltime-State (aus alltime.json)
-let staticDaten   = null;
-let staticGeladen = false;
-let staticSortS   = 'punkte';
-let staticSortT   = 'punkte';
-let staticGender  = 'alle';
-let staticSuche   = '';
+let staticDaten        = null;
+let staticGeladen      = false;
+let staticView         = 'scorerteams';  // 'scorerteams' | 'kader'
+let staticSortS        = 'punkte';
+let staticSortT        = 'punkte';
+let staticGender       = 'alle';
+let staticSuche        = '';
+// Team-Kader State
+let staticKaderTeam    = '';   // ausgewählter Teamname
+let staticKaderVerband = 'alle';
+let staticKaderSort    = 'punkte';
+let staticKaderSuche   = '';
 
 // Toggle: Strafdetails + Pro-Spiel-Spalten
 let scorerStrafenDetails  = false;
@@ -2148,6 +2178,15 @@ function esc(s) {
 
 function renderStaticAlltime() {
   if (!staticDaten) return;
+  // Controls je nach View anpassen
+  const isKader = staticView === 'kader';
+  document.getElementById('static-gender-btns').style.display  = isKader ? 'none' : '';
+  document.getElementById('static-toggle-sep').style.display   = isKader ? 'none' : '';
+  document.getElementById('static-strafen-btn').style.display  = isKader ? 'none' : '';
+  document.getElementById('static-pergame-btn').style.display  = isKader ? 'none' : '';
+  document.getElementById('static-suche-sep').style.display    = isKader ? 'none' : '';
+  document.getElementById('static-suche').style.display        = isKader ? 'none' : '';
+  if (isKader) { renderStaticKader(); return; }
   const suche = staticSuche.trim().toLowerCase();
 
   // ── Spieler filtern + sortieren ───────────────────────────────────────────
@@ -2279,7 +2318,7 @@ function renderStaticAlltime() {
 
 function setStaticGender(g, btn) {
   staticGender = g;
-  document.querySelectorAll('#static-controls .filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#static-gender-btns .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
   document.getElementById('static-pergame-btn')?.classList.toggle('active', staticPerGame);
@@ -2288,6 +2327,179 @@ function setStaticGender(g, btn) {
 function setStaticSortS(key) { staticSortS = key; renderStaticAlltime(); }
 function setStaticSortT(key) { staticSortT = key; renderStaticAlltime(); }
 function onStaticSuche(val)  { staticSuche = val; renderStaticAlltime(); }
+
+function setStaticView(v) {
+  staticView = v;
+  document.getElementById('static-view-scorerteams').classList.toggle('active', v === 'scorerteams');
+  document.getElementById('static-view-kader').classList.toggle('active', v === 'kader');
+  renderStaticAlltime();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 6: Team-Kader-Ansicht
+// ─────────────────────────────────────────────────────────────────────────────
+function renderStaticKader() {
+  const el = document.getElementById('content-static');
+  const rosters = staticDaten?.team_rosters;
+  if (!rosters) {
+    el.innerHTML = '<div class="error-box">team_rosters nicht in alltime.json vorhanden.<br><small>Bitte <b>python tools/alltime.py</b> neu ausführen.</small></div>';
+    return;
+  }
+
+  // ── Team-Suche: zeige alle Teams die den Suchbegriff enthalten ────────────
+  const teamNames = Object.keys(rosters).sort();
+  const suche = staticKaderSuche.trim().toLowerCase();
+  const gefilterte = suche
+    ? teamNames.filter(n => n.toLowerCase().includes(suche))
+    : teamNames;
+
+  // ── Kein Team ausgewählt oder gesuchtes Team nicht mehr in Ergebnissen ────
+  const teamGültig = staticKaderTeam && rosters[staticKaderTeam];
+
+  // ── Verband-Optionen für gewähltes Team ───────────────────────────────────
+  let verbaende = [];
+  let rosterZeilen = '';
+  let kaderInfo = '';
+
+  if (teamGültig) {
+    const roster = rosters[staticKaderTeam];
+    // Alle Verbände die Spieler dieses Teams haben
+    const verbSet = new Set();
+    roster.forEach(p => (p.verbaende || []).forEach(v => verbSet.add(v)));
+    verbaende = [...verbSet].sort();
+
+    // Filtern nach Verband
+    let gefiltert = roster;
+    if (staticKaderVerband !== 'alle') {
+      gefiltert = roster.filter(p => (p.verbaende || []).includes(staticKaderVerband));
+    }
+
+    // Sortieren
+    gefiltert = [...gefiltert].sort((a, b) => {
+      const sp = x => x.spiele || 1;
+      if (staticKaderSort === 'pkt_sp') return b.punkte/sp(b) - a.punkte/sp(a);
+      if (staticKaderSort === 'g_sp')   return b.tore/sp(b)   - a.tore/sp(a);
+      if (staticKaderSort === 'a_sp')   return b.assists/sp(b) - a.assists/sp(a);
+      if (staticKaderSort === 'pim_sp') return b.strafminuten/sp(b) - a.strafminuten/sp(a);
+      return (b[staticKaderSort] || 0) - (a[staticKaderSort] || 0);
+    });
+
+    const kHdr = (key, label, title='') =>
+      `<th class="${staticKaderSort===key?'at-sort-active':''}" onclick="setStaticKaderSort('${key}')"${title?` title="${title}"`:''}>${label}</th>`;
+
+    const colCount = 7 + (staticStrafenDetails ? 5 : 0) + (staticPerGame ? 4 : 0);
+    rosterZeilen = gefiltert.map((p, i) => {
+      const name = `${p.first_name} ${p.last_name}`;
+      const sp   = p.spiele || 1;
+      const vb   = (p.verbaende || []).join(', ') || '—';
+      return `<tr>
+        <td class="at-rank">${i+1}</td>
+        <td class="at-name">${esc(name)}</td>
+        <td class="at-team" title="${esc(vb)}">${esc(vb.length > 35 ? vb.slice(0,33)+'…' : vb)}</td>
+        <td>${p.spiele}</td>
+        <td>${p.tore}</td>
+        <td>${p.assists}</td>
+        <td class="at-pkt">${p.punkte}</td>
+        ${staticStrafenDetails
+          ? `<td>${p.p2||0}</td><td>${p.p2and2||0}</td><td>${p.p5||0}</td><td>${p.p10||0}</td><td>${p.ms||0}</td>`
+          : ''}
+        <td>${p.strafminuten}'</td>
+        ${staticPerGame
+          ? `<td>${(p.punkte/sp).toFixed(2)}</td><td>${(p.tore/sp).toFixed(2)}</td><td>${(p.assists/sp).toFixed(2)}</td><td>${(p.strafminuten/sp).toFixed(2)}'</td>`
+          : ''}
+      </tr>`;
+    }).join('');
+
+    const vHdr = (v) => {
+      const lbl = v === 'alle' ? 'Alle Verbände' : v;
+      return `<button class="filter-btn${staticKaderVerband===v?' active':''}" onclick="setStaticKaderVerband('${esc(v)}')">${esc(lbl)}</button>`;
+    };
+    const verbButtons = [vHdr('alle'), ...verbaende.map(vHdr)].join('');
+
+    kaderInfo = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        ${verbButtons}
+        <div class="alltime-sep"></div>
+        <button class="filter-btn" id="kader-strafen-btn" onclick="toggleStrafenDetails('static')"${staticStrafenDetails?' class="filter-btn active"':''}>Strafen Details</button>
+        <button class="filter-btn" id="kader-pergame-btn" onclick="togglePerGame('static')"${staticPerGame?' class="filter-btn active"':''}>Pro Spiel</button>
+      </div>
+      <div class="glass">
+        <table class="at-table">
+          <thead><tr>
+            <th>#</th>
+            <th>Spieler</th>
+            <th>Verbände</th>
+            ${kHdr('spiele','Sp')}
+            ${kHdr('tore','G')}
+            ${kHdr('assists','A')}
+            ${kHdr('punkte','Pkt')}
+            ${staticStrafenDetails
+              ? `${kHdr('p2',"2'","2-Minuten-Strafen")}${kHdr('p2and2','2+2','2+2-Minuten-Strafen')}${kHdr('p5',"5'","5-Minuten-Strafen")}${kHdr('p10',"10'","10-Minuten-Strafen")}${kHdr('ms','MS','Matchstrafen')}`
+              : ''}
+            ${kHdr('strafminuten','PIM')}
+            ${staticPerGame
+              ? `${kHdr('pkt_sp','Pkt/Sp','Punkte pro Spiel')}${kHdr('g_sp','G/Sp','Tore pro Spiel')}${kHdr('a_sp','A/Sp','Assists pro Spiel')}${kHdr('pim_sp','PIM/Sp','PIM pro Spiel')}`
+              : ''}
+          </tr></thead>
+          <tbody>${rosterZeilen || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
+        </table>
+      </div>`;
+  }
+
+  // ── Autocomplete-Liste ────────────────────────────────────────────────────
+  const maxListe = 30;
+  const listeItems = gefilterte.slice(0, maxListe).map(n =>
+    `<div class="kader-team-item${n===staticKaderTeam?' kader-team-selected':''}" onclick="waehleKaderTeam('${esc(n).replace(/'/g,"\\'")}')">${esc(n)}</div>`
+  ).join('');
+  const mehrInfo = gefilterte.length > maxListe
+    ? `<div style="padding:6px 10px;color:rgba(255,255,255,.3);font-size:.72rem">${gefilterte.length - maxListe} weitere → Suche verfeinern</div>`
+    : '';
+
+  el.innerHTML = `
+  <div class="alltime-section">
+    <div class="alltime-section-title">🏒 Team-Kader ${teamGültig ? '— ' + esc(staticKaderTeam) : ''}</div>
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+
+      <!-- Linke Spalte: Team-Suche -->
+      <div style="min-width:220px;max-width:280px;flex:0 0 250px">
+        <input class="alltime-search" type="text" id="kader-suche" style="width:100%;box-sizing:border-box;margin-bottom:6px"
+               placeholder="Team suchen…" value="${esc(staticKaderSuche)}"
+               oninput="staticKaderSuche=this.value;renderStaticKader()">
+        <div class="glass" style="max-height:480px;overflow-y:auto;padding:4px 0">
+          ${listeItems || '<div style="padding:10px;color:rgba(255,255,255,.3);font-size:.8rem">Keine Teams gefunden</div>'}
+          ${mehrInfo}
+        </div>
+      </div>
+
+      <!-- Rechte Spalte: Kader-Tabelle -->
+      <div style="flex:1;min-width:300px">
+        ${teamGültig
+          ? kaderInfo
+          : '<div style="color:rgba(255,255,255,.35);padding:20px 0;font-size:.85rem">← Team aus der Liste auswählen</div>'}
+      </div>
+    </div>
+  </div>`;
+
+  // Toggle-Buttons nochmal syncen (wegen class-Reihenfolge im innerHTML)
+  document.getElementById('kader-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
+  document.getElementById('kader-pergame-btn')?.classList.toggle('active', staticPerGame);
+}
+
+function waehleKaderTeam(name) {
+  staticKaderTeam    = name;
+  staticKaderVerband = 'alle';
+  renderStaticKader();
+}
+
+function setStaticKaderVerband(v) {
+  staticKaderVerband = v;
+  renderStaticKader();
+}
+
+function setStaticKaderSort(key) {
+  staticKaderSort = key;
+  renderStaticKader();
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Init

@@ -126,8 +126,9 @@ def main():
 
     # ── 3. Aggregieren ────────────────────────────────────────────────────────
     print("\nAggregiere…", flush=True)
-    spieler_map = {}
-    team_map    = {}
+    spieler_map      = {}
+    team_map         = {}
+    team_player_map  = {}   # (team_name, player_id) → per-Team-Stats
 
     for liga, scorer, tabelle in ergebnisse:
         liga_name  = liga.get('name', '')
@@ -169,19 +170,57 @@ def main():
             sp['p5']           += s.get('penalty_5')     or 0
             sp['p10']          += s.get('penalty_10')    or 0
             # Alle Matchstraf-Typen in einer Zahl zusammenfassen
-            sp['ms'] += (
+            ms_val = (
                 (s.get('penalty_match')   or 0) +
                 (s.get('penalty_ms_tech') or 0) +
                 (s.get('penalty_ms_full') or 0) +
                 (s.get('penalty_ms1')     or 0) +
                 (s.get('penalty_ms2')     or 0)
             )
+            sp['ms'] += ms_val
             if s.get('team_name'):
                 sp['teams'].add(s['team_name'])
             if game_op:
                 sp['verbaende'].add(game_op)
             if sp['geschlecht'] != geschlecht:
                 sp['geschlecht'] = 'gemischt'
+
+            # ── Team-Kader: Stats pro Spieler+Team ───────────────────────────
+            team_name_raw = (s.get('team_name') or '').strip()
+            if team_name_raw:
+                tp_key = (team_name_raw, pid)
+                if tp_key not in team_player_map:
+                    team_player_map[tp_key] = {
+                        'player_id':    pid,
+                        'first_name':   s.get('first_name', ''),
+                        'last_name':    s.get('last_name',  ''),
+                        'team_name':    team_name_raw,
+                        'verbaende':    set(),
+                        'spiele':       0,
+                        'tore':         0,
+                        'assists':      0,
+                        'strafminuten': 0,
+                        'p2':     0,
+                        'p2and2': 0,
+                        'p5':     0,
+                        'p10':    0,
+                        'ms':     0,
+                        'geschlecht':   geschlecht,
+                    }
+                tp = team_player_map[tp_key]
+                tp['first_name'] = s.get('first_name') or tp['first_name']
+                tp['last_name']  = s.get('last_name')  or tp['last_name']
+                tp['spiele']       += s.get('games')         or 0
+                tp['tore']         += s.get('goals')         or 0
+                tp['assists']      += s.get('assists')        or 0
+                tp['strafminuten'] += pim(s)
+                tp['p2']           += s.get('penalty_2')     or 0
+                tp['p2and2']       += s.get('penalty_2and2') or 0
+                tp['p5']           += s.get('penalty_5')     or 0
+                tp['p10']          += s.get('penalty_10')    or 0
+                tp['ms']           += ms_val
+                if game_op:
+                    tp['verbaende'].add(game_op)
 
         # ── Teams ─────────────────────────────────────────────────────────────
         for t in (tabelle or []):
@@ -221,12 +260,25 @@ def main():
 
     team_liste = sorted(team_map.values(), key=lambda x: x['punkte'], reverse=True)
 
+    # ── Team-Kader-Dict aufbauen ──────────────────────────────────────────────
+    team_rosters = {}   # team_name → [spieler_liste sortiert nach punkte]
+    for tp in team_player_map.values():
+        tp['verbaende'] = sorted(tp['verbaende'])
+        tp['punkte']    = tp['tore'] + tp['assists']
+        tn = tp['team_name']
+        if tn not in team_rosters:
+            team_rosters[tn] = []
+        team_rosters[tn].append(tp)
+    for roster in team_rosters.values():
+        roster.sort(key=lambda x: x['punkte'], reverse=True)
+
     # ── 5. Speichern ──────────────────────────────────────────────────────────
     ergebnis = {
         'generiert':    str(date.today()),
         'ligen_gesamt': len(ligen),
         'scorer':       scorer_liste,
         'teams':        team_liste,
+        'team_rosters': team_rosters,
     }
 
     output = os.path.join(ROOT, 'data', 'alltime.json')
@@ -240,6 +292,7 @@ def main():
     print(f"  Fertig!")
     print(f"  {len(scorer_liste):>6} Spieler aggregiert")
     print(f"  {len(team_liste):>6} Teams aggregiert")
+    print(f"  {len(team_rosters):>6} Team-Kader erstellt")
     print(f"  {len(ligen):>6} Ligen verarbeitet")
     if fehler_ligen:
         print(f"  {len(fehler_ligen):>6} Ligen fehlgeschlagen:")
