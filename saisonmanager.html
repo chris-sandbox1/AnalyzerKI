@@ -1902,9 +1902,16 @@ function pim(s) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TAB 1: TABELLE
+// TAB 1: TABELLE (Liga) oder TURNIERBAUM (Cup)
 // ─────────────────────────────────────────────────────────────────────────────
 function renderTabelle() {
+  const modus = getSpielplanModus();
+  // Tab-Beschriftung anpassen
+  const tabelleTab = document.querySelector('.tab[onclick*="zeigeTab(\'tabelle\')"]');
+  if (tabelleTab) tabelleTab.textContent = (modus !== 'liga') ? 'Turnierbaum' : 'Tabelle';
+  if (modus === 'cup')        return renderTurnierbaum();
+  if (modus === 'cup_gruppe') return renderGruppenphaseMitKO();
+
   const sorted = [...tabelle].sort((a, b) => a.position - b.position);
 
   let rows = sorted.map(t => {
@@ -1969,9 +1976,6 @@ function setSpielfFilter(f, btn) {
 }
 
 function renderSpielplan() {
-  const modus = getSpielplanModus();
-  if (modus === 'cup')        return renderTurnierbaum();
-  if (modus === 'cup_gruppe') return renderGruppenphaseMitKO();
   return renderSpielplanLiga();
 }
 
@@ -2066,11 +2070,11 @@ function renderSpielplanLiga() {
 
 /**
  * Baut den Turnierbaum-HTML-String aus einem Spiele-Array.
- * @param {Array}  spiele       - schedule.json Spiele (oder Teilmenge für KO-Phase)
- * @param {Array}  rundentitel  - ligaMeta.game_day_titles (Index 0 = Runde 1)
- * @param {Number} startRunde   - ab welcher game_day_number der Baum beginnt (default 1)
+ * @param {Array}  spiele      - schedule.json Spiele (oder Teilmenge für KO-Phase)
+ * @param {*}      _unused     - nicht mehr verwendet (Titel kommen aus den Spielen selbst)
+ * @param {Number} startRunde  - ab welcher game_day_number der Baum beginnt (default 1)
  */
-function baueBracket(spiele, rundentitel, startRunde = 1) {
+function baueBracket(spiele, _unused, startRunde = 1) {
   // 1. Runden ermitteln
   const rundenMap = {};   // game_day_number → [spiele]
   spiele.forEach(s => {
@@ -2124,7 +2128,10 @@ function baueBracket(spiele, rundentitel, startRunde = 1) {
   let html = '<div class="bracket-scroll"><div class="bracket">';
 
   rundenNrn.forEach(nr => {
-    const titel = (rundentitel && rundentitel[nr - 1]) || `Runde ${nr}`;
+    // Titel direkt aus dem ersten Spiel der Runde lesen (zuverlässiger als Meta-Array)
+    const erstesSpiel = rundenMap[nr][0];
+    const titelRaw = erstesSpiel?.game_day_title ?? erstesSpiel?.game_day_name ?? `Runde ${nr}`;
+    const titel = typeof titelRaw === 'object' ? (titelRaw?.title ?? titelRaw?.name ?? `Runde ${nr}`) : (titelRaw || `Runde ${nr}`);
     const serien = serienAusRunde(rundenMap[nr]);
 
     html += `<div class="bracket-round">
@@ -2207,9 +2214,8 @@ function renderTurnierbaum() {
   const tf = document.getElementById('spielplan-team-filter');
   if (tf) tf.closest('select')?.parentElement?.style && (tf.style.display = 'none');
 
-  const titel = ligaMeta?.game_day_titles || [];
-  document.getElementById('content-spielplan').innerHTML =
-    baueBracket(spielplan, titel, 1);
+  document.getElementById('content-tabelle').innerHTML =
+    baueBracket(spielplan, null, 1);
 }
 
 function renderGruppenphaseMitKO() {
@@ -2284,7 +2290,7 @@ function renderGruppenphaseMitKO() {
     html += baueBracket(koSpiele, titel, minKoRunde);
   }
 
-  document.getElementById('content-spielplan').innerHTML = html || '<div class="lade-info"><span>Keine Daten.</span></div>';
+  document.getElementById('content-tabelle').innerHTML = html || '<div class="lade-info"><span>Keine Daten.</span></div>';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
