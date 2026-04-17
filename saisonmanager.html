@@ -2296,22 +2296,9 @@ function renderStaticAlltime() {
   const gesamtStaticSpieler = spieler.length;
   spieler = spieler.slice((staticSpielerSeite - 1) * PAGE_SIZE, staticSpielerSeite * PAGE_SIZE);
 
-  // ── Teams filtern + sortieren ─────────────────────────────────────────────
-  let teams = staticDaten.teams || [];
-  if (staticGender !== 'alle') teams = teams.filter(t => t.geschlecht === staticGender);
-  if (suche) teams = teams.filter(t => (t.team_name || '').toLowerCase().includes(suche));
-  const teamVal = t => staticSortT === 'diff'
-    ? (t.tore || 0) - (t.gegentore || 0)
-    : (t[staticSortT] || 0);
-  teams = [...teams].sort((a, b) => teamVal(b) - teamVal(a));
-  const gesamtStaticTeams = teams.length;
-  teams = teams.slice((staticTeamSeite - 1) * PAGE_SIZE, staticTeamSeite * PAGE_SIZE);
-
-  // ── Hilfsfunktionen für sortierbare Spaltenköpfe ─────────────────────────
+  // ── Hilfsfunktion für sortierbare Spaltenköpfe ───────────────────────────
   const sHdr = (key, label) =>
     `<th class="${staticSortS===key?'at-sort-active':''}" onclick="setStaticSortS('${key}')">${label}</th>`;
-  const tHdr = (key, label) =>
-    `<th class="${staticSortT===key?'at-sort-active':''}" onclick="setStaticSortT('${key}')">${label}</th>`;
 
   // ── Scorer-Zeilen ─────────────────────────────────────────────────────────
   const scorerRows = spieler.map((s, i) => {
@@ -2333,23 +2320,6 @@ function renderStaticAlltime() {
       ${staticPerGame
         ? `<td>${(s.punkte / sp).toFixed(2)}</td><td>${(s.tore / sp).toFixed(2)}</td><td>${(s.assists / sp).toFixed(2)}</td><td>${(s.strafminuten / sp).toFixed(2)}'</td>`
         : ''}
-    </tr>`;
-  }).join('');
-
-  // ── Team-Zeilen ───────────────────────────────────────────────────────────
-  const teamRows = teams.map((t, i) => {
-    const diff    = (t.tore || 0) - (t.gegentore || 0);
-    const diffCls = diff > 0 ? 'at-pos' : diff < 0 ? 'at-neg' : '';
-    const diffTxt = diff > 0 ? `+${diff}` : String(diff);
-    return `<tr>
-      <td class="at-rank">${i + 1}</td>
-      <td class="at-name">${esc(t.team_name)}</td>
-      <td>${t.saisons}</td>
-      <td>${t.spiele}</td>
-      <td>${t.siege}</td>
-      <td>${t.tore}:${t.gegentore}</td>
-      <td class="${diffCls}">${diffTxt}</td>
-      <td class="at-pkt">${t.punkte}</td>
     </tr>`;
   }).join('');
 
@@ -2388,33 +2358,12 @@ function renderStaticAlltime() {
       </table>
     </div>
     ${paginierungsHTML(gesamtStaticSpieler, staticSpielerSeite, 'setStaticSpielerSeite')}
-
-    <div class="alltime-section-title" style="margin-top:8px">
-      🇩🇪 Ewige Teamtabelle &nbsp;·&nbsp; ${gesamtStaticTeams} Teams
-    </div>
-    <div class="glass">
-      <table class="at-table">
-        <thead><tr>
-          <th>#</th>
-          <th>Team</th>
-          ${tHdr('saisons','Sai')}
-          ${tHdr('spiele','Sp')}
-          ${tHdr('siege','S')}
-          <th>T:G</th>
-          ${tHdr('diff','Diff')}
-          ${tHdr('punkte','Pkt')}
-        </tr></thead>
-        <tbody>${teamRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
-      </table>
-    </div>
-    ${paginierungsHTML(gesamtStaticTeams, staticTeamSeite, 'setStaticTeamSeite')}
   </div>`;
 }
 
 function setStaticGender(g, btn) {
   staticGender = g;
   staticSpielerSeite = 1;
-  staticTeamSeite = 1;
   document.querySelectorAll('#static-gender-btns .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
@@ -2422,8 +2371,7 @@ function setStaticGender(g, btn) {
   renderStaticAlltime();
 }
 function setStaticSortS(key) { staticSortS = key; staticSpielerSeite = 1; renderStaticAlltime(); }
-function setStaticSortT(key) { staticSortT = key; staticTeamSeite = 1; renderStaticAlltime(); }
-function onStaticSuche(val)  { staticSuche = val; staticSpielerSeite = 1; staticTeamSeite = 1; renderStaticAlltime(); }
+function onStaticSuche(val)  { staticSuche = val; staticSpielerSeite = 1; renderStaticAlltime(); }
 
 function setStaticView(v) {
   staticView = v;
