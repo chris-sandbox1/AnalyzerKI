@@ -273,18 +273,22 @@ def main():
         roster.sort(key=lambda x: x['punkte'], reverse=True)
 
     # ── 5. Speichern ──────────────────────────────────────────────────────────
-    ergebnis = {
-        'generiert':    str(date.today()),
-        'ligen_gesamt': len(ligen),
-        'scorer':       scorer_liste,
-        'teams':        team_liste,
-        'team_rosters': team_rosters,
-    }
+    os.makedirs(os.path.join(ROOT, 'data'), exist_ok=True)
 
-    output = os.path.join(ROOT, 'data', 'alltime.json')
-    os.makedirs(os.path.dirname(output), exist_ok=True)
-    with open(output, 'w', encoding='utf-8') as f:
-        json.dump(ergebnis, f, ensure_ascii=False, indent=2)
+    # Datei 1: alltime.json — nur scorer + teams, kein indent
+    output_main = os.path.join(ROOT, 'data', 'alltime.json')
+    with open(output_main, 'w', encoding='utf-8') as f:
+        json.dump({
+            'generiert':    str(date.today()),
+            'ligen_gesamt': len(ligen),
+            'scorer':       scorer_liste,
+            'teams':        team_liste,
+        }, f, ensure_ascii=False)
+
+    # Datei 2: team_rosters.json — nur team_rosters, kein indent
+    output_rosters = os.path.join(ROOT, 'data', 'team_rosters.json')
+    with open(output_rosters, 'w', encoding='utf-8') as f:
+        json.dump(team_rosters, f, ensure_ascii=False)
 
     # ── 6. Zusammenfassung ────────────────────────────────────────────────────
     print()
@@ -298,7 +302,8 @@ def main():
         print(f"  {len(fehler_ligen):>6} Ligen fehlgeschlagen:")
         for fl in fehler_ligen:
             print(f"           – {fl}")
-    print(f"  Gespeichert: {output}")
+    print(f"  Gespeichert: {output_main}")
+    print(f"  Gespeichert: {output_rosters}")
     print(f"{'─'*60}")
 
 

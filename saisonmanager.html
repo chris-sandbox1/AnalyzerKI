@@ -819,6 +819,29 @@
       font-size: .8rem;
       color: #f87171;
     }
+
+    /* ── Pagination ─────────────────────────────────────────────────────────── */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 0 4px;
+      font-size: .78rem;
+    }
+    .pg-btn {
+      background: rgba(255,255,255,.07);
+      border: 0.5px solid rgba(255,255,255,.15);
+      color: #fff;
+      border-radius: 6px;
+      padding: 5px 14px;
+      cursor: pointer;
+      font-size: .75rem;
+      transition: background .15s;
+    }
+    .pg-btn:hover:not(:disabled) { background: rgba(255,255,255,.14); }
+    .pg-btn:disabled { opacity: .3; cursor: default; }
+    .pg-info { color: rgba(255,255,255,.4); }
   </style>
 </head>
 <body>
@@ -971,6 +994,20 @@
 // ─────────────────────────────────────────────────────────────────────────────
 const API_BASE = 'https://saisonmanager.de';
 
+const PAGE_SIZE = 100;
+
+function paginierungsHTML(gesamt, seite, setzeFn) {
+  if (gesamt <= PAGE_SIZE) return '';
+  const seiten = Math.ceil(gesamt / PAGE_SIZE);
+  const von = (seite - 1) * PAGE_SIZE + 1;
+  const bis = Math.min(seite * PAGE_SIZE, gesamt);
+  return `<div class="pagination-bar">
+    <button class="pg-btn" ${seite <= 1 ? 'disabled' : ''} onclick="${setzeFn}(${seite - 1})">← Zurück</button>
+    <span class="pg-info">Seite ${seite} / ${seiten} &nbsp;·&nbsp; ${von}–${bis} von ${gesamt}</span>
+    <button class="pg-btn" ${seite >= seiten ? 'disabled' : ''} onclick="${setzeFn}(${seite + 1})">Weiter →</button>
+  </div>`;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // State
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1008,6 +1045,16 @@ let staticKaderTeams   = new Set(); // ausgewählte Teamnamen (Mehrfachauswahl)
 let staticKaderVerband = 'alle';
 let staticKaderSort    = 'punkte';
 let staticKaderSuche   = '';
+
+// Pagination-State
+let alltimeSpielerSeite = 1;
+let alltimeTeamSeite    = 1;
+let staticSpielerSeite  = 1;
+let staticTeamSeite     = 1;
+let staticKaderSeite    = 1;
+// Lazy-Load-State für team_rosters.json
+let teamRostersGeladen  = false;
+let teamRostersLaed     = false;
 
 // Toggle: Strafdetails + Pro-Spiel-Spalten
 let scorerStrafenDetails  = false;
@@ -1877,6 +1924,9 @@ function renderAlltimeSpieler() {
     return b.punkte - a.punkte || b.goals - a.goals;
   });
 
+  const gesamtSpieler = spieler.length;
+  spieler = spieler.slice((alltimeSpielerSeite - 1) * PAGE_SIZE, alltimeSpielerSeite * PAGE_SIZE);
+
   const sHdr = (key, label, title) => {
     const tt = title ? ` title="${title}"` : '';
     return `<th class="${alltimeSortS === key ? 'at-sort-active' : ''}" onclick="setAlltimeSortS('${key}')"${tt}>${label}</th>`;
@@ -1906,7 +1956,7 @@ function renderAlltimeSpieler() {
 
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
-    <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler</div>
+    <div class="alltime-section-title">Ewige Scorerliste &nbsp;·&nbsp; ${gesamtSpieler} Spieler</div>
     <div class="glass">
       <table class="at-table">
         <thead><tr>
@@ -1928,11 +1978,13 @@ function renderAlltimeSpieler() {
         <tbody>${rows || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
+    ${paginierungsHTML(gesamtSpieler, alltimeSpielerSeite, 'setAlltimeSpielerSeite')}
   </div>`;
 }
 
 function setAlltimeTeamMode(mode) {
   alltimeTeamMode = mode;
+  alltimeTeamSeite = 1;
   renderAlltimeTeams();
 }
 
@@ -1959,6 +2011,7 @@ function renderAlltimeTeams() {
 
 // ── Gesamt-Ansicht ────────────────────────────────────────────────────────────
 function renderAlltimeTeamsTotal(teams, modeToggle) {
+  const gesamtTeams = teams.length;
   teams = [...teams].sort((a, b) => {
     const sp = x => x.games || 1;
     if (alltimeSortT === 'saisons')        return b.saisons          - a.saisons;
@@ -1982,6 +2035,8 @@ function renderAlltimeTeamsTotal(teams, modeToggle) {
     if (alltimeSortT === 'pim_sp')         return (b.pim||0)/sp(b)   - (a.pim||0)/sp(a);
     return b.points - a.points || b.goals_diff - a.goals_diff;
   });
+
+  teams = teams.slice((alltimeTeamSeite - 1) * PAGE_SIZE, alltimeTeamSeite * PAGE_SIZE);
 
   const tHdr = (key, label, title) => {
     const tt = title ? ` title="${title}"` : '';
@@ -2024,7 +2079,7 @@ function renderAlltimeTeamsTotal(teams, modeToggle) {
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title" style="display:flex;align-items:center">
-      Ewige Teamtabelle &nbsp;·&nbsp; ${teams.length} Teams ${modeToggle}
+      Ewige Teamtabelle &nbsp;·&nbsp; ${gesamtTeams} Teams ${modeToggle}
     </div>
     <div class="glass">
       <table class="at-table">
@@ -2050,6 +2105,7 @@ function renderAlltimeTeamsTotal(teams, modeToggle) {
         <tbody>${rows || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
+    ${paginierungsHTML(gesamtTeams, alltimeTeamSeite, 'setAlltimeTeamSeite')}
   </div>`;
 }
 
@@ -2058,6 +2114,7 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
   // Nur Teams mit mindestens einer Saison
   teams = teams.filter(t => t.bestSaison);
 
+  const gesamtTeams = teams.length;
   teams = [...teams].sort((a, b) => {
     const bA = a.bestSaison, bB = b.bestSaison;
     if (alltimeTeamBestSort === 'games')          return bB.games          - bA.games;
@@ -2070,6 +2127,8 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
     if (alltimeTeamBestSort === 'diff')           return bB.goals_diff     - bA.goals_diff;
     return bB.points - bA.points || bB.goals_diff - bA.goals_diff; // punkte
   });
+
+  teams = teams.slice((alltimeTeamSeite - 1) * PAGE_SIZE, alltimeTeamSeite * PAGE_SIZE);
 
   const bHdr = (key, label, title) => {
     const tt = title ? ` title="${title}"` : '';
@@ -2109,7 +2168,7 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
   document.getElementById('content-alltime').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title" style="display:flex;align-items:center">
-      Beste Saison je Team &nbsp;·&nbsp; ${teams.length} Teams ${modeToggle}
+      Beste Saison je Team &nbsp;·&nbsp; ${gesamtTeams} Teams ${modeToggle}
     </div>
     <div class="glass">
       <table class="at-table">
@@ -2129,6 +2188,7 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
         <tbody>${rows || '<tr><td colspan="12" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
       </table>
     </div>
+    ${paginierungsHTML(gesamtTeams, alltimeTeamSeite, 'setAlltimeTeamSeite')}
   </div>`;
 }
 
@@ -2148,6 +2208,8 @@ function setAlltimeView(view) {
 // Geschlechter-Filter
 function setAlltimeGender(g, btn) {
   alltimeGender = g;
+  alltimeSpielerSeite = 1;
+  alltimeTeamSeite = 1;
   document.querySelectorAll('#alltime-controls .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   syncAlltimeButtons();
@@ -2157,18 +2219,22 @@ function setAlltimeGender(g, btn) {
 // Scorer-Spalte sortieren
 function setAlltimeSortS(key) {
   alltimeSortS = key;
+  alltimeSpielerSeite = 1;
   renderAlltime();
 }
 
 // Team-Spalte sortieren
 function setAlltimeSortT(key) {
   alltimeSortT = key;
+  alltimeTeamSeite = 1;
   renderAlltime();
 }
 
 // Suche
 function onAlltimeSuche(val) {
   alltimeSuche = val;
+  alltimeSpielerSeite = 1;
+  alltimeTeamSeite = 1;
   renderAlltime();
 }
 
@@ -2227,6 +2293,8 @@ function renderStaticAlltime() {
     if (staticSortS === 'pim_sp') return b.strafminuten/sp(b)  - a.strafminuten/sp(a);
     return (b[staticSortS] || 0) - (a[staticSortS] || 0);
   });
+  const gesamtStaticSpieler = spieler.length;
+  spieler = spieler.slice((staticSpielerSeite - 1) * PAGE_SIZE, staticSpielerSeite * PAGE_SIZE);
 
   // ── Teams filtern + sortieren ─────────────────────────────────────────────
   let teams = staticDaten.teams || [];
@@ -2236,6 +2304,8 @@ function renderStaticAlltime() {
     ? (t.tore || 0) - (t.gegentore || 0)
     : (t[staticSortT] || 0);
   teams = [...teams].sort((a, b) => teamVal(b) - teamVal(a));
+  const gesamtStaticTeams = teams.length;
+  teams = teams.slice((staticTeamSeite - 1) * PAGE_SIZE, staticTeamSeite * PAGE_SIZE);
 
   // ── Hilfsfunktionen für sortierbare Spaltenköpfe ─────────────────────────
   const sHdr = (key, label) =>
@@ -2293,7 +2363,7 @@ function renderStaticAlltime() {
   document.getElementById('content-static').innerHTML = `
   <div class="alltime-section">
     <div class="alltime-section-title">
-      🇩🇪 Ewige Scorerliste &nbsp;·&nbsp; ${spieler.length} Spieler
+      🇩🇪 Ewige Scorerliste &nbsp;·&nbsp; ${gesamtStaticSpieler} Spieler
       <span style="font-size:.72rem;font-weight:400;color:rgba(255,255,255,.35);margin-left:12px">${stand}</span>
     </div>
     <div class="glass">
@@ -2317,9 +2387,10 @@ function renderStaticAlltime() {
         <tbody>${scorerRows || `<tr><td colspan="${scorerColCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
       </table>
     </div>
+    ${paginierungsHTML(gesamtStaticSpieler, staticSpielerSeite, 'setStaticSpielerSeite')}
 
     <div class="alltime-section-title" style="margin-top:8px">
-      🇩🇪 Ewige Teamtabelle &nbsp;·&nbsp; ${teams.length} Teams
+      🇩🇪 Ewige Teamtabelle &nbsp;·&nbsp; ${gesamtStaticTeams} Teams
     </div>
     <div class="glass">
       <table class="at-table">
@@ -2336,26 +2407,48 @@ function renderStaticAlltime() {
         <tbody>${teamRows || '<tr><td colspan="8" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>'}</tbody>
       </table>
     </div>
+    ${paginierungsHTML(gesamtStaticTeams, staticTeamSeite, 'setStaticTeamSeite')}
   </div>`;
 }
 
 function setStaticGender(g, btn) {
   staticGender = g;
+  staticSpielerSeite = 1;
+  staticTeamSeite = 1;
   document.querySelectorAll('#static-gender-btns .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
   document.getElementById('static-pergame-btn')?.classList.toggle('active', staticPerGame);
   renderStaticAlltime();
 }
-function setStaticSortS(key) { staticSortS = key; renderStaticAlltime(); }
-function setStaticSortT(key) { staticSortT = key; renderStaticAlltime(); }
-function onStaticSuche(val)  { staticSuche = val; renderStaticAlltime(); }
+function setStaticSortS(key) { staticSortS = key; staticSpielerSeite = 1; renderStaticAlltime(); }
+function setStaticSortT(key) { staticSortT = key; staticTeamSeite = 1; renderStaticAlltime(); }
+function onStaticSuche(val)  { staticSuche = val; staticSpielerSeite = 1; staticTeamSeite = 1; renderStaticAlltime(); }
 
 function setStaticView(v) {
   staticView = v;
   document.getElementById('static-view-scorerteams').classList.toggle('active', v === 'scorerteams');
   document.getElementById('static-view-kader').classList.toggle('active', v === 'kader');
-  renderStaticAlltime();
+  if (v === 'kader' && staticDaten && !staticDaten.team_rosters && !teamRostersLaed) {
+    ladeTeamRosters();
+  } else {
+    renderStaticAlltime();
+  }
+}
+
+async function ladeTeamRosters() {
+  teamRostersLaed = true;
+  document.getElementById('content-static').innerHTML =
+    '<div class="lade-info"><div class="spinner"></div><span>Lade Team-Kader-Daten…</span></div>';
+  try {
+    const rosters = await fetchJSON('data/team_rosters.json');
+    staticDaten.team_rosters = rosters;
+    teamRostersGeladen = true;
+    renderStaticAlltime();
+  } catch(e) {
+    document.getElementById('content-static').innerHTML =
+      `<div class="error-box">team_rosters.json nicht erreichbar.<br><small>${e.message || e}</small></div>`;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2440,6 +2533,9 @@ function renderStaticKader() {
       return (b[staticKaderSort] || 0) - (a[staticKaderSort] || 0);
     });
 
+    const gesamtKader = gefiltert.length;
+    gefiltert = gefiltert.slice((staticKaderSeite - 1) * PAGE_SIZE, staticKaderSeite * PAGE_SIZE);
+
     const kHdr = (key, label, title='') =>
       `<th class="${staticKaderSort===key?'at-sort-active':''}" onclick="setStaticKaderSort('${key}')"${title?` title="${title}"`:''}>${label}</th>`;
 
@@ -2499,7 +2595,8 @@ function renderStaticKader() {
           </tr></thead>
           <tbody>${rosterZeilen || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
         </table>
-      </div>`;
+      </div>
+      ${paginierungsHTML(gesamtKader, staticKaderSeite, 'setStaticKaderSeite')}`;
   }
 
   // ── Titel: Teamnamen oder Anzahl ──────────────────────────────────────────
@@ -2576,18 +2673,30 @@ function waehleKaderTeam(name) {
     staticKaderTeams.add(name);
     staticKaderVerband = 'alle';
   }
+  staticKaderSeite = 1;
   renderStaticKader();
 }
 
 function setStaticKaderVerband(v) {
   staticKaderVerband = v;
+  staticKaderSeite = 1;
   renderStaticKader();
 }
 
 function setStaticKaderSort(key) {
   staticKaderSort = key;
+  staticKaderSeite = 1;
   renderStaticKader();
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Pagination-Setter
+// ─────────────────────────────────────────────────────────────────────────────
+function setAlltimeSpielerSeite(s) { alltimeSpielerSeite = s; renderAlltimeSpieler(); }
+function setAlltimeTeamSeite(s)    { alltimeTeamSeite    = s; renderAlltimeTeams(); }
+function setStaticSpielerSeite(s)  { staticSpielerSeite  = s; renderStaticAlltime(); }
+function setStaticTeamSeite(s)     { staticTeamSeite     = s; renderStaticAlltime(); }
+function setStaticKaderSeite(s)    { staticKaderSeite    = s; renderStaticKader(); }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Init
