@@ -977,7 +977,7 @@
       font-size: 72px;
       font-weight: 900;
       line-height: 1;
-      filter: drop-shadow(0 0 24px currentColor);
+      filter: drop-shadow(0 0 10px currentColor);
     }
     .sd-score-sep {
       font-size: 48px;
@@ -3336,12 +3336,16 @@ function renderSpielDetail(g) {
   const activePeriodIndices = PERIOD_LABELS.map((_, i) => i).filter(i => hP[i] !== undefined || gP[i] !== undefined);
 
   // ── Drittel-Balken-Vergleich ──
+  const totalH = parseInt(hg) || 0;
+  const totalG = parseInt(gg) || 0;
+  // Alle Balken gegen denselben Maximalwert skalieren (höchste Gesamttorzahl)
+  const globalMax = Math.max(totalH, totalG, 1);
+
   function statRow(h, ga, label, colH, colG, delay, isTotal) {
-    const max = Math.max(h, ga, 1);
-    const hw = Math.round(h  / max * 100);
-    const gw = Math.round(ga / max * 100);
-    const glowH = colH === 'var(--color-a)' ? 'rgba(74,222,128,.35)' : 'rgba(251,146,60,.35)';
-    const glowG = colG === 'var(--color-b)' ? 'rgba(251,146,60,.35)' : 'rgba(74,222,128,.35)';
+    const hw = Math.round(h  / globalMax * 100);
+    const gw = Math.round(ga / globalMax * 100);
+    const glowH = 'rgba(74,222,128,.35)';
+    const glowG = 'rgba(251,146,60,.35)';
     return `<div class="sd-stat-row${isTotal ? ' sd-stat-total' : ''}">
       <div class="sd-stat-left">
         <span class="sd-stat-val" style="color:${colH}">${h}</span>
@@ -3361,9 +3365,6 @@ function renderSpielDetail(g) {
     </div>`;
   }
 
-  const totalH = parseInt(hg) || 0;
-  const totalG = parseInt(gg) || 0;
-
   const periodTableHTML = activePeriods.length ? `
     <div class="sd-period-header">
       <div class="sd-period-header-home" style="color:${CA}">${esc(g.home_team_name)}</div>
@@ -3372,7 +3373,7 @@ function renderSpielDetail(g) {
     </div>
     ${activePeriodIndices.map((idx, n) =>
       statRow(hP[idx] ?? 0, gP[idx] ?? 0,
-              PERIOD_LABELS[idx].replace('. Drittel', '. D.').replace('Verlängerung','Verlängerung').replace('Penaltyschießen','Penalties'),
+              PERIOD_LABELS[idx].replace('. Drittel', '. D.').replace('Penaltyschießen','Penalties'),
               CA, CB, 0.08 * (n + 1), false)
     ).join('')}
     ${statRow(totalH, totalG, 'Gesamt', CA, CB,
