@@ -1478,7 +1478,7 @@ function renderScorer() {
       <td>${s.assists}</td>
       <td class="scorer-pkt">${punkte}</td>
       ${scorerStrafenDetails
-        ? `<td>${s.penalty_2 || 0}</td><td>${s.penalty_2and2 || 0}</td><td>${s.penalty_5 || 0}</td><td>${s.penalty_10 || 0}</td><td>${s.penalty_match || 0}</td>`
+        ? `<td>${s.penalty_2 || 0}</td><td>${s.penalty_2and2 || 0}</td><td>${s.penalty_5 || 0}</td><td>${s.penalty_10 || 0}</td><td>${(s.penalty_match||0)+(s.penalty_ms_tech||0)+(s.penalty_ms_full||0)+(s.penalty_ms1||0)+(s.penalty_ms2||0)}</td>`
         : ''}
       <td>${pimTotal}'</td>
       ${scorerPerGame
@@ -1780,7 +1780,8 @@ function aggregiereAlltime(ergebnisse) {
       sp.p2and2  += (s.penalty_2and2 || 0);
       sp.p5      += (s.penalty_5     || 0);
       sp.p10     += (s.penalty_10    || 0);
-      sp.ms      += (s.penalty_match || 0);
+      sp.ms      += (s.penalty_match || 0) + (s.penalty_ms_tech || 0) +
+                    (s.penalty_ms_full || 0) + (s.penalty_ms1 || 0) + (s.penalty_ms2 || 0);
       if (s.team_name) sp.teams.add(s.team_name);
 
       // Team-Strafen nach team_name akkumulieren (teamMap noch nicht vollständig)
@@ -1793,7 +1794,8 @@ function aggregiereAlltime(ergebnisse) {
         tp.p2and2+= (s.penalty_2and2 || 0);
         tp.p5    += (s.penalty_5     || 0);
         tp.p10   += (s.penalty_10    || 0);
-        tp.ms    += (s.penalty_match || 0);
+        tp.ms    += (s.penalty_match || 0) + (s.penalty_ms_tech || 0) +
+                    (s.penalty_ms_full || 0) + (s.penalty_ms1 || 0) + (s.penalty_ms2 || 0);
         tp.pim   += pim(s);
       }
     });
