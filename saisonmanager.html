@@ -938,8 +938,51 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 24px;
-      padding: 24px;
+      padding: 28px 20px 20px;
       margin-bottom: 12px;
+      /* kein Milchglas — direkt auf Aurora */
+      background: none;
+      border: none;
+      backdrop-filter: none;
+    }
+
+    /* Sunburst-Container für Drittel */
+    .sd-period-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(8,14,26,.7);
+      margin-bottom: 4px;
+    }
+    .sd-period-wrap::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 280%; height: 280%;
+      transform: translate(-50%, -50%);
+      background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(255,255,255,.028) 0deg 2.5deg,
+        transparent       2.5deg 18deg
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Zentraler Glühpunkt */
+    .sd-period-wrap::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(255,255,255,.13) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sd-period-wrap .sd-period-table {
+      position: relative;
+      z-index: 1;
+      padding: 12px 16px;
     }
     .sd-hero-team {
       display: flex;
@@ -972,6 +1015,7 @@
       font-size: 72px;
       font-weight: 900;
       line-height: 1;
+      filter: drop-shadow(0 0 24px currentColor);
     }
     .sd-score-sep {
       font-size: 48px;
@@ -3546,7 +3590,7 @@ function renderSpielDetail(g) {
     <button class="sd-back-btn" onclick="zeigSpielplan()">← Spielplan</button>
 
     <!-- Score Hero -->
-    <div class="glass sd-hero">
+    <div class="sd-hero">
       <div class="sd-hero-team">
         <img class="sd-hero-logo" src="${esc(g.home_team_logo || '')}" alt="" onerror="this.style.display='none'">
         <div class="sd-hero-name" style="color:${CA}">${esc(g.home_team_name)}</div>
@@ -3574,7 +3618,7 @@ function renderSpielDetail(g) {
     <!-- Drittel -->
     ${periodTableHTML ? `
     <div class="sd-section-title">Tore pro Drittel</div>
-    <div class="glass" style="padding:12px 16px;margin-bottom:4px">
+    <div class="sd-period-wrap">
       ${periodTableHTML}
     </div>` : ''}
 
