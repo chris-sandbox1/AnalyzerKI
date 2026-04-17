@@ -1020,48 +1020,138 @@
       margin: 16px 0 6px;
     }
 
-    /* Drittel-Tabelle */
+    /* Drittel-Tabelle (vertikal: links Heim, Mitte Label, rechts Gast) */
     .sd-period-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: .8rem;
+      font-size: .84rem;
     }
     .sd-period-table th {
-      text-align: center;
-      padding: 8px 12px;
-      color: rgba(255,255,255,.35);
-      font-size: .7rem;
-      font-weight: 600;
-      border-bottom: 0.5px solid rgba(255,255,255,.07);
+      padding: 6px 16px 10px;
+      font-size: .76rem;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255,255,255,.1);
     }
+    .sd-pt-home  { text-align: right; }
+    .sd-pt-mid   { text-align: center; color: rgba(255,255,255,.3); font-weight: 500; width: 100px; }
+    .sd-pt-guest { text-align: left; }
     .sd-period-table td {
-      text-align: center;
-      padding: 8px 12px;
+      padding: 8px 16px;
       border-bottom: 0.5px solid rgba(255,255,255,.05);
+      font-variant-numeric: tabular-nums;
     }
-    .sd-period-table td:first-child { text-align: left; font-weight: 600; }
-    .sd-period-total { font-weight: 800; color: #f1f5f9; }
+    .sd-period-table td.sd-pt-mid {
+      font-size: .68rem;
+      color: rgba(255,255,255,.32);
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .sd-period-winner { font-weight: 800; color: #f1f5f9; }
+    .sd-period-total-row td {
+      font-weight: 800;
+      font-size: .92rem;
+      color: #f1f5f9;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: none;
+      padding-top: 11px;
+    }
 
-    /* Timeline */
-    .sd-timeline { display: flex; flex-direction: column; gap: 4px; }
-    .sd-event {
-      display: grid;
-      grid-template-columns: 44px 28px 1fr auto;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 7px;
-      font-size: .78rem;
+    /* Vertikaler Zeitstrahl */
+    .sd-vtl {
+      position: relative;
+      padding: 0 4px 4px;
     }
-    .sd-event:hover { background: rgba(255,255,255,.03); }
-    .sd-event-time { color: rgba(255,255,255,.4); font-size: .72rem; font-variant-numeric: tabular-nums; }
-    .sd-event-icon { font-size: 1rem; text-align: center; }
-    .sd-event-info { display: flex; flex-direction: column; gap: 1px; }
-    .sd-event-main { font-weight: 600; }
-    .sd-event-sub { font-size: .68rem; color: rgba(255,255,255,.38); }
-    .sd-event-score { font-size: .72rem; font-variant-numeric: tabular-nums; color: rgba(255,255,255,.35); font-weight: 700; }
-    .sd-event-home { border-left: 2px solid var(--color-a); }
-    .sd-event-guest { border-left: 2px solid var(--color-b); }
+    .sd-vtl::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: rgba(255,255,255,.1);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .sd-vtl-period-sep {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 0 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .sd-vtl-period-sep::before,
+    .sd-vtl-period-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.11);
+    }
+    .sd-vtl-period-name {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.3);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .sd-vtl-row {
+      display: grid;
+      grid-template-columns: 1fr 22px 1fr;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      min-height: 42px;
+    }
+    .sd-vtl-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .sd-vtl-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px currentColor;
+    }
+    .sd-vtl-score {
+      font-size: .58rem;
+      font-variant-numeric: tabular-nums;
+      color: rgba(255,255,255,.5);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .sd-vtl-home-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      padding: 6px 10px 6px 2px;
+    }
+    .sd-vtl-guest-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      padding: 6px 2px 6px 10px;
+    }
+    .sd-vtl-event-name {
+      font-size: .74rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .sd-vtl-event-sub {
+      font-size: .65rem;
+      color: rgba(255,255,255,.36);
+      line-height: 1.3;
+    }
+    .sd-vtl-event-time {
+      font-size: .6rem;
+      color: rgba(255,255,255,.26);
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
 
     /* Strafen-Übersicht */
     .sd-penalty-cols {
@@ -3166,19 +3256,34 @@ function renderSpielDetail(g) {
   // ── Drittel ──
   const hP = r.home_goals_period || [];
   const gP = r.guest_goals_period || [];
-  const periodLabels = ['1. Drittel','2. Drittel','3. Drittel','Verlängerung'];
-  const activePeriods = periodLabels.filter((_, i) => hP[i] !== undefined || gP[i] !== undefined);
-  const periodRows = `
-    <tr>
-      <td style="color:${CA}">${esc(g.home_team_name)}</td>
-      ${activePeriods.map((_, i) => `<td>${hP[i] ?? 0}</td>`).join('')}
-      <td class="sd-period-total">${hg}</td>
-    </tr>
-    <tr>
-      <td style="color:${CB}">${esc(g.guest_team_name)}</td>
-      ${activePeriods.map((_, i) => `<td>${gP[i] ?? 0}</td>`).join('')}
-      <td class="sd-period-total">${gg}</td>
-    </tr>`;
+  const PERIOD_LABELS = ['1. Drittel','2. Drittel','3. Drittel','Verlängerung','Penaltyschießen'];
+  const activePeriods = PERIOD_LABELS.filter((_, i) => hP[i] !== undefined || gP[i] !== undefined);
+  const activePeriodIndices = PERIOD_LABELS.map((_, i) => i).filter(i => hP[i] !== undefined || gP[i] !== undefined);
+
+  // Neue vertikale Drittelübersicht
+  const periodTableHTML = activePeriods.length ? `
+    <table class="sd-period-table">
+      <thead><tr>
+        <th class="sd-pt-home" style="color:${CA}">${esc(g.home_team_name)}</th>
+        <th class="sd-pt-mid"></th>
+        <th class="sd-pt-guest" style="color:${CB}">${esc(g.guest_team_name)}</th>
+      </tr></thead>
+      <tbody>
+        ${activePeriodIndices.map(i => {
+          const h = hP[i] ?? 0, ga = gP[i] ?? 0;
+          return `<tr>
+            <td class="sd-pt-home${h > ga ? ' sd-period-winner' : ''}">${h}</td>
+            <td class="sd-pt-mid">${esc(PERIOD_LABELS[i])}</td>
+            <td class="sd-pt-guest${ga > h ? ' sd-period-winner' : ''}">${ga}</td>
+          </tr>`;
+        }).join('')}
+        <tr class="sd-period-total-row">
+          <td class="sd-pt-home">${hg}</td>
+          <td class="sd-pt-mid">Gesamt</td>
+          <td class="sd-pt-guest">${gg}</td>
+        </tr>
+      </tbody>
+    </table>` : '';
 
   // ── Events: Timeline ──
   const events = (g.events || []).slice().sort((a, b) => a.sortkey > b.sortkey ? 1 : -1);
@@ -3215,44 +3320,67 @@ function renderSpielDetail(g) {
     penalty_ms2:   'Matchstrafe 2',
   };
 
-  const timelineRows = events.map(e => {
+  // ── Vertikaler Zeitstrahl: Events nach Drittel gruppieren ──
+  const PERIOD_NAMES = { 1: '1. Drittel', 2: '2. Drittel', 3: '3. Drittel', 4: 'Verlängerung', 5: 'Penaltyschießen' };
+  const byPeriod = {};
+  events.forEach(e => {
+    const p = e.period ?? 1;
+    if (!byPeriod[p]) byPeriod[p] = [];
+    byPeriod[p].push(e);
+  });
+  const periodNums = Object.keys(byPeriod).map(Number).sort((a, b) => a - b);
+
+  function buildVtlRow(e) {
     const isHome = e.event_team === 'home';
-    const cls = isHome ? 'sd-event-home' : 'sd-event-guest';
     const playerLookup = isHome ? homePlayers : guestPlayers;
-    const teamLabel = isHome ? esc(g.home_team_name) : esc(g.guest_team_name);
+    const teamLabel = isHome ? g.home_team_name : g.guest_team_name;
+    const col = isHome ? 'var(--color-a)' : 'var(--color-b)';
     const hasNumber = e.number != null && e.number !== '';
     const playerName = hasNumber ? (playerLookup[e.number] || '') : '';
 
-    let icon, mainText, subText, scoreText = '';
+    let icon, nameStr, subStr = '', scoreStr = '';
     if (e.event_type === 'goal') {
       icon = '⚽';
-      mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
+      nameStr = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : esc(teamLabel);
       const assistName = e.assist ? (playerLookup[e.assist] || '') : null;
-      subText = assistName ? `Assist: #${e.assist} ${esc(assistName)}` : (e.goal_type_string || '');
-      scoreText = `${e.home_goals}:${e.guest_goals}`;
+      subStr = assistName ? `Assist: #${e.assist} ${esc(assistName)}` : (e.goal_type_string || '');
+      scoreStr = `${e.home_goals}:${e.guest_goals}`;
     } else if (e.event_type === 'timeout') {
       icon = '⏱';
-      mainText = teamLabel;
-      subText = 'Timeout';
+      nameStr = esc(teamLabel);
+      subStr = 'Timeout';
     } else {
       icon = penaltyIcon(e.penalty_type);
-      mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
+      nameStr = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : esc(teamLabel);
       const penTypeStr = e.penalty_type_string || PEN_LABEL[e.penalty_type] || '';
-      subText = [penTypeStr, e.penalty_reason_string].filter(Boolean).join(' · ');
-      // Bankstrafe: kein Spieler → Grund besonders hervorheben
-      if (!hasNumber && !subText) subText = 'Bankstrafe';
+      subStr = [penTypeStr, e.penalty_reason_string].filter(Boolean).join(' · ');
+      if (!hasNumber && !subStr) subStr = 'Bankstrafe';
     }
 
-    return `<div class="sd-event ${cls}">
-      <span class="sd-event-time">P${e.period} ${esc(e.time)}</span>
-      <span class="sd-event-icon">${icon}</span>
-      <div class="sd-event-info">
-        <span class="sd-event-main">${mainText}</span>
-        ${subText ? `<span class="sd-event-sub">${esc(subText)}</span>` : ''}
+    const content = `
+      <div class="sd-vtl-event-name">${icon} ${nameStr}</div>
+      ${subStr ? `<div class="sd-vtl-event-sub">${esc(subStr)}</div>` : ''}
+      <div class="sd-vtl-event-time">${esc(e.time || '')}</div>`;
+
+    const homeSide  = isHome  ? `<div class="sd-vtl-home-side">${content}</div>` : `<div></div>`;
+    const guestSide = !isHome ? `<div class="sd-vtl-guest-side">${content}</div>` : `<div></div>`;
+
+    return `<div class="sd-vtl-row">
+      ${homeSide}
+      <div class="sd-vtl-center">
+        <div class="sd-vtl-dot" style="background:${col};color:${col}"></div>
+        ${scoreStr ? `<div class="sd-vtl-score">${scoreStr}</div>` : ''}
       </div>
-      <span class="sd-event-score">${scoreText}</span>
+      ${guestSide}
     </div>`;
-  }).join('');
+  }
+
+  let vtlHTML = '<div class="sd-vtl">';
+  periodNums.forEach(p => {
+    vtlHTML += `<div class="sd-vtl-period-sep"><span class="sd-vtl-period-name">${PERIOD_NAMES[p] || 'Periode ' + p}</span></div>`;
+    vtlHTML += byPeriod[p].map(buildVtlRow).join('');
+  });
+  vtlHTML += '</div>';
 
   // ── Strafen-Übersicht ──
   const penalties = events.filter(e => e.event_type === 'penalty');
@@ -3370,24 +3498,17 @@ function renderSpielDetail(g) {
     </div>
 
     <!-- Drittel -->
-    ${activePeriods.length ? `
+    ${periodTableHTML ? `
     <div class="sd-section-title">Tore pro Drittel</div>
     <div class="glass" style="padding:12px 16px;margin-bottom:4px">
-      <table class="sd-period-table">
-        <thead><tr>
-          <th></th>
-          ${activePeriods.map(l => `<th>${esc(l)}</th>`).join('')}
-          <th>Gesamt</th>
-        </tr></thead>
-        <tbody>${periodRows}</tbody>
-      </table>
+      ${periodTableHTML}
     </div>` : ''}
 
     <!-- Spielverlauf -->
     ${events.length ? `
     <div class="sd-section-title">Spielverlauf</div>
     <div class="glass" style="padding:10px 8px;margin-bottom:4px">
-      <div class="sd-timeline">${timelineRows}</div>
+      ${vtlHTML}
     </div>` : ''}
 
     <!-- Strafen -->
