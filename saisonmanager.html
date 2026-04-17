@@ -312,6 +312,9 @@
     .tabelle-table td:nth-child(2) { text-align: left; }
     .tabelle-table tr:last-child td { border-bottom: none; }
     .tabelle-table tr:hover td { background: rgba(255,255,255,.025); }
+    .t-row-klickbar { cursor: pointer; }
+    .t-row-klickbar:hover td { background: rgba(255,255,255,.05) !important; }
+    .t-row-klickbar:hover .t-name { color: var(--color-a); }
 
     .t-pos {
       font-size: .72rem;
@@ -388,8 +391,8 @@
     .bracket-round {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      width: 240px;
+      gap: 6px;
+      width: 310px;
       flex-shrink: 0;
     }
     .bracket-round-title {
@@ -434,32 +437,41 @@
       text-align: center;
     }
     .bsh-stand.decided { color: rgba(255,255,255,.65); }
-    .bracket-serie-gap { height: 10px; }
+    .bracket-serie-gap {
+      height: 1px;
+      background: rgba(255,255,255,.07);
+      margin: 4px 0;
+      border-radius: 1px;
+    }
 
     /* Spiel-Zeile */
     .bg-row {
       display: grid;
       grid-template-columns: 1fr auto 1fr auto;
       align-items: center;
-      gap: 6px;
-      padding: 6px 8px;
-      border-radius: 7px;
-      font-size: .76rem;
+      gap: 8px;
+      padding: 9px 11px;
+      border-radius: 8px;
+      font-size: .8rem;
       cursor: pointer;
-      transition: background .1s;
-      border-bottom: 0.5px solid rgba(255,255,255,.04);
+      transition: background .15s, border-color .15s;
+      background: rgba(255,255,255,.03);
+      border: 0.5px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(4px);
     }
-    .bg-row:last-child { border-bottom: none; }
-    .bg-row:hover { background: rgba(255,255,255,.06); }
+    .bg-row:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.18);
+    }
     .bg-home, .bg-guest {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       overflow: hidden;
     }
     .bg-guest { flex-direction: row-reverse; justify-content: flex-start; }
     .bg-logo {
-      width: 18px; height: 18px;
+      width: 22px; height: 22px;
       object-fit: contain;
       flex-shrink: 0;
     }
@@ -467,28 +479,28 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: rgba(255,255,255,.7);
-      font-size: .74rem;
+      color: rgba(255,255,255,.75);
+      font-size: .78rem;
     }
     .bg-score {
       font-weight: 800;
       font-variant-numeric: tabular-nums;
       text-align: center;
       white-space: nowrap;
-      font-size: .78rem;
-      padding: 0 4px;
+      font-size: .82rem;
+      padding: 0 5px;
     }
     .bg-score.played { color: #f1f5f9; }
     .bg-score.future { color: rgba(255,255,255,.3); font-weight: 400; }
-    .bg-pf { font-size: .62rem; font-weight: 400; color: rgba(255,255,255,.4); }
+    .bg-pf { font-size: .64rem; font-weight: 400; color: rgba(255,255,255,.4); }
     .bg-meta {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       gap: 1px;
     }
-    .bg-nr    { font-size: .6rem; color: rgba(255,255,255,.25); }
-    .bg-datum { font-size: .6rem; color: rgba(255,255,255,.25); white-space: nowrap; }
+    .bg-nr    { font-size: .62rem; color: rgba(255,255,255,.3); }
+    .bg-datum { font-size: .62rem; color: rgba(255,255,255,.28); white-space: nowrap; }
 
     /* Gruppenphase-Grid */
     .gruppe-grid {
@@ -1470,7 +1482,7 @@
 
 <!-- Topbar -->
 <header>
-  <a class="logo" href="dashboard.html">
+  <a class="logo" href="saisonmanager.html">
     <div class="logo-text">Floorball<span>IQ</span></div>
   </a>
   <nav class="tabs">
@@ -1483,7 +1495,6 @@
   </nav>
   <div class="hd-space"></div>
   <button class="btn-topbar" onclick="datenGeladen=false;ladeDaten()">↺ Aktualisieren</button>
-  <a class="btn-topbar" href="dashboard.html">← Analysen</a>
 </header>
 
 <!-- Liga-Auswahlleiste -->
@@ -1663,6 +1674,7 @@ let spielplan = [];
 let scorer    = [];
 let ligaMeta  = null;   // leagues/{id}.json → league_type, has_preround, game_day_titles
 let aktiverTab   = 'tabelle';
+let vorherTab    = null;   // Tab vor Spiel-Detail-Öffnung (für Zurück-Navigation)
 let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
 let datenGeladen = false;
@@ -1790,13 +1802,8 @@ async function ladeLigen() {
     `<option value="${v}" ${v === 'Floorball Deutschland' ? 'selected' : ''}>${v}</option>`
   ).join('');
 
-  // Liga-Dropdown für Standard-Verband befüllen
+  // Liga-Dropdown für Standard-Verband befüllen (wählt automatisch aktuellste)
   befuelleLigaDropdown('Floorball Deutschland');
-
-  // Standard-Liga auf 1. FBL (ID 1890) setzen
-  const lSel = document.getElementById('liga-select');
-  const opt1890 = [...lSel.options].find(o => o.value === '1890');
-  if (opt1890) lSel.value = '1890';
 
   // Daten laden
   await ladeDaten();
@@ -1812,7 +1819,15 @@ function befuelleLigaDropdown(verband) {
     const jahr = l.season ? ` (${saisonJahr(l.season)})` : '';
     return `<option value="${l.id}">${l.name}${jahr}</option>`;
   }).join('');
-  if (ligen.length) aktiveLigaId = ligen[0].id;
+
+  // Aktuellste Liga vorauswählen: höchste season-Nummer gewinnt
+  if (ligen.length) {
+    const neueste = ligen.reduce((best, l) =>
+      (parseInt(l.season) || 0) > (parseInt(best.season) || 0) ? l : best
+    , ligen[0]);
+    aktiveLigaId = neueste.id;
+    lSel.value   = String(neueste.id);
+  }
 }
 
 // Verband gewechselt
@@ -1927,7 +1942,7 @@ function renderTabelle() {
     const posCls  = t.position === 1 ? 'pos-1' : t.position === 2 ? 'pos-2' : t.position === 3 ? 'pos-3' : '';
 
     return `
-    <tr>
+    <tr class="t-row-klickbar" onclick="zeigeTeamDetail(${t.team_id})">
       <td><span class="t-pos ${posCls}">${t.position}</span></td>
       <td>
         <div class="t-team">
@@ -2090,27 +2105,27 @@ function baueBracket(spiele, _unused, startRunde = 1) {
                           .filter(n => n >= startRunde);
   if (!rundenNrn.length) return '<div class="lade-info"><span>Keine Spiele gefunden.</span></div>';
 
-  // 2. Normierter Team-Paar-Key für Serien
+  // 2. Normierter Team-Paar-Key für Serien (nach Name sortiert, IDs oft nicht vorhanden)
   function serienKey(s) {
-    return [s.home_team_id, s.guest_team_id].sort((a,b) => a - b).join('-');
+    return [s.home_team_name || '', s.guest_team_name || ''].sort().join('|||');
   }
 
-  // 3. Spiele einer Runde nach Team-Paar gruppieren, nach Datum sortiert
+  // 3. Spiele einer Runde nach Team-Paar gruppieren
+  //    Innerhalb einer Gruppe: nach Datum sortiert
+  //    Gruppen-Reihenfolge: nach erstem Spieldatum der Gruppe
   function gruppiereRunde(rSpiele) {
     const map = {};
+    const order = [];   // Reihenfolge der Keys beim ersten Auftreten
     rSpiele.forEach(s => {
       const k = serienKey(s);
-      if (!map[k]) map[k] = {
-        homeName: s.home_team_name, guestName: s.guest_team_name,
-        homeLogo: logoUrl(s.home_team_small_logo || s.home_team_logo),
-        guestLogo: logoUrl(s.guest_team_small_logo || s.guest_team_logo),
-        spiele: []
-      };
+      if (!map[k]) {
+        map[k] = { spiele: [] };
+        order.push(k);
+      }
       map[k].spiele.push(s);
     });
-    return Object.values(map).sort((a,b) =>
-      (a.spiele[0].date || '') < (b.spiele[0].date || '') ? -1 : 1
-    );
+    // Gruppen nach erstem Auftreten in den Daten sortieren (Einfügungsreihenfolge)
+    return order.map(k => map[k]);
   }
 
   // 4. Serienstand berechnen (für Best-of-Header)
@@ -2172,25 +2187,14 @@ function baueBracket(spiele, _unused, startRunde = 1) {
     const gruppen = gruppiereRunde(rundenMap[nr]);
     html += `<div class="bracket-round"><div class="bracket-round-title">${esc(titel)}</div>`;
 
-    gruppen.forEach(gruppe => {
+    gruppen.forEach((gruppe, gi) => {
       const istSerie = gruppe.spiele.length > 1;
+      // Trennlinie zwischen Serien (nicht vor der ersten)
+      if (gi > 0) html += '<div class="bracket-serie-gap"></div>';
       if (istSerie) {
-        // Serie-Header mit Stand
-        const st = serienStand(gruppe);
-        const standStr = (st.hw > 0 || st.gw > 0) ? ` · ${st.hw}:${st.gw}` : '';
-        const hLogo = gruppe.homeLogo ? `<img class="bg-logo" src="${gruppe.homeLogo}" alt="" onerror="this.style.display='none'">` : '';
-        const gLogo = gruppe.guestLogo ? `<img class="bg-logo" src="${gruppe.guestLogo}" alt="" onerror="this.style.display='none'">` : '';
-        const hCls = st.winner === 'home' ? ' bsh-winner' : st.winner ? ' bsh-loser' : '';
-        const gCls = st.winner === 'guest' ? ' bsh-winner' : st.winner ? ' bsh-loser' : '';
-        html += `<div class="bracket-serie-header glass">
-          <span class="bsh-team${hCls}">${hLogo}${esc(gruppe.homeName)}</span>
-          <span class="bsh-stand${st.entschieden ? ' decided' : ''}">${st.hw}:${st.gw}</span>
-          <span class="bsh-team bsh-guest${gCls}">${esc(gruppe.guestName)}${gLogo}</span>
-        </div>`;
         gruppe.spiele
           .sort((a,b) => (a.date||'') < (b.date||'') ? -1 : 1)
           .forEach((s, i) => { html += spielZeile(s, i); });
-        html += '<div class="bracket-serie-gap"></div>';
       } else {
         html += spielZeile(gruppe.spiele[0], null);
       }
@@ -2420,6 +2424,16 @@ function renderScorer() {
 // ─────────────────────────────────────────────────────────────────────────────
 // TAB 4: TEAM-DETAIL
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Direkt zu einem Team im Team-Detail Tab springen (z.B. aus der Tabelle) */
+function zeigeTeamDetail(teamId) {
+  const sel = document.getElementById('detail-team-select');
+  if (!sel) return;
+  sel.value = String(teamId);
+  zeigeTab('detail');
+  renderDetail();
+}
+
 function renderDetail() {
   const sel = document.getElementById('detail-team-select');
   const teamId = parseInt(sel?.value || 0);
@@ -3681,9 +3695,18 @@ function setStaticKaderSeite(s)    { staticKaderSeite    = s; renderStaticKader(
 function zeigSpielplan() {
   document.getElementById('spielplan-liste').style.display = '';
   document.getElementById('spielplan-detail').style.display = 'none';
+  // Wenn Detail aus Turnierbaum geöffnet wurde → zurück zum Turnierbaum
+  if (vorherTab && vorherTab !== 'spielplan') {
+    const ziel = vorherTab;
+    vorherTab = null;
+    zeigeTab(ziel);
+  }
 }
 
 async function zeigSpielDetail(gameId) {
+  // Tab merken, dann zum Spielplan wechseln (Detail lebt dort)
+  vorherTab = aktiverTab;
+  if (aktiverTab !== 'spielplan') zeigeTab('spielplan');
   document.getElementById('spielplan-liste').style.display = 'none';
   const detailEl = document.getElementById('spielplan-detail');
   const contentEl = document.getElementById('content-spiel-detail');
@@ -3993,7 +4016,7 @@ function renderSpielDetail(g) {
     : '';
 
   return `
-    <button class="sd-back-btn" onclick="zeigSpielplan()">← Spielplan</button>
+    <button class="sd-back-btn" onclick="zeigSpielplan()">← ${vorherTab === 'tabelle' ? (getSpielplanModus() !== 'liga' ? 'Turnierbaum' : 'Tabelle') : 'Spielplan'}</button>
 
     <!-- Score Hero -->
     <div class="sd-hero">
