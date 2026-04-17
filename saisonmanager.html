@@ -1184,6 +1184,26 @@
     .sd-penalty-player { font-weight: 600; }
     .sd-penalty-reason { color: rgba(255,255,255,.35); font-size: .68rem; }
 
+    /* Spielinfos-Tabelle */
+    .sd-info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+    }
+    .sd-info-table tr { border-bottom: 0.5px solid rgba(255,255,255,.06); }
+    .sd-info-table tr:last-child { border-bottom: none; }
+    .sd-info-table td { padding: 8px 4px; vertical-align: top; }
+    .sd-info-label {
+      color: rgba(255,255,255,.38);
+      width: 40%;
+      padding-right: 12px;
+    }
+    .sd-info-value {
+      color: #e2e8f0;
+      font-weight: 500;
+      text-align: right;
+    }
+
     /* Kader */
     .sd-roster-cols {
       display: grid;
@@ -3487,10 +3507,35 @@ function renderSpielDetail(g) {
 
   // ── Schiedsrichter ──
   const refs = (g.nominated_referees || g.referees || []);
-  const refStr = Array.isArray(refs) ? refs.join(' · ') : String(refs);
+  const refStr = Array.isArray(refs) ? refs.join(' / ') : (refs ? String(refs) : '');
 
   // ── Datum formatieren ──
   const datumStr = g.date ? new Date(g.date).toLocaleDateString('de-DE', {weekday:'short', day:'2-digit', month:'2-digit', year:'numeric'}) : '';
+
+  // ── Spielinfos ──
+  const gameDay = g.game_day != null
+    ? (typeof g.game_day === 'object' ? (g.game_day.number ?? '') : g.game_day)
+    : null;
+  const infoRows = [
+    g.league_name                    && ['Liga',           esc(g.league_name)],
+    g.game_number                    && ['Spielnummer',    esc(g.game_number)],
+    g.date                           && ['Datum',          datumStr.replace(/^\w+, /, '')],  // ohne Wochentag
+    g.start_time                     && ['Spielbeginn',    esc(g.start_time) + ' Uhr'],
+    (g.arena || g.arena_short)       && ['Halle',          esc(g.arena || g.arena_short)],
+    g.arena_address                  && ['Adresse',        esc(g.arena_address)],
+    g.audience                       && ['Zuschauer',      esc(g.audience)],
+    gameDay                          && ['Spieltag',       esc(gameDay)],
+    refStr                           && ['Schiedsrichter', esc(refStr)],
+  ].filter(Boolean);
+
+  const infoTableHTML = infoRows.length ? `
+    <table class="sd-info-table">
+      ${infoRows.map(([label, val]) => `
+        <tr>
+          <td class="sd-info-label">${label}</td>
+          <td class="sd-info-value">${val}</td>
+        </tr>`).join('')}
+    </table>` : '';
 
   // ── VOD-Button ──
   const vodBtn = g.vod_link
@@ -3586,6 +3631,13 @@ function renderSpielDetail(g) {
         </div>
       </div>
     </div>
+
+    <!-- Spielinfos -->
+    ${infoTableHTML ? `
+    <div class="sd-section-title">Spielinfos</div>
+    <div class="glass" style="padding:12px 16px;margin-bottom:4px">
+      ${infoTableHTML}
+    </div>` : ''}
   `;
 }
 
