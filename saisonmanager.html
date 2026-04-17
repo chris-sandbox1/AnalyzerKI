@@ -3202,6 +3202,19 @@ function renderSpielDetail(g) {
   (g.players?.home || []).forEach(p => { homePlayers[p.trikot_number] = `${p.player_firstname} ${p.player_name}`; });
   (g.players?.guest || []).forEach(p => { guestPlayers[p.trikot_number] = `${p.player_firstname} ${p.player_name}`; });
 
+  // Straftyp-Fallback wenn penalty_type_string fehlt
+  const PEN_LABEL = {
+    penalty_2:     '2 Minuten',
+    penalty_2and2: '2+2 Minuten',
+    penalty_5:     '5 Minuten',
+    penalty_10:    '10 Minuten',
+    penalty_match: 'Matchstrafe',
+    penalty_ms_tech: 'Matchstrafe (techn.)',
+    penalty_ms_full: 'Matchstrafe (voll)',
+    penalty_ms1:   'Matchstrafe 1',
+    penalty_ms2:   'Matchstrafe 2',
+  };
+
   const timelineRows = events.map(e => {
     const isHome = e.event_team === 'home';
     const cls = isHome ? 'sd-event-home' : 'sd-event-guest';
@@ -3220,7 +3233,10 @@ function renderSpielDetail(g) {
     } else {
       icon = penaltyIcon(e.penalty_type);
       mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
-      subText = [e.penalty_type_string, e.penalty_reason_string].filter(Boolean).join(' · ');
+      const penTypeStr = e.penalty_type_string || PEN_LABEL[e.penalty_type] || '';
+      subText = [penTypeStr, e.penalty_reason_string].filter(Boolean).join(' · ');
+      // Bankstrafe: kein Spieler → Grund besonders hervorheben
+      if (!hasNumber && !subText) subText = 'Bankstrafe';
     }
 
     return `<div class="sd-event ${cls}">
@@ -3248,10 +3264,10 @@ function renderSpielDetail(g) {
       const cls = penaltyClass(e.penalty_type);
       return `<div class="sd-penalty-row">
         <span class="sd-penalty-time">P${e.period} ${esc(e.time)}</span>
-        <span class="sd-penalty-type ${cls}">${esc(e.penalty_type_string || '?')}</span>
+        <span class="sd-penalty-type ${cls}">${esc(e.penalty_type_string || PEN_LABEL[e.penalty_type] || '?')}</span>
         <div>
           <span class="sd-penalty-player">${playerLabel}</span>
-          ${e.penalty_reason_string ? `<div class="sd-penalty-reason">${esc(e.penalty_reason_string)}</div>` : ''}
+          ${e.penalty_reason_string ? `<div class="sd-penalty-reason">${esc(e.penalty_reason_string)}</div>` : (!hasNr ? '<div class="sd-penalty-reason">Bankstrafe</div>' : '')}
         </div>
       </div>`;
     }).join('');
