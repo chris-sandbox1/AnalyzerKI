@@ -371,6 +371,141 @@
     .spielplan-wrap {
       padding: 0 20px 24px;
     }
+
+    /* ── Turnierbaum ─────────────────────────────────────────────────────────── */
+    .bracket-scroll {
+      overflow-x: auto;
+      padding: 12px 16px 24px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bracket {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: flex-start;
+      min-width: max-content;
+    }
+    .bracket-round {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 240px;
+      flex-shrink: 0;
+    }
+    .bracket-round-title {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      text-align: center;
+      padding: 4px 0 6px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      margin-bottom: 4px;
+    }
+    .bracket-matchup {
+      border-radius: 10px;
+      padding: 10px 12px 8px;
+      cursor: pointer;
+      transition: background .15s;
+      user-select: none;
+    }
+    .bracket-matchup:hover { background: rgba(255,255,255,.07) !important; }
+    .bracket-team {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 0;
+      font-size: .8rem;
+      font-weight: 500;
+      transition: opacity .15s;
+    }
+    .bracket-team.winner .bracket-team-name { font-weight: 800; color: #f1f5f9; }
+    .bracket-team.loser  { opacity: .38; }
+    .bracket-logo {
+      width: 20px; height: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .bracket-logo-placeholder {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      flex-shrink: 0;
+    }
+    .bracket-team-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: rgba(255,255,255,.75);
+    }
+    .bracket-team-score {
+      font-size: .78rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: rgba(255,255,255,.5);
+      min-width: 14px;
+      text-align: right;
+    }
+    .bracket-team.winner .bracket-team-score { color: var(--color-a); }
+    .bracket-stand {
+      text-align: center;
+      font-size: .62rem;
+      color: rgba(255,255,255,.25);
+      letter-spacing: .04em;
+      padding: 1px 0 3px;
+      border-top: 0.5px solid rgba(255,255,255,.06);
+      border-bottom: 0.5px solid rgba(255,255,255,.06);
+      margin: 2px 0;
+    }
+    .bracket-stand.decided { color: rgba(255,255,255,.5); font-weight: 700; }
+
+    /* Accordion-Spiele */
+    .bracket-games {
+      margin-top: 8px;
+      border-top: 0.5px solid rgba(255,255,255,.08);
+      padding-top: 6px;
+    }
+    .bracket-game-item {
+      display: grid;
+      grid-template-columns: 32px 1fr auto 60px;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 4px;
+      border-radius: 6px;
+      font-size: .72rem;
+      cursor: pointer;
+      transition: background .1s;
+    }
+    .bracket-game-item:hover { background: rgba(255,255,255,.07); }
+    .bracket-game-item.played { }
+    .bracket-game-nr   { color: rgba(255,255,255,.3); font-size: .65rem; }
+    .bracket-game-teams { color: rgba(255,255,255,.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bracket-game-score { font-weight: 700; font-variant-numeric: tabular-nums; color: #f1f5f9; text-align: right; }
+    .bracket-game-datum { color: rgba(255,255,255,.25); font-size: .62rem; text-align: right; }
+
+    /* Gruppenphase-Grid */
+    .gruppe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 0 16px 16px;
+    }
+    .gruppe-table-wrap { border-radius: 10px; padding: 10px 12px; }
+    .gruppe-title {
+      font-size: .65rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      margin-bottom: 8px;
+    }
+    .gruppe-table { width: 100%; border-collapse: collapse; font-size: .74rem; }
+    .gruppe-table th {
+      color: rgba(255,255,255,.3); font-size: .6rem; font-weight: 600;
+      padding: 2px 4px 5px; text-align: center;
+    }
+    .gruppe-table th:nth-child(2) { text-align: left; }
+    .gruppe-table td { padding: 4px; text-align: center; border-top: 0.5px solid rgba(255,255,255,.05); }
+    .gruppe-table td:nth-child(2) { text-align: left; }
     .spieltag-gruppe {
       margin-bottom: 18px;
     }
@@ -1521,6 +1656,7 @@ let aktiveLigaId = 1890;
 let tabelle   = [];
 let spielplan = [];
 let scorer    = [];
+let ligaMeta  = null;   // leagues/{id}.json → league_type, has_preround, game_day_titles
 let aktiverTab   = 'tabelle';
 let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
@@ -1709,10 +1845,11 @@ function onLiga() {
 async function ladeDaten() {
   if (datenGeladen) return;
   try {
-    [tabelle, spielplan, scorer] = await Promise.all([
+    [tabelle, spielplan, scorer, ligaMeta] = await Promise.all([
       fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/table.json`),
       fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/schedule.json`),
       fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}/scorer.json`),
+      fetchJSON(`${API_BASE}/api/v2/leagues/${aktiveLigaId}.json`),
     ]);
     datenGeladen = true;
     befuelleTeamDropdowns();
@@ -1727,6 +1864,11 @@ async function ladeDaten() {
       document.getElementById('content-' + id).innerHTML = msg;
     });
   }
+}
+
+function getSpielplanModus() {
+  if (!ligaMeta || ligaMeta.league_type !== 'cup') return 'liga';
+  return ligaMeta.has_preround ? 'cup_gruppe' : 'cup';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1827,6 +1969,13 @@ function setSpielfFilter(f, btn) {
 }
 
 function renderSpielplan() {
+  const modus = getSpielplanModus();
+  if (modus === 'cup')        return renderTurnierbaum();
+  if (modus === 'cup_gruppe') return renderGruppenphaseMitKO();
+  return renderSpielplanLiga();
+}
+
+function renderSpielplanLiga() {
   const teamFilter = document.getElementById('spielplan-team-filter')?.value || '';
   let spiele = spielplan;
 
@@ -1909,6 +2058,233 @@ function renderSpielplan() {
 
   html += '</div>';
   document.getElementById('content-spielplan').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB 2b: TURNIERBAUM (Cup-Modus)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Baut den Turnierbaum-HTML-String aus einem Spiele-Array.
+ * @param {Array}  spiele       - schedule.json Spiele (oder Teilmenge für KO-Phase)
+ * @param {Array}  rundentitel  - ligaMeta.game_day_titles (Index 0 = Runde 1)
+ * @param {Number} startRunde   - ab welcher game_day_number der Baum beginnt (default 1)
+ */
+function baueBracket(spiele, rundentitel, startRunde = 1) {
+  // 1. Runden ermitteln
+  const rundenMap = {};   // game_day_number → [spiele]
+  spiele.forEach(s => {
+    const r = s.game_day_number ?? s.game_day ?? 1;
+    if (!rundenMap[r]) rundenMap[r] = [];
+    rundenMap[r].push(s);
+  });
+  const rundenNrn = Object.keys(rundenMap).map(Number).sort((a,b) => a - b)
+                          .filter(n => n >= startRunde);
+  if (!rundenNrn.length) return '<div class="lade-info"><span>Keine Spiele gefunden.</span></div>';
+
+  // 2. Pro Runde: Serien bilden (normierter Team-Paar-Key)
+  function serienKey(s) {
+    return [s.home_team_id, s.guest_team_id].sort((a,b) => a - b).join('-');
+  }
+
+  function serienAusRunde(rSpiele) {
+    const map = {};
+    rSpiele.forEach(s => {
+      const k = serienKey(s);
+      if (!map[k]) map[k] = { spiele: [], homeId: s.home_team_id, guestId: s.guest_team_id,
+                               homeName: s.home_team_name, guestName: s.guest_team_name,
+                               homeLogo: logoUrl(s.home_team_small_logo || s.home_team_logo),
+                               guestLogo: logoUrl(s.guest_team_small_logo || s.guest_team_logo) };
+      map[k].spiele.push(s);
+    });
+    // Serien nach frühestem Spieldatum sortieren
+    return Object.values(map).sort((a,b) =>
+      (a.spiele[0].date || '') < (b.spiele[0].date || '') ? -1 : 1
+    );
+  }
+
+  function serienStand(serie) {
+    let homeW = 0, guestW = 0;
+    serie.spiele.forEach(s => {
+      if (!istVergangen(s) || !s.result) return;
+      const hg = s.result.home_goals ?? 0, gg = s.result.guest_goals ?? 0;
+      if (hg > gg) homeW++;
+      else if (gg > hg) guestW++;
+    });
+    const gespielt = serie.spiele.filter(s => istVergangen(s) && s.result).length;
+    const gesamt   = serie.spiele.length;
+    const maxMoegl = gesamt;
+    const braucht  = Math.ceil((maxMoegl + 1) / 2);
+    const entschieden = homeW >= braucht || guestW >= braucht;
+    const winner = entschieden ? (homeW >= braucht ? 'home' : 'guest') : null;
+    return { homeW, guestW, entschieden, winner, gespielt, gesamt };
+  }
+
+  // 3. HTML aufbauen
+  let html = '<div class="bracket-scroll"><div class="bracket">';
+
+  rundenNrn.forEach(nr => {
+    const titel = (rundentitel && rundentitel[nr - 1]) || `Runde ${nr}`;
+    const serien = serienAusRunde(rundenMap[nr]);
+
+    html += `<div class="bracket-round">
+      <div class="bracket-round-title">${esc(titel)}</div>`;
+
+    serien.forEach(serie => {
+      const st = serienStand(serie);
+      const serieId = `serie-${serie.spiele[0].game_id}`;
+      const homeWinner  = st.winner === 'home';
+      const guestWinner = st.winner === 'guest';
+
+      // Logos
+      const hLogoEl = serie.homeLogo
+        ? `<img class="bracket-logo" src="${serie.homeLogo}" alt="" onerror="this.style.display='none'">`
+        : '<div class="bracket-logo-placeholder"></div>';
+      const gLogoEl = serie.guestLogo
+        ? `<img class="bracket-logo" src="${serie.guestLogo}" alt="" onerror="this.style.display='none'">`
+        : '<div class="bracket-logo-placeholder"></div>';
+
+      // Einzelspiele (Accordion-Inhalt)
+      const spieleHTML = serie.spiele
+        .sort((a,b) => (a.date||'') < (b.date||'') ? -1 : 1)
+        .map((s, idx) => {
+          const verg = istVergangen(s);
+          const erg = (verg && s.result)
+            ? `<span class="bracket-game-score">${s.result.home_goals}:${s.result.guest_goals}${s.result.postfix?.short ? ' '+s.result.postfix.short : ''}</span>`
+            : `<span class="bracket-game-score" style="color:rgba(255,255,255,.3)">${s.time || '–'}</span>`;
+          // Heimvorteil: welches Team spielt tatsächlich zu Hause in diesem Spiel?
+          const heimKurz = s.home_team_name.length > 18
+            ? s.home_team_name.split(' ').pop() : s.home_team_name;
+          const gastKurz = s.guest_team_name.length > 18
+            ? s.guest_team_name.split(' ').pop() : s.guest_team_name;
+          return `<div class="bracket-game-item${verg ? ' played' : ''}" onclick="event.stopPropagation();zeigSpielDetail(${s.game_id})">
+            <span class="bracket-game-nr">Sp. ${idx+1}</span>
+            <span class="bracket-game-teams">${esc(heimKurz)} – ${esc(gastKurz)}</span>
+            ${erg}
+            <span class="bracket-game-datum">${formatDatum(s.date)}</span>
+          </div>`;
+        }).join('');
+
+      // Serienstand-Label
+      const standLabel = st.entschieden
+        ? `${st.homeW}:${st.guestW}`
+        : (st.gespielt > 0 ? `${st.homeW}:${st.guestW}` : '–:–');
+      const standCls = st.entschieden ? 'bracket-stand decided' : 'bracket-stand';
+
+      html += `<div class="bracket-matchup glass" onclick="toggleBracketSerie('${serieId}')">
+        <div class="bracket-team${homeWinner  ? ' winner' : st.winner ? ' loser' : ''}">
+          ${hLogoEl}
+          <span class="bracket-team-name">${esc(serie.homeName)}</span>
+          <span class="bracket-team-score">${st.homeW}</span>
+        </div>
+        <div class="${standCls}">${standLabel}</div>
+        <div class="bracket-team${guestWinner ? ' winner' : st.winner ? ' loser' : ''}">
+          ${gLogoEl}
+          <span class="bracket-team-name">${esc(serie.guestName)}</span>
+          <span class="bracket-team-score">${st.guestW}</span>
+        </div>
+        <div class="bracket-games" id="${serieId}" style="display:none">
+          ${spieleHTML}
+        </div>
+      </div>`;
+    });
+
+    html += '</div>'; // bracket-round
+  });
+
+  html += '</div></div>'; // bracket + bracket-scroll
+  return html;
+}
+
+function toggleBracketSerie(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function renderTurnierbaum() {
+  // Team-Filter ausblenden (macht im Baum wenig Sinn)
+  const tf = document.getElementById('spielplan-team-filter');
+  if (tf) tf.closest('select')?.parentElement?.style && (tf.style.display = 'none');
+
+  const titel = ligaMeta?.game_day_titles || [];
+  document.getElementById('content-spielplan').innerHTML =
+    baueBracket(spielplan, titel, 1);
+}
+
+function renderGruppenphaseMitKO() {
+  // Gruppenphase: Runden deren Titel "Gruppe" enthält → Mini-Tabellen
+  // KO: alle anderen Runden → Bracket
+  const titel = ligaMeta?.game_day_titles || [];
+
+  // Gruppentabellen aus table.json (haben group_name-Feld)
+  const gruppenTab = {};
+  (tabelle || []).forEach(t => {
+    const g = t.group_name || t.group || 'Gruppe';
+    if (!gruppenTab[g]) gruppenTab[g] = [];
+    gruppenTab[g].push(t);
+  });
+  const hatGruppenTab = Object.keys(gruppenTab).length > 0;
+
+  // KO-Runden: game_day_number wo Titel kein "Gruppe" enthält
+  const koSpiele = spielplan.filter(s => {
+    const nr = s.game_day_number ?? s.game_day ?? 1;
+    const t  = titel[nr - 1] || '';
+    return !t.toLowerCase().includes('gruppe') && !t.toLowerCase().includes('group');
+  });
+  // Gruppenphase-Spiele
+  const gruppeSpiele = spielplan.filter(s => {
+    const nr = s.game_day_number ?? s.game_day ?? 1;
+    const t  = titel[nr - 1] || '';
+    return t.toLowerCase().includes('gruppe') || t.toLowerCase().includes('group');
+  });
+
+  let html = '';
+
+  // ── Gruppenphase ──────────────────────────────────────────────────────────
+  if (hatGruppenTab) {
+    html += '<div class="sd-section-title" style="margin:8px 0 10px">Gruppenphase</div>';
+    html += '<div class="gruppe-grid">';
+    Object.entries(gruppenTab).sort(([a],[b]) => a.localeCompare(b)).forEach(([gName, teams]) => {
+      const sorted = [...teams].sort((a,b) => (a.position||99) - (b.position||99));
+      html += `<div class="glass gruppe-table-wrap">
+        <div class="gruppe-title">${esc(gName)}</div>
+        <table class="gruppe-table">
+          <thead><tr><th>#</th><th>Team</th><th>Sp</th><th>P</th><th>Tore</th></tr></thead>
+          <tbody>
+            ${sorted.map(t => `<tr>
+              <td>${t.position || '–'}</td>
+              <td>${esc(t.team_name)}</td>
+              <td>${t.games ?? '–'}</td>
+              <td><strong>${t.points ?? '–'}</strong></td>
+              <td style="color:rgba(255,255,255,.45)">${t.goals_scored ?? '–'}:${t.goals_received ?? '–'}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    });
+    html += '</div>';
+  } else if (gruppeSpiele.length) {
+    // Fallback: Gruppenphase-Spiele als Liste
+    html += '<div class="sd-section-title" style="margin:8px 0 10px">Gruppenphase</div>';
+    const tmpSpieler = spielplan;
+    spielplan = gruppeSpiele;
+    // temporär renderSpielplanLiga in einen div rendern
+    const tmp = document.createElement('div');
+    tmp.innerHTML = '';
+    spielplan = tmpSpieler;
+    // einfache Liste reicht
+    html += baueBracket(gruppeSpiele, titel, 1);
+  }
+
+  // ── KO-Baum ───────────────────────────────────────────────────────────────
+  if (koSpiele.length) {
+    html += '<div class="sd-section-title" style="margin:16px 0 10px">K.O.-Phase</div>';
+    const minKoRunde = Math.min(...koSpiele.map(s => s.game_day_number ?? s.game_day ?? 1));
+    html += baueBracket(koSpiele, titel, minKoRunde);
+  }
+
+  document.getElementById('content-spielplan').innerHTML = html || '<div class="lade-info"><span>Keine Daten.</span></div>';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
