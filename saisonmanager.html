@@ -915,6 +915,233 @@
     .pg-btn:hover:not(:disabled) { background: rgba(255,255,255,.14); }
     .pg-btn:disabled { opacity: .3; cursor: default; }
     .pg-info { color: rgba(255,255,255,.4); }
+
+    /* ── Spiel-Detail ──────────────────────────────────────────────────────── */
+    .sd-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.07);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.7);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: .78rem;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: background .15s;
+    }
+    .sd-back-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    .sd-hero {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 24px;
+      margin-bottom: 12px;
+    }
+    .sd-hero-team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .sd-hero-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+    .sd-hero-name {
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .sd-hero-mid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .sd-score {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .sd-score-num {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .sd-score-sep {
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(255,255,255,.25);
+    }
+    .sd-score-postfix {
+      font-size: .75rem;
+      color: rgba(255,255,255,.45);
+      margin-top: 2px;
+    }
+    .sd-meta {
+      font-size: .72rem;
+      color: rgba(255,255,255,.38);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .sd-vod-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239,68,68,.15);
+      border: 0.5px solid rgba(239,68,68,.3);
+      color: #f87171;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: .74rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .sd-vod-btn:hover { background: rgba(239,68,68,.25); }
+    .sd-refs {
+      font-size: .68rem;
+      color: rgba(255,255,255,.25);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .sd-section-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin: 16px 0 6px;
+    }
+
+    /* Drittel-Tabelle */
+    .sd-period-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+    }
+    .sd-period-table th {
+      text-align: center;
+      padding: 8px 12px;
+      color: rgba(255,255,255,.35);
+      font-size: .7rem;
+      font-weight: 600;
+      border-bottom: 0.5px solid rgba(255,255,255,.07);
+    }
+    .sd-period-table td {
+      text-align: center;
+      padding: 8px 12px;
+      border-bottom: 0.5px solid rgba(255,255,255,.05);
+    }
+    .sd-period-table td:first-child { text-align: left; font-weight: 600; }
+    .sd-period-total { font-weight: 800; color: #f1f5f9; }
+
+    /* Timeline */
+    .sd-timeline { display: flex; flex-direction: column; gap: 4px; }
+    .sd-event {
+      display: grid;
+      grid-template-columns: 44px 28px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: .78rem;
+    }
+    .sd-event:hover { background: rgba(255,255,255,.03); }
+    .sd-event-time { color: rgba(255,255,255,.4); font-size: .72rem; font-variant-numeric: tabular-nums; }
+    .sd-event-icon { font-size: 1rem; text-align: center; }
+    .sd-event-info { display: flex; flex-direction: column; gap: 1px; }
+    .sd-event-main { font-weight: 600; }
+    .sd-event-sub { font-size: .68rem; color: rgba(255,255,255,.38); }
+    .sd-event-score { font-size: .72rem; font-variant-numeric: tabular-nums; color: rgba(255,255,255,.35); font-weight: 700; }
+    .sd-event-home { border-left: 2px solid var(--color-a); }
+    .sd-event-guest { border-left: 2px solid var(--color-b); }
+
+    /* Strafen-Übersicht */
+    .sd-penalty-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .sd-penalty-col-title {
+      font-size: .72rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid rgba(255,255,255,.08);
+    }
+    .sd-penalty-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+      font-size: .74rem;
+    }
+    .sd-penalty-row:last-child { border-bottom: none; }
+    .sd-penalty-time { color: rgba(255,255,255,.35); min-width: 36px; font-size: .68rem; }
+    .sd-penalty-type { font-size: .7rem; padding: 1px 5px; border-radius: 4px; font-weight: 700; }
+    .sd-ptype-2   { background: rgba(234,179,8,.15);  color: #facc15; }
+    .sd-ptype-mid { background: rgba(249,115,22,.15); color: #fb923c; }
+    .sd-ptype-ms  { background: rgba(239,68,68,.15);  color: #f87171; }
+    .sd-penalty-player { font-weight: 600; }
+    .sd-penalty-reason { color: rgba(255,255,255,.35); font-size: .68rem; }
+
+    /* Kader */
+    .sd-roster-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .sd-roster-col-title {
+      font-size: .72rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid rgba(255,255,255,.08);
+    }
+    .sd-lineup-title {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.28);
+      margin: 8px 0 4px;
+    }
+    .sd-player-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      font-size: .76rem;
+      border-bottom: 0.5px solid rgba(255,255,255,.04);
+    }
+    .sd-player-row:last-child { border-bottom: none; }
+    .sd-player-nr {
+      min-width: 26px;
+      text-align: right;
+      color: rgba(255,255,255,.3);
+      font-size: .68rem;
+      font-weight: 700;
+    }
+    .sd-player-name { flex: 1; }
+    .sd-player-mvp { color: #fbbf24; font-size: .8rem; }
+    .sd-starter-row {
+      background: rgba(255,255,255,.04);
+      border-radius: 5px;
+      padding: 4px 6px;
+      margin: 2px 0;
+    }
+    .sd-pos-label {
+      font-size: .62rem;
+      color: rgba(255,255,255,.25);
+      min-width: 60px;
+    }
   </style>
 </head>
 <body>
@@ -976,14 +1203,21 @@
 
 <!-- TAB 2: SPIELPLAN -->
 <section id="tab-spielplan" class="tab-content">
-  <div class="filters" id="spielplan-filters">
-    <button class="filter-btn active" onclick="setSpielfFilter('alle', this)">Alle Spiele</button>
-    <select class="liga-select" id="spielplan-team-filter" onchange="renderSpielplan()" style="border-radius:20px;padding:5px 14px;font-size:.75rem">
-      <option value="">Alle Teams</option>
-    </select>
+  <!-- Spielplan-Liste (Standard-View) -->
+  <div id="spielplan-liste">
+    <div class="filters" id="spielplan-filters">
+      <button class="filter-btn active" onclick="setSpielfFilter('alle', this)">Alle Spiele</button>
+      <select class="liga-select" id="spielplan-team-filter" onchange="renderSpielplan()" style="border-radius:20px;padding:5px 14px;font-size:.75rem">
+        <option value="">Alle Teams</option>
+      </select>
+    </div>
+    <div id="content-spielplan">
+      <div class="lade-info"><div class="spinner"></div><span>Spielplan lädt…</span></div>
+    </div>
   </div>
-  <div id="content-spielplan">
-    <div class="lade-info"><div class="spinner"></div><span>Spielplan lädt…</span></div>
+  <!-- Spiel-Detail-View (initial versteckt) -->
+  <div id="spielplan-detail" style="display:none;padding:20px 20px 40px">
+    <div id="content-spiel-detail"></div>
   </div>
 </section>
 
@@ -1487,7 +1721,7 @@ function renderSpielplan() {
       }
 
       html += `
-      <div class="glass spiel-item ${verg ? 'vergangen' : ''}">
+      <div class="glass spiel-item ${verg ? 'vergangen' : ''}" onclick="zeigSpielDetail(${s.game_id})" style="cursor:pointer">
         <div class="spiel-datum">
           <strong>${formatDatum(s.date)}</strong>
           ${s.time && !verg ? s.time : ''}
@@ -2898,6 +3132,272 @@ function setAlltimeTeamSeite(s)    { alltimeTeamSeite    = s; renderAlltimeTeams
 function setStaticSpielerSeite(s)  { staticSpielerSeite  = s; renderStaticAlltime(); }
 function setStaticTeamSeite(s)     { staticTeamSeite     = s; renderStaticAlltime(); }
 function setStaticKaderSeite(s)    { staticKaderSeite    = s; renderStaticKader(); }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Spiel-Detail-Ansicht
+// ─────────────────────────────────────────────────────────────────────────────
+
+function zeigSpielplan() {
+  document.getElementById('spielplan-liste').style.display = '';
+  document.getElementById('spielplan-detail').style.display = 'none';
+}
+
+async function zeigSpielDetail(gameId) {
+  document.getElementById('spielplan-liste').style.display = 'none';
+  const detailEl = document.getElementById('spielplan-detail');
+  const contentEl = document.getElementById('content-spiel-detail');
+  detailEl.style.display = '';
+  contentEl.innerHTML = '<div class="lade-info"><div class="spinner"></div><span>Lade Spieldaten…</span></div>';
+  try {
+    const g = await fetchJSON(`${API_BASE}/api/v2/games/${gameId}.json`);
+    contentEl.innerHTML = renderSpielDetail(g);
+  } catch(e) {
+    contentEl.innerHTML = `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
+  }
+}
+
+function renderSpielDetail(g) {
+  const CA = 'var(--color-a)', CB = 'var(--color-b)';
+  const r = g.result || {};
+  const hg = r.home_goals ?? '–';
+  const gg = r.guest_goals ?? '–';
+  const postfix = r.postfix?.short ? `<div class="sd-score-postfix">${esc(r.postfix.short)}</div>` : '';
+
+  // ── Drittel ──
+  const hP = r.home_goals_period || [];
+  const gP = r.guest_goals_period || [];
+  const periodLabels = ['1. Drittel','2. Drittel','3. Drittel','Verlängerung'];
+  const activePeriods = periodLabels.filter((_, i) => hP[i] !== undefined || gP[i] !== undefined);
+  const periodRows = `
+    <tr>
+      <td style="color:${CA}">${esc(g.home_team_name)}</td>
+      ${activePeriods.map((_, i) => `<td>${hP[i] ?? 0}</td>`).join('')}
+      <td class="sd-period-total">${hg}</td>
+    </tr>
+    <tr>
+      <td style="color:${CB}">${esc(g.guest_team_name)}</td>
+      ${activePeriods.map((_, i) => `<td>${gP[i] ?? 0}</td>`).join('')}
+      <td class="sd-period-total">${gg}</td>
+    </tr>`;
+
+  // ── Events: Timeline ──
+  const events = (g.events || []).slice().sort((a, b) => a.sortkey > b.sortkey ? 1 : -1);
+
+  function penaltyClass(penType) {
+    if (!penType) return 'sd-ptype-2';
+    if (penType === 'penalty_2') return 'sd-ptype-2';
+    if (['penalty_2and2','penalty_5','penalty_10'].includes(penType)) return 'sd-ptype-mid';
+    return 'sd-ptype-ms'; // penalty_match, penalty_ms_*
+  }
+  function penaltyIcon(penType) {
+    if (!penType) return '🟨';
+    if (penType === 'penalty_2') return '🟨';
+    if (['penalty_2and2','penalty_5','penalty_10'].includes(penType)) return '🟧';
+    return '🟥';
+  }
+
+  // Spieler-Lookup: trikot_number → name (für Assists)
+  const homePlayers = {};
+  const guestPlayers = {};
+  (g.players?.home || []).forEach(p => { homePlayers[p.trikot_number] = `${p.player_firstname} ${p.player_name}`; });
+  (g.players?.guest || []).forEach(p => { guestPlayers[p.trikot_number] = `${p.player_firstname} ${p.player_name}`; });
+
+  const timelineRows = events.map(e => {
+    const isHome = e.event_team === 'home';
+    const cls = isHome ? 'sd-event-home' : 'sd-event-guest';
+    const playerLookup = isHome ? homePlayers : guestPlayers;
+    const playerName = playerLookup[e.number] || `#${e.number}`;
+
+    let icon, mainText, subText, scoreText = '';
+    if (e.event_type === 'goal') {
+      icon = '⚽';
+      mainText = `#${e.number} ${esc(playerName)}`;
+      const assistName = e.assist ? (playerLookup[e.assist] || `#${e.assist}`) : null;
+      subText = assistName ? `Assist: #${e.assist} ${esc(assistName)}` : (e.goal_type_string || '');
+      scoreText = `${e.home_goals}:${e.guest_goals}`;
+    } else {
+      icon = penaltyIcon(e.penalty_type);
+      mainText = `#${e.number} ${esc(playerName)}`;
+      subText = [e.penalty_type_string, e.penalty_reason_string].filter(Boolean).join(' · ');
+    }
+
+    return `<div class="sd-event ${cls}">
+      <span class="sd-event-time">P${e.period} ${esc(e.time)}</span>
+      <span class="sd-event-icon">${icon}</span>
+      <div class="sd-event-info">
+        <span class="sd-event-main">${mainText}</span>
+        ${subText ? `<span class="sd-event-sub">${esc(subText)}</span>` : ''}
+      </div>
+      <span class="sd-event-score">${scoreText}</span>
+    </div>`;
+  }).join('');
+
+  // ── Strafen-Übersicht ──
+  const penalties = events.filter(e => e.event_type === 'penalty');
+  const homePens = penalties.filter(e => e.event_team === 'home');
+  const guestPens = penalties.filter(e => e.event_team === 'guest');
+
+  function penRows(pens, playerLookup) {
+    if (!pens.length) return '<div style="color:rgba(255,255,255,.25);font-size:.72rem;padding:6px 0">Keine Strafen</div>';
+    return pens.map(e => {
+      const name = playerLookup[e.number] || `#${e.number}`;
+      const cls = penaltyClass(e.penalty_type);
+      return `<div class="sd-penalty-row">
+        <span class="sd-penalty-time">P${e.period} ${esc(e.time)}</span>
+        <span class="sd-penalty-type ${cls}">${esc(e.penalty_type_string || '?')}</span>
+        <div>
+          <span class="sd-penalty-player">#${e.number} ${esc(name)}</span>
+          ${e.penalty_reason_string ? `<div class="sd-penalty-reason">${esc(e.penalty_reason_string)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Kader & Aufstellung ──
+  const posLabels = {
+    goal: 'Torwart', defender1: 'Verteidiger 1', defender2: 'Verteidiger 2',
+    center: 'Mitte', forward1: 'Stürmer 1', forward2: 'Stürmer 2'
+  };
+  const posOrder = ['goal','defender1','defender2','center','forward1','forward2'];
+
+  function mvpSet(awards) {
+    const s = new Set();
+    (awards || []).forEach(a => { if (a.award === 'mvp') s.add(a.trikot_number); });
+    return s;
+  }
+
+  function rosterCol(startingPlayers, allPlayers, awards, teamColor) {
+    const mvps = mvpSet(awards);
+    const startingNrs = new Set((startingPlayers || []).map(p => p.trikot_number));
+
+    // Startaufstellung nach posOrder
+    const startMap = {};
+    (startingPlayers || []).forEach(p => { startMap[p.position] = p; });
+    const startRows = posOrder.map(pos => {
+      const p = startMap[pos];
+      if (!p) return '';
+      const isMvp = mvps.has(p.trikot_number);
+      return `<div class="sd-player-row sd-starter-row">
+        <span class="sd-pos-label">${posLabels[pos]}</span>
+        <span class="sd-player-nr">#${p.trikot_number}</span>
+        <span class="sd-player-name">${esc(p.player_firstname)} ${esc(p.player_name)}</span>
+        ${isMvp ? '<span class="sd-player-mvp" title="MVP">🏆</span>' : ''}
+      </div>`;
+    }).join('');
+
+    // Alle anderen Spieler
+    const others = (allPlayers || [])
+      .filter(p => !startingNrs.has(p.trikot_number))
+      .sort((a, b) => a.trikot_number - b.trikot_number);
+    const otherRows = others.map(p => {
+      const isMvp = mvps.has(p.trikot_number);
+      return `<div class="sd-player-row">
+        <span class="sd-player-nr">#${p.trikot_number}</span>
+        <span class="sd-player-name">${esc(p.player_firstname)} ${esc(p.player_name)}</span>
+        ${isMvp ? '<span class="sd-player-mvp" title="MVP">🏆</span>' : ''}
+      </div>`;
+    }).join('');
+
+    return `
+      ${startRows ? `<div class="sd-lineup-title">Startaufstellung</div>${startRows}` : ''}
+      ${otherRows ? `<div class="sd-lineup-title" style="margin-top:10px">Weitere Spieler</div>${otherRows}` : ''}
+    `;
+  }
+
+  // ── Schiedsrichter ──
+  const refs = (g.nominated_referees || g.referees || []);
+  const refStr = Array.isArray(refs) ? refs.join(' · ') : String(refs);
+
+  // ── Datum formatieren ──
+  const datumStr = g.date ? new Date(g.date).toLocaleDateString('de-DE', {weekday:'short', day:'2-digit', month:'2-digit', year:'numeric'}) : '';
+
+  // ── VOD-Button ──
+  const vodBtn = g.vod_link
+    ? `<a href="${esc(g.vod_link)}" target="_blank" rel="noopener" class="sd-vod-btn">▶ VOD ansehen</a>`
+    : '';
+
+  return `
+    <button class="sd-back-btn" onclick="zeigSpielplan()">← Spielplan</button>
+
+    <!-- Score Hero -->
+    <div class="glass sd-hero">
+      <div class="sd-hero-team">
+        <img class="sd-hero-logo" src="${esc(g.home_team_logo || '')}" alt="" onerror="this.style.display='none'">
+        <div class="sd-hero-name" style="color:${CA}">${esc(g.home_team_name)}</div>
+      </div>
+      <div class="sd-hero-mid">
+        <div class="sd-score">
+          <span class="sd-score-num" style="color:${CA};text-shadow:0 0 40px rgba(74,222,128,.4)">${hg}</span>
+          <span class="sd-score-sep">:</span>
+          <span class="sd-score-num" style="color:${CB};text-shadow:0 0 40px rgba(251,146,60,.4)">${gg}</span>
+        </div>
+        ${postfix}
+        <div class="sd-meta">
+          ${datumStr}${g.game_day ? ` · Spieltag ${g.game_day}` : ''}${g.arena_short ? ` · ${esc(g.arena_short)}` : ''}
+          ${g.audience ? `<br>${g.audience} Zuschauer` : ''}
+        </div>
+        ${vodBtn}
+        ${refStr ? `<div class="sd-refs">SR: ${esc(refStr)}</div>` : ''}
+      </div>
+      <div class="sd-hero-team">
+        <img class="sd-hero-logo" src="${esc(g.guest_team_logo || '')}" alt="" onerror="this.style.display='none'">
+        <div class="sd-hero-name" style="color:${CB}">${esc(g.guest_team_name)}</div>
+      </div>
+    </div>
+
+    <!-- Drittel -->
+    ${activePeriods.length ? `
+    <div class="sd-section-title">Tore pro Drittel</div>
+    <div class="glass" style="padding:12px 16px;margin-bottom:4px">
+      <table class="sd-period-table">
+        <thead><tr>
+          <th></th>
+          ${activePeriods.map(l => `<th>${esc(l)}</th>`).join('')}
+          <th>Gesamt</th>
+        </tr></thead>
+        <tbody>${periodRows}</tbody>
+      </table>
+    </div>` : ''}
+
+    <!-- Spielverlauf -->
+    ${events.length ? `
+    <div class="sd-section-title">Spielverlauf</div>
+    <div class="glass" style="padding:10px 8px;margin-bottom:4px">
+      <div class="sd-timeline">${timelineRows}</div>
+    </div>` : ''}
+
+    <!-- Strafen -->
+    ${penalties.length ? `
+    <div class="sd-section-title">Strafzeiten</div>
+    <div class="glass" style="padding:14px 16px;margin-bottom:4px">
+      <div class="sd-penalty-cols">
+        <div>
+          <div class="sd-penalty-col-title" style="color:${CA}">${esc(g.home_team_name)}</div>
+          ${penRows(homePens, homePlayers)}
+        </div>
+        <div>
+          <div class="sd-penalty-col-title" style="color:${CB}">${esc(g.guest_team_name)}</div>
+          ${penRows(guestPens, guestPlayers)}
+        </div>
+      </div>
+    </div>` : ''}
+
+    <!-- Kader -->
+    <div class="sd-section-title">Kader &amp; Aufstellung</div>
+    <div class="glass" style="padding:14px 16px;margin-bottom:4px">
+      <div class="sd-roster-cols">
+        <div>
+          <div class="sd-roster-col-title" style="color:${CA}">${esc(g.home_team_name)}</div>
+          ${rosterCol(g.starting_players?.home, g.players?.home, g.awards?.home, CA)}
+        </div>
+        <div>
+          <div class="sd-roster-col-title" style="color:${CB}">${esc(g.guest_team_name)}</div>
+          ${rosterCol(g.starting_players?.guest, g.players?.guest, g.awards?.guest, CB)}
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Init
