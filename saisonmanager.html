@@ -3206,18 +3206,20 @@ function renderSpielDetail(g) {
     const isHome = e.event_team === 'home';
     const cls = isHome ? 'sd-event-home' : 'sd-event-guest';
     const playerLookup = isHome ? homePlayers : guestPlayers;
-    const playerName = playerLookup[e.number] || `#${e.number}`;
+    const teamLabel = isHome ? esc(g.home_team_name) : esc(g.guest_team_name);
+    const hasNumber = e.number != null && e.number !== '';
+    const playerName = hasNumber ? (playerLookup[e.number] || '') : '';
 
     let icon, mainText, subText, scoreText = '';
     if (e.event_type === 'goal') {
       icon = '⚽';
-      mainText = `#${e.number} ${esc(playerName)}`;
-      const assistName = e.assist ? (playerLookup[e.assist] || `#${e.assist}`) : null;
+      mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
+      const assistName = e.assist ? (playerLookup[e.assist] || '') : null;
       subText = assistName ? `Assist: #${e.assist} ${esc(assistName)}` : (e.goal_type_string || '');
       scoreText = `${e.home_goals}:${e.guest_goals}`;
     } else {
       icon = penaltyIcon(e.penalty_type);
-      mainText = `#${e.number} ${esc(playerName)}`;
+      mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
       subText = [e.penalty_type_string, e.penalty_reason_string].filter(Boolean).join(' · ');
     }
 
@@ -3237,16 +3239,18 @@ function renderSpielDetail(g) {
   const homePens = penalties.filter(e => e.event_team === 'home');
   const guestPens = penalties.filter(e => e.event_team === 'guest');
 
-  function penRows(pens, playerLookup) {
+  function penRows(pens, playerLookup, teamName) {
     if (!pens.length) return '<div style="color:rgba(255,255,255,.25);font-size:.72rem;padding:6px 0">Keine Strafen</div>';
     return pens.map(e => {
-      const name = playerLookup[e.number] || `#${e.number}`;
+      const hasNr = e.number != null && e.number !== '';
+      const lookedUp = hasNr ? (playerLookup[e.number] || '') : '';
+      const playerLabel = hasNr ? `#${e.number}${lookedUp ? ' ' + esc(lookedUp) : ''}` : esc(teamName || '–');
       const cls = penaltyClass(e.penalty_type);
       return `<div class="sd-penalty-row">
         <span class="sd-penalty-time">P${e.period} ${esc(e.time)}</span>
         <span class="sd-penalty-type ${cls}">${esc(e.penalty_type_string || '?')}</span>
         <div>
-          <span class="sd-penalty-player">#${e.number} ${esc(name)}</span>
+          <span class="sd-penalty-player">${playerLabel}</span>
           ${e.penalty_reason_string ? `<div class="sd-penalty-reason">${esc(e.penalty_reason_string)}</div>` : ''}
         </div>
       </div>`;
@@ -3333,7 +3337,7 @@ function renderSpielDetail(g) {
         </div>
         ${postfix}
         <div class="sd-meta">
-          ${datumStr}${g.game_day ? ` · Spieltag ${g.game_day}` : ''}${g.arena_short ? ` · ${esc(g.arena_short)}` : ''}
+          ${datumStr}${g.game_day != null ? ` · Spieltag ${typeof g.game_day === 'object' ? (g.game_day.number ?? '') : g.game_day}` : ''}${g.arena_short ? ` · ${esc(g.arena_short)}` : ''}
           ${g.audience ? `<br>${g.audience} Zuschauer` : ''}
         </div>
         ${vodBtn}
@@ -3373,11 +3377,11 @@ function renderSpielDetail(g) {
       <div class="sd-penalty-cols">
         <div>
           <div class="sd-penalty-col-title" style="color:${CA}">${esc(g.home_team_name)}</div>
-          ${penRows(homePens, homePlayers)}
+          ${penRows(homePens, homePlayers, g.home_team_name)}
         </div>
         <div>
           <div class="sd-penalty-col-title" style="color:${CB}">${esc(g.guest_team_name)}</div>
-          ${penRows(guestPens, guestPlayers)}
+          ${penRows(guestPens, guestPlayers, g.guest_team_name)}
         </div>
       </div>
     </div>` : ''}
