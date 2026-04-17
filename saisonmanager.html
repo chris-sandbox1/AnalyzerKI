@@ -1131,8 +1131,9 @@ let datenGeladen = false;
 let alltimeDaten        = null;
 let alltimeGeladen      = false;
 let alltimeRohdaten     = null;      // alle geladenen Rohdaten (für Re-Aggregation)
-let alltimeLigaFilter   = new Set(); // ausgewählte Liga-IDs; leer = alle
-let alltimeLigaSuche    = '';
+let alltimeLigaFilter     = new Set(); // ausgewählte Liga-IDs; leer = alle (außer noneMode)
+let alltimeLigaNoneMode   = false;     // true → leeres Set bedeutet "keine"
+let alltimeLigaSuche      = '';
 let alltimeLigaPanelOffen = false;
 let alltimeSortS   = 'tore';    // Scorer-Sortierung
 let alltimeSortT   = 'punkte';  // Tabellen-Sortierung
@@ -1281,8 +1282,9 @@ function onVerband() {
   // Alltime-Reset: Verband bestimmt die Alltime-Quelle
   alltimeGeladen  = false;
   alltimeDaten    = null;
-  alltimeRohdaten = null;
+  alltimeRohdaten   = null;
   alltimeLigaFilter.clear();
+  alltimeLigaNoneMode = false;
   const spinner  = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
   document.getElementById('content-alltime').innerHTML = spinner;
   document.getElementById('gender-hint').innerHTML = '';
@@ -1872,9 +1874,9 @@ async function ladeAlltimeDaten() {
 // Re-Aggregation mit aktivem Ligen-Filter (kein neuer Fetch)
 function aggregiereUndRenderAlltime() {
   if (!alltimeRohdaten) return;
-  const gefiltert = alltimeLigaFilter.size > 0
-    ? alltimeRohdaten.filter(e => alltimeLigaFilter.has(e.ligaId))
-    : alltimeRohdaten;
+  const gefiltert = (alltimeLigaFilter.size === 0 && !alltimeLigaNoneMode)
+    ? alltimeRohdaten
+    : alltimeRohdaten.filter(e => alltimeLigaFilter.has(e.ligaId));
   alltimeDaten = aggregiereAlltime(gefiltert);
   alltimeSpielerSeite = 1;
   alltimeTeamSeite    = 1;
@@ -1886,7 +1888,10 @@ function aktualisiereLigaBtn() {
   const btn = document.getElementById('alltime-liga-btn');
   if (!btn) return;
   const n = alltimeLigaFilter.size;
-  if (n === 0) {
+  if (n === 0 && alltimeLigaNoneMode) {
+    btn.textContent = 'Keine Ligen ▾';
+    btn.classList.add('active');
+  } else if (n === 0) {
     btn.textContent = 'Alle Ligen ▾';
     btn.classList.remove('active');
   } else {
@@ -1934,7 +1939,7 @@ function renderAlltimeLigaPanel() {
   const gefiltert = suche ? ligas.filter(l => l.name.toLowerCase().includes(suche)) : ligas;
 
   list.innerHTML = gefiltert.map(l => {
-    const checked = alltimeLigaFilter.size === 0 || alltimeLigaFilter.has(l.id);
+    const checked = !alltimeLigaNoneMode && (alltimeLigaFilter.size === 0 || alltimeLigaFilter.has(l.id));
     const jahr = l.saison ? ` <span style="color:rgba(255,255,255,.35);font-size:.7rem">${saisonJahr(l.saison)}</span>` : '';
     return `<label class="liga-check-item">
       <input type="checkbox" ${checked ? 'checked' : ''}
@@ -1945,36 +1950,42 @@ function renderAlltimeLigaPanel() {
 }
 
 function onAlltimeLigaToggle(id, checked) {
-  // Beim ersten Deselektieren: erst alle aktivieren, dann die eine entfernen
-  if (alltimeLigaFilter.size === 0 && !checked) {
-    if (!alltimeRohdaten) return;
-    alltimeRohdaten.forEach(e => alltimeLigaFilter.add(e.ligaId));
+  if (checked) {
+    // Aus noneMode: einfach diese Liga hinzufügen
+    alltimeLigaNoneMode = false;
+    alltimeLigaFilter.add(id);
+    // Aus "alle"-Modus: erst alle sammeln, dann diesen lassen
+  } else {
+    // Aus "alle"-Modus: erst alle IDs füllen, dann diese entfernen
+    if (alltimeLigaFilter.size === 0 && !alltimeLigaNoneMode) {
+      if (!alltimeRohdaten) return;
+      new Set(alltimeRohdaten.map(e => e.ligaId)).forEach(i => alltimeLigaFilter.add(i));
+    }
+    alltimeLigaFilter.delete(id);
+    // Letzten entfernt → noneMode
+    if (alltimeLigaFilter.size === 0) alltimeLigaNoneMode = true;
   }
-  if (checked) alltimeLigaFilter.add(id);
-  else         alltimeLigaFilter.delete(id);
-  // Wenn wieder alle ausgewählt: auf "leer = alle" zurück
+  // Wenn wieder alle ausgewählt: zurück auf "alle"-Modus
   const uniqueIds = new Set(alltimeRohdaten?.map(e => e.ligaId) || []);
-  if (alltimeLigaFilter.size >= uniqueIds.size && [...uniqueIds].every(id => alltimeLigaFilter.has(id))) {
+  if (!alltimeLigaNoneMode && alltimeLigaFilter.size >= uniqueIds.size &&
+      [...uniqueIds].every(i => alltimeLigaFilter.has(i))) {
     alltimeLigaFilter.clear();
+    alltimeLigaNoneMode = false;
   }
   aggregiereUndRenderAlltime();
   renderAlltimeLigaPanel();
 }
 
 function alltimeLigaAlleAuswaehlen() {
-  alltimeLigaFilter.clear();  // leer = alle
+  alltimeLigaFilter.clear();
+  alltimeLigaNoneMode = false;
   aggregiereUndRenderAlltime();
   renderAlltimeLigaPanel();
 }
 
 function alltimeLigaKeineAuswaehlen() {
-  // Nichts aggregieren — zeige Hinweis
   alltimeLigaFilter.clear();
-  if (alltimeRohdaten) alltimeRohdaten.forEach(e => alltimeLigaFilter.add(e.ligaId));
-  // Alle abwählen → Filter enthält alle IDs, jetzt alle entfernen bis auf keine
-  // Tatsächlich: wir brauchen einen speziellen "keine" State
-  // Einfachste Lösung: Filter auf ein leeres Set setzen und aggregiereAlltime([]) aufrufen
-  alltimeLigaFilter.clear();
+  alltimeLigaNoneMode = true;
   alltimeDaten = aggregiereAlltime([]);
   alltimeSpielerSeite = 1;
   alltimeTeamSeite    = 1;
