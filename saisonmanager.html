@@ -3230,6 +3230,10 @@ function renderSpielDetail(g) {
       const assistName = e.assist ? (playerLookup[e.assist] || '') : null;
       subText = assistName ? `Assist: #${e.assist} ${esc(assistName)}` : (e.goal_type_string || '');
       scoreText = `${e.home_goals}:${e.guest_goals}`;
+    } else if (e.event_type === 'timeout') {
+      icon = '⏱';
+      mainText = teamLabel;
+      subText = 'Timeout';
     } else {
       icon = penaltyIcon(e.penalty_type);
       mainText = hasNumber ? `#${e.number}${playerName ? ' ' + esc(playerName) : ''}` : teamLabel;
