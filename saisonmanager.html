@@ -1176,6 +1176,7 @@
     }
     .sd-penalty-row:last-child { border-bottom: none; }
     .sd-penalty-time { color: rgba(255,255,255,.35); min-width: 36px; font-size: .68rem; }
+    .sd-goal-score   { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; color: rgba(255,255,255,.55); min-width: 32px; }
     .sd-penalty-type { font-size: .7rem; padding: 1px 5px; border-radius: 4px; font-weight: 700; }
     .sd-ptype-2   { background: rgba(234,179,8,.15);  color: #facc15; }
     .sd-ptype-mid { background: rgba(249,115,22,.15); color: #fb923c; }
@@ -3382,6 +3383,34 @@ function renderSpielDetail(g) {
   });
   vtlHTML += '</div>';
 
+  // ── Tore-Übersicht ──
+  const goals = events.filter(e => e.event_type === 'goal');
+  const homeGoals  = goals.filter(e => e.event_team === 'home');
+  const guestGoals = goals.filter(e => e.event_team === 'guest');
+
+  function goalRows(gs, playerLookup) {
+    if (!gs.length) return '<div style="color:rgba(255,255,255,.25);font-size:.72rem;padding:6px 0">Keine Tore</div>';
+    return gs.map(e => {
+      const hasNr    = e.number != null && e.number !== '';
+      const scorer   = hasNr ? (playerLookup[e.number] || '') : '';
+      const scorerLabel = hasNr ? `#${e.number}${scorer ? ' ' + esc(scorer) : ''}` : '–';
+      const assistName  = e.assist ? (playerLookup[e.assist] || '') : null;
+      const assistLabel = assistName !== null
+        ? `#${e.assist}${assistName ? ' ' + esc(assistName) : ''}`
+        : null;
+      const typeLabel = e.goal_type_string || '';
+      return `<div class="sd-penalty-row">
+        <span class="sd-penalty-time">P${e.period} ${esc(e.time)}</span>
+        <span class="sd-goal-score">${e.home_goals}:${e.guest_goals}</span>
+        <div>
+          <span class="sd-penalty-player">${scorerLabel}</span>
+          ${assistLabel ? `<div class="sd-penalty-reason">Assist: ${assistLabel}</div>` : ''}
+          ${typeLabel   ? `<div class="sd-penalty-reason">${esc(typeLabel)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
   // ── Strafen-Übersicht ──
   const penalties = events.filter(e => e.event_type === 'penalty');
   const homePens = penalties.filter(e => e.event_team === 'home');
@@ -3509,6 +3538,22 @@ function renderSpielDetail(g) {
     <div class="sd-section-title">Spielverlauf</div>
     <div class="glass" style="padding:10px 8px;margin-bottom:4px">
       ${vtlHTML}
+    </div>` : ''}
+
+    <!-- Tore & Assists -->
+    ${goals.length ? `
+    <div class="sd-section-title">Tore &amp; Assists</div>
+    <div class="glass" style="padding:14px 16px;margin-bottom:4px">
+      <div class="sd-penalty-cols">
+        <div>
+          <div class="sd-penalty-col-title" style="color:${CA}">${esc(g.home_team_name)}</div>
+          ${goalRows(homeGoals, homePlayers)}
+        </div>
+        <div>
+          <div class="sd-penalty-col-title" style="color:${CB}">${esc(g.guest_team_name)}</div>
+          ${goalRows(guestGoals, guestPlayers)}
+        </div>
+      </div>
     </div>` : ''}
 
     <!-- Strafen -->
