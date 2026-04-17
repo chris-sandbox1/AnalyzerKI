@@ -669,6 +669,79 @@
       outline: none;
     }
     .liga-select:hover { border-color: rgba(255,255,255,.22); }
+    .liga-select option {
+      background-color: #1a1a2e;
+      color: #e2e8f0;
+    }
+    .liga-select:disabled {
+      opacity: .35;
+      cursor: default;
+      pointer-events: none;
+    }
+    /* Multi-Select Liga-Panel */
+    .liga-multiselect-wrap { position: relative; }
+    .liga-multiselect-btn {
+      background: rgba(255,255,255,.06);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 7px;
+      padding: 5px 12px;
+      font-size: .78rem;
+      cursor: pointer;
+      white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .liga-multiselect-btn:hover { border-color: rgba(255,255,255,.3); }
+    .liga-multiselect-btn.active { border-color: var(--color-a); color: var(--color-a); }
+    .liga-multiselect-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 200;
+      background: #1a1a2e;
+      border: 0.5px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      padding: 8px;
+    }
+    .liga-multiselect-panel.offen { display: block; }
+    .liga-multiselect-search {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255,255,255,.08);
+      border: 0.5px solid rgba(255,255,255,.12);
+      color: #e2e8f0;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: .75rem;
+      outline: none;
+      margin-bottom: 6px;
+    }
+    .liga-multiselect-actions {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .liga-multiselect-list {
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .liga-check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 6px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: .76rem;
+      color: rgba(255,255,255,.75);
+    }
+    .liga-check-item:hover { background: rgba(255,255,255,.06); }
+    .liga-check-item input[type=checkbox] { accent-color: var(--color-a); cursor: pointer; }
 
     .liga-bar-sep {
       width: 1px;
@@ -957,6 +1030,27 @@
     <button class="filter-btn" id="alltime-strafen-btn" onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
     <button class="filter-btn" id="alltime-pergame-btn" onclick="togglePerGame('alltime')">Pro Spiel</button>
     <div class="alltime-sep"></div>
+    <!-- Liga-Multi-Select (nur im Alltime-Tab sichtbar) -->
+    <div class="liga-multiselect-wrap" id="alltime-liga-wrap" style="display:none">
+      <button class="liga-multiselect-btn" id="alltime-liga-btn" onclick="toggleAlltimeLigaPanel(event)">
+        Alle Ligen ▾
+      </button>
+      <div class="liga-multiselect-panel" id="alltime-liga-panel">
+        <input class="liga-multiselect-search" type="text" placeholder="Liga suchen…"
+               oninput="alltimeLigaSuche=this.value;renderAlltimeLigaPanel()"
+               id="alltime-liga-suche">
+        <div class="liga-multiselect-actions">
+          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
+                  onclick="alltimeLigaAlleAuswaehlen()">Alle</button>
+          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
+                  onclick="alltimeLigaKeineAuswaehlen()">Keine</button>
+          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px;margin-left:auto"
+                  onclick="toggleAlltimeLigaPanel(event)">✕ Schließen</button>
+        </div>
+        <div class="liga-multiselect-list" id="alltime-liga-list"></div>
+      </div>
+    </div>
+    <div class="alltime-sep"></div>
     <input class="alltime-search" type="text" id="alltime-suche" placeholder="Spieler oder Team suchen…" oninput="onAlltimeSuche(this.value)">
   </div>
   <div id="gender-hint"></div>
@@ -994,6 +1088,18 @@
 // ─────────────────────────────────────────────────────────────────────────────
 const API_BASE = 'https://saisonmanager.de';
 
+// Saison-Nummer → Jahres-Label  (season 17 → "25/26")
+// Basis: FBL Season 1 = 2009/10 → Jahr = 2008 + season
+function saisonJahr(season) {
+  if (!season && season !== 0) return '';
+  const n = parseInt(season);
+  if (isNaN(n)) return String(season);
+  const y = 2008 + n;
+  const a = String(y % 100).padStart(2, '0');
+  const b = String((y + 1) % 100).padStart(2, '0');
+  return `${a}/${b}`;
+}
+
 const PAGE_SIZE = 100;
 
 function paginierungsHTML(gesamt, seite, setzeFn) {
@@ -1022,8 +1128,12 @@ let scorerSort   = 'punkte';
 let datenGeladen = false;
 
 // Alltime-State (live, per Verband)
-let alltimeDaten   = null;
-let alltimeGeladen = false;
+let alltimeDaten        = null;
+let alltimeGeladen      = false;
+let alltimeRohdaten     = null;      // alle geladenen Rohdaten (für Re-Aggregation)
+let alltimeLigaFilter   = new Set(); // ausgewählte Liga-IDs; leer = alle
+let alltimeLigaSuche    = '';
+let alltimeLigaPanelOffen = false;
 let alltimeSortS   = 'tore';    // Scorer-Sortierung
 let alltimeSortT   = 'punkte';  // Tabellen-Sortierung
 let alltimeGender  = 'alle';
@@ -1098,6 +1208,18 @@ function zeigeTab(id) {
     b.classList.toggle('active', ids[i] === id);
   });
   document.getElementById('tab-' + id).classList.add('active');
+
+  // Verband + Liga je nach Tab deaktivieren
+  const vSel = document.getElementById('verband-select');
+  const lSel = document.getElementById('liga-select');
+  const isStatic  = id === 'static';
+  const isAlltime = id === 'alltime';
+  vSel.disabled = isStatic;
+  lSel.disabled = isStatic || isAlltime;
+  // Liga-Multiselect nur im Alltime-Tab sichtbar
+  const wrap = document.getElementById('alltime-liga-wrap');
+  if (wrap) wrap.style.display = isAlltime ? '' : 'none';
+
   if (id === 'alltime' && !alltimeGeladen) ladeAlltimeDaten();
   if (id === 'static'  && !staticGeladen)  ladeStaticAlltime();
 }
@@ -1145,9 +1267,10 @@ function befuelleLigaDropdown(verband) {
     .filter(l => l.game_operation === verband)
     .sort((a, b) => a.name.localeCompare(b.name, 'de'));
   const lSel = document.getElementById('liga-select');
-  lSel.innerHTML = ligen.map(l =>
-    `<option value="${l.id}">${l.name}${l.season ? ' – ' + l.season : ''}</option>`
-  ).join('');
+  lSel.innerHTML = ligen.map(l => {
+    const jahr = l.season ? ` (${saisonJahr(l.season)})` : '';
+    return `<option value="${l.id}">${l.name}${jahr}</option>`;
+  }).join('');
   if (ligen.length) aktiveLigaId = ligen[0].id;
 }
 
@@ -1156,8 +1279,10 @@ function onVerband() {
   const verband = document.getElementById('verband-select').value;
   befuelleLigaDropdown(verband);
   // Alltime-Reset: Verband bestimmt die Alltime-Quelle
-  alltimeGeladen = false;
-  alltimeDaten   = null;
+  alltimeGeladen  = false;
+  alltimeDaten    = null;
+  alltimeRohdaten = null;
+  alltimeLigaFilter.clear();
   const spinner  = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
   document.getElementById('content-alltime').innerHTML = spinner;
   document.getElementById('gender-hint').innerHTML = '';
@@ -1724,7 +1849,7 @@ async function ladeAlltimeDaten() {
             fertig++;
             const el = document.getElementById('alltime-progress');
             if (el) el.textContent = `Lade Saison ${fertig}/${saisons.length}…`;
-            return { saison: s.season || String(s.id), ligaName: s.name, scorer: sc, table: ta };
+            return { ligaId: s.id, saison: s.season || String(s.id), ligaName: s.name, scorer: sc, table: ta };
           })
         )
       );
@@ -1732,15 +1857,130 @@ async function ladeAlltimeDaten() {
     }
     if (fehler > 0) console.warn(`Alltime: ${fehler} Requests fehlgeschlagen (von ${saisons.length * 2} gesamt)`);
 
-
-    alltimeDaten   = aggregiereAlltime(ergebnisse);
-    alltimeGeladen = true;
-    renderAlltime();
+    alltimeRohdaten = ergebnisse;
+    alltimeGeladen  = true;
+    alltimeLigaFilter.clear();
+    aggregiereUndRenderAlltime();
+    renderAlltimeLigaPanel();
   } catch (e) {
     console.error(e);
     document.getElementById('content-alltime').innerHTML =
       `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
   }
+}
+
+// Re-Aggregation mit aktivem Ligen-Filter (kein neuer Fetch)
+function aggregiereUndRenderAlltime() {
+  if (!alltimeRohdaten) return;
+  const gefiltert = alltimeLigaFilter.size > 0
+    ? alltimeRohdaten.filter(e => alltimeLigaFilter.has(e.ligaId))
+    : alltimeRohdaten;
+  alltimeDaten = aggregiereAlltime(gefiltert);
+  alltimeSpielerSeite = 1;
+  alltimeTeamSeite    = 1;
+  renderAlltime();
+  aktualisiereLigaBtn();
+}
+
+function aktualisiereLigaBtn() {
+  const btn = document.getElementById('alltime-liga-btn');
+  if (!btn) return;
+  const n = alltimeLigaFilter.size;
+  if (n === 0) {
+    btn.textContent = 'Alle Ligen ▾';
+    btn.classList.remove('active');
+  } else {
+    btn.textContent = `${n} Liga${n > 1 ? 'en' : ''} ▾`;
+    btn.classList.add('active');
+  }
+}
+
+function toggleAlltimeLigaPanel(e) {
+  if (e) e.stopPropagation();
+  alltimeLigaPanelOffen = !alltimeLigaPanelOffen;
+  const panel = document.getElementById('alltime-liga-panel');
+  if (panel) panel.classList.toggle('offen', alltimeLigaPanelOffen);
+  if (alltimeLigaPanelOffen) {
+    const inp = document.getElementById('alltime-liga-suche');
+    if (inp) inp.focus();
+  }
+}
+
+// Panel außerhalb schließen
+document.addEventListener('click', e => {
+  if (alltimeLigaPanelOffen && !document.getElementById('alltime-liga-wrap')?.contains(e.target)) {
+    alltimeLigaPanelOffen = false;
+    document.getElementById('alltime-liga-panel')?.classList.remove('offen');
+  }
+});
+
+function renderAlltimeLigaPanel() {
+  const list = document.getElementById('alltime-liga-list');
+  if (!list || !alltimeRohdaten) return;
+  const suche = alltimeLigaSuche.trim().toLowerCase();
+
+  // Eindeutige Ligen aus Rohdaten extrahieren (id + name + saison)
+  const ligas = [];
+  const seen = new Set();
+  for (const e of alltimeRohdaten) {
+    if (!seen.has(e.ligaId)) {
+      seen.add(e.ligaId);
+      ligas.push({ id: e.ligaId, name: e.ligaName, saison: e.saison });
+    }
+  }
+  // Nach Name sortieren, dann Saison absteigend
+  ligas.sort((a, b) => a.name.localeCompare(b.name, 'de') || (parseInt(b.saison)||0) - (parseInt(a.saison)||0));
+
+  const gefiltert = suche ? ligas.filter(l => l.name.toLowerCase().includes(suche)) : ligas;
+
+  list.innerHTML = gefiltert.map(l => {
+    const checked = alltimeLigaFilter.size === 0 || alltimeLigaFilter.has(l.id);
+    const jahr = l.saison ? ` <span style="color:rgba(255,255,255,.35);font-size:.7rem">${saisonJahr(l.saison)}</span>` : '';
+    return `<label class="liga-check-item">
+      <input type="checkbox" ${checked ? 'checked' : ''}
+             onchange="onAlltimeLigaToggle(${l.id}, this.checked)">
+      ${esc(l.name)}${jahr}
+    </label>`;
+  }).join('');
+}
+
+function onAlltimeLigaToggle(id, checked) {
+  // Beim ersten Deselektieren: erst alle aktivieren, dann die eine entfernen
+  if (alltimeLigaFilter.size === 0 && !checked) {
+    if (!alltimeRohdaten) return;
+    alltimeRohdaten.forEach(e => alltimeLigaFilter.add(e.ligaId));
+  }
+  if (checked) alltimeLigaFilter.add(id);
+  else         alltimeLigaFilter.delete(id);
+  // Wenn wieder alle ausgewählt: auf "leer = alle" zurück
+  const uniqueIds = new Set(alltimeRohdaten?.map(e => e.ligaId) || []);
+  if (alltimeLigaFilter.size >= uniqueIds.size && [...uniqueIds].every(id => alltimeLigaFilter.has(id))) {
+    alltimeLigaFilter.clear();
+  }
+  aggregiereUndRenderAlltime();
+  renderAlltimeLigaPanel();
+}
+
+function alltimeLigaAlleAuswaehlen() {
+  alltimeLigaFilter.clear();  // leer = alle
+  aggregiereUndRenderAlltime();
+  renderAlltimeLigaPanel();
+}
+
+function alltimeLigaKeineAuswaehlen() {
+  // Nichts aggregieren — zeige Hinweis
+  alltimeLigaFilter.clear();
+  if (alltimeRohdaten) alltimeRohdaten.forEach(e => alltimeLigaFilter.add(e.ligaId));
+  // Alle abwählen → Filter enthält alle IDs, jetzt alle entfernen bis auf keine
+  // Tatsächlich: wir brauchen einen speziellen "keine" State
+  // Einfachste Lösung: Filter auf ein leeres Set setzen und aggregiereAlltime([]) aufrufen
+  alltimeLigaFilter.clear();
+  alltimeDaten = aggregiereAlltime([]);
+  alltimeSpielerSeite = 1;
+  alltimeTeamSeite    = 1;
+  renderAlltime();
+  aktualisiereLigaBtn();
+  renderAlltimeLigaPanel();
 }
 
 // Aggregation: scorer + table über alle Saisons zusammenführen
