@@ -946,44 +946,6 @@
       backdrop-filter: none;
     }
 
-    /* Sunburst-Container für Drittel */
-    .sd-period-wrap {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      background: rgba(8,14,26,.7);
-      margin-bottom: 4px;
-    }
-    .sd-period-wrap::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 280%; height: 280%;
-      transform: translate(-50%, -50%);
-      background: repeating-conic-gradient(
-        from 0deg at 50% 50%,
-        rgba(255,255,255,.028) 0deg 2.5deg,
-        transparent       2.5deg 18deg
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Zentraler Glühpunkt */
-    .sd-period-wrap::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px; height: 80px;
-      background: radial-gradient(circle, rgba(255,255,255,.13) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .sd-period-wrap .sd-period-table {
-      position: relative;
-      z-index: 1;
-      padding: 12px 16px;
-    }
     .sd-hero-team {
       display: flex;
       flex-direction: column;
@@ -1064,42 +1026,90 @@
       margin: 16px 0 6px;
     }
 
-    /* Drittel-Tabelle (vertikal: links Heim, Mitte Label, rechts Gast) */
-    .sd-period-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .84rem;
-    }
-    .sd-period-table th {
+    /* Drittel-Balken-Vergleich */
+    .sd-period-wrap {
+      border-radius: 14px;
+      background: rgba(8,14,26,.75);
+      border: 0.5px solid rgba(255,255,255,.08);
+      margin-bottom: 4px;
       padding: 6px 16px 10px;
-      font-size: .76rem;
-      font-weight: 700;
-      border-bottom: 1px solid rgba(255,255,255,.1);
     }
-    .sd-pt-home  { text-align: right; }
-    .sd-pt-mid   { text-align: center; color: rgba(255,255,255,.3); font-weight: 500; width: 100px; }
-    .sd-pt-guest { text-align: left; }
-    .sd-period-table td {
-      padding: 8px 16px;
+    .sd-period-header {
+      display: grid;
+      grid-template-columns: 1fr 100px 1fr;
+      gap: 10px;
+      padding: 6px 0 8px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 4px;
+    }
+    .sd-period-header-home  { text-align: right;  font-size: .75rem; font-weight: 700; }
+    .sd-period-header-mid   { text-align: center; font-size: .65rem; color: rgba(255,255,255,.3); }
+    .sd-period-header-guest { text-align: left;   font-size: .75rem; font-weight: 700; }
+    .sd-stat-row {
+      display: grid;
+      grid-template-columns: 1fr 100px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
       border-bottom: 0.5px solid rgba(255,255,255,.05);
-      font-variant-numeric: tabular-nums;
     }
-    .sd-period-table td.sd-pt-mid {
-      font-size: .68rem;
-      color: rgba(255,255,255,.32);
-      font-weight: 600;
-      letter-spacing: .04em;
+    .sd-stat-row:last-child { border-bottom: none; }
+    .sd-stat-left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .sd-stat-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sd-stat-val {
+      font-size: .88rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      min-width: 24px;
+    }
+    .sd-stat-left  .sd-stat-val { text-align: right; }
+    .sd-stat-right .sd-stat-val { text-align: left; }
+    .sd-stat-bar-wrap {
+      flex: 1;
+      height: 5px;
+      border-radius: 3px;
+      display: flex;
+    }
+    .sd-stat-left  .sd-stat-bar-wrap { justify-content: flex-end; }
+    .sd-stat-right .sd-stat-bar-wrap { justify-content: flex-start; }
+    .sd-stat-bar {
+      height: 5px;
+      border-radius: 3px;
+      min-width: 3px;
+    }
+    .sd-stat-bar-home {
+      transform-origin: right center;
+      animation: sd-bar-grow .7s cubic-bezier(.4,0,.2,1) both;
+    }
+    .sd-stat-bar-guest {
+      transform-origin: left center;
+      animation: sd-bar-grow .7s cubic-bezier(.4,0,.2,1) both;
+    }
+    @keyframes sd-bar-grow {
+      from { transform: scaleX(0); opacity: 0; }
+      to   { transform: scaleX(1); opacity: 1; }
+    }
+    .sd-stat-label {
+      text-align: center;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.3);
       text-transform: uppercase;
     }
-    .sd-period-winner { font-weight: 800; color: #f1f5f9; }
-    .sd-period-total-row td {
-      font-weight: 800;
-      font-size: .92rem;
-      color: #f1f5f9;
-      border-top: 1px solid rgba(255,255,255,.1);
-      border-bottom: none;
-      padding-top: 11px;
-    }
+    .sd-stat-total .sd-stat-val   { font-size: 1rem; }
+    .sd-stat-total .sd-stat-bar   { height: 7px; }
+    .sd-stat-total .sd-stat-bar-wrap { height: 7px; }
+    .sd-stat-total .sd-stat-label { color: rgba(255,255,255,.5); }
 
     /* Vertikaler Zeitstrahl */
     .sd-vtl {
@@ -3325,30 +3335,49 @@ function renderSpielDetail(g) {
   const activePeriods = PERIOD_LABELS.filter((_, i) => hP[i] !== undefined || gP[i] !== undefined);
   const activePeriodIndices = PERIOD_LABELS.map((_, i) => i).filter(i => hP[i] !== undefined || gP[i] !== undefined);
 
-  // Neue vertikale Drittelübersicht
+  // ── Drittel-Balken-Vergleich ──
+  function statRow(h, ga, label, colH, colG, delay, isTotal) {
+    const max = Math.max(h, ga, 1);
+    const hw = Math.round(h  / max * 100);
+    const gw = Math.round(ga / max * 100);
+    const glowH = colH === 'var(--color-a)' ? 'rgba(74,222,128,.35)' : 'rgba(251,146,60,.35)';
+    const glowG = colG === 'var(--color-b)' ? 'rgba(251,146,60,.35)' : 'rgba(74,222,128,.35)';
+    return `<div class="sd-stat-row${isTotal ? ' sd-stat-total' : ''}">
+      <div class="sd-stat-left">
+        <span class="sd-stat-val" style="color:${colH}">${h}</span>
+        <div class="sd-stat-bar-wrap">
+          <div class="sd-stat-bar sd-stat-bar-home"
+            style="width:${hw}%;background:${colH};box-shadow:0 0 8px ${glowH};animation-delay:${delay}s"></div>
+        </div>
+      </div>
+      <div class="sd-stat-label">${label}</div>
+      <div class="sd-stat-right">
+        <div class="sd-stat-bar-wrap">
+          <div class="sd-stat-bar sd-stat-bar-guest"
+            style="width:${gw}%;background:${colG};box-shadow:0 0 8px ${glowG};animation-delay:${delay}s"></div>
+        </div>
+        <span class="sd-stat-val" style="color:${colG}">${ga}</span>
+      </div>
+    </div>`;
+  }
+
+  const totalH = parseInt(hg) || 0;
+  const totalG = parseInt(gg) || 0;
+
   const periodTableHTML = activePeriods.length ? `
-    <table class="sd-period-table">
-      <thead><tr>
-        <th class="sd-pt-home" style="color:${CA}">${esc(g.home_team_name)}</th>
-        <th class="sd-pt-mid"></th>
-        <th class="sd-pt-guest" style="color:${CB}">${esc(g.guest_team_name)}</th>
-      </tr></thead>
-      <tbody>
-        ${activePeriodIndices.map(i => {
-          const h = hP[i] ?? 0, ga = gP[i] ?? 0;
-          return `<tr>
-            <td class="sd-pt-home${h > ga ? ' sd-period-winner' : ''}">${h}</td>
-            <td class="sd-pt-mid">${esc(PERIOD_LABELS[i])}</td>
-            <td class="sd-pt-guest${ga > h ? ' sd-period-winner' : ''}">${ga}</td>
-          </tr>`;
-        }).join('')}
-        <tr class="sd-period-total-row">
-          <td class="sd-pt-home">${hg}</td>
-          <td class="sd-pt-mid">Gesamt</td>
-          <td class="sd-pt-guest">${gg}</td>
-        </tr>
-      </tbody>
-    </table>` : '';
+    <div class="sd-period-header">
+      <div class="sd-period-header-home" style="color:${CA}">${esc(g.home_team_name)}</div>
+      <div class="sd-period-header-mid"></div>
+      <div class="sd-period-header-guest" style="color:${CB}">${esc(g.guest_team_name)}</div>
+    </div>
+    ${activePeriodIndices.map((idx, n) =>
+      statRow(hP[idx] ?? 0, gP[idx] ?? 0,
+              PERIOD_LABELS[idx].replace('. Drittel', '. D.').replace('Verlängerung','Verlängerung').replace('Penaltyschießen','Penalties'),
+              CA, CB, 0.08 * (n + 1), false)
+    ).join('')}
+    ${statRow(totalH, totalG, 'Gesamt', CA, CB,
+              0.08 * (activePeriodIndices.length + 1), true)}
+  ` : '';
 
   // ── Events: Timeline ──
   const events = (g.events || []).slice().sort((a, b) => a.sortkey > b.sortkey ? 1 : -1);
