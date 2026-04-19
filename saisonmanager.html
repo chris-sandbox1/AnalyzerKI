@@ -3071,13 +3071,14 @@ function renderAlltime() {
     &nbsp;·&nbsp; ${anzHerren} Herren &nbsp;·&nbsp; ${anzDamen} Damen
   </div>`;
 
-  // Im Kader-Modus: Geschlecht-Filter + Liga-Filter ausblenden
+  // Strafen/PerGame im Kader-View intern anzeigen → im Topbar ausblenden
   const isKader = alltimeView === 'kader';
-  document.getElementById('alltime-gender-btns')?.style.setProperty('display', isKader ? 'none' : '');
-  document.getElementById('alltime-gender-sep') ?.style.setProperty('display', isKader ? 'none' : '');
   document.getElementById('alltime-strafen-btn')?.style.setProperty('display', isKader ? 'none' : '');
   document.getElementById('alltime-pergame-btn')?.style.setProperty('display', isKader ? 'none' : '');
-  document.getElementById('alltime-liga-wrap')  ?.style.setProperty('display', isKader ? 'none' : '');
+  // Gender-Buttons + Liga-Dropdown: immer sichtbar (auch im Kader-View)
+  document.getElementById('alltime-gender-btns')?.style.setProperty('display', '');
+  document.getElementById('alltime-gender-sep') ?.style.setProperty('display', '');
+  document.getElementById('alltime-liga-wrap')  ?.style.setProperty('display', '');
 
   if (alltimeView === 'kader') return renderAlltimeKader();
   if (alltimeView === 'teams') return renderAlltimeTeams();
@@ -3386,8 +3387,16 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
 /** Baut team_name → [Spieler] Roster aus den Rohdaten des aktiven Verbands. */
 function bauldeAlltimeKaderRosters() {
   const tpMap = {};
-  (alltimeRohdaten || []).forEach(({ scorer: sc }) => {
-    (sc || []).forEach(s => {
+  // Liga-Filter anwenden (gleiche Logik wie aggregiereUndRenderAlltime)
+  const quelldaten = (!alltimeLigaFilter.size && !alltimeLigaNoneMode)
+    ? (alltimeRohdaten || [])
+    : (alltimeRohdaten || []).filter(e => alltimeLigaFilter.has(e.ligaId));
+
+  quelldaten.forEach(e => {
+    // Gender-Filter
+    if (alltimeGender === 'herren' &&  istDamen(e.ligaName)) return;
+    if (alltimeGender === 'damen'  && !istDamen(e.ligaName)) return;
+    (e.scorer || []).forEach(s => {
       const pid   = s.player_id;
       const tname = (s.team_name || '').trim();
       if (!pid || !tname) return;
