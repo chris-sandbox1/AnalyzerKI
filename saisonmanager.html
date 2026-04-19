@@ -1699,11 +1699,14 @@
   <div class="alltime-controls" id="alltime-controls">
     <button class="filter-btn active" id="alltime-view-spieler" onclick="setAlltimeView('spieler')">Spieler</button>
     <button class="filter-btn"        id="alltime-view-teams"   onclick="setAlltimeView('teams')">Teams</button>
+    <button class="filter-btn"        id="alltime-view-kader"   onclick="setAlltimeView('kader')">Team-Kader</button>
     <div class="alltime-sep"></div>
-    <button class="filter-btn active" onclick="setAlltimeGender('alle', this)">Alle</button>
-    <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
-    <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
-    <div class="alltime-sep"></div>
+    <span id="alltime-gender-btns">
+      <button class="filter-btn active" onclick="setAlltimeGender('alle', this)">Alle</button>
+      <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
+      <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
+    </span>
+    <div class="alltime-sep" id="alltime-gender-sep"></div>
     <button class="filter-btn" id="alltime-strafen-btn" onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
     <button class="filter-btn" id="alltime-pergame-btn" onclick="togglePerGame('alltime')">Pro Spiel</button>
     <div class="alltime-sep"></div>
@@ -1830,15 +1833,21 @@ let staticSortS        = 'punkte';
 let staticSortT        = 'punkte';
 let staticGender       = 'alle';
 let staticSuche        = '';
-// Team-Kader State
-let staticKaderTeams   = new Set(); // ausgewählte Teamnamen (Mehrfachauswahl)
+// Team-Kader State (Alltime DE / static)
+let staticKaderTeams   = new Set();
 let staticKaderVerband = 'alle';
 let staticKaderSort    = 'punkte';
 let staticKaderSuche   = '';
 
+// Team-Kader State (Alltime per Verband)
+let alltimeKaderTeams  = new Set();
+let alltimeKaderSort   = 'punkte';
+let alltimeKaderSuche  = '';
+
 // Pagination-State
 let alltimeSpielerSeite = 1;
 let alltimeTeamSeite    = 1;
+let alltimeKaderSeite   = 1;
 let staticSpielerSeite  = 1;
 let staticTeamSeite     = 1;
 let staticKaderSeite    = 1;
@@ -1967,6 +1976,9 @@ function onVerband() {
   alltimeRohdaten   = null;
   alltimeLigaFilter.clear();
   alltimeLigaNoneMode = false;
+  alltimeKaderTeams.clear();
+  alltimeKaderSuche = '';
+  alltimeKaderSeite = 1;
   const spinner  = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
   document.getElementById('content-alltime').innerHTML = spinner;
   document.getElementById('gender-hint').innerHTML = '';
@@ -3059,11 +3071,17 @@ function renderAlltime() {
     &nbsp;·&nbsp; ${anzHerren} Herren &nbsp;·&nbsp; ${anzDamen} Damen
   </div>`;
 
-  if (alltimeView === 'teams') {
-    renderAlltimeTeams();
-  } else {
-    renderAlltimeSpieler();
-  }
+  // Im Kader-Modus: Geschlecht-Filter + Liga-Filter ausblenden
+  const isKader = alltimeView === 'kader';
+  document.getElementById('alltime-gender-btns')?.style.setProperty('display', isKader ? 'none' : '');
+  document.getElementById('alltime-gender-sep') ?.style.setProperty('display', isKader ? 'none' : '');
+  document.getElementById('alltime-strafen-btn')?.style.setProperty('display', isKader ? 'none' : '');
+  document.getElementById('alltime-pergame-btn')?.style.setProperty('display', isKader ? 'none' : '');
+  document.getElementById('alltime-liga-wrap')  ?.style.setProperty('display', isKader ? 'none' : '');
+
+  if (alltimeView === 'kader') return renderAlltimeKader();
+  if (alltimeView === 'teams') return renderAlltimeTeams();
+  renderAlltimeSpieler();
 }
 
 function renderAlltimeSpieler() {
@@ -3361,12 +3379,234 @@ function renderAlltimeTeamsBest(teams, modeToggle) {
   </div>`;
 }
 
-function syncAlltimeButtons() {
-  document.getElementById('alltime-view-spieler')?.classList.toggle('active', alltimeView === 'spieler');
-  document.getElementById('alltime-view-teams')  ?.classList.toggle('active', alltimeView === 'teams');
-  document.getElementById('alltime-strafen-btn') ?.classList.toggle('active', alltimeStrafenDetails);
-  document.getElementById('alltime-pergame-btn') ?.classList.toggle('active', alltimePerGame);
+// ─────────────────────────────────────────────────────────────────────────────
+// ALLTIME: Team-Kader-Ansicht (live, per Verband)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Baut team_name → [Spieler] Roster aus den Rohdaten des aktiven Verbands. */
+function bauldeAlltimeKaderRosters() {
+  const tpMap = {};
+  (alltimeRohdaten || []).forEach(({ scorer: sc }) => {
+    (sc || []).forEach(s => {
+      const pid   = s.player_id;
+      const tname = (s.team_name || '').trim();
+      if (!pid || !tname) return;
+      const key = tname + '|||' + pid;
+      if (!tpMap[key]) {
+        tpMap[key] = {
+          player_id: pid,
+          first_name: s.first_name || '',
+          last_name:  s.last_name  || '',
+          team_name:  tname,
+          spiele: 0, tore: 0, assists: 0,
+          strafminuten: 0, p2: 0, p2and2: 0, p5: 0, p10: 0, ms: 0,
+        };
+      }
+      const tp = tpMap[key];
+      tp.first_name    = s.first_name || tp.first_name;
+      tp.last_name     = s.last_name  || tp.last_name;
+      tp.spiele       += s.games         || 0;
+      tp.tore         += s.goals         || 0;
+      tp.assists      += s.assists        || 0;
+      tp.strafminuten += pim(s);
+      tp.p2           += s.penalty_2     || 0;
+      tp.p2and2       += s.penalty_2and2 || 0;
+      tp.p5           += s.penalty_5     || 0;
+      tp.p10          += s.penalty_10    || 0;
+      tp.ms           += (s.penalty_match   || 0) + (s.penalty_ms_tech || 0) +
+                         (s.penalty_ms_full || 0) + (s.penalty_ms1     || 0) + (s.penalty_ms2 || 0);
+    });
+  });
+  const rosters = {};
+  Object.values(tpMap).forEach(tp => {
+    tp.punkte = tp.tore + tp.assists;
+    if (!rosters[tp.team_name]) rosters[tp.team_name] = [];
+    rosters[tp.team_name].push(tp);
+  });
+  Object.values(rosters).forEach(r => r.sort((a, b) => b.punkte - a.punkte));
+  return rosters;
 }
+
+function renderAlltimeKader() {
+  const el      = document.getElementById('content-alltime');
+  const rosters = bauldeAlltimeKaderRosters();
+  const teamNames = Object.keys(rosters).sort();
+  const suche     = alltimeKaderSuche.trim().toLowerCase();
+  const gefilterte = suche
+    ? teamNames.filter(n => n.toLowerCase().includes(suche))
+    : teamNames;
+
+  const hatAuswahl = alltimeKaderTeams.size > 0;
+
+  // ── Spieler über alle gewählten Teams zusammenführen ───────────────────────
+  let kaderInfo = '';
+  if (hatAuswahl) {
+    const merged = new Map();
+    for (const teamName of alltimeKaderTeams) {
+      const roster = rosters[teamName] || [];
+      for (const p of roster) {
+        if (!merged.has(p.player_id)) {
+          merged.set(p.player_id, {
+            player_id: p.player_id,
+            first_name: p.first_name, last_name: p.last_name,
+            spiele: 0, tore: 0, assists: 0,
+            strafminuten: 0, p2: 0, p2and2: 0, p5: 0, p10: 0, ms: 0,
+          });
+        }
+        const m = merged.get(p.player_id);
+        m.first_name    = p.first_name || m.first_name;
+        m.last_name     = p.last_name  || m.last_name;
+        m.spiele       += p.spiele       || 0;
+        m.tore         += p.tore         || 0;
+        m.assists      += p.assists      || 0;
+        m.strafminuten += p.strafminuten || 0;
+        m.p2           += p.p2    || 0;  m.p2and2 += p.p2and2 || 0;
+        m.p5           += p.p5    || 0;  m.p10    += p.p10    || 0;
+        m.ms           += p.ms    || 0;
+      }
+    }
+
+    let gefiltert = [...merged.values()].map(m => ({ ...m, punkte: m.tore + m.assists }));
+    gefiltert.sort((a, b) => {
+      const sp = x => x.spiele || 1;
+      if (alltimeKaderSort === 'pkt_sp') return b.punkte/sp(b) - a.punkte/sp(a);
+      if (alltimeKaderSort === 'g_sp')   return b.tore/sp(b)   - a.tore/sp(a);
+      if (alltimeKaderSort === 'a_sp')   return b.assists/sp(b) - a.assists/sp(a);
+      if (alltimeKaderSort === 'pim_sp') return b.strafminuten/sp(b) - a.strafminuten/sp(a);
+      return (b[alltimeKaderSort] || 0) - (a[alltimeKaderSort] || 0);
+    });
+
+    const gesamt  = gefiltert.length;
+    gefiltert = gefiltert.slice((alltimeKaderSeite - 1) * PAGE_SIZE, alltimeKaderSeite * PAGE_SIZE);
+
+    const kHdr = (key, label, title = '') =>
+      `<th class="${alltimeKaderSort === key ? 'at-sort-active' : ''}"
+           onclick="setAlltimeKaderSort('${key}')"
+           ${title ? `title="${title}"` : ''}>${label}</th>`;
+
+    const colCount = 6 + (alltimeStrafenDetails ? 5 : 0) + (alltimePerGame ? 4 : 0);
+    const zeilen = gefiltert.map((p, i) => {
+      const sp = p.spiele || 1;
+      return `<tr>
+        <td class="at-rank">${(alltimeKaderSeite - 1) * PAGE_SIZE + i + 1}</td>
+        <td class="at-name">${esc(p.first_name + ' ' + p.last_name)}</td>
+        <td>${p.spiele}</td>
+        <td>${p.tore}</td>
+        <td>${p.assists}</td>
+        <td class="at-pkt">${p.punkte}</td>
+        ${alltimeStrafenDetails
+          ? `<td>${p.p2||0}</td><td>${p.p2and2||0}</td><td>${p.p5||0}</td><td>${p.p10||0}</td><td>${p.ms||0}</td>`
+          : ''}
+        <td>${p.strafminuten}'</td>
+        ${alltimePerGame
+          ? `<td>${(p.punkte/sp).toFixed(2)}</td><td>${(p.tore/sp).toFixed(2)}</td><td>${(p.assists/sp).toFixed(2)}</td><td>${(p.strafminuten/sp).toFixed(2)}'</td>`
+          : ''}
+      </tr>`;
+    }).join('');
+
+    kaderInfo = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="filter-btn${alltimeStrafenDetails?' active':''}"
+                onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
+        <button class="filter-btn${alltimePerGame?' active':''}"
+                onclick="togglePerGame('alltime')">Pro Spiel</button>
+      </div>
+      <div class="glass" style="overflow-x:auto">
+        <table class="at-table">
+          <thead><tr>
+            <th>#</th><th>Spieler</th>
+            ${kHdr('spiele','Sp')}
+            ${kHdr('tore','G')}
+            ${kHdr('assists','A')}
+            ${kHdr('punkte','Pkt')}
+            ${alltimeStrafenDetails
+              ? `${kHdr('p2',"2'","2-Minuten-Strafen")}${kHdr('p2and2','2+2')}${kHdr('p5',"5'")}${kHdr('p10',"10'")}${kHdr('ms','MS','Matchstrafen')}`
+              : ''}
+            ${kHdr('strafminuten','PIM')}
+            ${alltimePerGame
+              ? `${kHdr('pkt_sp','Pkt/Sp')}${kHdr('g_sp','G/Sp')}${kHdr('a_sp','A/Sp')}${kHdr('pim_sp','PIM/Sp')}`
+              : ''}
+          </tr></thead>
+          <tbody>${zeilen || `<tr><td colspan="${colCount}" style="text-align:center;padding:20px;color:rgba(255,255,255,.3)">Keine Einträge</td></tr>`}</tbody>
+        </table>
+      </div>
+      ${paginierungsHTML(gesamt, alltimeKaderSeite, 'setAlltimeKaderSeite')}`;
+  }
+
+  // ── Ausgewählte Teams als Tags ──────────────────────────────────────────────
+  const titelTeams = alltimeKaderTeams.size === 0
+    ? ''
+    : alltimeKaderTeams.size === 1
+      ? '— ' + esc([...alltimeKaderTeams][0])
+      : `— ${alltimeKaderTeams.size} Teams kombiniert`;
+
+  const auswahlTags = alltimeKaderTeams.size > 0
+    ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">
+        ${[...alltimeKaderTeams].map(n =>
+          `<span class="kader-tag" onclick="waehleAlltimeKaderTeam('${esc(n).replace(/'/g,"\\'")}')">
+            ${esc(n)} <span class="kader-tag-x">✕</span>
+          </span>`).join('')}
+        <button class="filter-btn" style="font-size:.7rem;padding:3px 8px"
+                onclick="alltimeKaderTeams.clear();alltimeKaderSeite=1;renderAlltimeKader()">Alle abwählen</button>
+      </div>`
+    : '';
+
+  const listeItems = gefilterte.map(n => {
+    const sel = alltimeKaderTeams.has(n);
+    return `<div class="kader-team-item${sel ? ' kader-team-selected' : ''}"
+                 onclick="waehleAlltimeKaderTeam('${esc(n).replace(/'/g,"\\'")}')">
+      <span class="kader-check">${sel ? '✓' : ''}</span>${esc(n)}
+    </div>`;
+  }).join('');
+
+  const hatteSearchFokus = document.activeElement?.id === 'alltime-kader-suche';
+
+  el.innerHTML = `
+  <div class="alltime-section">
+    <div class="alltime-section-title">🏒 Team-Kader ${titelTeams}</div>
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+
+      <!-- Linke Spalte: Team-Suche + Liste -->
+      <div style="min-width:200px;max-width:260px;flex:0 0 230px">
+        <input class="alltime-search" type="text" id="alltime-kader-suche"
+               style="width:100%;box-sizing:border-box;margin-bottom:6px"
+               placeholder="Team suchen…" value="${esc(alltimeKaderSuche)}"
+               oninput="alltimeKaderSuche=this.value;alltimeKaderSeite=1;renderAlltimeKader()">
+        ${auswahlTags}
+        <div class="glass" style="max-height:420px;overflow-y:auto;padding:4px 0">
+          ${listeItems || '<div style="padding:10px;color:rgba(255,255,255,.3);font-size:.8rem">Keine Teams gefunden</div>'}
+        </div>
+      </div>
+
+      <!-- Rechte Spalte: Spieler-Tabelle -->
+      <div style="flex:1;min-width:280px">
+        ${hatAuswahl
+          ? kaderInfo
+          : '<div style="color:rgba(255,255,255,.35);padding:20px 0;font-size:.85rem">← Ein oder mehrere Teams aus der Liste auswählen</div>'}
+      </div>
+    </div>
+  </div>`;
+
+  if (hatteSearchFokus) {
+    const inp = document.getElementById('alltime-kader-suche');
+    if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  }
+}
+
+function waehleAlltimeKaderTeam(name) {
+  if (alltimeKaderTeams.has(name)) alltimeKaderTeams.delete(name);
+  else alltimeKaderTeams.add(name);
+  alltimeKaderSeite = 1;
+  renderAlltimeKader();
+}
+
+function setAlltimeKaderSort(key) {
+  alltimeKaderSort  = key;
+  alltimeKaderSeite = 1;
+  renderAlltimeKader();
+}
+
+function syncAlltimeButtons() {
 
 function setAlltimeView(view) {
   alltimeView = view;
@@ -3811,6 +4051,7 @@ function setStaticKaderSort(key) {
 // ─────────────────────────────────────────────────────────────────────────────
 function setAlltimeSpielerSeite(s) { alltimeSpielerSeite = s; renderAlltimeSpieler(); }
 function setAlltimeTeamSeite(s)    { alltimeTeamSeite    = s; renderAlltimeTeams(); }
+function setAlltimeKaderSeite(s)   { alltimeKaderSeite   = s; renderAlltimeKader(); }
 function setStaticSpielerSeite(s)  { staticSpielerSeite  = s; renderStaticAlltime(); }
 function setStaticTeamSeite(s)     { staticTeamSeite     = s; renderStaticAlltime(); }
 function setStaticKaderSeite(s)    { staticKaderSeite    = s; renderStaticKader(); }
