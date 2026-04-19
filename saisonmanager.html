@@ -3607,6 +3607,11 @@ function setAlltimeKaderSort(key) {
 }
 
 function syncAlltimeButtons() {
+  ['spieler','teams','kader'].forEach(v => {
+    const btn = document.getElementById('alltime-view-' + v);
+    if (btn) btn.classList.toggle('active', alltimeView === v);
+  });
+}
 
 function setAlltimeView(view) {
   alltimeView = view;
