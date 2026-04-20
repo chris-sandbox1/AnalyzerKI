@@ -21,7 +21,7 @@
     :root {
       --color-a: #4ade80;
       --color-b: #fb923c;
-      --bg: #080810;
+      --bg: #0d0d18;
       --glass-bg: rgba(255,255,255,.04);
       --glass-border: rgba(255,255,255,.09);
       --topbar-h: 54px;
@@ -51,21 +51,21 @@
     }
     .blob-left {
       width: 420px; height: 420px;
-      background: rgba(16,185,129,.22);
+      background: rgba(16,185,129,.32);
       filter: blur(80px);
       left: -60px; top: 10%;
       animation: blob-drift-l 10s ease-in-out infinite alternate;
     }
     .blob-right {
       width: 380px; height: 380px;
-      background: rgba(249,115,22,.20);
+      background: rgba(249,115,22,.28);
       filter: blur(75px);
       right: -40px; top: 5%;
       animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
     }
     .blob-center {
       width: 200px; height: 200px;
-      background: rgba(99,102,241,.14);
+      background: rgba(99,102,241,.20);
       filter: blur(60px);
       left: 50%; bottom: 10%;
       transform: translateX(-50%);
@@ -218,6 +218,15 @@
       text-decoration: none;
     }
     .btn-topbar:hover { background: rgba(255,255,255,.1); color: #f1f5f9; }
+    .btn-refresh {
+      width: 36px; height: 36px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
 
     /* ── Tab-Content ────────────────────────────────────────────────────────── */
     .tab-content {
@@ -1192,9 +1201,10 @@
     .sd-period-wrap {
       border-radius: 14px;
       background: var(--glass-bg);
-      border: 0.5px solid var(--glass-border);
+      border: 0.5px solid rgba(74,222,128,.20);
       margin-bottom: 4px;
       padding: 6px 16px 10px;
+      box-shadow: 0 0 18px rgba(74,222,128,.08), inset 0 0 0 0.5px rgba(74,222,128,.06);
     }
     .sd-period-header {
       display: grid;
@@ -1468,7 +1478,12 @@
       font-size: .62rem;
       color: rgba(255,255,255,.25);
       min-width: 60px;
+      flex-shrink: 0;
     }
+    /* Kurzversion der Positionsbezeichnung (Mobile) */
+    .pos-abbr { display: none; }
+    /* Spielername darf abgeschnitten werden */
+    .sd-player-name { min-width: 0; }
 
     /* ═══════════════════════════════════════════════════════════════════════════
        MOBILE  (max-width: 768px)
@@ -1585,11 +1600,24 @@
 
       /* ── Gruppenphase-Grid ── */
       .gruppe-grid { grid-template-columns: 1fr; padding: 0 8px 12px; }
+
+      /* ── Kader & Aufstellung: Overflow-Schutz ── */
+      .sd-roster-cols { gap: 6px; }
+      .sd-roster-col-title { font-size: .65rem; }
+      .sd-player-row { overflow: hidden; max-width: 100%; }
+      .sd-player-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .7rem; }
+      .sd-player-nr { min-width: 20px; font-size: .62rem; }
+      .sd-pos-label { min-width: 14px; font-size: .58rem; }
+      .sd-starter-row { overflow: hidden; }
+
+      /* Positionsbezeichnung kürzen */
+      .pos-long { display: none; }
+      .pos-abbr { display: inline; }
     }
 
     /* ── Hintergrund heller im Browser (nicht PWA-Standalone) ────────────────── */
     @media (display-mode: browser) {
-      :root { --bg: #0f0f1a; }
+      :root { --bg: #141428; }
     }
 
     /* ── Live-Badge & Stream-Button ──────────────────────────────────────────── */
@@ -1721,6 +1749,54 @@
     .detail-scorer-table td:nth-child(2) { text-align: left; font-weight: 600; }
     .detail-scorer-table tr:last-child td { border-bottom: none; }
     .detail-scorer-table tr:hover td { background: rgba(255,255,255,.025); }
+
+    /* ── Bottom Navigation Bar (Mobile) ────────────────────────────────────── */
+    #bottom-nav { display: none; }
+
+    .bnav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.32);
+      cursor: pointer;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      transition: color .15s;
+      padding: 6px 0 4px;
+      line-height: 1;
+    }
+    .bnav-item svg { width: 21px; height: 21px; flex-shrink: 0; }
+    .bnav-item:hover  { color: rgba(255,255,255,.6); }
+    .bnav-item.active { color: var(--color-a); }
+
+    @media (max-width: 768px) {
+      /* Top-Tabs ausblenden */
+      header .tabs { display: none !important; }
+
+      /* Bottom-Nav einblenden */
+      #bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: auto;
+        min-height: 54px;
+        background: rgba(8,8,16,.96);
+        border-top: 0.5px solid rgba(255,255,255,.09);
+        z-index: 100;
+        align-items: stretch;
+        backdrop-filter: blur(14px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+
+      /* Genug Abstand damit Inhalt nicht unter der Bar verschwindet */
+      .tab-content { padding-bottom: 64px; }
+    }
   </style>
 </head>
 <body>
@@ -1733,10 +1809,10 @@
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
-  <div class="corner-blob" style="width:200px;height:200px;filter:blur(70px);background:rgba(16,185,129,.10);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.09);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
-  <div class="corner-blob" style="width:150px;height:150px;filter:blur(60px);background:rgba(16,185,129,.07);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:160px;height:160px;filter:blur(65px);background:rgba(249,115,22,.07);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:220px;height:220px;filter:blur(70px);background:rgba(16,185,129,.16);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:200px;height:200px;filter:blur(65px);background:rgba(249,115,22,.14);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:170px;height:170px;filter:blur(60px);background:rgba(16,185,129,.11);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.11);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
@@ -1756,7 +1832,7 @@
     <button class="tab"        onclick="zeigeTab('static')">🇩🇪 Alltime DE</button>
   </nav>
   <div class="hd-space"></div>
-  <button class="btn-topbar" onclick="datenGeladen=false;ladeDaten()">↺ Aktualisieren</button>
+  <button class="btn-topbar btn-refresh" onclick="datenGeladen=false;ladeDaten()" title="Aktualisieren">↺</button>
 </header>
 
 <!-- Liga-Auswahlleiste -->
@@ -1944,6 +2020,8 @@ let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
 let tabelleSort  = 'position';
 let tabelleSortAsc = true;
+let tabelleStrafenDetails = false;
+let tabellePerGame        = false;
 let datenGeladen = false;
 
 // Alltime-State (live, per Verband)
@@ -2032,9 +2110,13 @@ let staticPerGame         = false;
 function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+  const tabIds = ['tabelle','spielplan','scorer','detail','alltime','static'];
   document.querySelectorAll('header .tab').forEach((b, i) => {
-    const ids = ['tabelle','spielplan','scorer','detail','alltime','static'];
-    b.classList.toggle('active', ids[i] === id);
+    b.classList.toggle('active', tabIds[i] === id);
+  });
+  // Bottom-Nav synchronisieren
+  document.querySelectorAll('#bottom-nav .bnav-item').forEach((b, i) => {
+    b.classList.toggle('active', tabIds[i] === id);
   });
   document.getElementById('tab-' + id).classList.add('active');
 
@@ -2211,8 +2293,25 @@ function renderTabelle() {
   if (modus === 'cup')        return renderTurnierbaum();
   if (modus === 'cup_gruppe') return renderGruppenphaseMitKO();
 
+  // Penalty-Aggregation aus Scorer pro Team
+  const teamPim = {};
+  scorer.forEach(s => {
+    const id = s.team_id;
+    if (!id) return;
+    if (!teamPim[id]) teamPim[id] = { p2:0, p2and2:0, p5:0, p10:0, ms:0, pim:0 };
+    const tp = teamPim[id];
+    tp.p2     += s.penalty_2     || 0;
+    tp.p2and2 += s.penalty_2and2 || 0;
+    tp.p5     += s.penalty_5     || 0;
+    tp.p10    += s.penalty_10    || 0;
+    tp.ms     += (s.penalty_match||0)+(s.penalty_ms_tech||0)+(s.penalty_ms_full||0)+(s.penalty_ms1||0)+(s.penalty_ms2||0);
+    tp.pim    += pim(s);
+  });
+
   // Sortierung
   const sorted = [...tabelle].sort((a, b) => {
+    const tpA = teamPim[a.team_id] || {};
+    const tpB = teamPim[b.team_id] || {};
     let diff = 0;
     if      (tabelleSort === 'position')  diff = a.position - b.position;
     else if (tabelleSort === 'games')     diff = a.games - b.games;
@@ -2223,6 +2322,12 @@ function renderTabelle() {
     else if (tabelleSort === 'goals')     diff = (a.goals_scored - a.goals_received) - (b.goals_scored - b.goals_received);
     else if (tabelleSort === 'diff')      diff = (a.goals_diff ?? 0) - (b.goals_diff ?? 0);
     else if (tabelleSort === 'points')    diff = a.points - b.points;
+    else if (tabelleSort === 'pim')       diff = (tpA.pim||0) - (tpB.pim||0);
+    else if (tabelleSort === 'p2')        diff = (tpA.p2||0)  - (tpB.p2||0);
+    else if (tabelleSort === 'p2and2')    diff = (tpA.p2and2||0) - (tpB.p2and2||0);
+    else if (tabelleSort === 'p5')        diff = (tpA.p5||0)  - (tpB.p5||0);
+    else if (tabelleSort === 'p10')       diff = (tpA.p10||0) - (tpB.p10||0);
+    else if (tabelleSort === 'ms')        diff = (tpA.ms||0)  - (tpB.ms||0);
     return tabelleSortAsc ? diff : -diff;
   });
 
@@ -2243,6 +2348,8 @@ function renderTabelle() {
     const diffCls = diff > 0 ? 't-diff-pos' : diff < 0 ? 't-diff-neg' : '';
     const diffTxt = diff > 0 ? '+' + diff : String(diff);
     const posCls  = t.position === 1 ? 'pos-1' : t.position === 2 ? 'pos-2' : t.position === 3 ? 'pos-3' : '';
+    const tp      = teamPim[t.team_id] || {};
+    const sp      = t.games || 1;
 
     return `
     <tr class="t-row-klickbar" onclick="zeigeTeamDetail(${t.team_id})">
@@ -2261,12 +2368,26 @@ function renderTabelle() {
       <td class="col-hide-mob">${t.goals_scored}:${t.goals_received}</td>
       <td class="col-hide-mob ${diffCls}">${diffTxt}</td>
       <td class="t-pkt">${t.points}</td>
+      ${tabelleStrafenDetails
+        ? `<td class="col-hide-mob">${tp.p2||0}</td><td class="col-hide-mob">${tp.p2and2||0}</td><td class="col-hide-mob">${tp.p5||0}</td><td class="col-hide-mob">${tp.p10||0}</td><td class="col-hide-mob">${tp.ms||0}</td>`
+        : ''}
+      <td>${tp.pim||0}'</td>
+      ${tabellePerGame
+        ? `<td class="col-hide-mob">${t.goals_scored ? (t.goals_scored/sp).toFixed(2) : '—'}</td><td class="col-hide-mob">${(((tp.pim||0)/sp)).toFixed(2)}'</td>`
+        : ''}
     </tr>`;
   }).join('');
 
+  const hasPimData = scorer.length > 0;
+
   document.getElementById('content-tabelle').innerHTML = `
+  ${hasPimData ? `
+  <div class="scorer-controls" style="background:var(--glass-bg);border:0.5px solid var(--glass-border);border-radius:10px 10px 0 0;border-bottom:none;margin-bottom:0">
+    <button class="filter-btn ${tabelleStrafenDetails?'active':''}" id="tabelle-strafen-btn" onclick="toggleStrafenDetails('tabelle')">Strafen Details</button>
+    <button class="filter-btn ${tabellePerGame?'active':''}" id="tabelle-pergame-btn" onclick="togglePerGame('tabelle')">Pro Spiel</button>
+  </div>` : ''}
   <div class="tabelle-wrap">
-    <div class="glass">
+    <div class="glass" style="${hasPimData?'border-top-left-radius:0;border-top-right-radius:0':''}">
       <table class="tabelle-table">
         <thead>
           <tr>
@@ -2277,9 +2398,16 @@ function renderTabelle() {
             ${tabTh('won_ot','OTS','Overtime-Siege','col-hide-mob')}
             ${tabTh('lost_ot','OTN','Overtime-Niederlagen','col-hide-mob')}
             ${tabTh('lost','N','Niederlagen')}
-            ${tabTh('goals','T:G','Tordifferenz','col-hide-mob')}
+            ${tabTh('goals','T:G','Tore:Gegentore','col-hide-mob')}
             ${tabTh('diff','Diff','Tordifferenz','col-hide-mob')}
             ${tabTh('points','Pkt','Punkte')}
+            ${tabelleStrafenDetails
+              ? `${tabTh('p2',"2'",'2-Minuten-Strafen','col-hide-mob')}${tabTh('p2and2','2+2','2+2-Minuten-Strafen','col-hide-mob')}${tabTh('p5',"5'",'5-Minuten-Strafen','col-hide-mob')}${tabTh('p10',"10'",'10-Minuten-Strafen','col-hide-mob')}${tabTh('ms','MS','Matchstrafen','col-hide-mob')}`
+              : ''}
+            ${tabTh('pim','PIM','Strafminuten gesamt')}
+            ${tabellePerGame
+              ? `<th class="col-hide-mob" title="Tore pro Spiel">T/Sp</th><th class="col-hide-mob" title="Strafminuten pro Spiel">PIM/Sp</th>`
+              : ''}
           </tr>
         </thead>
         <tbody>${rows}</tbody>
@@ -2545,6 +2673,20 @@ function renderGruppenphaseMitKO() {
   // KO: alle anderen Runden → Bracket
   const titel = ligaMeta?.game_day_titles || [];
 
+  // game_day_titles ist ein Array von Objekten {game_day_number, title} ODER ein Array von Strings.
+  // Hilfsfunktion: Titel für eine Runde korrekt nachschlagen.
+  function getTitelFuerRunde(nr) {
+    if (!titel.length) return '';
+    const erster = titel[0];
+    if (typeof erster === 'object' && erster !== null) {
+      // Neues Format: [{game_day_number: 1, title: "Gruppe A"}, ...]
+      const eintrag = titel.find(e => e.game_day_number === nr);
+      return String(eintrag?.title || '');
+    }
+    // Altes Format: ["Gruppe A", "Runde 1", ...]
+    return String(titel[nr - 1] || '');
+  }
+
   // Gruppentabellen aus table.json (haben group_name-Feld)
   const gruppenTab = {};
   (tabelle || []).forEach(t => {
@@ -2557,14 +2699,14 @@ function renderGruppenphaseMitKO() {
   // KO-Runden: game_day_number wo Titel kein "Gruppe" enthält
   const koSpiele = spielplan.filter(s => {
     const nr = s.game_day_number ?? s.game_day ?? 1;
-    const t  = String(titel[nr - 1] || '');
-    return !t.toLowerCase().includes('gruppe') && !t.toLowerCase().includes('group');
+    const t  = getTitelFuerRunde(nr).toLowerCase();
+    return !t.includes('gruppe') && !t.includes('group');
   });
   // Gruppenphase-Spiele
   const gruppeSpiele = spielplan.filter(s => {
     const nr = s.game_day_number ?? s.game_day ?? 1;
-    const t  = String(titel[nr - 1] || '');
-    return t.toLowerCase().includes('gruppe') || t.toLowerCase().includes('group');
+    const t  = getTitelFuerRunde(nr).toLowerCase();
+    return t.includes('gruppe') || t.includes('group');
   });
 
   let html = '';
@@ -2638,6 +2780,10 @@ function toggleStrafenDetails(context) {
     alltimeStrafenDetails = !alltimeStrafenDetails;
     document.getElementById('alltime-strafen-btn')?.classList.toggle('active', alltimeStrafenDetails);
     renderAlltime();
+  } else if (context === 'tabelle') {
+    tabelleStrafenDetails = !tabelleStrafenDetails;
+    document.getElementById('tabelle-strafen-btn')?.classList.toggle('active', tabelleStrafenDetails);
+    renderTabelle();
   } else if (context === 'static') {
     staticStrafenDetails = !staticStrafenDetails;
     document.getElementById('static-strafen-btn')?.classList.toggle('active', staticStrafenDetails);
@@ -2654,6 +2800,10 @@ function togglePerGame(context) {
     alltimePerGame = !alltimePerGame;
     document.getElementById('alltime-pergame-btn')?.classList.toggle('active', alltimePerGame);
     renderAlltime();
+  } else if (context === 'tabelle') {
+    tabellePerGame = !tabellePerGame;
+    document.getElementById('tabelle-pergame-btn')?.classList.toggle('active', tabellePerGame);
+    renderTabelle();
   } else if (context === 'static') {
     staticPerGame = !staticPerGame;
     document.getElementById('static-pergame-btn')?.classList.toggle('active', staticPerGame);
@@ -4365,6 +4515,22 @@ function renderSpielDetail(g) {
   // Alle Balken gegen denselben Maximalwert skalieren (höchste Gesamttorzahl)
   const globalMax = Math.max(totalH, totalG, 1);
 
+  // Rahmenfarbe der Tore-pro-Drittel-Sektion: Gewinner bestimmt die Farbe
+  const hatErgebnis = r.home_goals !== undefined && r.guest_goals !== undefined;
+  let periodBorderStyle = '';
+  if (hatErgebnis && (totalH > 0 || totalG > 0)) {
+    if (totalH > totalG) {
+      // Grünes Team (Heim, links) gewinnt
+      periodBorderStyle = 'border-color:rgba(74,222,128,.45);box-shadow:0 0 22px rgba(74,222,128,.18),inset 0 0 0 0.5px rgba(74,222,128,.10)';
+    } else if (totalG > totalH) {
+      // Oranges Team (Gast, rechts) gewinnt
+      periodBorderStyle = 'border-color:rgba(251,146,60,.40);box-shadow:0 0 22px rgba(251,146,60,.16),inset 0 0 0 0.5px rgba(251,146,60,.08)';
+    } else {
+      // Unentschieden → neutrales Weiß
+      periodBorderStyle = 'border-color:rgba(255,255,255,.22);box-shadow:0 0 18px rgba(255,255,255,.05),inset 0 0 0 0.5px rgba(255,255,255,.08)';
+    }
+  }
+
   function statRow(h, ga, label, colH, colG, delay, isTotal) {
     const hw = Math.round(h  / globalMax * 100);
     const gw = Math.round(ga / globalMax * 100);
@@ -4555,7 +4721,11 @@ function renderSpielDetail(g) {
   // ── Kader & Aufstellung ──
   const posLabels = {
     goal: 'Torwart', defender1: 'Verteidiger 1', defender2: 'Verteidiger 2',
-    center: 'Mitte', forward1: 'Stürmer 1', forward2: 'Stürmer 2'
+    center: 'Center', forward1: 'Flügel 1', forward2: 'Flügel 2'
+  };
+  const posAbbr = {
+    goal: 'TW', defender1: 'V1', defender2: 'V2',
+    center: 'C', forward1: 'F1', forward2: 'F2'
   };
   const posOrder = ['goal','defender1','defender2','center','forward1','forward2'];
 
@@ -4577,7 +4747,7 @@ function renderSpielDetail(g) {
       if (!p) return '';
       const isMvp = mvps.has(p.trikot_number);
       return `<div class="sd-player-row sd-starter-row">
-        <span class="sd-pos-label">${posLabels[pos]}</span>
+        <span class="sd-pos-label"><span class="pos-long">${posLabels[pos]}</span><span class="pos-abbr">${posAbbr[pos]}</span></span>
         <span class="sd-player-nr">#${p.trikot_number}</span>
         <span class="sd-player-name">${esc(p.player_firstname)} ${esc(p.player_name)}</span>
         ${isMvp ? '<span class="sd-player-mvp" title="MVP">🏆</span>' : ''}
@@ -4685,7 +4855,7 @@ function renderSpielDetail(g) {
     <!-- Drittel -->
     ${periodTableHTML ? `
     <div class="sd-section-title">Tore pro Drittel</div>
-    <div class="sd-period-wrap">
+    <div class="sd-period-wrap"${periodBorderStyle ? ` style="${periodBorderStyle}"` : ''}>
       ${periodTableHTML}
     </div>` : ''}
 
@@ -4768,5 +4938,51 @@ ladeLigen();
     });
   }
 </script>
+
+<!-- Bottom Navigation Bar (nur Mobile) -->
+<nav id="bottom-nav">
+  <button class="bnav-item active" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+    </svg>
+    <span>Tabelle</span>
+  </button>
+  <button class="bnav-item" id="bnav-spielplan" onclick="zeigeTab('spielplan')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="17" rx="2"/>
+      <path d="M3 10h18M8 2v4M16 2v4"/>
+    </svg>
+    <span>Spielplan</span>
+  </button>
+  <button class="bnav-item" id="bnav-scorer" onclick="zeigeTab('scorer')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+    </svg>
+    <span>Scorer</span>
+  </button>
+  <button class="bnav-item" id="bnav-detail" onclick="zeigeTab('detail')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+    </svg>
+    <span>Team</span>
+  </button>
+  <button class="bnav-item" id="bnav-alltime" onclick="zeigeTab('alltime')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/>
+    </svg>
+    <span>Alltime</span>
+  </button>
+  <button class="bnav-item" id="bnav-static" onclick="zeigeTab('static')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/>
+    </svg>
+    <span>DE</span>
+  </button>
+</nav>
+
 </body>
 </html>
