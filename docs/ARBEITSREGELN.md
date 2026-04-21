@@ -158,6 +158,21 @@ const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
 - `ladeOverview()` wartet per Polling (200ms Intervall) auf `alleligen.length > 0` bevor sie startet
 - Aktuelle Saison = höchste `season`-Nummer über alle Ligen
 
+### CSS-Design-Variablen (Stand April 2026)
+
+```css
+:root {
+  --color-a: #4ade80;          /* Grün (Team A / Akzent) */
+  --color-b: #fb923c;          /* Orange (Team B) */
+  --bg: #0d0d18;               /* Hintergrundfarbe */
+  --glass-bg: rgba(255,255,255,.07);     /* Karten-Hintergrund (war .04, erhöht für Kontrast) */
+  --glass-border: rgba(255,255,255,.13); /* Karten-Rahmen (war .09) */
+  --topbar-h: 54px;
+  --mob-header-content: 68px;  /* Höhe des Mobile-Headers unterhalb der Safe Area */
+}
+```
+`--glass-bg` und `--glass-border` steuern den Kontrast aller `.glass`-Elemente. Wenn Karten zu wenig vom Hintergrund abheben → diese beiden Werte erhöhen.
+
 ### Mobile Header (Stand April 2026)
 
 - Header ist einzeilig auf Mobile (`flex-wrap: nowrap`):
@@ -199,7 +214,11 @@ const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
 
 ### Wichtige Funktionen & Muster
 
-**Liga-Dropdown:** `befuelleLigaDropdown()` soll immer die neueste Saison vorauswählen — per `.reduce()` die höchste `season`-Zahl finden, nicht alphabetisch sortieren und nicht hardcoded.
+**Liga-Dropdown:** `befuelleLigaDropdown(verband)` soll immer die neueste Saison vorauswählen — per `Math.max(...)` die höchste `season`-Zahl finden, nicht alphabetisch sortieren und nicht hardcoded. Dropdown nutzt `<optgroup label="Aktuelle Saison">` und `<optgroup label="Archiv">`. Vorauswahl per Score-Logik: Nicht-Damen-Liga +2, Name beginnt mit „1." +1 — wählt so immer die Herren 1. Liga als Default.
+
+**Dropdown-Sperr-Logik:** `aktualisiereDropdownStatus()` deaktiviert Verband- und Liga-Select je nach aktivem Tab. Overview: beide gesperrt. Alltime-Deutschland: beide gesperrt. Alltime-Verband: nur Liga gesperrt. Wird immer am Ende von `zeigeTab()` aufgerufen. Mobile-Selects (`-mob`-Sufffix) werden synchron gesperrt.
+
+**Spielplan-Navigation aus Overview:** `zeigVerbandSpielplan(vb)` setzt den Verband-Select, ruft `befuelleLigaDropdown(vb)` auf (wählt beste Liga automatisch), dann `zeigeTab('spielplan')` und `ladeDaten()`. So landet der Nutzer direkt auf dem richtigen Verband+Liga im Spielplan-Tab.
 
 **Alltime-Filter:** `aggregiereUndRenderAlltime()` filtert `alltimeRohdaten` nach `alltimeLigaFilter` und ruft dann `renderAlltime()` auf. Jede Funktion die eigene Rosters baut (z. B. `bauldeAlltimeKaderRosters()`) muss dieselbe Filterlogik selbst anwenden:
 ```js
@@ -230,11 +249,14 @@ function serienKey(s) {
 - **PWA GitHub Pages:** scope und start_url müssen exakt `/AnalyzerKI/` enthalten — ein fehlender Trailing Slash oder falscher Pfad verhindert die Installation.
 - **Liga-Multiselect startet mit `display:none`:** `alltime-liga-wrap` ist im HTML initial versteckt. `renderAlltime()` muss es explizit einblenden (nicht nur den `isKader`-Zustand toggeln).
 - **`overflow-x: hidden` auf `body`/`html` bricht `position: fixed` auf iOS Safari:** Aurora-Blobs, Bottom-Nav und alle anderen `fixed`-Elemente verschwinden auf iPhone wenn `overflow-x: hidden` auf dem `body` sitzt. NIEMALS `overflow-x: hidden` auf `html` oder `body` setzen. Stattdessen `overflow: hidden` nur auf Wrapper-Divs verwenden.
+- **iOS WebKit rendert `filter: blur()` NICHT in `position: fixed; overflow: hidden` Containern (PWA-Modus):** Aurora-Blobs und Corner-Blobs werden in der installierten PWA komplett unsichtbar. **Fix:** (1) `#bg-layer` von `overflow: hidden` → `overflow: clip` ändern — `clip` erstellt kein neues BFC und triggert den iOS-Bug nicht. (2) Alle `filter: blur(Xpx)` auf Blob-Elementen durch `radial-gradient(ellipse at center, rgba(...) 0%, transparent 70%)` ersetzen — optisch identisches weiches Leuchten, kein Filter. Blob-Größe ca. 1,4× größer als mit Blur wählen, da Gradient schon weich ausläuft. `overflow: clip` wird ab iOS 16 unterstützt.
 - **`env(safe-area-inset-bottom)` funktioniert nicht ohne `viewport-fit=cover`:** Im Viewport-Meta-Tag muss `viewport-fit=cover` stehen, sonst ignoriert iOS die `env()`-Funktion. Gilt für alle Safe-Area-Insets (top/bottom/left/right).
 - **Logo-CSS und generische `span`-Selektoren:** `.logo-text span { color: green }` trifft ALLE Kind-Spans. Wenn mehrere Spans im Logo-Element existieren (z. B. `.logo-full` + `.logo-iq`), immer spezifische Klassen für den farbigen Teil verwenden: `.logo-text .logo-iq { ... }`.
 - **Mobile-Selects müssen manuell synchronisiert werden:** `#verband-select-mob` und `#liga-select-mob` sind Duplikate der Desktop-Selects. Bei jedem Befüllen der Desktop-Selects (in `ladeLigen()`, `befuelleLigaDropdown()`, `onVerband()`) die Mobile-Selects manuell nachziehen, sonst zeigen sie veraltete Werte.
 - **`zeigeTab()` kennt 6 Tab-IDs:** `tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime']`. Kein `static` mehr — `zeigeTab('static')` würde `getElementById('tab-static')` aufrufen und einen Fehler werfen.
 - **`ovToggleMehr()` erwartet IDs im DOM:** Die Funktion greift auf `getElementById()` zu — die IDs (`ov-b2-preview`, `ov-b3-preview`, `vb0-np` etc.) existieren nur nach `renderOverview()`. Nie `ovToggleMehr()` vor dem ersten Render aufrufen.
+- **`col-hide-mob` global vs. Tabelle:** `col-hide-mob` blendet Spalten auf Mobile aus. Wenn auch Tabellen-spezifische Spalten (OTS, OTN, T:G, Diff) ausgeblendet werden sollen, NICHT global mit `col-hide-mob` arbeiten — stattdessen separaten Override: `.tabelle-table .col-hide-mob { display: table-cell !important; }`. Oder eigene Klassen pro Kontext verwenden.
+- **Service Worker Cache-Name muss bei jeder Deployment-Änderung hochgezählt werden:** `CACHE_NAME = 'floorballiq-vX'` — PWA lädt sonst die alte gecachte HTML-Datei. Jede inhaltliche Änderung → Cache-Version erhöhen → SW-Datei mitcommiten. Aktuell `v4`.
 - **Block-4-Verband-IDs sind Index-basiert:** `vb0`, `vb1` etc. (Index in der `verbände`-Array). Die Reihenfolge ist deterministisch (Floorball Deutschland zuerst, dann alphabetisch). Aber die IDs ändern sich wenn Verbände hinzukommen/wegfallen — kein Problem da sie bei jedem `renderOverview()` neu generiert werden.
 - **`gruppiereNachDatum()` nutzt Objekt-Einfüge-Reihenfolge:** Modernes JS/V8 preserviert die Einfüge-Reihenfolge von String-Schlüsseln in Objekten. Wenn das Input-Array nach Datum aufsteigend sortiert ist, ist auch das Output-Objekt aufsteigend. Für Block 3 (neueste zuerst) Input bereits absteigend sortieren.
 
