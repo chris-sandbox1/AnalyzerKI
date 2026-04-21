@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>FloorballIQ – Liga</title>
 
   <!-- PWA -->
@@ -32,7 +32,7 @@
       background: var(--bg);
       color: #e2e8f0;
       font-family: Inter, system-ui, -apple-system, sans-serif;
-      overflow-x: hidden;
+      /* overflow-x NICHT auf body/html setzen – bricht position:fixed auf iOS Safari */
     }
 
     /* ── Hintergrund-Ebene ──────────────────────────────────────────────────── */
@@ -178,6 +178,32 @@
       border-bottom: 1.5px solid var(--color-a);
       padding-bottom: 1px;
     }
+
+    /* Mobile-Logo: „Floorball" auf Desktop sichtbar, auf Mobile ausgeblendet */
+    .logo-full { /* sichtbar auf Desktop — kein extra CSS nötig */ }
+
+    /* Mobile-Dropdowns im Header: global versteckt, auf Mobile eingeblendet */
+    #mob-dropdowns { display: none; }
+
+    /* Pull-to-Refresh Indikator */
+    #ptr-indicator {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: var(--color-a);
+      color: #0d0d18;
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: .78rem;
+      font-weight: 700;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .3s;
+      display: none;
+    }
+    #ptr-indicator.ptr-visible { display: block; opacity: 1; }
 
     .tabs {
       display: flex;
@@ -1490,38 +1516,39 @@
     ═══════════════════════════════════════════════════════════════════════════ */
     @media (max-width: 768px) {
 
-      /* ── Subbar-Höhe erhöhen (2 Zeilen Dropdowns) ── */
-      :root { --subbar-h: 82px; }
+      /* ── Subbar-Höhe auf 0 (Liga-Bar auf Mobile versteckt) ── */
+      :root { --subbar-h: 0px; }
 
-      /* ── Header ── */
-      header { gap: 6px; padding: 0 10px; }
-      .logo-text { font-size: 13px; }
-      .tabs {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-shrink: 1;
-        scrollbar-width: none;
-      }
-      .tabs::-webkit-scrollbar { display: none; }
-      .tab { font-size: 11.5px; padding: 5px 11px; }
-      .btn-topbar { font-size: .68rem; padding: 5px 8px; }
-
-      /* ── Liga-Bar: Verband + Liga untereinander ── */
-      #liga-bar {
+      /* ── Header: 2-zeilig (Logo + Dropdowns) ── */
+      header {
         height: auto;
-        min-height: var(--subbar-h);
         flex-wrap: wrap;
-        padding: 8px 10px;
+        gap: 6px;
+        padding: 8px 10px 6px;
+        align-items: center;
+      }
+      /* „Floorball" ausblenden – nur „IQ" bleibt sichtbar */
+      .logo-full { display: none; }
+      /* Refresh-Button ausblenden – Pull-to-Refresh übernimmt */
+      .btn-refresh { display: none !important; }
+      /* Mobile-Dropdowns einblenden (2. Zeile im Header) */
+      #mob-dropdowns {
+        display: flex;
+        flex: 0 0 100%;
+        width: 100%;
         gap: 6px;
       }
-      .liga-bar-lbl { display: none; }
-      .liga-bar-sep { display: none; }
-      #liga-bar .liga-select {
-        flex: 1 1 100%;
-        width: 100%;
+      #mob-dropdowns .liga-select {
+        flex: 1;
         font-size: .76rem;
         padding: 5px 8px;
       }
+      /* Tab-Inhalt: Platz für 2-zeiligen Header (~54px Logo-Zeile + ~38px Dropdown-Zeile) */
+      .tab-content { padding-top: 100px !important; }
+      /* Liga-Bar komplett ausblenden (Dropdowns sind jetzt im Header) */
+      #liga-bar { display: none !important; }
+      .logo-text { font-size: 13px; }
+      .btn-topbar { font-size: .68rem; padding: 5px 8px; }
 
       /* ── Inhalts-Padding reduzieren ── */
       .tabelle-wrap  { padding: 10px 8px 16px; }
@@ -1613,6 +1640,12 @@
       /* Positionsbezeichnung kürzen */
       .pos-long { display: none; }
       .pos-abbr { display: inline; }
+
+      /* ── Horizontales Scrollen in Detail-Karten fixen ── */
+      .detail-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
     /* ── Hintergrund heller im Browser (nicht PWA-Standalone) ────────────────── */
@@ -1794,8 +1827,8 @@
         padding-bottom: env(safe-area-inset-bottom, 0px);
       }
 
-      /* Genug Abstand damit Inhalt nicht unter der Bar verschwindet */
-      .tab-content { padding-bottom: 64px; }
+      /* Genug Abstand damit Inhalt nicht unter der Bar verschwindet (inkl. iPhone Home-Indicator) */
+      .tab-content { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
     }
   </style>
 </head>
@@ -1821,7 +1854,7 @@
 <!-- Topbar -->
 <header>
   <a class="logo" href="saisonmanager.html">
-    <div class="logo-text">Floorball<span>IQ</span></div>
+    <div class="logo-text"><span class="logo-full">Floorball</span><span>IQ</span></div>
   </a>
   <nav class="tabs">
     <button class="tab active" onclick="zeigeTab('tabelle')">Tabelle</button>
@@ -1829,10 +1862,18 @@
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
     <button class="tab"        onclick="zeigeTab('alltime')">Alltime</button>
-    <button class="tab"        onclick="zeigeTab('static')">🇩🇪 Alltime DE</button>
   </nav>
   <div class="hd-space"></div>
   <button class="btn-topbar btn-refresh" onclick="datenGeladen=false;ladeDaten()" title="Aktualisieren">↺</button>
+  <!-- Mobile: Verband + Liga direkt im Header (2. Zeile) -->
+  <div id="mob-dropdowns">
+    <select class="liga-select" id="verband-select-mob" onchange="onVerbandMob()">
+      <option>Lädt…</option>
+    </select>
+    <select class="liga-select" id="liga-select-mob" onchange="onLigaMob()">
+      <option>Lädt…</option>
+    </select>
+  </div>
 </header>
 
 <!-- Liga-Auswahlleiste -->
@@ -1905,72 +1946,83 @@
   </div>
 </section>
 
-<!-- TAB 5: ALLTIME -->
+<!-- TAB 5: ALLTIME (Verband + Deutschland zusammengeführt) -->
 <section id="tab-alltime" class="tab-content">
-  <div class="alltime-controls" id="alltime-controls">
-    <button class="filter-btn active" id="alltime-view-spieler" onclick="setAlltimeView('spieler')">Spieler</button>
-    <button class="filter-btn"        id="alltime-view-teams"   onclick="setAlltimeView('teams')">Teams</button>
-    <button class="filter-btn"        id="alltime-view-kader"   onclick="setAlltimeView('kader')">Team-Kader</button>
-    <div class="alltime-sep"></div>
-    <span id="alltime-gender-btns">
-      <button class="filter-btn active" onclick="setAlltimeGender('alle', this)">Alle</button>
-      <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
-      <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
-    </span>
-    <div class="alltime-sep" id="alltime-gender-sep"></div>
-    <button class="filter-btn" id="alltime-strafen-btn" onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
-    <button class="filter-btn" id="alltime-pergame-btn" onclick="togglePerGame('alltime')">Pro Spiel</button>
-    <div class="alltime-sep"></div>
-    <!-- Liga-Multi-Select (nur im Alltime-Tab sichtbar) -->
-    <div class="liga-multiselect-wrap" id="alltime-liga-wrap" style="display:none">
-      <button class="liga-multiselect-btn" id="alltime-liga-btn" onclick="toggleAlltimeLigaPanel(event)">
-        Alle Ligen ▾
-      </button>
-      <div class="liga-multiselect-panel" id="alltime-liga-panel">
-        <input class="liga-multiselect-search" type="text" placeholder="Liga suchen…"
-               oninput="alltimeLigaSuche=this.value;renderAlltimeLigaPanel()"
-               id="alltime-liga-suche">
-        <div class="liga-multiselect-actions">
-          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
-                  onclick="alltimeLigaAlleAuswaehlen()">Alle</button>
-          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
-                  onclick="alltimeLigaKeineAuswaehlen()">Keine</button>
-          <button class="filter-btn" style="font-size:.7rem;padding:3px 10px;margin-left:auto"
-                  onclick="toggleAlltimeLigaPanel(event)">✕ Schließen</button>
-        </div>
-        <div class="liga-multiselect-list" id="alltime-liga-list"></div>
-      </div>
-    </div>
-    <div class="alltime-sep"></div>
-    <input class="alltime-search" type="text" id="alltime-suche" placeholder="Spieler oder Team suchen…" oninput="onAlltimeSuche(this.value)">
-  </div>
-  <div id="gender-hint"></div>
-  <div id="content-alltime">
-    <div class="lade-info"><div class="spinner"></div><span>Alltime-Daten laden…</span></div>
-  </div>
-</section>
 
-<!-- TAB 6: ALLTIME DEUTSCHLAND (statisch aus alltime.json) -->
-<section id="tab-static" class="tab-content">
-  <div class="alltime-controls" id="static-controls">
-    <button class="filter-btn active" id="static-view-scorerteams" onclick="setStaticView('scorerteams')">Scorer &amp; Teams</button>
-    <button class="filter-btn"        id="static-view-kader"       onclick="setStaticView('kader')">Team-Kader</button>
-    <div class="alltime-sep"></div>
-    <span id="static-gender-btns">
-      <button class="filter-btn active" id="static-gender-alle"   onclick="setStaticGender('alle',  this)">Alle</button>
-      <button class="filter-btn"        id="static-gender-herren" onclick="setStaticGender('herren',this)">Herren</button>
-      <button class="filter-btn"        id="static-gender-damen"  onclick="setStaticGender('damen', this)">Damen</button>
-    </span>
-    <div class="alltime-sep" id="static-toggle-sep"></div>
-    <button class="filter-btn" id="static-strafen-btn" onclick="toggleStrafenDetails('static')">Strafen Details</button>
-    <button class="filter-btn" id="static-pergame-btn" onclick="togglePerGame('static')">Pro Spiel</button>
-    <div class="alltime-sep" id="static-suche-sep"></div>
-    <input class="alltime-search" type="text" id="static-suche"
-           placeholder="Spieler oder Team suchen…" oninput="onStaticSuche(this.value)">
+  <!-- Sub-Navigation: Verband / Deutschland -->
+  <div style="display:flex;gap:8px;padding:10px 20px 0;flex-wrap:wrap" id="alltime-subnav">
+    <button class="filter-btn active" id="alltime-sub-verband"     onclick="setAlltimeSubTab('verband')">Verband</button>
+    <button class="filter-btn"        id="alltime-sub-deutschland" onclick="setAlltimeSubTab('deutschland')">🇩🇪 Deutschland</button>
   </div>
-  <div id="content-static">
-    <div class="lade-info"><div class="spinner"></div><span>Lade alltime.json…</span></div>
+
+  <!-- Panel: Verband (live API) -->
+  <div id="alltime-verband-panel">
+    <div class="alltime-controls" id="alltime-controls">
+      <button class="filter-btn active" id="alltime-view-spieler" onclick="setAlltimeView('spieler')">Spieler</button>
+      <button class="filter-btn"        id="alltime-view-teams"   onclick="setAlltimeView('teams')">Teams</button>
+      <button class="filter-btn"        id="alltime-view-kader"   onclick="setAlltimeView('kader')">Team-Kader</button>
+      <div class="alltime-sep"></div>
+      <span id="alltime-gender-btns">
+        <button class="filter-btn active" onclick="setAlltimeGender('alle', this)">Alle</button>
+        <button class="filter-btn"        onclick="setAlltimeGender('herren', this)">Herren</button>
+        <button class="filter-btn"        onclick="setAlltimeGender('damen', this)">Damen</button>
+      </span>
+      <div class="alltime-sep" id="alltime-gender-sep"></div>
+      <button class="filter-btn" id="alltime-strafen-btn" onclick="toggleStrafenDetails('alltime')">Strafen Details</button>
+      <button class="filter-btn" id="alltime-pergame-btn" onclick="togglePerGame('alltime')">Pro Spiel</button>
+      <div class="alltime-sep"></div>
+      <!-- Liga-Multi-Select -->
+      <div class="liga-multiselect-wrap" id="alltime-liga-wrap" style="display:none">
+        <button class="liga-multiselect-btn" id="alltime-liga-btn" onclick="toggleAlltimeLigaPanel(event)">
+          Alle Ligen ▾
+        </button>
+        <div class="liga-multiselect-panel" id="alltime-liga-panel">
+          <input class="liga-multiselect-search" type="text" placeholder="Liga suchen…"
+                 oninput="alltimeLigaSuche=this.value;renderAlltimeLigaPanel()"
+                 id="alltime-liga-suche">
+          <div class="liga-multiselect-actions">
+            <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
+                    onclick="alltimeLigaAlleAuswaehlen()">Alle</button>
+            <button class="filter-btn" style="font-size:.7rem;padding:3px 10px"
+                    onclick="alltimeLigaKeineAuswaehlen()">Keine</button>
+            <button class="filter-btn" style="font-size:.7rem;padding:3px 10px;margin-left:auto"
+                    onclick="toggleAlltimeLigaPanel(event)">✕ Schließen</button>
+          </div>
+          <div class="liga-multiselect-list" id="alltime-liga-list"></div>
+        </div>
+      </div>
+      <div class="alltime-sep"></div>
+      <input class="alltime-search" type="text" id="alltime-suche" placeholder="Spieler oder Team suchen…" oninput="onAlltimeSuche(this.value)">
+    </div>
+    <div id="gender-hint"></div>
+    <div id="content-alltime">
+      <div class="lade-info"><div class="spinner"></div><span>Alltime-Daten laden…</span></div>
+    </div>
   </div>
+
+  <!-- Panel: Deutschland (statisch aus alltime.json) -->
+  <div id="alltime-deutschland-panel" style="display:none">
+    <div class="alltime-controls" id="static-controls">
+      <button class="filter-btn active" id="static-view-scorerteams" onclick="setStaticView('scorerteams')">Scorer &amp; Teams</button>
+      <button class="filter-btn"        id="static-view-kader"       onclick="setStaticView('kader')">Team-Kader</button>
+      <div class="alltime-sep"></div>
+      <span id="static-gender-btns">
+        <button class="filter-btn active" id="static-gender-alle"   onclick="setStaticGender('alle',  this)">Alle</button>
+        <button class="filter-btn"        id="static-gender-herren" onclick="setStaticGender('herren',this)">Herren</button>
+        <button class="filter-btn"        id="static-gender-damen"  onclick="setStaticGender('damen', this)">Damen</button>
+      </span>
+      <div class="alltime-sep" id="static-toggle-sep"></div>
+      <button class="filter-btn" id="static-strafen-btn" onclick="toggleStrafenDetails('static')">Strafen Details</button>
+      <button class="filter-btn" id="static-pergame-btn" onclick="togglePerGame('static')">Pro Spiel</button>
+      <div class="alltime-sep" id="static-suche-sep"></div>
+      <input class="alltime-search" type="text" id="static-suche"
+             placeholder="Spieler oder Team suchen…" oninput="onStaticSuche(this.value)">
+    </div>
+    <div id="content-static">
+      <div class="lade-info"><div class="spinner"></div><span>Lade alltime.json…</span></div>
+    </div>
+  </div>
+
 </section>
 
 <script>
@@ -2039,6 +2091,9 @@ let alltimeSuche   = '';
 let alltimeView        = 'spieler'; // 'spieler' | 'teams'
 let alltimeTeamMode    = 'total';   // 'total' | 'best'
 let alltimeTeamBestSort= 'punkte';  // Sort-Key für Beste-Saison-Ansicht
+
+// Alltime Sub-Tab: 'verband' | 'deutschland'
+let alltimeSubTab = 'verband';
 
 // Static-Alltime-State (aus alltime.json)
 let staticDaten        = null;
@@ -2110,7 +2165,7 @@ let staticPerGame         = false;
 function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-  const tabIds = ['tabelle','spielplan','scorer','detail','alltime','static'];
+  const tabIds = ['tabelle','spielplan','scorer','detail','alltime'];
   document.querySelectorAll('header .tab').forEach((b, i) => {
     b.classList.toggle('active', tabIds[i] === id);
   });
@@ -2118,21 +2173,29 @@ function zeigeTab(id) {
   document.querySelectorAll('#bottom-nav .bnav-item').forEach((b, i) => {
     b.classList.toggle('active', tabIds[i] === id);
   });
-  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('tab-' + id)?.classList.add('active');
 
   // Verband + Liga je nach Tab deaktivieren
   const vSel = document.getElementById('verband-select');
   const lSel = document.getElementById('liga-select');
-  const isStatic  = id === 'static';
   const isAlltime = id === 'alltime';
-  vSel.disabled = isStatic;
-  lSel.disabled = isStatic || isAlltime;
-  // Liga-Multiselect nur im Alltime-Tab sichtbar
-  const wrap = document.getElementById('alltime-liga-wrap');
-  if (wrap) wrap.style.display = isAlltime ? '' : 'none';
+  vSel.disabled = false;
+  lSel.disabled = isAlltime;
 
-  if (id === 'alltime' && !alltimeGeladen) ladeAlltimeDaten();
-  if (id === 'static'  && !staticGeladen)  ladeStaticAlltime();
+  // Beim Alltime-Tab: beide Datenquellen laden falls nötig
+  if (isAlltime) {
+    if (!alltimeGeladen) ladeAlltimeDaten();
+    if (!staticGeladen)  ladeStaticAlltime();
+  }
+}
+
+// Sub-Tab im Alltime-Bereich umschalten
+function setAlltimeSubTab(sub) {
+  alltimeSubTab = sub;
+  document.getElementById('alltime-verband-panel').style.display     = sub === 'verband'     ? '' : 'none';
+  document.getElementById('alltime-deutschland-panel').style.display = sub === 'deutschland' ? '' : 'none';
+  document.getElementById('alltime-sub-verband').classList.toggle('active', sub === 'verband');
+  document.getElementById('alltime-sub-deutschland').classList.toggle('active', sub === 'deutschland');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2160,6 +2223,13 @@ async function ladeLigen() {
     `<option value="${v}" ${v === 'Floorball Deutschland' ? 'selected' : ''}>${v}</option>`
   ).join('');
 
+  // Mobile-Verband-Select synchronisieren
+  const vSelMob = document.getElementById('verband-select-mob');
+  if (vSelMob) {
+    vSelMob.innerHTML = vSel.innerHTML;
+    vSelMob.value     = vSel.value;
+  }
+
   // Liga-Dropdown für Standard-Verband befüllen (wählt automatisch aktuellste)
   befuelleLigaDropdown('Floorball Deutschland');
 
@@ -2186,11 +2256,35 @@ function befuelleLigaDropdown(verband) {
     aktiveLigaId = neueste.id;
     lSel.value   = String(neueste.id);
   }
+
+  // Mobile-Select synchronisieren
+  const lSelMob = document.getElementById('liga-select-mob');
+  if (lSelMob) {
+    lSelMob.innerHTML = lSel.innerHTML;
+    lSelMob.value     = lSel.value;
+  }
+}
+
+// Mobile-Dropdowns: synchronisieren und an Desktop-Funktionen delegieren
+function onVerbandMob() {
+  const mob = document.getElementById('verband-select-mob');
+  const desk = document.getElementById('verband-select');
+  if (desk && mob) { desk.value = mob.value; }
+  onVerband();
+}
+function onLigaMob() {
+  const mob = document.getElementById('liga-select-mob');
+  const desk = document.getElementById('liga-select');
+  if (desk && mob) { desk.value = mob.value; }
+  onLiga();
 }
 
 // Verband gewechselt
 function onVerband() {
   const verband = document.getElementById('verband-select').value;
+  // Mobile-Select synchronisieren
+  const vSelMob = document.getElementById('verband-select-mob');
+  if (vSelMob) vSelMob.value = verband;
   befuelleLigaDropdown(verband);
   // Alltime-Reset: Verband bestimmt die Alltime-Quelle
   alltimeGeladen  = false;
@@ -4923,6 +5017,39 @@ function renderSpielDetail(g) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Pull-to-Refresh (nur auf Touch-Geräten)
+// ─────────────────────────────────────────────────────────────────────────────
+(function() {
+  const THRESHOLD = 80; // Pixel Zieh-Distanz zum Auslösen
+  let startY = 0, pulling = false;
+  const ind = document.getElementById('ptr-indicator');
+  if (!ind) return;
+
+  document.addEventListener('touchstart', e => {
+    // Nur auslösen wenn ganz oben gescrollt
+    if (window.scrollY === 0) {
+      startY  = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if (!pulling) return;
+    pulling = false;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (dy >= THRESHOLD) {
+      // Indikator kurz anzeigen, dann Daten neu laden
+      ind.classList.add('ptr-visible');
+      setTimeout(() => {
+        ind.classList.remove('ptr-visible');
+        datenGeladen = false;
+        ladeDaten();
+      }, 700);
+    }
+  });
+})();
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Init
 // ─────────────────────────────────────────────────────────────────────────────
 ladeLigen();
@@ -4974,15 +5101,10 @@ ladeLigen();
     </svg>
     <span>Alltime</span>
   </button>
-  <button class="bnav-item" id="bnav-static" onclick="zeigeTab('static')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M3 12h18"/>
-      <path d="M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/>
-    </svg>
-    <span>DE</span>
-  </button>
 </nav>
+
+<!-- Pull-to-Refresh Indikator -->
+<div id="ptr-indicator">↻ Aktualisieren</div>
 
 </body>
 </html>

@@ -111,6 +111,67 @@ Gemini gibt JSON zurück mit diesen Feldern:
 
 ---
 
+## saisonmanager.html — Liga-Statistiken & PWA
+
+### Projektstruktur (neu, ab April 2026)
+
+| Datei | Zweck |
+|---|---|
+| `saisonmanager.html` | Haupt-App: Tabelle, Scorer, Spielplan, Turnierbaum, Alltime, Team-Detail |
+| `manifest.json` | PWA-Manifest (start_url + scope: `/AnalyzerKI/`) |
+| `service-worker.js` | Cache-first für App-Shell, Network-pass für saisonmanager.de API |
+| `icons/icon-192.png`, `icon-512.png` | PWA-Icons (via Python/Pillow generiert) |
+| `data/alltime.json` | Alltime-Spieler + Teams (via `tools/alltime.py` erzeugt) |
+| `data/team_rosters.json` | Team-Kader für Alltime-DE-Tab |
+| `tools/alltime.py` | Einmaliger Batch-Job: lädt alle Ligen von der API, aggregiert, speichert |
+
+**API-Basis:** `https://saisonmanager.de/api/v2`
+**GitHub Pages Pfad:** `/AnalyzerKI/` — dieser Prefix muss in manifest + SW überall stehen.
+
+### Datenfluss & wichtige State-Variablen
+
+- `alleligen` — alle Ligen aus `leagues.json`, einmal beim Start geladen
+- `alltimeRohdaten` — Array von `{ ligaId, ligaName, saison, scorer, table }` — die Rohdaten für den aktiven Verband; wird bei Verbandswechsel geleert
+- `alltimeDaten` — aggregierte Spieler + Teams; wird aus `alltimeRohdaten` durch `aggregiereAlltime()` berechnet
+- `alltimeLigaFilter` (Set) — ausgewählte Liga-IDs; leer = alle (außer `alltimeLigaNoneMode`)
+- `alltimeGender` — `'alle'` / `'herren'` / `'damen'`
+- `vorherTab` — merkt sich den Tab vor einer Spiel-Detail-Navigation, damit Zurück-Taste stimmt
+
+### Wichtige Funktionen & Muster
+
+**Liga-Dropdown:** `befuelleLigaDropdown()` soll immer die neueste Saison vorauswählen — per `.reduce()` die höchste `season`-Zahl finden, nicht alphabetisch sortieren und nicht hardcoded.
+
+**Alltime-Filter:** `aggregiereUndRenderAlltime()` filtert `alltimeRohdaten` nach `alltimeLigaFilter` und ruft dann `renderAlltime()` auf. Jede Funktion die eigene Rosters baut (z. B. `bauldeAlltimeKaderRosters()`) muss dieselbe Filterlogik selbst anwenden:
+```js
+const quelldaten = (!alltimeLigaFilter.size && !alltimeLigaNoneMode)
+  ? alltimeRohdaten
+  : alltimeRohdaten.filter(e => alltimeLigaFilter.has(e.ligaId));
+```
+Und Gender-Filter: `istDamen(e.ligaName)` für jedes Entry prüfen.
+
+**`renderAlltime()` steuert Controls:** Diese Funktion entscheidet welche Filter-Buttons in der Control-Leiste ein- oder ausgeblendet werden. Bei neuen Views immer prüfen welche Controls sinnvoll sind und ob `style.setProperty('display', ...)` alle relevanten Elemente erfasst.
+
+**Tab-Navigation mit Rücksprung:** Pattern `vorherTab = aktiverTab` vor dem Wechsel, in `zeigSpielplan()` zurücknavigieren wenn `vorherTab !== 'spielplan'`.
+
+**serienKey (Turnierbaum):** Immer über sortierte Team-**Namen** (nicht IDs), da `team_id` in `schedule.json` häufig fehlt:
+```js
+function serienKey(s) {
+  return [s.home_team_name || '', s.guest_team_name || ''].sort().join('|||');
+}
+```
+
+**Mobile CSS:** `@media (max-width: 768px)`, Klasse `col-hide-mob` auf `<th>` + `<td>` für unwichtige Spalten, `overflow-x: auto` auf `.glass`-Wrappern.
+
+### Bekannte Fallstricke — saisonmanager.html
+
+- **SyntaxError "Unexpected end of input":** Ursache war eine Funktion mit öffnendem `{` aber ohne Body und schließendes `}`. Alle folgenden Funktionen wurden als ihr Inhalt interpretiert → am Script-Ende fehlte eine Klammer. Backtick-Balancing war korrekt (kein offenes Template Literal) — das war eine Falle.
+- **Backtick-Zähler als Debugging-Tool unzuverlässig:** Regex-Pattern wie `/'/g` innerhalb von Template Literals bringen einfache Python-Zähler durcheinander. Node.js `--check` ist die zuverlässige Methode; ohne Node.js besser auf Klammer-Ebene manuell debuggen.
+- **Filter-Isolation:** Neue Berechnungsfunktionen, die `alltimeRohdaten` direkt konsumieren, erben nicht automatisch `alltimeLigaFilter` oder `alltimeGender` — diese müssen immer explizit angewendet werden.
+- **PWA GitHub Pages:** scope und start_url müssen exakt `/AnalyzerKI/` enthalten — ein fehlender Trailing Slash oder falscher Pfad verhindert die Installation.
+- **Liga-Multiselect startet mit `display:none`:** `alltime-liga-wrap` ist im HTML initial versteckt. `renderAlltime()` muss es explizit einblenden (nicht nur den `isKader`-Zustand toggeln).
+
+---
+
 ## Bekannte Fallstricke & frühere Fehler
 
 ### Python
