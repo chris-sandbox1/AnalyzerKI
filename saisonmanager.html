@@ -22,8 +22,8 @@
       --color-a: #4ade80;
       --color-b: #fb923c;
       --bg: #0d0d18;
-      --glass-bg: rgba(255,255,255,.04);
-      --glass-border: rgba(255,255,255,.09);
+      --glass-bg: rgba(255,255,255,.07);
+      --glass-border: rgba(255,255,255,.13);
       --topbar-h: 54px;
     }
 
@@ -41,7 +41,7 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
+      overflow: clip; /* overflow:clip statt hidden – iOS WebKit rendert filter:blur sonst nicht */
     }
 
     .aurora-blob {
@@ -50,24 +50,21 @@
       pointer-events: none;
     }
     .blob-left {
-      width: 420px; height: 420px;
-      background: rgba(16,185,129,.32);
-      filter: blur(80px);
-      left: -60px; top: 10%;
+      width: 560px; height: 560px;
+      background: radial-gradient(ellipse at center, rgba(16,185,129,.38) 0%, transparent 70%);
+      left: -120px; top: 5%;
       animation: blob-drift-l 10s ease-in-out infinite alternate;
     }
     .blob-right {
-      width: 380px; height: 380px;
-      background: rgba(249,115,22,.28);
-      filter: blur(75px);
-      right: -40px; top: 5%;
+      width: 520px; height: 520px;
+      background: radial-gradient(ellipse at center, rgba(249,115,22,.32) 0%, transparent 70%);
+      right: -100px; top: 0%;
       animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
     }
     .blob-center {
-      width: 200px; height: 200px;
-      background: rgba(99,102,241,.20);
-      filter: blur(60px);
-      left: 50%; bottom: 10%;
+      width: 320px; height: 320px;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,.22) 0%, transparent 70%);
+      left: 50%; bottom: 5%;
       transform: translateX(-50%);
       animation: blob-drift-c 8s ease-in-out infinite alternate;
     }
@@ -1980,10 +1977,10 @@
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
-  <div class="corner-blob" style="width:220px;height:220px;filter:blur(70px);background:rgba(16,185,129,.16);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:200px;height:200px;filter:blur(65px);background:rgba(249,115,22,.14);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
-  <div class="corner-blob" style="width:170px;height:170px;filter:blur(60px);background:rgba(16,185,129,.11);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.11);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:280px;height:280px;background:radial-gradient(ellipse at center,rgba(16,185,129,.22) 0%,transparent 70%);top:-80px;left:-80px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:260px;height:260px;background:radial-gradient(ellipse at center,rgba(249,115,22,.18) 0%,transparent 70%);top:-70px;right:-70px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:220px;height:220px;background:radial-gradient(ellipse at center,rgba(16,185,129,.14) 0%,transparent 70%);bottom:-60px;left:-50px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:240px;height:240px;background:radial-gradient(ellipse at center,rgba(249,115,22,.14) 0%,transparent 70%);bottom:-60px;right:-50px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
@@ -2358,6 +2355,17 @@ function zeigeTab(id) {
     if (!overviewGeladen) ladeOverview();
     else renderOverview();
   }
+}
+
+// Vom Overview-Block direkt zum Spielplan wechseln und dabei Verband+Liga setzen
+function zeigVerbandSpielplan(vb) {
+  const vSel    = document.getElementById('verband-select');
+  const vSelMob = document.getElementById('verband-select-mob');
+  if (vSel)    { vSel.value = vb; }
+  if (vSelMob) { vSelMob.value = vb; }
+  befuelleLigaDropdown(vb);   // wählt automatisch beste Liga
+  zeigeTab('spielplan');
+  ladeDaten();                // Spielplan mit neuer Liga laden
 }
 
 // Sub-Tab im Alltime-Bereich umschalten
@@ -5521,7 +5529,7 @@ function renderOverview() {
     html += `<div class="ov-block">
       <div class="ov-block-header">
         <span class="ov-block-title">${esc(vb)}</span>
-        <button class="ov-alle-btn" onclick="zeigeTab('spielplan')">Alle →</button>
+        <button class="ov-alle-btn" onclick="zeigVerbandSpielplan('${esc(vb)}')">Zum Spielplan →</button>
       </div>
       <div class="ov-vb-cols">`;
 
