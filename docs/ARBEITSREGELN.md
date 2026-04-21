@@ -55,8 +55,10 @@ Gemini gibt JSON zurück mit diesen Feldern:
 - Bei Bugs: erst Ursache analysieren, dann gezielt fixen
 
 ## Git-Regeln
-- Nie ohne ausdrückliche Aufforderung pushen — nur commiten wenn explizit darum gebeten
-- Wenn gepusht werden soll, zuerst committen, dann fragen ob Push gewünscht ist
+- Nie ohne ausdrückliche Aufforderung commiten oder pushen
+- Commit + Push nur wenn explizit darum gebeten — beides zusammen ist okay wenn der Nutzer „push" sagt
+- Branch ist `saisonmanager` (nicht `main`) — immer prüfen auf welchem Branch gearbeitet wird
+- Änderungen in `saisonmanager.html` werden auf GitHub Pages erst nach dem Push sichtbar (Deployment ~1–2 Min)
 
 ---
 
@@ -120,13 +122,54 @@ Gemini gibt JSON zurück mit diesen Feldern:
 | `saisonmanager.html` | Haupt-App: Tabelle, Scorer, Spielplan, Turnierbaum, Alltime, Team-Detail |
 | `manifest.json` | PWA-Manifest (start_url + scope: `/AnalyzerKI/`) |
 | `service-worker.js` | Cache-first für App-Shell, Network-pass für saisonmanager.de API |
-| `icons/icon-192.png`, `icon-512.png` | PWA-Icons (via Python/Pillow generiert) |
+| `icons/App_Logo.png` | Quell-Logo (1254×1254 px, RGBA) — Basis für alle Icon-Größen |
+| `icons/icon-192.png`, `icon-512.png` | PWA-Icons (per Python/Pillow via LANCZOS aus App_Logo.png skaliert) |
 | `data/alltime.json` | Alltime-Spieler + Teams (via `tools/alltime.py` erzeugt) |
 | `data/team_rosters.json` | Team-Kader für Alltime-DE-Tab |
 | `tools/alltime.py` | Einmaliger Batch-Job: lädt alle Ligen von der API, aggregiert, speichert |
 
 **API-Basis:** `https://saisonmanager.de/api/v2`
 **GitHub Pages Pfad:** `/AnalyzerKI/` — dieser Prefix muss in manifest + SW überall stehen.
+**Branch:** `saisonmanager` (nicht `main`) — GitHub Pages deployed von diesem Branch.
+
+### Tab-Struktur (Stand April 2026)
+
+5 Tabs: `tabelle`, `spielplan`, `scorer`, `detail`, `alltime`
+```js
+const tabIds = ['tabelle','spielplan','scorer','detail','alltime'];
+```
+- **Alltime** enthält zwei Sub-Panels: „Verband" (Live-API) und „🇩🇪 Deutschland" (statisch aus `alltime.json`)
+- Umschalten per `setAlltimeSubTab('verband' | 'deutschland')` → zeigt/versteckt `#alltime-verband-panel` / `#alltime-deutschland-panel`
+- `tab-static` existiert nicht mehr als eigene Section — Inhalt lebt jetzt in `#alltime-deutschland-panel` innerhalb `#tab-alltime`
+- Beide Datenquellen (live + static) werden geladen sobald der Alltime-Tab das erste Mal geöffnet wird
+
+### Mobile Header (Stand April 2026)
+
+- Header ist 2-zeilig auf Mobile (`flex-wrap: wrap`):
+  - Zeile 1: Logo (`IQ`) + hd-space
+  - Zeile 2: `#mob-dropdowns` mit `#verband-select-mob` + `#liga-select-mob`
+- `#liga-bar` (Desktop-Auswahlleiste) ist auf Mobile komplett ausgeblendet (`display: none !important`)
+- Mobile-Selects werden beim Laden in `ladeLigen()` und `befuelleLigaDropdown()` synchronisiert
+- `onVerbandMob()` / `onLigaMob()` synchronisieren zurück auf die Desktop-Selects und rufen `onVerband()` / `onLiga()` auf
+- `--subbar-h: 0px` auf Mobile (statt 44px), `padding-top: 100px !important` auf `.tab-content` um den 2-zeiligen Header zu kompensieren
+
+### Logo-Muster
+
+```html
+<div class="logo-text"><span class="logo-full">Floorball</span><span class="logo-iq">IQ</span></div>
+```
+```css
+.logo-text .logo-iq { color: var(--color-a); border-bottom: 1.5px solid var(--color-a); }
+@media (max-width: 768px) { .logo-full { display: none; } }
+```
+**Wichtig:** NICHT `.logo-text span { ... }` verwenden — das trifft alle Kind-Spans (inkl. `.logo-full`) und macht dann auch „Floorball" grün. Immer eine spezifische Klasse für den farbigen Teil.
+
+### Pull-to-Refresh
+
+- Auf Mobile ersetzt eine Wisch-Geste (80 px nach unten, wenn `scrollY === 0`) den Refresh-Button
+- `#ptr-indicator` (grünes Pill, `position: fixed`) wird kurz eingeblendet, dann `datenGeladen = false; ladeDaten()`
+- Refresh-Button (`.btn-refresh`) auf Mobile via `display: none !important` ausgeblendet
+- Touch-Events mit `{ passive: true }` — kein `preventDefault()` nötig
 
 ### Datenfluss & wichtige State-Variablen
 
@@ -135,6 +178,7 @@ Gemini gibt JSON zurück mit diesen Feldern:
 - `alltimeDaten` — aggregierte Spieler + Teams; wird aus `alltimeRohdaten` durch `aggregiereAlltime()` berechnet
 - `alltimeLigaFilter` (Set) — ausgewählte Liga-IDs; leer = alle (außer `alltimeLigaNoneMode`)
 - `alltimeGender` — `'alle'` / `'herren'` / `'damen'`
+- `alltimeSubTab` — `'verband'` | `'deutschland'` — aktives Sub-Panel im Alltime-Tab
 - `vorherTab` — merkt sich den Tab vor einer Spiel-Detail-Navigation, damit Zurück-Taste stimmt
 
 ### Wichtige Funktionen & Muster
@@ -169,6 +213,11 @@ function serienKey(s) {
 - **Filter-Isolation:** Neue Berechnungsfunktionen, die `alltimeRohdaten` direkt konsumieren, erben nicht automatisch `alltimeLigaFilter` oder `alltimeGender` — diese müssen immer explizit angewendet werden.
 - **PWA GitHub Pages:** scope und start_url müssen exakt `/AnalyzerKI/` enthalten — ein fehlender Trailing Slash oder falscher Pfad verhindert die Installation.
 - **Liga-Multiselect startet mit `display:none`:** `alltime-liga-wrap` ist im HTML initial versteckt. `renderAlltime()` muss es explizit einblenden (nicht nur den `isKader`-Zustand toggeln).
+- **`overflow-x: hidden` auf `body`/`html` bricht `position: fixed` auf iOS Safari:** Aurora-Blobs, Bottom-Nav und alle anderen `fixed`-Elemente verschwinden auf iPhone wenn `overflow-x: hidden` auf dem `body` sitzt. NIEMALS `overflow-x: hidden` auf `html` oder `body` setzen. Stattdessen `overflow: hidden` nur auf Wrapper-Divs verwenden.
+- **`env(safe-area-inset-bottom)` funktioniert nicht ohne `viewport-fit=cover`:** Im Viewport-Meta-Tag muss `viewport-fit=cover` stehen, sonst ignoriert iOS die `env()`-Funktion. Gilt für alle Safe-Area-Insets (top/bottom/left/right).
+- **Logo-CSS und generische `span`-Selektoren:** `.logo-text span { color: green }` trifft ALLE Kind-Spans. Wenn mehrere Spans im Logo-Element existieren (z. B. `.logo-full` + `.logo-iq`), immer spezifische Klassen für den farbigen Teil verwenden: `.logo-text .logo-iq { ... }`.
+- **Mobile-Selects müssen manuell synchronisiert werden:** `#verband-select-mob` und `#liga-select-mob` sind Duplikate der Desktop-Selects. Bei jedem Befüllen der Desktop-Selects (in `ladeLigen()`, `befuelleLigaDropdown()`, `onVerband()`) die Mobile-Selects manuell nachziehen, sonst zeigen sie veraltete Werte.
+- **`zeigeTab()` kennt nur 5 Tab-IDs:** Nach dem Alltime-Merge ist `tabIds = ['tabelle','spielplan','scorer','detail','alltime']`. Kein `static` mehr — `zeigeTab('static')` würde `getElementById('tab-static')` aufrufen und einen Fehler werfen.
 
 ---
 
