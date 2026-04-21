@@ -1511,6 +1511,89 @@
     /* Spielername darf abgeschnitten werden */
     .sd-player-name { min-width: 0; }
 
+    /* ── TAB 0: OVERVIEW ───────────────────────────────────────────────────── */
+    @media (min-width: 769px) {
+      .ov-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; padding: 16px 20px 24px; align-items: start; }
+    }
+    @media (max-width: 768px) {
+      .ov-layout { display: block; padding: 4px 0 16px; }
+      .ov-sidebar { display: none; }
+      .ov-karte { width: calc(100vw - 60px); }
+    }
+    .ov-sidebar {
+      position: sticky;
+      top: calc(var(--topbar-h) + var(--subbar-h) + 16px);
+    }
+    .ov-block { margin-bottom: 20px; }
+    .ov-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px 4px;
+    }
+    .ov-block-title {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.35);
+    }
+    .ov-scroll-row {
+      display: flex; gap: 10px; overflow-x: auto;
+      padding: 6px 20px 12px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .ov-scroll-row::-webkit-scrollbar { display: none; }
+    .ov-karte {
+      flex-shrink: 0; width: 172px;
+      background: var(--glass-bg);
+      border: 0.5px solid var(--glass-border);
+      border-radius: 10px; padding: 11px 12px;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .ov-karte:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); }
+    .ov-karte-live { border-color: rgba(74,222,128,.35) !important; background: rgba(74,222,128,.04) !important; }
+    .ov-karte-pinned { border-color: rgba(251,146,60,.3) !important; }
+    .ov-karte-team { display: flex; align-items: center; gap: 6px; }
+    .ov-karte-logo { width: 18px; height: 18px; object-fit: contain; border-radius: 2px; flex-shrink: 0; }
+    .ov-karte-logo-ph { width: 18px; height: 18px; background: rgba(255,255,255,.07); border-radius: 2px; flex-shrink: 0; }
+    .ov-karte-name { font-size: .74rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ov-karte-score { text-align: center; padding: 3px 0; font-size: .9rem; font-weight: 900; letter-spacing: -.02em; }
+    .ov-karte-score.played { color: #f1f5f9; }
+    .ov-karte-score.future { color: rgba(255,255,255,.45); font-weight: 500; font-size: .78rem; }
+    .ov-karte-score.live { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--color-a); font-size: .88rem; }
+    .ov-karte-liga { font-size: .62rem; color: rgba(255,255,255,.22); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ov-karte-datum { font-size: .66rem; color: rgba(255,255,255,.28); text-align: center; }
+    .ov-datum-header { font-size: .74rem; font-weight: 700; color: rgba(255,255,255,.5); padding: 6px 20px 2px; }
+    .ov-leer { padding: 8px 20px 4px; color: rgba(255,255,255,.22); font-size: .8rem; }
+    .ov-settings-btn {
+      background: rgba(255,255,255,.06); border: 0.5px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.4); border-radius: 7px; padding: 4px 9px;
+      font-size: .82rem; cursor: pointer; transition: background .15s; flex-shrink: 0;
+    }
+    .ov-settings-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .ov-alle-btn {
+      background: transparent; border: none; color: rgba(74,222,128,.65);
+      font-size: .74rem; font-weight: 600; cursor: pointer; padding: 2px 0;
+    }
+    .ov-alle-btn:hover { color: var(--color-a); }
+    .ov-pinned-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--color-b); margin-bottom: -2px;
+    }
+    /* Settings Overlay + Panel */
+    #ov-settings-overlay {
+      position: fixed; inset: 0; z-index: 149;
+      background: rgba(0,0,0,.52); display: none;
+    }
+    #ov-settings-overlay.offen { display: block; }
+    #ov-settings-panel {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 150; background: #1a1a2e;
+      border: 0.5px solid rgba(255,255,255,.15); border-radius: 14px;
+      width: min(420px, calc(100vw - 32px)); max-height: 75vh;
+      overflow-y: auto; padding: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.7); display: none;
+    }
+    #ov-settings-panel.offen { display: block; }
+
     /* ═══════════════════════════════════════════════════════════════════════════
        MOBILE  (max-width: 768px)
     ═══════════════════════════════════════════════════════════════════════════ */
@@ -1857,6 +1940,7 @@
     <div class="logo-text"><span class="logo-full">Floorball</span><span class="logo-iq">IQ</span></div>
   </a>
   <nav class="tabs">
+    <button class="tab"        onclick="zeigeTab('overview')">Übersicht</button>
     <button class="tab active" onclick="zeigeTab('tabelle')">Tabelle</button>
     <button class="tab"        onclick="zeigeTab('spielplan')">Spielplan</button>
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
@@ -1888,6 +1972,13 @@
     <option>Lädt…</option>
   </select>
 </div>
+
+<!-- TAB 0: OVERVIEW -->
+<section id="tab-overview" class="tab-content">
+  <div id="content-overview">
+    <div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>
+  </div>
+</section>
 
 <!-- TAB 1: TABELLE -->
 <section id="tab-tabelle" class="tab-content active">
@@ -2095,6 +2186,11 @@ let alltimeTeamBestSort= 'punkte';  // Sort-Key für Beste-Saison-Ansicht
 // Alltime Sub-Tab: 'verband' | 'deutschland'
 let alltimeSubTab = 'verband';
 
+// Overview-State
+let overviewGeladen  = false;
+let overviewDaten    = [];   // [{liga, spiele}]
+let overviewSettings = { verbandFilter: [], meinTeam: null };
+
 // Static-Alltime-State (aus alltime.json)
 let staticDaten        = null;
 let staticGeladen      = false;
@@ -2165,7 +2261,7 @@ let staticPerGame         = false;
 function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-  const tabIds = ['tabelle','spielplan','scorer','detail','alltime'];
+  const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
   document.querySelectorAll('header .tab').forEach((b, i) => {
     b.classList.toggle('active', tabIds[i] === id);
   });
@@ -2178,14 +2274,20 @@ function zeigeTab(id) {
   // Verband + Liga je nach Tab deaktivieren
   const vSel = document.getElementById('verband-select');
   const lSel = document.getElementById('liga-select');
-  const isAlltime = id === 'alltime';
+  const isAlltime  = id === 'alltime';
+  const isOverview = id === 'overview';
   vSel.disabled = false;
-  lSel.disabled = isAlltime;
+  lSel.disabled = isAlltime || isOverview;
 
   // Beim Alltime-Tab: beide Datenquellen laden falls nötig
   if (isAlltime) {
     if (!alltimeGeladen) ladeAlltimeDaten();
     if (!staticGeladen)  ladeStaticAlltime();
+  }
+  // Beim Overview-Tab: Spielpläne laden falls nötig
+  if (isOverview) {
+    if (!overviewGeladen) ladeOverview();
+    else renderOverview();
   }
 }
 
@@ -5017,6 +5119,351 @@ function renderSpielDetail(g) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// TAB 0: OVERVIEW
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ladeOverviewSettings() {
+  try {
+    const s = localStorage.getItem('fiq-overview-settings');
+    if (s) overviewSettings = { verbandFilter: [], meinTeam: null, ...JSON.parse(s) };
+  } catch {}
+}
+
+function speichereOverviewSettings() {
+  localStorage.setItem('fiq-overview-settings', JSON.stringify(overviewSettings));
+}
+
+async function ladeOverview() {
+  if (overviewGeladen) { renderOverview(); return; }
+  const el = document.getElementById('content-overview');
+  if (!el) return;
+
+  // Warten bis alleligen durch ladeLigen() befüllt wurden
+  if (!alleligen.length) {
+    el.innerHTML = '<div class="lade-info"><div class="spinner"></div><span>Warte auf Liga-Daten…</span></div>';
+    await new Promise(resolve => {
+      const check = setInterval(() => { if (alleligen.length) { clearInterval(check); resolve(); } }, 200);
+    });
+  }
+
+  // Nur Ligen der aktuellen Saison (höchste season-Nummer)
+  const maxSeason = Math.max(...alleligen.map(l => parseInt(l.season) || 0));
+  const aktuelleligen = alleligen.filter(l => parseInt(l.season) === maxSeason);
+
+  let fertig = 0;
+  const total = aktuelleligen.length;
+  el.innerHTML = `<div class="lade-info"><div class="spinner"></div><span id="ov-progress">Lade Spielpläne 0/${total}…</span></div>`;
+
+  const promises = aktuelleligen.map(l =>
+    fetchJSON(`${API_BASE}/api/v2/leagues/${l.id}/schedule.json`)
+      .then(spiele => {
+        fertig++;
+        const prog = document.getElementById('ov-progress');
+        if (prog) prog.textContent = `Lade Spielpläne ${fertig}/${total}…`;
+        return { liga: l, spiele: Array.isArray(spiele) ? spiele : [] };
+      })
+      .catch(() => { fertig++; return null; })
+  );
+
+  overviewDaten = (await Promise.all(promises)).filter(Boolean);
+  overviewGeladen = true;
+  renderOverview();
+}
+
+// Datum YYYY-MM-DD → "Sa, 19. April"
+function formatDatumLang(dateStr) {
+  if (!dateStr) return '–';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'long' });
+}
+
+// Spiele-Array → {datum: [spiel, ...]}  (Reihenfolge bleibt erhalten)
+function gruppiereNachDatum(spiele) {
+  const g = {};
+  spiele.forEach(s => {
+    const d = s.date || '?';
+    if (!g[d]) g[d] = [];
+    g[d].push(s);
+  });
+  return g;
+}
+
+// Einzelne Spiel-Karte als HTML-String
+function ovKarte(s, gepinnt) {
+  const live = s.started && !s.ended;
+  const verg = !!s.ended;
+  const hLogo = logoUrl(s.home_team_logo_small || s.home_team_logo);
+  const gLogo = logoUrl(s.guest_team_logo_small || s.guest_team_logo);
+  const hLogoEl = hLogo
+    ? `<img src="${hLogo}" class="ov-karte-logo" onerror="this.style.display='none'" alt="">`
+    : `<div class="ov-karte-logo-ph"></div>`;
+  const gLogoEl = gLogo
+    ? `<img src="${gLogo}" class="ov-karte-logo" onerror="this.style.display='none'" alt="">`
+    : `<div class="ov-karte-logo-ph"></div>`;
+
+  let scoreHtml;
+  if (live) {
+    scoreHtml = `<div class="ov-karte-score live">
+      <span class="live-badge" style="font-size:.58rem;padding:2px 6px"><span class="live-dot" style="width:5px;height:5px"></span>LIVE</span>
+      <span>${s.result?.home_goals ?? '?'}:${s.result?.guest_goals ?? '?'}</span>
+    </div>`;
+  } else if (verg && s.result) {
+    scoreHtml = `<div class="ov-karte-score played">${s.result.home_goals}:${s.result.guest_goals}</div>`;
+  } else {
+    const uhr = verg ? '–' : (s.time || '–');
+    scoreHtml = `<div class="ov-karte-score future">${verg ? '–:–' : uhr}</div>`;
+  }
+
+  const datumStr = (verg || live) ? '' : `<div class="ov-karte-datum">${formatDatum(s.date)}</div>`;
+  const gepinntLabel = gepinnt ? `<div class="ov-pinned-label">⭐ Mein Team</div>` : '';
+  const liveCls   = live    ? ' ov-karte-live'   : '';
+  const pinnedCls = gepinnt ? ' ov-karte-pinned' : '';
+
+  return `<div class="ov-karte${liveCls}${pinnedCls}" onclick="zeigSpielDetail(${s.game_id})">
+    ${gepinntLabel}
+    <div class="ov-karte-team">${hLogoEl}<span class="ov-karte-name">${esc(s.home_team_name)}</span></div>
+    ${scoreHtml}
+    <div class="ov-karte-team">${gLogoEl}<span class="ov-karte-name">${esc(s.guest_team_name)}</span></div>
+    ${datumStr}
+    <div class="ov-karte-liga">${esc(s._liga?.name || '')}</div>
+  </div>`;
+}
+
+// Top-5-Tabelle für die Sidebar (nutzt die aktuell geladene Ligatabelle)
+function bautSidebarTabelle() {
+  if (!tabelle || !tabelle.length) return '<div class="ov-leer">Keine Tabellendaten.</div>';
+  const top5 = [...tabelle].sort((a, b) => a.position - b.position).slice(0, 5);
+  const rows = top5.map(t => {
+    const logo = logoUrl(t.team_logo_small || t.team_logo);
+    const logoEl = logo
+      ? `<img src="${logo}" style="width:15px;height:15px;object-fit:contain;border-radius:2px;margin-right:5px;vertical-align:middle" onerror="this.style.display='none'" alt="">`
+      : '';
+    const posCls = t.position === 1 ? 'pos-1' : t.position === 2 ? 'pos-2' : t.position === 3 ? 'pos-3' : '';
+    return `<tr onclick="zeigeTeamDetail(${t.team_id})" style="cursor:pointer">
+      <td style="padding:6px 4px;text-align:center"><span class="t-pos ${posCls}" style="font-size:.7rem">${t.position}</span></td>
+      <td style="padding:6px 4px;font-size:.74rem;font-weight:500">${logoEl}${esc(t.team_name)}</td>
+      <td style="padding:6px 4px;text-align:right;font-weight:800;font-size:.78rem">${t.points}</td>
+    </tr>`;
+  }).join('');
+  const ligaName = alleligen.find(l => l.id === aktiveLigaId)?.name || '';
+  return `<div style="font-size:.62rem;color:rgba(255,255,255,.28);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em">${esc(ligaName)}</div>
+    <table style="width:100%;border-collapse:collapse"><tbody>${rows}</tbody></table>
+    <button class="ov-alle-btn" style="margin-top:8px;display:block" onclick="zeigeTab('tabelle')">Vollständige Tabelle →</button>`;
+}
+
+function renderOverview() {
+  const el = document.getElementById('content-overview');
+  if (!el) return;
+  ladeOverviewSettings();
+
+  const heute   = new Date().toISOString().slice(0, 10);
+  const in14Ts  = Date.now() + 14 * 24 * 60 * 60 * 1000;
+  const in14    = new Date(in14Ts).toISOString().slice(0, 10);
+  const vor7    = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+  // Verbands-Filter anwenden
+  const versteckt = new Set(overviewSettings.verbandFilter || []);
+  const gefiltert = overviewDaten.filter(d => !versteckt.has(d.liga.game_operation));
+
+  // Alle Spiele flach, mit Liga als _liga-Property
+  const alleSpiele = gefiltert.flatMap(({liga, spiele}) =>
+    spiele.map(s => ({ ...s, _liga: liga }))
+  );
+
+  const istLive  = s => !!s.started && !s.ended;
+  const meinTeam = overviewSettings.meinTeam || null;
+
+  // ── Block 1: Live & Heute ──
+  const seenIds = new Set();
+  const block1 = [];
+
+  // Gepinnte Team-Spiele zuerst (zukünftig, noch nicht heute)
+  if (meinTeam) {
+    alleSpiele
+      .filter(s => !s.ended && s.date > heute &&
+        (s.home_team_name === meinTeam || s.guest_team_name === meinTeam))
+      .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1)
+      .slice(0, 3)
+      .forEach(s => { seenIds.add(s.game_id); block1.push({ s, gepinnt: true }); });
+  }
+  // Live + Heute (dedup)
+  alleSpiele
+    .filter(s => istLive(s) || s.date === heute)
+    .sort((a, b) => {
+      if (istLive(a) && !istLive(b)) return -1;
+      if (!istLive(a) && istLive(b)) return 1;
+      return (a.time || '') < (b.time || '') ? -1 : 1;
+    })
+    .forEach(s => {
+      if (seenIds.has(s.game_id)) return;
+      seenIds.add(s.game_id);
+      block1.push({ s, gepinnt: false });
+    });
+
+  // ── Block 2: Nächste 14 Tage ──
+  const naechste = alleSpiele
+    .filter(s => s.date > heute && s.date <= in14 && !s.ended && !istLive(s))
+    .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1);
+  const naechsteGruppen = gruppiereNachDatum(naechste);
+
+  // ── Block 3: Letzte 7 Tage ──
+  const letzte = alleSpiele
+    .filter(s => s.ended && s.date >= vor7 && s.date <= heute)
+    .sort((a, b) => (a.date || '') > (b.date || '') ? -1 : 1);
+  const letzteGruppen = gruppiereNachDatum(letzte);
+
+  // ── Block 4: Nach Verband ──
+  const verbände = [...new Set(gefiltert.map(d => d.liga.game_operation))];
+  verbände.sort((a, b) => {
+    if (a === 'Floorball Deutschland') return -1;
+    if (b === 'Floorball Deutschland') return 1;
+    return a.localeCompare(b, 'de');
+  });
+
+  // ── HTML zusammenbauen ──
+  const settingsBtn = `<button class="ov-settings-btn" onclick="toggleOverviewSettings()" title="Einstellungen">⚙</button>`;
+
+  let html = `<div class="ov-layout"><div class="ov-main">`;
+
+  // Block 1
+  html += `<div class="ov-block">
+    <div class="ov-block-header">
+      <span class="ov-block-title">🔴 Live &amp; Heute${meinTeam ? ' · ⭐ ' + esc(meinTeam) : ''}</span>
+      ${settingsBtn}
+    </div>`;
+  if (block1.length) {
+    html += `<div class="ov-scroll-row">`;
+    block1.forEach(({s, gepinnt}) => { html += ovKarte(s, gepinnt); });
+    html += `</div>`;
+  } else {
+    html += `<div class="ov-leer">Keine Spiele heute.</div>`;
+  }
+  html += `</div>`;
+
+  // Block 2
+  html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Nächste Spiele</span></div>`;
+  if (Object.keys(naechsteGruppen).length) {
+    Object.entries(naechsteGruppen).forEach(([datum, spiele]) => {
+      html += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
+      spiele.forEach(s => { html += ovKarte(s, false); });
+      html += `</div>`;
+    });
+  } else {
+    html += `<div class="ov-leer">Keine Spiele in den nächsten 14 Tagen.</div>`;
+  }
+  html += `</div>`;
+
+  // Block 3
+  html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Zuletzt gespielt</span></div>`;
+  if (Object.keys(letzteGruppen).length) {
+    Object.entries(letzteGruppen).forEach(([datum, spiele]) => {
+      html += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
+      spiele.forEach(s => { html += ovKarte(s, false); });
+      html += `</div>`;
+    });
+  } else {
+    html += `<div class="ov-leer">Keine Spiele in den letzten 7 Tagen.</div>`;
+  }
+  html += `</div>`;
+
+  // Block 4: Nach Verband
+  verbände.forEach(vb => {
+    const vbSpiele = gefiltert
+      .filter(d => d.liga.game_operation === vb)
+      .flatMap(d => d.spiele.map(s => ({ ...s, _liga: d.liga })));
+    const next5 = vbSpiele
+      .filter(s => s.date >= heute && !s.ended)
+      .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1)
+      .slice(0, 5);
+    if (!next5.length) return;
+    html += `<div class="ov-block">
+      <div class="ov-block-header">
+        <span class="ov-block-title">${esc(vb)}</span>
+        <button class="ov-alle-btn" onclick="zeigeTab('spielplan')">Alle →</button>
+      </div>
+      <div class="ov-scroll-row">${next5.map(s => ovKarte(s, false)).join('')}</div>
+    </div>`;
+  });
+
+  html += `</div>`; // ov-main
+
+  // Sidebar (nur Desktop, zeigt Top-5 der aktuell gewählten Liga)
+  html += `<div class="ov-sidebar"><div class="glass" style="padding:14px 16px">
+    <div class="ov-block-title" style="margin-bottom:10px">Tabelle</div>
+    ${bautSidebarTabelle()}
+  </div></div>`;
+
+  html += `</div>`; // ov-layout
+  el.innerHTML = html;
+}
+
+// Settings-Panel öffnen/schließen
+function toggleOverviewSettings() {
+  const panel   = document.getElementById('ov-settings-panel');
+  const overlay = document.getElementById('ov-settings-overlay');
+  if (!panel || !overlay) return;
+  const offen = panel.classList.toggle('offen');
+  overlay.classList.toggle('offen', offen);
+  if (offen) renderSettingsPanel();
+}
+
+function renderSettingsPanel() {
+  const panel = document.getElementById('ov-settings-panel');
+  if (!panel) return;
+  ladeOverviewSettings();
+
+  // Alle Verbände aus den geladenen Daten
+  const verbände = [...new Set(overviewDaten.map(d => d.liga.game_operation))].sort();
+  const vbRows = verbände.map(vb => {
+    const sichtbar = !(overviewSettings.verbandFilter || []).includes(vb);
+    return `<label class="liga-check-item">
+      <input type="checkbox" ${sichtbar ? 'checked' : ''}
+             onchange="toggleOverviewVerband('${vb.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}', this.checked)">
+      ${esc(vb)}
+    </label>`;
+  }).join('');
+
+  // Alle Teams für Mein-Team-Dropdown
+  const alleTeams = [...new Set(
+    overviewDaten.flatMap(d => d.spiele.flatMap(s => [s.home_team_name, s.guest_team_name]).filter(Boolean))
+  )].sort();
+  const meinTeam = overviewSettings.meinTeam || '';
+
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-weight:700;font-size:.88rem">⚙ Übersicht-Einstellungen</span>
+      <button class="filter-btn" onclick="toggleOverviewSettings()" style="padding:3px 10px">✕</button>
+    </div>
+    <div class="card-lbl" style="margin-bottom:8px">Verbände anzeigen</div>
+    <div style="margin-bottom:16px">${vbRows || '<div class="ov-leer">Keine Daten geladen.</div>'}</div>
+    <div class="card-lbl" style="margin-bottom:8px">Mein Team (immer in Block 1)</div>
+    <select class="liga-select" style="width:100%" onchange="setMeinTeam(this.value)">
+      <option value="">– kein Team gepinnt –</option>
+      ${alleTeams.map(t => `<option value="${esc(t)}" ${t === meinTeam ? 'selected' : ''}>${esc(t)}</option>`).join('')}
+    </select>
+    <div style="font-size:.68rem;color:rgba(255,255,255,.3);margin-top:6px">
+      Nächste Spiele dieses Teams erscheinen immer oben — auch wenn nicht heute.
+    </div>`;
+}
+
+function toggleOverviewVerband(vb, sichtbar) {
+  if (!overviewSettings.verbandFilter) overviewSettings.verbandFilter = [];
+  if (sichtbar) {
+    overviewSettings.verbandFilter = overviewSettings.verbandFilter.filter(v => v !== vb);
+  } else {
+    if (!overviewSettings.verbandFilter.includes(vb)) overviewSettings.verbandFilter.push(vb);
+  }
+  speichereOverviewSettings();
+  if (overviewGeladen) renderOverview();
+}
+
+function setMeinTeam(team) {
+  overviewSettings.meinTeam = team || null;
+  speichereOverviewSettings();
+  if (overviewGeladen) renderOverview();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Pull-to-Refresh (nur auf Touch-Geräten)
 // ─────────────────────────────────────────────────────────────────────────────
 (function() {
@@ -5068,6 +5515,13 @@ ladeLigen();
 
 <!-- Bottom Navigation Bar (nur Mobile) -->
 <nav id="bottom-nav">
+  <button class="bnav-item" id="bnav-overview" onclick="zeigeTab('overview')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span>Home</span>
+  </button>
   <button class="bnav-item active" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
@@ -5102,6 +5556,10 @@ ladeLigen();
     <span>Alltime</span>
   </button>
 </nav>
+
+<!-- Overview: Einstellungs-Panel -->
+<div id="ov-settings-overlay" onclick="toggleOverviewSettings()"></div>
+<div id="ov-settings-panel"></div>
 
 <!-- Pull-to-Refresh Indikator -->
 <div id="ptr-indicator">↻ Aktualisieren</div>
