@@ -134,24 +134,40 @@ Gemini gibt JSON zurück mit diesen Feldern:
 
 ### Tab-Struktur (Stand April 2026)
 
-5 Tabs: `tabelle`, `spielplan`, `scorer`, `detail`, `alltime`
+6 Tabs: `overview`, `tabelle`, `spielplan`, `scorer`, `detail`, `alltime`
 ```js
-const tabIds = ['tabelle','spielplan','scorer','detail','alltime'];
+const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
 ```
+- **Overview** ist erster Tab (Desktop) / Home-Icon Bottom-Nav (Mobile) — lädt alle Ligen der aktuellen Saison parallel
 - **Alltime** enthält zwei Sub-Panels: „Verband" (Live-API) und „🇩🇪 Deutschland" (statisch aus `alltime.json`)
 - Umschalten per `setAlltimeSubTab('verband' | 'deutschland')` → zeigt/versteckt `#alltime-verband-panel` / `#alltime-deutschland-panel`
 - `tab-static` existiert nicht mehr als eigene Section — Inhalt lebt jetzt in `#alltime-deutschland-panel` innerhalb `#tab-alltime`
 - Beide Datenquellen (live + static) werden geladen sobald der Alltime-Tab das erste Mal geöffnet wird
 
+### Overview-Tab (Stand April 2026)
+
+- **Block 1**: Live & Heute — horizontale Scroll-Reihe, `Mein Team` gepinnt oben
+- **Block 2 + 3 nebeneinander** (Desktop: CSS Grid `ov-b2b3-grid 1fr 1fr`, Mobile: gestackt)
+  - Block 2: Nächste Spiele — 5 Karten Preview, expandierbar zu allen zukünftigen Spielen (gruppiert nach Datum)
+  - Block 3: Zuletzt gespielt — 5 Karten Preview, expandierbar zu allen vergangenen Spielen (neueste zuerst)
+- **Block 4**: Pro Verband 2 Spalten (`ov-vb-cols`): links „Nächste Spiele" (max 5), rechts „Letzte Spiele" (max 5)
+- **Mehr anzeigen-Logik**: `ovToggleMehr(previewId, fullId)` — reine show/hide, keine API-Calls. Preview und Full als separate Divs im HTML; Button wechselt zwischen beiden.
+- **Settings**: Zahnrad-Button im Block-1-Header → `toggleOverviewSettings()` → `renderSettingsPanel()`
+- **Sidebar** (nur Desktop): Top-5-Tabelle der aktuell gewählten Liga (`bautSidebarTabelle()`)
+- **State**: `overviewGeladen`, `overviewDaten: [{liga, spiele}]`, `overviewSettings` (localStorage `fiq-overview-settings`)
+- `ladeOverview()` wartet per Polling (200ms Intervall) auf `alleligen.length > 0` bevor sie startet
+- Aktuelle Saison = höchste `season`-Nummer über alle Ligen
+
 ### Mobile Header (Stand April 2026)
 
-- Header ist 2-zeilig auf Mobile (`flex-wrap: wrap`):
-  - Zeile 1: Logo (`IQ`) + hd-space
-  - Zeile 2: `#mob-dropdowns` mit `#verband-select-mob` + `#liga-select-mob`
+- Header ist einzeilig auf Mobile (`flex-wrap: nowrap`):
+  - Links: Logo (`IQ`)
+  - Rechts: `#mob-dropdowns` mit `#verband-select-mob` + `#liga-select-mob` **vertikal gestapelt** (`flex-direction: column`)
 - `#liga-bar` (Desktop-Auswahlleiste) ist auf Mobile komplett ausgeblendet (`display: none !important`)
+- Safe Area: `padding-top: calc(env(safe-area-inset-top) + 8px)` im Header → schiebt Inhalt unter iOS-Statusleiste
+- `--mob-header-content: 68px` CSS-Variable; Header hat `min-height: calc(env(safe-area-inset-top) + 68px)` und `.tab-content` hat exakt dasselbe `padding-top` → kein Gap
 - Mobile-Selects werden beim Laden in `ladeLigen()` und `befuelleLigaDropdown()` synchronisiert
 - `onVerbandMob()` / `onLigaMob()` synchronisieren zurück auf die Desktop-Selects und rufen `onVerband()` / `onLiga()` auf
-- `--subbar-h: 0px` auf Mobile (statt 44px), `padding-top: 100px !important` auf `.tab-content` um den 2-zeiligen Header zu kompensieren
 
 ### Logo-Muster
 
@@ -217,7 +233,10 @@ function serienKey(s) {
 - **`env(safe-area-inset-bottom)` funktioniert nicht ohne `viewport-fit=cover`:** Im Viewport-Meta-Tag muss `viewport-fit=cover` stehen, sonst ignoriert iOS die `env()`-Funktion. Gilt für alle Safe-Area-Insets (top/bottom/left/right).
 - **Logo-CSS und generische `span`-Selektoren:** `.logo-text span { color: green }` trifft ALLE Kind-Spans. Wenn mehrere Spans im Logo-Element existieren (z. B. `.logo-full` + `.logo-iq`), immer spezifische Klassen für den farbigen Teil verwenden: `.logo-text .logo-iq { ... }`.
 - **Mobile-Selects müssen manuell synchronisiert werden:** `#verband-select-mob` und `#liga-select-mob` sind Duplikate der Desktop-Selects. Bei jedem Befüllen der Desktop-Selects (in `ladeLigen()`, `befuelleLigaDropdown()`, `onVerband()`) die Mobile-Selects manuell nachziehen, sonst zeigen sie veraltete Werte.
-- **`zeigeTab()` kennt nur 5 Tab-IDs:** Nach dem Alltime-Merge ist `tabIds = ['tabelle','spielplan','scorer','detail','alltime']`. Kein `static` mehr — `zeigeTab('static')` würde `getElementById('tab-static')` aufrufen und einen Fehler werfen.
+- **`zeigeTab()` kennt 6 Tab-IDs:** `tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime']`. Kein `static` mehr — `zeigeTab('static')` würde `getElementById('tab-static')` aufrufen und einen Fehler werfen.
+- **`ovToggleMehr()` erwartet IDs im DOM:** Die Funktion greift auf `getElementById()` zu — die IDs (`ov-b2-preview`, `ov-b3-preview`, `vb0-np` etc.) existieren nur nach `renderOverview()`. Nie `ovToggleMehr()` vor dem ersten Render aufrufen.
+- **Block-4-Verband-IDs sind Index-basiert:** `vb0`, `vb1` etc. (Index in der `verbände`-Array). Die Reihenfolge ist deterministisch (Floorball Deutschland zuerst, dann alphabetisch). Aber die IDs ändern sich wenn Verbände hinzukommen/wegfallen — kein Problem da sie bei jedem `renderOverview()` neu generiert werden.
+- **`gruppiereNachDatum()` nutzt Objekt-Einfüge-Reihenfolge:** Modernes JS/V8 preserviert die Einfüge-Reihenfolge von String-Schlüsseln in Objekten. Wenn das Input-Array nach Datum aufsteigend sortiert ist, ist auch das Output-Objekt aufsteigend. Für Block 3 (neueste zuerst) Input bereits absteigend sortieren.
 
 ---
 
