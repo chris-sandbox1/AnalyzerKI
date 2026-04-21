@@ -1602,14 +1602,19 @@
       /* ── Subbar-Höhe auf 0 (Liga-Bar auf Mobile versteckt) ── */
       :root { --subbar-h: 0px; }
 
-      /* ── Header: einzeilig, Safe-Area-bewusst ── */
+      /* ── Header: einzeilig, Safe-Area-bewusst ──
+         --mob-header-content: Höhe des sichtbaren Header-Inhalts (exkl. safe-area).
+         min-height + padding-top auf .tab-content nutzen denselben Wert → kein Gap. ── */
+      :root { --mob-header-content: 68px; }
       header {
-        height: auto;
         flex-wrap: nowrap;
         gap: 10px;
         /* Safe Area oben: schiebt Header unter iOS-Statusleiste */
         padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px 8px;
         align-items: center;
+        /* Fixe Mindesthöhe = safe-area + content → kein Gap zur Tab-Content */
+        min-height: calc(env(safe-area-inset-top, 0px) + var(--mob-header-content));
+        height: auto;
       }
       /* „Floorball" ausblenden – nur „IQ" bleibt sichtbar */
       .logo-full { display: none; }
@@ -1630,8 +1635,8 @@
         font-size: .74rem;
         padding: 4px 8px;
       }
-      /* Tab-Inhalt: Safe Area oben + Header-Höhe (~80px) */
-      .tab-content { padding-top: calc(env(safe-area-inset-top, 0px) + 86px) !important; }
+      /* Tab-Inhalt: exakt Header-Höhe als Abstand oben → nahtlos unter dem Header */
+      .tab-content { padding-top: calc(env(safe-area-inset-top, 0px) + var(--mob-header-content)) !important; }
       /* Liga-Bar komplett ausblenden (Dropdowns sind jetzt im Header) */
       #liga-bar { display: none !important; }
       .logo-text { font-size: 14px; }
