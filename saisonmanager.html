@@ -1602,35 +1602,39 @@
       /* ── Subbar-Höhe auf 0 (Liga-Bar auf Mobile versteckt) ── */
       :root { --subbar-h: 0px; }
 
-      /* ── Header: 2-zeilig (Logo + Dropdowns) ── */
+      /* ── Header: einzeilig, Safe-Area-bewusst ── */
       header {
         height: auto;
-        flex-wrap: wrap;
-        gap: 6px;
-        padding: 8px 10px 6px;
+        flex-wrap: nowrap;
+        gap: 10px;
+        /* Safe Area oben: schiebt Header unter iOS-Statusleiste */
+        padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px 8px;
         align-items: center;
       }
       /* „Floorball" ausblenden – nur „IQ" bleibt sichtbar */
       .logo-full { display: none; }
       /* Refresh-Button ausblenden – Pull-to-Refresh übernimmt */
       .btn-refresh { display: none !important; }
-      /* Mobile-Dropdowns einblenden (2. Zeile im Header) */
+      /* hd-space ausblenden – nicht nötig wenn Dropdowns rechts sind */
+      .hd-space { display: none !important; }
+      /* Mobile-Dropdowns: rechts vom Logo, vertikal gestapelt */
       #mob-dropdowns {
         display: flex;
-        flex: 0 0 100%;
-        width: 100%;
-        gap: 6px;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+        min-width: 0;
       }
       #mob-dropdowns .liga-select {
-        flex: 1;
-        font-size: .76rem;
-        padding: 5px 8px;
+        width: 100%;
+        font-size: .74rem;
+        padding: 4px 8px;
       }
-      /* Tab-Inhalt: Platz für 2-zeiligen Header (~54px Logo-Zeile + ~38px Dropdown-Zeile) */
-      .tab-content { padding-top: 100px !important; }
+      /* Tab-Inhalt: Safe Area oben + Header-Höhe (~80px) */
+      .tab-content { padding-top: calc(env(safe-area-inset-top, 0px) + 86px) !important; }
       /* Liga-Bar komplett ausblenden (Dropdowns sind jetzt im Header) */
       #liga-bar { display: none !important; }
-      .logo-text { font-size: 13px; }
+      .logo-text { font-size: 14px; }
       .btn-topbar { font-size: .68rem; padding: 5px 8px; }
 
       /* ── Inhalts-Padding reduzieren ── */
@@ -1901,7 +1905,7 @@
         position: fixed;
         bottom: 0; left: 0; right: 0;
         height: auto;
-        min-height: 54px;
+        min-height: 64px;
         background: rgba(8,8,16,.96);
         border-top: 0.5px solid rgba(255,255,255,.09);
         z-index: 100;
@@ -1909,9 +1913,14 @@
         backdrop-filter: blur(14px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
       }
+      .bnav-item {
+        padding: 8px 0 6px;
+        font-size: 10px;
+      }
+      .bnav-item svg { width: 23px; height: 23px; }
 
       /* Genug Abstand damit Inhalt nicht unter der Bar verschwindet (inkl. iPhone Home-Indicator) */
-      .tab-content { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+      .tab-content { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
     }
   </style>
 </head>
