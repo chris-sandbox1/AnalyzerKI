@@ -1697,8 +1697,11 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      /* ── Spalten verstecken ── */
+      /* ── Spalten verstecken (Scorer, Alltime) ── */
       .col-hide-mob { display: none !important; }
+      /* ── Tabelle: alle Spalten sichtbar, horizontales Scrollen ── */
+      /* Überschreibt col-hide-mob speziell für die Ligatabelle */
+      .tabelle-table .col-hide-mob { display: table-cell !important; }
 
       /* ── Ligatabelle kompakter ── */
       .tabelle-table th,
@@ -1992,8 +1995,8 @@
     <div class="logo-text"><span class="logo-full">Floorball</span><span class="logo-iq">IQ</span></div>
   </a>
   <nav class="tabs">
-    <button class="tab"        onclick="zeigeTab('overview')">Übersicht</button>
-    <button class="tab active" onclick="zeigeTab('tabelle')">Tabelle</button>
+    <button class="tab active"  onclick="zeigeTab('overview')">Übersicht</button>
+    <button class="tab"         onclick="zeigeTab('tabelle')">Tabelle</button>
     <button class="tab"        onclick="zeigeTab('spielplan')">Spielplan</button>
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
@@ -2026,14 +2029,14 @@
 </div>
 
 <!-- TAB 0: OVERVIEW -->
-<section id="tab-overview" class="tab-content">
+<section id="tab-overview" class="tab-content active">
   <div id="content-overview">
     <div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>
   </div>
 </section>
 
 <!-- TAB 1: TABELLE -->
-<section id="tab-tabelle" class="tab-content active">
+<section id="tab-tabelle" class="tab-content">
   <div id="content-tabelle">
     <div class="lade-info"><div class="spinner"></div><span>Tabelle lädt…</span></div>
   </div>
@@ -2209,7 +2212,7 @@ let tabelle   = [];
 let spielplan = [];
 let scorer    = [];
 let ligaMeta  = null;   // leagues/{id}.json → league_type, has_preround, game_day_titles
-let aktiverTab   = 'tabelle';
+let aktiverTab   = 'overview';
 let vorherTab    = null;   // Tab vor Spiel-Detail-Öffnung (für Zurück-Navigation)
 let spielfilter  = 'alle';
 let scorerSort   = 'punkte';
@@ -2310,6 +2313,27 @@ let staticPerGame         = false;
 // ─────────────────────────────────────────────────────────────────────────────
 // Tab-Navigation
 // ─────────────────────────────────────────────────────────────────────────────
+// Dropdown-Status (enabled/disabled) je nach aktivem Tab und Alltime-Sub-Tab
+function aktualisiereDropdownStatus() {
+  const vSel    = document.getElementById('verband-select');
+  const lSel    = document.getElementById('liga-select');
+  const vSelMob = document.getElementById('verband-select-mob');
+  const lSelMob = document.getElementById('liga-select-mob');
+  // Overview: beide aus (keine Liga-spezifische Ansicht)
+  // Alltime/Deutschland: beide aus (statische Daten, kein Verband/Liga nötig)
+  // Alltime/Verband: Verband an, Liga aus
+  // alle anderen Tabs: beide an
+  const isOverview  = aktiverTab === 'overview';
+  const isAlltimeDe = aktiverTab === 'alltime' && alltimeSubTab === 'deutschland';
+  const isAlltimeVb = aktiverTab === 'alltime' && alltimeSubTab === 'verband';
+  const vDis = isOverview || isAlltimeDe;
+  const lDis = isOverview || isAlltimeDe || isAlltimeVb;
+  if (vSel)    vSel.disabled    = vDis;
+  if (lSel)    lSel.disabled    = lDis;
+  if (vSelMob) vSelMob.disabled = vDis;
+  if (lSelMob) lSelMob.disabled = lDis;
+}
+
 function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
@@ -2322,22 +2346,15 @@ function zeigeTab(id) {
     b.classList.toggle('active', tabIds[i] === id);
   });
   document.getElementById('tab-' + id)?.classList.add('active');
-
-  // Verband + Liga je nach Tab deaktivieren
-  const vSel = document.getElementById('verband-select');
-  const lSel = document.getElementById('liga-select');
-  const isAlltime  = id === 'alltime';
-  const isOverview = id === 'overview';
-  vSel.disabled = false;
-  lSel.disabled = isAlltime || isOverview;
+  aktualisiereDropdownStatus();
 
   // Beim Alltime-Tab: beide Datenquellen laden falls nötig
-  if (isAlltime) {
+  if (id === 'alltime') {
     if (!alltimeGeladen) ladeAlltimeDaten();
     if (!staticGeladen)  ladeStaticAlltime();
   }
   // Beim Overview-Tab: Spielpläne laden falls nötig
-  if (isOverview) {
+  if (id === 'overview') {
     if (!overviewGeladen) ladeOverview();
     else renderOverview();
   }
@@ -2350,6 +2367,7 @@ function setAlltimeSubTab(sub) {
   document.getElementById('alltime-deutschland-panel').style.display = sub === 'deutschland' ? '' : 'none';
   document.getElementById('alltime-sub-verband').classList.toggle('active', sub === 'verband');
   document.getElementById('alltime-sub-deutschland').classList.toggle('active', sub === 'deutschland');
+  aktualisiereDropdownStatus();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2393,22 +2411,49 @@ async function ladeLigen() {
 
 // Liga-Dropdown für gewählten Verband neu befüllen
 function befuelleLigaDropdown(verband) {
-  const ligen = alleligen
-    .filter(l => l.game_operation === verband)
+  const alle = alleligen.filter(l => l.game_operation === verband);
+  const maxSeason = Math.max(...alle.map(l => parseInt(l.season) || 0));
+
+  // Aktuelle Saison (höchste season-Nummer)
+  const aktuelle = alle
+    .filter(l => parseInt(l.season) === maxSeason)
     .sort((a, b) => a.name.localeCompare(b.name, 'de'));
-  const lSel = document.getElementById('liga-select');
-  lSel.innerHTML = ligen.map(l => {
+
+  // Ältere Saisons als Archiv (neueste zuerst, dann alphabetisch)
+  const archiv = alle
+    .filter(l => parseInt(l.season) < maxSeason)
+    .sort((a, b) => {
+      const sd = (parseInt(b.season) || 0) - (parseInt(a.season) || 0);
+      return sd !== 0 ? sd : a.name.localeCompare(b.name, 'de');
+    });
+
+  const toOption = l => {
     const jahr = l.season ? ` (${saisonJahr(l.season)})` : '';
     return `<option value="${l.id}">${l.name}${jahr}</option>`;
-  }).join('');
+  };
 
-  // Aktuellste Liga vorauswählen: höchste season-Nummer gewinnt
-  if (ligen.length) {
-    const neueste = ligen.reduce((best, l) =>
-      (parseInt(l.season) || 0) > (parseInt(best.season) || 0) ? l : best
-    , ligen[0]);
-    aktiveLigaId = neueste.id;
-    lSel.value   = String(neueste.id);
+  const lSel = document.getElementById('liga-select');
+  let optHTML = '';
+  if (aktuelle.length) optHTML += `<optgroup label="Aktuelle Saison">${aktuelle.map(toOption).join('')}</optgroup>`;
+  if (archiv.length)   optHTML += `<optgroup label="Archiv">${archiv.map(toOption).join('')}</optgroup>`;
+  lSel.innerHTML = optHTML || alle.map(toOption).join('');
+
+  // Vorauswahl: höchste Saison, bevorzuge Herren/nicht-Damen und "1." im Namen
+  if (aktuelle.length) {
+    const bevorzugt = [...aktuelle].sort((a, b) => {
+      const score = l => {
+        let s = 0;
+        if (!l.name.toLowerCase().includes('damen')) s += 2;
+        if (/^1\./.test(l.name)) s += 1;
+        return s;
+      };
+      return score(b) - score(a);
+    });
+    aktiveLigaId = bevorzugt[0].id;
+    lSel.value   = String(bevorzugt[0].id);
+  } else if (alle.length) {
+    aktiveLigaId = alle[0].id;
+    lSel.value   = String(alle[0].id);
   }
 
   // Mobile-Select synchronisieren
@@ -5657,7 +5702,10 @@ function setMeinTeam(team) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Init
 // ─────────────────────────────────────────────────────────────────────────────
-ladeLigen();
+ladeOverviewSettings();
+aktualisiereDropdownStatus(); // Dropdowns direkt korrekt grau/aktiv setzen
+ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden
+ladeOverview();               // Overview parallel starten (wartet intern per Polling auf alleligen)
 </script>
 
 <!-- Service Worker registrieren -->
