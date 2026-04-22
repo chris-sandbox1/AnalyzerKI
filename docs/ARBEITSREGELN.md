@@ -271,6 +271,58 @@ function serienKey(s) {
 
 ---
 
+## Git-Stand & offene Aufgaben (Stand April 2026)
+
+### Aktueller Stand
+- **Aktiver Branch:** `saisonmanager`
+- **Letzter stabiler Commit:** `4d51da3` — fix: Mobile Header-Gap via `--mob-header-content`
+  - Aktuell deployed als Revert-Commit `530731f`
+- **Bekannter Broken-Commit:** `92c1e6a` — feat: Overview-Tab komplett überarbeitet
+  - Dieser Commit hat einen visuellen Fehler in der App-Ansicht verursacht (genaue Ursache noch unbekannt)
+  - Alle Commits ab `92c1e6a` wurden deshalb rückgängig gemacht
+  - **Vor einer Neu-Implementierung des Overview-Tabs:** Diff zwischen `4d51da3` und `92c1e6a` gründlich prüfen (`git diff 4d51da3 92c1e6a -- saisonmanager.html`)
+
+### Offene Bugs (wurden implementiert, dann revertiert — müssen neu angegangen werden)
+
+**Bug 1 — Bottom-Nav zeigt Tabelle als aktiv beim Start:**
+- `#bnav-tabelle` hatte `class="bnav-item active"` hardcodiert → auf `#bnav-overview` verschieben
+- Init-Code muss `zeigeTab('overview')` aufrufen (synchronisiert alles in einem Schritt)
+
+**Bug 2 — App hängt nach Klick auf Spiel oder Team:**
+- `#ov-settings-overlay` (z-index:149) blockiert Bottom-Nav (z-index:100) wenn versehentlich offen
+- Fix: Bottom-Nav z-index auf 200 erhöhen
+- Zusätzlich: `try/catch` in `zeigSpielDetail()` und `zeigeTeamDetail()` — ungefangene Fehler brechen die Event-Handler-Chain ab
+
+**Bug 3 — Aurora-Blobs in PWA unsichtbar:**
+- iOS WebKit: `filter: blur()` in `position: fixed; overflow: hidden` Containern → Blobs werden weiß/unsichtbar
+- Fix 1: `#bg-layer` auf `overflow: clip` statt `overflow: hidden` (kein neues BFC, triggert iOS-Bug nicht)
+- Fix 2: `filter: blur(Xpx)` ersetzen durch `radial-gradient(ellipse at center, rgba(...) 0%, transparent 70%)`
+- Fix 3: `#bg-layer` von `inset: 0` → `top:0; left:0; width:100%; height:100%` (iOS 14 Kompatibilität)
+- Fix 4: `@media (display-mode: standalone)` Override für Aurora/Corner-Blobs
+- Farben: grün (`rgba(74,222,128,...)`) oben-links + unten-rechts; orange (`rgba(251,146,60,...)`) oben-rechts + unten-links
+- Corner-Blob-Größe: 400–460px, opacity ~0.13–0.15
+
+**Problem 1 — Service Worker Pfad 404:**
+- SW-Registrierung von absolutem `/AnalyzerKI/service-worker.js` → relativ `service-worker.js` mit `scope: './'`
+
+**Problem 2 — Logo-URLs in renderSpielDetail falsch:**
+- `g.home_team_logo` und `g.guest_team_logo` direkt in `<img src="">` — fehlende `logoUrl()`-Wrapper
+- Fix: `src="${logoUrl(g.home_team_logo) || ''}"` und `src="${logoUrl(g.guest_team_logo) || ''}"`
+
+**Problem 3 — Alltime lädt bis zu 500 Requests gleichzeitig:**
+- `getAktivVerbandSaisons()` gibt alle historischen Ligen zurück (200-300+)
+- Fix: Parameter `nurAktuell=false` hinzufügen; bei `true` nur Ligen mit der höchsten `season`-Nummer zurückgeben
+- `ladeAlltimeDaten()` startet mit `alltimeNurAktuell=true` (State-Variable)
+- Nach Laden: Banner anzeigen „X weitere Saisons im Archiv. [Alle Saisons laden]"
+- `ladeAlleAlltimeSaisons()`: setzt `alltimeNurAktuell=false`, resettet `alltimeGeladen`, ruft `ladeAlltimeDaten()` neu auf
+- `onVerband()`: `alltimeNurAktuell = true` zurücksetzen bei Verbandswechsel
+
+**Problem 4 — HTTP-500 Konsolen-Rauschen:**
+- `console.warn(...)` für fehlgeschlagene Alltime-Requests entfernen
+- `.catch(() => [])` reicht — 500er von inaktiven Ligen sind erwartet, kein Logging nötig
+
+---
+
 ## Bekannte Fallstricke & frühere Fehler
 
 ### Python
