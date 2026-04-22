@@ -22,8 +22,8 @@
       --color-a: #4ade80;
       --color-b: #fb923c;
       --bg: #0d0d18;
-      --glass-bg: rgba(255,255,255,.07);
-      --glass-border: rgba(255,255,255,.13);
+      --glass-bg: rgba(255,255,255,.04);
+      --glass-border: rgba(255,255,255,.09);
       --topbar-h: 54px;
     }
 
@@ -38,16 +38,10 @@
     /* ── Hintergrund-Ebene ──────────────────────────────────────────────────── */
     #bg-layer {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%; /* explizit statt inset:0 – besser auf iOS 14 */
+      inset: 0;
       z-index: 0;
       pointer-events: none;
-      overflow: clip; /* overflow:clip statt hidden – iOS WebKit rendert filter:blur sonst nicht */
-    }
-
-    /* PWA Standalone: sicherstellen dass Blobs gerendert werden */
-    @media (display-mode: standalone) {
-      #bg-layer { opacity: 1; }
-      .aurora-blob, .corner-blob { display: block; }
+      overflow: hidden;
     }
 
     .aurora-blob {
@@ -56,21 +50,24 @@
       pointer-events: none;
     }
     .blob-left {
-      width: 580px; height: 580px;
-      background: radial-gradient(ellipse at center, rgba(74,222,128,.35) 0%, transparent 70%);
-      left: -140px; top: 5%;
+      width: 420px; height: 420px;
+      background: rgba(16,185,129,.32);
+      filter: blur(80px);
+      left: -60px; top: 10%;
       animation: blob-drift-l 10s ease-in-out infinite alternate;
     }
     .blob-right {
-      width: 540px; height: 540px;
-      background: radial-gradient(ellipse at center, rgba(251,146,60,.30) 0%, transparent 70%);
-      right: -120px; top: 0%;
+      width: 380px; height: 380px;
+      background: rgba(249,115,22,.28);
+      filter: blur(75px);
+      right: -40px; top: 5%;
       animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
     }
     .blob-center {
-      width: 340px; height: 340px;
-      background: radial-gradient(ellipse at center, rgba(99,102,241,.20) 0%, transparent 70%);
-      left: 50%; bottom: 5%;
+      width: 200px; height: 200px;
+      background: rgba(99,102,241,.20);
+      filter: blur(60px);
+      left: 50%; bottom: 10%;
       transform: translateX(-50%);
       animation: blob-drift-c 8s ease-in-out infinite alternate;
     }
@@ -1957,7 +1954,7 @@
         min-height: 64px;
         background: rgba(8,8,16,.96);
         border-top: 0.5px solid rgba(255,255,255,.09);
-        z-index: 200; /* 200 > settings-overlay (149) und ptr-indicator (200) → immer oben */
+        z-index: 100;
         align-items: stretch;
         backdrop-filter: blur(14px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -1983,11 +1980,10 @@
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
-  <!-- Corner-Blobs: grün oben-links + unten-rechts, orange oben-rechts + unten-links -->
-  <div class="corner-blob" style="width:460px;height:460px;background:radial-gradient(ellipse at center,rgba(74,222,128,.15) 0%,transparent 65%);top:-160px;left:-160px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:440px;height:440px;background:radial-gradient(ellipse at center,rgba(251,146,60,.15) 0%,transparent 65%);top:-150px;right:-150px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
-  <div class="corner-blob" style="width:400px;height:400px;background:radial-gradient(ellipse at center,rgba(251,146,60,.13) 0%,transparent 65%);bottom:-140px;left:-140px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:420px;height:420px;background:radial-gradient(ellipse at center,rgba(74,222,128,.13) 0%,transparent 65%);bottom:-150px;right:-150px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:220px;height:220px;filter:blur(70px);background:rgba(16,185,129,.16);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:200px;height:200px;filter:blur(65px);background:rgba(249,115,22,.14);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:170px;height:170px;filter:blur(60px);background:rgba(16,185,129,.11);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.11);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
@@ -2245,9 +2241,6 @@ let alltimeTeamBestSort= 'punkte';  // Sort-Key für Beste-Saison-Ansicht
 // Alltime Sub-Tab: 'verband' | 'deutschland'
 let alltimeSubTab = 'verband';
 
-// Alltime Lade-Modus: zunächst nur aktuelle Saison, dann auf Wunsch alle
-let alltimeNurAktuell = true;
-
 // Overview-State
 let overviewGeladen  = false;
 let overviewDaten    = [];   // [{liga, spiele}]
@@ -2365,17 +2358,6 @@ function zeigeTab(id) {
     if (!overviewGeladen) ladeOverview();
     else renderOverview();
   }
-}
-
-// Vom Overview-Block direkt zum Spielplan wechseln und dabei Verband+Liga setzen
-function zeigVerbandSpielplan(vb) {
-  const vSel    = document.getElementById('verband-select');
-  const vSelMob = document.getElementById('verband-select-mob');
-  if (vSel)    { vSel.value = vb; }
-  if (vSelMob) { vSelMob.value = vb; }
-  befuelleLigaDropdown(vb);   // wählt automatisch beste Liga
-  zeigeTab('spielplan');
-  ladeDaten();                // Spielplan mit neuer Liga laden
 }
 
 // Sub-Tab im Alltime-Bereich umschalten
@@ -2504,10 +2486,9 @@ function onVerband() {
   if (vSelMob) vSelMob.value = verband;
   befuelleLigaDropdown(verband);
   // Alltime-Reset: Verband bestimmt die Alltime-Quelle
-  alltimeGeladen    = false;
-  alltimeDaten      = null;
+  alltimeGeladen  = false;
+  alltimeDaten    = null;
   alltimeRohdaten   = null;
-  alltimeNurAktuell = true;
   alltimeLigaFilter.clear();
   alltimeLigaNoneMode = false;
   alltimeKaderTeams.clear();
@@ -3221,11 +3202,7 @@ function zeigeTeamDetail(teamId) {
   if (!sel) return;
   sel.value = String(teamId);
   zeigeTab('detail');
-  try { renderDetail(); } catch(e) {
-    console.error('renderDetail Fehler:', e);
-    const el = document.getElementById('content-detail');
-    if (el) el.innerHTML = `<div class="error-box">Fehler beim Laden der Teamdaten: ${e.message}</div>`;
-  }
+  renderDetail();
 }
 
 function renderDetail() {
@@ -3444,26 +3421,21 @@ function istDamen(ligaName) {
 }
 
 // Alle Saisons aller Ligen des aktiven Verbands — dedupliziert nach id
-// nurAktuell=true → nur Ligen der höchsten season-Nummer zurückgeben
-function getAktivVerbandSaisons(nurAktuell = false) {
+function getAktivVerbandSaisons() {
   const verband = document.getElementById('verband-select')?.value || '';
   if (!verband) return [];
   const seen = new Set();
-  const alle = alleligen.filter(l => {
+  return alleligen.filter(l => {
     if (l.game_operation !== verband || seen.has(l.id)) return false;
     seen.add(l.id);
     return true;
   });
-  if (!nurAktuell) return alle;
-  // Höchste season-ID ermitteln und nur diese zurückgeben
-  const maxSeason = Math.max(...alle.map(l => Number(l.season) || 0));
-  return alle.filter(l => (Number(l.season) || 0) === maxSeason);
 }
 
-// Alltime-Daten laden — standardmäßig nur aktuelle Saison, auf Wunsch alle
+// Alltime-Daten parallel laden
 async function ladeAlltimeDaten() {
   if (alltimeGeladen) return;
-  const saisons = getAktivVerbandSaisons(alltimeNurAktuell);
+  const saisons = getAktivVerbandSaisons();
   if (!saisons.length) {
     document.getElementById('content-alltime').innerHTML =
       '<div class="error-box">Keine Saisons für diese Liga gefunden.</div>';
@@ -3474,7 +3446,7 @@ async function ladeAlltimeDaten() {
   document.getElementById('content-alltime').innerHTML =
     `<div class="lade-info"><div class="spinner"></div><span id="alltime-progress">Lade Saison 0/${saisons.length}…</span></div>`;
 
-  let fertig = 0;
+  let fertig = 0, fehler = 0;
   const BATCH = 10; // max. gleichzeitige Anfragen → verhindert Rate-Limiting
   try {
     const ergebnisse = [];
@@ -3483,8 +3455,8 @@ async function ladeAlltimeDaten() {
       const batchResults = await Promise.all(
         batch.map(s =>
           Promise.all([
-            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => []),
-            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => []),
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => { fehler++; return []; }),
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => { fehler++; return []; }),
           ]).then(([sc, ta]) => {
             fertig++;
             const el = document.getElementById('alltime-progress');
@@ -3495,40 +3467,18 @@ async function ladeAlltimeDaten() {
       );
       ergebnisse.push(...batchResults);
     }
+    if (fehler > 0) console.warn(`Alltime: ${fehler} Requests fehlgeschlagen (von ${saisons.length * 2} gesamt)`);
 
     alltimeRohdaten = ergebnisse;
     alltimeGeladen  = true;
     alltimeLigaFilter.clear();
     aggregiereUndRenderAlltime();
     renderAlltimeLigaPanel();
-
-    // Banner: weitere Archiv-Saisons nachladen anbieten
-    if (alltimeNurAktuell) {
-      const alle = getAktivVerbandSaisons(false);
-      const archivAnzahl = alle.length - saisons.length;
-      if (archivAnzahl > 0) {
-        const banner = document.createElement('div');
-        banner.id = 'alltime-alle-saisons-banner';
-        banner.style.cssText = 'margin:16px 0;padding:12px 16px;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:.82rem;color:rgba(255,255,255,.6)';
-        banner.innerHTML = `<span>Nur aktuelle Saison angezeigt. ${archivAnzahl} weitere Saison${archivAnzahl !== 1 ? 'en' : ''} im Archiv.</span>
-          <button onclick="ladeAlleAlltimeSaisons()" style="flex-shrink:0;padding:7px 14px;border-radius:7px;border:none;background:var(--color-a);color:#000;font-size:.8rem;font-weight:700;cursor:pointer">Alle Saisons laden</button>`;
-        const contentEl = document.getElementById('content-alltime');
-        if (contentEl) contentEl.prepend(banner);
-      }
-    }
   } catch (e) {
+    console.error(e);
     document.getElementById('content-alltime').innerHTML =
       `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
   }
-}
-
-// Alle Archiv-Saisons nachladen (nach Nutzerklick)
-function ladeAlleAlltimeSaisons() {
-  alltimeNurAktuell = false;
-  alltimeGeladen    = false;
-  alltimeRohdaten   = null;
-  document.getElementById('alltime-alle-saisons-banner')?.remove();
-  ladeAlltimeDaten();
 }
 
 // Re-Aggregation mit aktivem Ligen-Filter (kein neuer Fetch)
@@ -4834,10 +4784,7 @@ async function zeigSpielDetail(gameId) {
     const g = await fetchJSON(`${API_BASE}/api/v2/games/${gameId}.json`);
     contentEl.innerHTML = renderSpielDetail(g);
   } catch(e) {
-    // Im Fehlerfall: Zurück-Button anzeigen damit der Nutzer nicht festhängt
-    contentEl.innerHTML = `
-      <button class="sd-back-btn" onclick="zeigSpielplan()">← Zurück</button>
-      <div class="error-box">Fehler beim Laden: ${e.message}</div>`;
+    contentEl.innerHTML = `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
   }
 }
 
@@ -5173,7 +5120,7 @@ function renderSpielDetail(g) {
     <!-- Score Hero -->
     <div class="sd-hero">
       <div class="sd-hero-team">
-        <img class="sd-hero-logo" src="${logoUrl(g.home_team_logo) || ''}" alt="" onerror="this.style.display='none'">
+        <img class="sd-hero-logo" src="${esc(g.home_team_logo || '')}" alt="" onerror="this.style.display='none'">
         <div class="sd-hero-name" style="color:${CA}">${esc(g.home_team_name)}</div>
       </div>
       <div class="sd-hero-mid">
@@ -5193,7 +5140,7 @@ function renderSpielDetail(g) {
         ${refStr ? `<div class="sd-refs">SR: ${esc(refStr)}</div>` : ''}
       </div>
       <div class="sd-hero-team">
-        <img class="sd-hero-logo" src="${logoUrl(g.guest_team_logo) || ''}" alt="" onerror="this.style.display='none'">
+        <img class="sd-hero-logo" src="${esc(g.guest_team_logo || '')}" alt="" onerror="this.style.display='none'">
         <div class="sd-hero-name" style="color:${CB}">${esc(g.guest_team_name)}</div>
       </div>
     </div>
@@ -5574,7 +5521,7 @@ function renderOverview() {
     html += `<div class="ov-block">
       <div class="ov-block-header">
         <span class="ov-block-title">${esc(vb)}</span>
-        <button class="ov-alle-btn" onclick="zeigVerbandSpielplan('${esc(vb)}')">Zum Spielplan →</button>
+        <button class="ov-alle-btn" onclick="zeigeTab('spielplan')">Alle →</button>
       </div>
       <div class="ov-vb-cols">`;
 
@@ -5756,16 +5703,17 @@ function setMeinTeam(team) {
 // Init
 // ─────────────────────────────────────────────────────────────────────────────
 ladeOverviewSettings();
-zeigeTab('overview');         // Starttab setzen: synchronisiert Desktop-Tabs, Bottom-Nav UND Dropdown-Status
-ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden (Overview wird per Polling gestartet)
+aktualisiereDropdownStatus(); // Dropdowns direkt korrekt grau/aktiv setzen
+ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden
+ladeOverview();               // Overview parallel starten (wartet intern per Polling auf alleligen)
 </script>
 
 <!-- Service Worker registrieren -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js', {
-        scope: './'
+      navigator.serviceWorker.register('/AnalyzerKI/service-worker.js', {
+        scope: '/AnalyzerKI/'
       }).catch(err => console.warn('SW-Registrierung fehlgeschlagen:', err));
     });
   }
@@ -5773,14 +5721,14 @@ ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden (Overvie
 
 <!-- Bottom Navigation Bar (nur Mobile) -->
 <nav id="bottom-nav">
-  <button class="bnav-item active" id="bnav-overview" onclick="zeigeTab('overview')">
+  <button class="bnav-item" id="bnav-overview" onclick="zeigeTab('overview')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
       <polyline points="9 22 9 12 15 12 15 22"/>
     </svg>
     <span>Home</span>
   </button>
-  <button class="bnav-item" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
+  <button class="bnav-item active" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
       <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
