@@ -2320,24 +2320,39 @@ function zeigeTab(id) {
   });
   document.getElementById('tab-' + id)?.classList.add('active');
 
-  // Verband + Liga je nach Tab deaktivieren
-  const vSel = document.getElementById('verband-select');
-  const lSel = document.getElementById('liga-select');
-  const isAlltime  = id === 'alltime';
-  const isOverview = id === 'overview';
-  vSel.disabled = false;
-  lSel.disabled = isAlltime || isOverview;
+  aktualisiereDropdownStatus();
 
   // Beim Alltime-Tab: beide Datenquellen laden falls nötig
-  if (isAlltime) {
+  if (id === 'alltime') {
     if (!alltimeGeladen) ladeAlltimeDaten();
     if (!staticGeladen)  ladeStaticAlltime();
   }
   // Beim Overview-Tab: Spielpläne laden falls nötig
-  if (isOverview) {
+  if (id === 'overview') {
     if (!overviewGeladen) ladeOverview();
     else renderOverview();
   }
+}
+
+// Dropdown-Sperrlogik je nach aktuellem Tab / Sub-Tab
+// Overview: beide gesperrt. Alltime-Verband: nur Liga. Alltime-Deutschland: beide. Sonst: beide frei.
+function aktualisiereDropdownStatus() {
+  const vSel    = document.getElementById('verband-select');
+  const lSel    = document.getElementById('liga-select');
+  const vSelMob = document.getElementById('verband-select-mob');
+  const lSelMob = document.getElementById('liga-select-mob');
+
+  let vLock = false, lLock = false;
+  if (aktiverTab === 'overview') {
+    vLock = true; lLock = true;
+  } else if (aktiverTab === 'alltime') {
+    lLock = true;
+    if (alltimeSubTab === 'deutschland') vLock = true;
+  }
+  if (vSel)    vSel.disabled    = vLock;
+  if (lSel)    lSel.disabled    = lLock;
+  if (vSelMob) vSelMob.disabled = vLock;
+  if (lSelMob) lSelMob.disabled = lLock;
 }
 
 // Sub-Tab im Alltime-Bereich umschalten
@@ -2347,6 +2362,7 @@ function setAlltimeSubTab(sub) {
   document.getElementById('alltime-deutschland-panel').style.display = sub === 'deutschland' ? '' : 'none';
   document.getElementById('alltime-sub-verband').classList.toggle('active', sub === 'verband');
   document.getElementById('alltime-sub-deutschland').classList.toggle('active', sub === 'deutschland');
+  aktualisiereDropdownStatus();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5518,7 +5534,7 @@ function renderOverview() {
     html += `<div class="ov-block">
       <div class="ov-block-header">
         <span class="ov-block-title">${esc(vb)}</span>
-        <button class="ov-alle-btn" onclick="zeigeTab('spielplan')">Alle →</button>
+        <button class="ov-alle-btn" onclick="zeigVerbandSpielplan('${esc(vb).replace(/'/g,"\\'")}')">Zum Verband →</button>
       </div>
       <div class="ov-vb-cols">
         <div>${nextCol}</div>
@@ -5537,6 +5553,29 @@ function renderOverview() {
 
   html += `</div>`; // ov-layout
   el.innerHTML = html;
+}
+
+// Von Overview Block 4 → Spielplan-Tab des Verbandes (wechselt Dropdown + lädt Daten)
+function zeigVerbandSpielplan(vb) {
+  const vSel    = document.getElementById('verband-select');
+  const vSelMob = document.getElementById('verband-select-mob');
+  if (vSel)    vSel.value    = vb;
+  if (vSelMob) vSelMob.value = vb;
+  befuelleLigaDropdown(vb);
+  // Liga-Auswahl aus befuelleLigaDropdown übernehmen und Daten neu laden
+  const lSel = document.getElementById('liga-select');
+  if (lSel && lSel.value) {
+    aktiveLigaId = parseInt(lSel.value);
+  }
+  datenGeladen = false;
+  spielfilter  = 'alle';
+  const spinner = '<div class="lade-info"><div class="spinner"></div><span>Lädt…</span></div>';
+  ['tabelle','spielplan','scorer','detail'].forEach(id => {
+    const el = document.getElementById('content-' + id);
+    if (el) el.innerHTML = spinner;
+  });
+  zeigeTab('spielplan');
+  ladeDaten();
 }
 
 // Preview <-> Full umschalten (lazy: Karten werden erst beim Klick erzeugt)
