@@ -5324,10 +5324,18 @@ function bautSidebarTabelle() {
     <button class="ov-alle-btn" style="margin-top:8px;display:block" onclick="zeigeTab('tabelle')">Vollständige Tabelle →</button>`;
 }
 
+// Lazy-Render-State für „Mehr anzeigen"
+const ovLazyData = {};   // fullId -> Spiele-Array (sortiert, gruppierbar)
+let ovExpandedFullId = null;
+
 function renderOverview() {
   const el = document.getElementById('content-overview');
   if (!el) return;
   ladeOverviewSettings();
+
+  // Lazy-State zurücksetzen (Verbandsfilter oder Mein-Team hat sich ggf. geändert)
+  Object.keys(ovLazyData).forEach(k => delete ovLazyData[k]);
+  ovExpandedFullId = null;
 
   const heute   = new Date().toISOString().slice(0, 10);
 
@@ -5395,27 +5403,23 @@ function renderOverview() {
   // ── HTML zusammenbauen ──
   const settingsBtn = `<button class="ov-settings-btn" onclick="toggleOverviewSettings()" title="Einstellungen">⚙</button>`;
 
-  // Preview-Row (5 Karten + Mehr-Button) / Full-Gruppiert (nach Datum + Weniger-Button)
-  const buildPreviewFull = (spiele5, gruppen, gesamt, previewId, fullId, leerText) => {
+  // Preview (5 Karten + Mehr-Button) — Full wird lazy beim Klick generiert
+  const buildPreviewFull = (spiele5, alleSpieleArr, previewId, fullId, leerText) => {
+    const gesamt = alleSpieleArr.length;
     if (!gesamt) {
       return `<div class="ov-leer">${leerText}</div>`;
     }
+    // Daten für Lazy-Generierung merken
+    if (gesamt > 5) ovLazyData[fullId] = alleSpieleArr;
+
     let prev = `<div id="${previewId}"><div class="ov-scroll-row">`;
     spiele5.forEach(s => { prev += ovKarte(s, false); });
     prev += `</div>`;
     if (gesamt > 5) {
-      prev += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${fullId}','${previewId}')">Mehr anzeigen →</button>`;
+      prev += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${previewId}','${fullId}')">Mehr anzeigen →</button>`;
     }
-    prev += `</div>`;
-
-    let full = `<div id="${fullId}" style="display:none">`;
-    Object.entries(gruppen).forEach(([datum, sp]) => {
-      full += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
-      sp.forEach(s => { full += ovKarte(s, false); });
-      full += `</div>`;
-    });
-    full += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${previewId}','${fullId}')">← Weniger</button></div>`;
-    return prev + full;
+    prev += `</div><div id="${fullId}" style="display:none"></div>`;
+    return prev;
   };
 
   let html = `<div class="ov-layout"><div class="ov-main">`;
@@ -5441,7 +5445,7 @@ function renderOverview() {
   // Block 2
   html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Nächste Spiele</span></div>`;
   html += buildPreviewFull(
-    naechste5, naechsteGruppen, naechsteAlle.length,
+    naechste5, naechsteAlle,
     'ov-b2-preview', 'ov-b2-full',
     'Keine kommenden Spiele.'
   );
@@ -5450,7 +5454,7 @@ function renderOverview() {
   // Block 3
   html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Zuletzt gespielt</span></div>`;
   html += buildPreviewFull(
-    letzte5, letzteGruppen, letzteAlle.length,
+    letzte5, letzteAlle,
     'ov-b3-preview', 'ov-b3-full',
     'Keine vergangenen Spiele.'
   );
@@ -5481,46 +5485,32 @@ function renderOverview() {
     const npId = `vb${idx}-np`, nfId = `vb${idx}-nf`;
     const lpId = `vb${idx}-lp`, lfId = `vb${idx}-lf`;
 
-    // Nächste Spalte
+    // Nächste Spalte (lazy)
     let nextCol = `<div class="ov-vb-subtitle">Nächste Spiele</div>`;
     if (next5.length) {
+      if (nextRest.length) ovLazyData[nfId] = nextAlle;
       nextCol += `<div id="${npId}"><div class="ov-scroll-row">${next5.map(s => ovKarte(s, false)).join('')}</div>`;
       if (nextRest.length) {
-        nextCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${nfId}','${npId}')">Mehr anzeigen →</button>`;
+        nextCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${npId}','${nfId}')">Mehr anzeigen →</button>`;
       } else {
         nextCol += `<div class="ov-keine-weitere">Keine weiteren Spiele angesetzt</div>`;
       }
-      nextCol += `</div>`;
-      if (nextRest.length) {
-        nextCol += `<div id="${nfId}" style="display:none">`;
-        const nextGruppen = gruppiereNachDatum(nextAlle);
-        Object.entries(nextGruppen).forEach(([datum, sp]) => {
-          nextCol += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">${sp.map(s => ovKarte(s, false)).join('')}</div>`;
-        });
-        nextCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${npId}','${nfId}')">← Weniger</button></div>`;
-      }
+      nextCol += `</div><div id="${nfId}" style="display:none"></div>`;
     } else {
       nextCol += `<div class="ov-leer">Keine kommenden Spiele.</div>`;
     }
 
-    // Letzte Spalte
+    // Letzte Spalte (lazy)
     let lastCol = `<div class="ov-vb-subtitle">Letzte Spiele</div>`;
     if (last5.length) {
+      if (lastRest.length) ovLazyData[lfId] = lastAlle;
       lastCol += `<div id="${lpId}"><div class="ov-scroll-row">${last5.map(s => ovKarte(s, false)).join('')}</div>`;
       if (lastRest.length) {
-        lastCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${lfId}','${lpId}')">Mehr anzeigen →</button>`;
+        lastCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${lpId}','${lfId}')">Mehr anzeigen →</button>`;
       } else {
         lastCol += `<div class="ov-keine-weitere">Keine weiteren Ergebnisse</div>`;
       }
-      lastCol += `</div>`;
-      if (lastRest.length) {
-        lastCol += `<div id="${lfId}" style="display:none">`;
-        const lastGruppen = gruppiereNachDatum(lastAlle);
-        Object.entries(lastGruppen).forEach(([datum, sp]) => {
-          lastCol += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">${sp.map(s => ovKarte(s, false)).join('')}</div>`;
-        });
-        lastCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${lpId}','${lfId}')">← Weniger</button></div>`;
-      }
+      lastCol += `</div><div id="${lfId}" style="display:none"></div>`;
     } else {
       lastCol += `<div class="ov-leer">Keine vergangenen Spiele.</div>`;
     }
@@ -5549,12 +5539,47 @@ function renderOverview() {
   el.innerHTML = html;
 }
 
-// Preview <-> Full umschalten (reines show/hide, keine API-Calls)
-function ovToggleMehr(showId, hideId) {
-  const show = document.getElementById(showId);
-  const hide = document.getElementById(hideId);
-  if (show) show.style.display = '';
-  if (hide) hide.style.display = 'none';
+// Preview <-> Full umschalten (lazy: Karten werden erst beim Klick erzeugt)
+// Nur ein Bereich kann gleichzeitig offen sein — vorheriger wird auto-collapsed
+function ovToggleMehr(previewId, fullId) {
+  const preview = document.getElementById(previewId);
+  const full    = document.getElementById(fullId);
+  if (!preview || !full) return;
+
+  const bereitsOffen = ovExpandedFullId === fullId;
+
+  // Aktuell offenen Bereich einklappen (DOM leeren → Mobile-Speicher schonen)
+  if (ovExpandedFullId) {
+    const altFull = document.getElementById(ovExpandedFullId);
+    if (altFull) {
+      const altPrev = document.getElementById(altFull.dataset.previewId || '');
+      altFull.style.display = 'none';
+      altFull.innerHTML = '';
+      if (altPrev) altPrev.style.display = '';
+    }
+    ovExpandedFullId = null;
+  }
+
+  // Wenn dieser Bereich schon offen war → nur zuklappen, fertig
+  if (bereitsOffen) return;
+
+  // Neuen Bereich ausklappen: Karten jetzt generieren
+  const spiele = ovLazyData[fullId];
+  if (!spiele) return;
+
+  const gruppen = gruppiereNachDatum(spiele);
+  let h = '';
+  Object.entries(gruppen).forEach(([datum, sp]) => {
+    h += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
+    sp.forEach(s => { h += ovKarte(s, false); });
+    h += `</div>`;
+  });
+  h += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${previewId}','${fullId}')">← Weniger</button>`;
+  full.innerHTML = h;
+  full.dataset.previewId = previewId;
+  preview.style.display = 'none';
+  full.style.display = '';
+  ovExpandedFullId = fullId;
 }
 
 // Settings-Panel öffnen/schließen
