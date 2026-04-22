@@ -2245,6 +2245,9 @@ let alltimeTeamBestSort= 'punkte';  // Sort-Key für Beste-Saison-Ansicht
 // Alltime Sub-Tab: 'verband' | 'deutschland'
 let alltimeSubTab = 'verband';
 
+// Alltime Lade-Modus: zunächst nur aktuelle Saison, dann auf Wunsch alle
+let alltimeNurAktuell = true;
+
 // Overview-State
 let overviewGeladen  = false;
 let overviewDaten    = [];   // [{liga, spiele}]
@@ -2501,9 +2504,10 @@ function onVerband() {
   if (vSelMob) vSelMob.value = verband;
   befuelleLigaDropdown(verband);
   // Alltime-Reset: Verband bestimmt die Alltime-Quelle
-  alltimeGeladen  = false;
-  alltimeDaten    = null;
+  alltimeGeladen    = false;
+  alltimeDaten      = null;
   alltimeRohdaten   = null;
+  alltimeNurAktuell = true;
   alltimeLigaFilter.clear();
   alltimeLigaNoneMode = false;
   alltimeKaderTeams.clear();
@@ -3440,21 +3444,26 @@ function istDamen(ligaName) {
 }
 
 // Alle Saisons aller Ligen des aktiven Verbands — dedupliziert nach id
-function getAktivVerbandSaisons() {
+// nurAktuell=true → nur Ligen der höchsten season-Nummer zurückgeben
+function getAktivVerbandSaisons(nurAktuell = false) {
   const verband = document.getElementById('verband-select')?.value || '';
   if (!verband) return [];
   const seen = new Set();
-  return alleligen.filter(l => {
+  const alle = alleligen.filter(l => {
     if (l.game_operation !== verband || seen.has(l.id)) return false;
     seen.add(l.id);
     return true;
   });
+  if (!nurAktuell) return alle;
+  // Höchste season-ID ermitteln und nur diese zurückgeben
+  const maxSeason = Math.max(...alle.map(l => Number(l.season) || 0));
+  return alle.filter(l => (Number(l.season) || 0) === maxSeason);
 }
 
-// Alltime-Daten parallel laden
+// Alltime-Daten laden — standardmäßig nur aktuelle Saison, auf Wunsch alle
 async function ladeAlltimeDaten() {
   if (alltimeGeladen) return;
-  const saisons = getAktivVerbandSaisons();
+  const saisons = getAktivVerbandSaisons(alltimeNurAktuell);
   if (!saisons.length) {
     document.getElementById('content-alltime').innerHTML =
       '<div class="error-box">Keine Saisons für diese Liga gefunden.</div>';
@@ -3465,7 +3474,7 @@ async function ladeAlltimeDaten() {
   document.getElementById('content-alltime').innerHTML =
     `<div class="lade-info"><div class="spinner"></div><span id="alltime-progress">Lade Saison 0/${saisons.length}…</span></div>`;
 
-  let fertig = 0, fehler = 0;
+  let fertig = 0;
   const BATCH = 10; // max. gleichzeitige Anfragen → verhindert Rate-Limiting
   try {
     const ergebnisse = [];
@@ -3474,8 +3483,8 @@ async function ladeAlltimeDaten() {
       const batchResults = await Promise.all(
         batch.map(s =>
           Promise.all([
-            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => { fehler++; return []; }),
-            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => { fehler++; return []; }),
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/scorer.json`).catch(() => []),
+            fetchJSON(`${API_BASE}/api/v2/leagues/${s.id}/table.json`).catch(() => []),
           ]).then(([sc, ta]) => {
             fertig++;
             const el = document.getElementById('alltime-progress');
@@ -3486,18 +3495,40 @@ async function ladeAlltimeDaten() {
       );
       ergebnisse.push(...batchResults);
     }
-    if (fehler > 0) console.warn(`Alltime: ${fehler} Requests fehlgeschlagen (von ${saisons.length * 2} gesamt)`);
 
     alltimeRohdaten = ergebnisse;
     alltimeGeladen  = true;
     alltimeLigaFilter.clear();
     aggregiereUndRenderAlltime();
     renderAlltimeLigaPanel();
+
+    // Banner: weitere Archiv-Saisons nachladen anbieten
+    if (alltimeNurAktuell) {
+      const alle = getAktivVerbandSaisons(false);
+      const archivAnzahl = alle.length - saisons.length;
+      if (archivAnzahl > 0) {
+        const banner = document.createElement('div');
+        banner.id = 'alltime-alle-saisons-banner';
+        banner.style.cssText = 'margin:16px 0;padding:12px 16px;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:.82rem;color:rgba(255,255,255,.6)';
+        banner.innerHTML = `<span>Nur aktuelle Saison angezeigt. ${archivAnzahl} weitere Saison${archivAnzahl !== 1 ? 'en' : ''} im Archiv.</span>
+          <button onclick="ladeAlleAlltimeSaisons()" style="flex-shrink:0;padding:7px 14px;border-radius:7px;border:none;background:var(--color-a);color:#000;font-size:.8rem;font-weight:700;cursor:pointer">Alle Saisons laden</button>`;
+        const contentEl = document.getElementById('content-alltime');
+        if (contentEl) contentEl.prepend(banner);
+      }
+    }
   } catch (e) {
-    console.error(e);
     document.getElementById('content-alltime').innerHTML =
       `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
   }
+}
+
+// Alle Archiv-Saisons nachladen (nach Nutzerklick)
+function ladeAlleAlltimeSaisons() {
+  alltimeNurAktuell = false;
+  alltimeGeladen    = false;
+  alltimeRohdaten   = null;
+  document.getElementById('alltime-alle-saisons-banner')?.remove();
+  ladeAlltimeDaten();
 }
 
 // Re-Aggregation mit aktivem Ligen-Filter (kein neuer Fetch)
@@ -5142,7 +5173,7 @@ function renderSpielDetail(g) {
     <!-- Score Hero -->
     <div class="sd-hero">
       <div class="sd-hero-team">
-        <img class="sd-hero-logo" src="${esc(g.home_team_logo || '')}" alt="" onerror="this.style.display='none'">
+        <img class="sd-hero-logo" src="${logoUrl(g.home_team_logo) || ''}" alt="" onerror="this.style.display='none'">
         <div class="sd-hero-name" style="color:${CA}">${esc(g.home_team_name)}</div>
       </div>
       <div class="sd-hero-mid">
@@ -5162,7 +5193,7 @@ function renderSpielDetail(g) {
         ${refStr ? `<div class="sd-refs">SR: ${esc(refStr)}</div>` : ''}
       </div>
       <div class="sd-hero-team">
-        <img class="sd-hero-logo" src="${esc(g.guest_team_logo || '')}" alt="" onerror="this.style.display='none'">
+        <img class="sd-hero-logo" src="${logoUrl(g.guest_team_logo) || ''}" alt="" onerror="this.style.display='none'">
         <div class="sd-hero-name" style="color:${CB}">${esc(g.guest_team_name)}</div>
       </div>
     </div>
@@ -5733,8 +5764,8 @@ ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden (Overvie
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/AnalyzerKI/service-worker.js', {
-        scope: '/AnalyzerKI/'
+      navigator.serviceWorker.register('service-worker.js', {
+        scope: './'
       }).catch(err => console.warn('SW-Registrierung fehlgeschlagen:', err));
     });
   }
