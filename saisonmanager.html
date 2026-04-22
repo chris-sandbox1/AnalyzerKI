@@ -21,7 +21,7 @@
     :root {
       --color-a: #4ade80;
       --color-b: #fb923c;
-      --bg: #0d0d18;
+      --bg: #363658;
       --glass-bg: rgba(255,255,255,.04);
       --glass-border: rgba(255,255,255,.09);
       --topbar-h: 54px;
@@ -29,7 +29,8 @@
 
     html, body {
       height: 100%;
-      background: var(--bg);
+      /* Grünlich links → dunkel Mitte → Orangelich rechts */
+      background: linear-gradient(to right, #152a18 0%, #141422 40%, #141422 60%, #2a1508 100%);
       color: #e2e8f0;
       font-family: Inter, system-ui, -apple-system, sans-serif;
       /* overflow-x NICHT auf body/html setzen – bricht position:fixed auf iOS Safari */
@@ -38,38 +39,45 @@
     /* ── Hintergrund-Ebene ──────────────────────────────────────────────────── */
     #bg-layer {
       position: fixed;
-      inset: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
+      /* overflow:visible — position:fixed verursacht keine Scrollbars, Blobs dürfen rausragen */
+      overflow: visible;
     }
 
     .aurora-blob {
-      position: absolute;
-      border-radius: 50%;
+      position: fixed;
       pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: screen;
     }
     .blob-left {
-      width: 420px; height: 420px;
-      background: rgba(16,185,129,.32);
-      filter: blur(80px);
-      left: -60px; top: 10%;
-      animation: blob-drift-l 10s ease-in-out infinite alternate;
+      /* Aus oben-links Ecke heraus strahlend */
+      top: -15%; left: -15%;
+      width: 75vw; height: 110vh;
+      transform-origin: top left;
+      background: radial-gradient(ellipse at top left, rgba(74,222,128,.30) 0%, transparent 55%);
+      animation: edge-shimmer-l 10s ease-in-out infinite alternate;
     }
     .blob-right {
-      width: 380px; height: 380px;
-      background: rgba(249,115,22,.28);
-      filter: blur(75px);
-      right: -40px; top: 5%;
-      animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
+      top: -15%; right: -15%;
+      width: 75vw; height: 110vh;
+      transform-origin: top right;
+      background: radial-gradient(ellipse at top right, rgba(251,146,60,.26) 0%, transparent 55%);
+      animation: edge-shimmer-r 12s ease-in-out infinite alternate-reverse;
     }
-    .blob-center {
-      width: 200px; height: 200px;
-      background: rgba(99,102,241,.20);
-      filter: blur(60px);
-      left: 50%; bottom: 10%;
-      transform: translateX(-50%);
-      animation: blob-drift-c 8s ease-in-out infinite alternate;
+    .blob-center { display: none; }
+
+    @keyframes edge-shimmer-l {
+      0%   { opacity: .72; transform: scale(.94); }
+      50%  { opacity: 1;   transform: scale(1);   }
+      100% { opacity: .80; transform: scale(.96); }
+    }
+    @keyframes edge-shimmer-r {
+      0%   { opacity: .80; transform: scale(.96); }
+      50%  { opacity: .72; transform: scale(.94); }
+      100% { opacity: 1;   transform: scale(1);   }
     }
 
     @keyframes blob-drift-l {
@@ -112,9 +120,9 @@
       inset: 0;
       background: linear-gradient(
         110deg,
-        rgba(0,18,8,.5) 0%, rgba(0,18,8,.5) 45%,
+        rgba(0,18,8,.08) 0%, rgba(0,18,8,.08) 45%,
         transparent 45%, transparent 55%,
-        rgba(18,6,0,.45) 55%, rgba(18,6,0,.45) 100%
+        rgba(18,6,0,.07) 55%, rgba(18,6,0,.07) 100%
       );
     }
     .diagonal-line {
@@ -1740,9 +1748,9 @@
       }
     }
 
-    /* ── Hintergrund heller im Browser (nicht PWA-Standalone) ────────────────── */
+    /* ── Hintergrund im Browser etwas dunkler als PWA (mehr Fläche sichtbar) ── */
     @media (display-mode: browser) {
-      :root { --bg: #141428; }
+      html, body { background: linear-gradient(to right, #152a18 0%, #141422 40%, #141422 60%, #2a1508 100%); }
     }
 
     /* ── Live-Badge & Stream-Button ──────────────────────────────────────────── */
@@ -1932,17 +1940,17 @@
 <body>
 
 <!-- Hintergrund -->
+<div class="aurora-blob blob-left"></div>
+<div class="aurora-blob blob-right"></div>
+
 <div id="bg-layer">
-  <div class="aurora-blob blob-left"></div>
-  <div class="aurora-blob blob-right"></div>
-  <div class="aurora-blob blob-center"></div>
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
-  <div class="corner-blob" style="width:220px;height:220px;filter:blur(70px);background:rgba(16,185,129,.16);top:-60px;left:-60px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:200px;height:200px;filter:blur(65px);background:rgba(249,115,22,.14);top:-50px;right:-50px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
-  <div class="corner-blob" style="width:170px;height:170px;filter:blur(60px);background:rgba(16,185,129,.11);bottom:-40px;left:-30px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:180px;height:180px;filter:blur(65px);background:rgba(249,115,22,.11);bottom:-40px;right:-30px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:420px;height:420px;background:radial-gradient(ellipse at center,rgba(74,222,128,.14) 0%,transparent 70%);top:-80px;left:-80px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:400px;height:400px;background:radial-gradient(ellipse at center,rgba(251,146,60,.13) 0%,transparent 70%);top:-70px;right:-70px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:400px;height:400px;background:radial-gradient(ellipse at center,rgba(74,222,128,.11) 0%,transparent 70%);bottom:-60px;right:-60px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:420px;height:420px;background:radial-gradient(ellipse at center,rgba(251,146,60,.11) 0%,transparent 70%);bottom:-60px;left:-50px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
