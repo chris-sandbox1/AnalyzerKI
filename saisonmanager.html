@@ -1522,11 +1522,29 @@
     /* ── TAB 0: OVERVIEW ───────────────────────────────────────────────────── */
     @media (min-width: 769px) {
       .ov-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; padding: 16px 20px 24px; align-items: start; }
+      .ov-b2b3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .ov-vb-cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     }
     @media (max-width: 768px) {
       .ov-layout { display: block; padding: 4px 0 16px; }
       .ov-sidebar { display: none; }
       .ov-karte { width: calc(100vw - 60px); }
+      .ov-b2b3-grid { display: block; }
+      .ov-vb-cols   { display: block; }
+    }
+    .ov-vb-subtitle {
+      font-size: 9px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.28);
+      padding: 4px 20px 2px;
+    }
+    .ov-mehr-btn {
+      background: transparent; border: none; color: rgba(74,222,128,.65);
+      font-size: .74rem; font-weight: 600; cursor: pointer;
+      padding: 4px 20px 8px; display: block;
+    }
+    .ov-mehr-btn:hover { color: var(--color-a); }
+    .ov-keine-weitere {
+      padding: 4px 20px 8px; color: rgba(255,255,255,.22); font-size: .72rem;
     }
     .ov-sidebar {
       position: sticky;
@@ -5312,9 +5330,6 @@ function renderOverview() {
   ladeOverviewSettings();
 
   const heute   = new Date().toISOString().slice(0, 10);
-  const in14Ts  = Date.now() + 14 * 24 * 60 * 60 * 1000;
-  const in14    = new Date(in14Ts).toISOString().slice(0, 10);
-  const vor7    = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   // Verbands-Filter anwenden
   const versteckt = new Set(overviewSettings.verbandFilter || []);
@@ -5355,17 +5370,19 @@ function renderOverview() {
       block1.push({ s, gepinnt: false });
     });
 
-  // ── Block 2: Nächste 14 Tage ──
-  const naechste = alleSpiele
-    .filter(s => s.date > heute && s.date <= in14 && !s.ended && !istLive(s))
+  // ── Block 2: Alle kommenden Spiele (aufsteigend) ──
+  const naechsteAlle = alleSpiele
+    .filter(s => s.date > heute && !s.ended && !istLive(s))
     .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1);
-  const naechsteGruppen = gruppiereNachDatum(naechste);
+  const naechste5 = naechsteAlle.slice(0, 5);
+  const naechsteGruppen = gruppiereNachDatum(naechsteAlle);
 
-  // ── Block 3: Letzte 7 Tage ──
-  const letzte = alleSpiele
-    .filter(s => s.ended && s.date >= vor7 && s.date <= heute)
+  // ── Block 3: Alle vergangenen Spiele (absteigend, neueste zuerst) ──
+  const letzteAlle = alleSpiele
+    .filter(s => s.ended && s.date <= heute)
     .sort((a, b) => (a.date || '') > (b.date || '') ? -1 : 1);
-  const letzteGruppen = gruppiereNachDatum(letzte);
+  const letzte5 = letzteAlle.slice(0, 5);
+  const letzteGruppen = gruppiereNachDatum(letzteAlle);
 
   // ── Block 4: Nach Verband ──
   const verbände = [...new Set(gefiltert.map(d => d.liga.game_operation))];
@@ -5377,6 +5394,29 @@ function renderOverview() {
 
   // ── HTML zusammenbauen ──
   const settingsBtn = `<button class="ov-settings-btn" onclick="toggleOverviewSettings()" title="Einstellungen">⚙</button>`;
+
+  // Preview-Row (5 Karten + Mehr-Button) / Full-Gruppiert (nach Datum + Weniger-Button)
+  const buildPreviewFull = (spiele5, gruppen, gesamt, previewId, fullId, leerText) => {
+    if (!gesamt) {
+      return `<div class="ov-leer">${leerText}</div>`;
+    }
+    let prev = `<div id="${previewId}"><div class="ov-scroll-row">`;
+    spiele5.forEach(s => { prev += ovKarte(s, false); });
+    prev += `</div>`;
+    if (gesamt > 5) {
+      prev += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${fullId}','${previewId}')">Mehr anzeigen →</button>`;
+    }
+    prev += `</div>`;
+
+    let full = `<div id="${fullId}" style="display:none">`;
+    Object.entries(gruppen).forEach(([datum, sp]) => {
+      full += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
+      sp.forEach(s => { full += ovKarte(s, false); });
+      full += `</div>`;
+    });
+    full += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${previewId}','${fullId}')">← Weniger</button></div>`;
+    return prev + full;
+  };
 
   let html = `<div class="ov-layout"><div class="ov-main">`;
 
@@ -5395,48 +5435,105 @@ function renderOverview() {
   }
   html += `</div>`;
 
+  // Block 2 + 3 nebeneinander (Desktop) / gestackt (Mobile)
+  html += `<div class="ov-b2b3-grid">`;
+
   // Block 2
   html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Nächste Spiele</span></div>`;
-  if (Object.keys(naechsteGruppen).length) {
-    Object.entries(naechsteGruppen).forEach(([datum, spiele]) => {
-      html += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
-      spiele.forEach(s => { html += ovKarte(s, false); });
-      html += `</div>`;
-    });
-  } else {
-    html += `<div class="ov-leer">Keine Spiele in den nächsten 14 Tagen.</div>`;
-  }
+  html += buildPreviewFull(
+    naechste5, naechsteGruppen, naechsteAlle.length,
+    'ov-b2-preview', 'ov-b2-full',
+    'Keine kommenden Spiele.'
+  );
   html += `</div>`;
 
   // Block 3
   html += `<div class="ov-block"><div class="ov-block-header"><span class="ov-block-title">Zuletzt gespielt</span></div>`;
-  if (Object.keys(letzteGruppen).length) {
-    Object.entries(letzteGruppen).forEach(([datum, spiele]) => {
-      html += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">`;
-      spiele.forEach(s => { html += ovKarte(s, false); });
-      html += `</div>`;
-    });
-  } else {
-    html += `<div class="ov-leer">Keine Spiele in den letzten 7 Tagen.</div>`;
-  }
+  html += buildPreviewFull(
+    letzte5, letzteGruppen, letzteAlle.length,
+    'ov-b3-preview', 'ov-b3-full',
+    'Keine vergangenen Spiele.'
+  );
   html += `</div>`;
 
-  // Block 4: Nach Verband
-  verbände.forEach(vb => {
+  html += `</div>`; // ov-b2b3-grid
+
+  // Block 4: Nach Verband — zwei Spalten (Nächste / Letzte)
+  verbände.forEach((vb, idx) => {
     const vbSpiele = gefiltert
       .filter(d => d.liga.game_operation === vb)
       .flatMap(d => d.spiele.map(s => ({ ...s, _liga: d.liga })));
-    const next5 = vbSpiele
-      .filter(s => s.date >= heute && !s.ended)
-      .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1)
-      .slice(0, 5);
-    if (!next5.length) return;
+
+    const nextAlle = vbSpiele
+      .filter(s => s.date > heute && !s.ended && !istLive(s))
+      .sort((a, b) => (a.date || '') < (b.date || '') ? -1 : 1);
+    const lastAlle = vbSpiele
+      .filter(s => s.ended && s.date <= heute)
+      .sort((a, b) => (a.date || '') > (b.date || '') ? -1 : 1);
+
+    if (!nextAlle.length && !lastAlle.length) return;
+
+    const next5 = nextAlle.slice(0, 5);
+    const last5 = lastAlle.slice(0, 5);
+    const nextRest = nextAlle.slice(5);
+    const lastRest = lastAlle.slice(5);
+
+    const npId = `vb${idx}-np`, nfId = `vb${idx}-nf`;
+    const lpId = `vb${idx}-lp`, lfId = `vb${idx}-lf`;
+
+    // Nächste Spalte
+    let nextCol = `<div class="ov-vb-subtitle">Nächste Spiele</div>`;
+    if (next5.length) {
+      nextCol += `<div id="${npId}"><div class="ov-scroll-row">${next5.map(s => ovKarte(s, false)).join('')}</div>`;
+      if (nextRest.length) {
+        nextCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${nfId}','${npId}')">Mehr anzeigen →</button>`;
+      } else {
+        nextCol += `<div class="ov-keine-weitere">Keine weiteren Spiele angesetzt</div>`;
+      }
+      nextCol += `</div>`;
+      if (nextRest.length) {
+        nextCol += `<div id="${nfId}" style="display:none">`;
+        const nextGruppen = gruppiereNachDatum(nextAlle);
+        Object.entries(nextGruppen).forEach(([datum, sp]) => {
+          nextCol += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">${sp.map(s => ovKarte(s, false)).join('')}</div>`;
+        });
+        nextCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${npId}','${nfId}')">← Weniger</button></div>`;
+      }
+    } else {
+      nextCol += `<div class="ov-leer">Keine kommenden Spiele.</div>`;
+    }
+
+    // Letzte Spalte
+    let lastCol = `<div class="ov-vb-subtitle">Letzte Spiele</div>`;
+    if (last5.length) {
+      lastCol += `<div id="${lpId}"><div class="ov-scroll-row">${last5.map(s => ovKarte(s, false)).join('')}</div>`;
+      if (lastRest.length) {
+        lastCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${lfId}','${lpId}')">Mehr anzeigen →</button>`;
+      } else {
+        lastCol += `<div class="ov-keine-weitere">Keine weiteren Ergebnisse</div>`;
+      }
+      lastCol += `</div>`;
+      if (lastRest.length) {
+        lastCol += `<div id="${lfId}" style="display:none">`;
+        const lastGruppen = gruppiereNachDatum(lastAlle);
+        Object.entries(lastGruppen).forEach(([datum, sp]) => {
+          lastCol += `<div class="ov-datum-header">${formatDatumLang(datum)}</div><div class="ov-scroll-row">${sp.map(s => ovKarte(s, false)).join('')}</div>`;
+        });
+        lastCol += `<button class="ov-mehr-btn" onclick="ovToggleMehr('${lpId}','${lfId}')">← Weniger</button></div>`;
+      }
+    } else {
+      lastCol += `<div class="ov-leer">Keine vergangenen Spiele.</div>`;
+    }
+
     html += `<div class="ov-block">
       <div class="ov-block-header">
         <span class="ov-block-title">${esc(vb)}</span>
         <button class="ov-alle-btn" onclick="zeigeTab('spielplan')">Alle →</button>
       </div>
-      <div class="ov-scroll-row">${next5.map(s => ovKarte(s, false)).join('')}</div>
+      <div class="ov-vb-cols">
+        <div>${nextCol}</div>
+        <div>${lastCol}</div>
+      </div>
     </div>`;
   });
 
@@ -5450,6 +5547,14 @@ function renderOverview() {
 
   html += `</div>`; // ov-layout
   el.innerHTML = html;
+}
+
+// Preview <-> Full umschalten (reines show/hide, keine API-Calls)
+function ovToggleMehr(showId, hideId) {
+  const show = document.getElementById(showId);
+  const hide = document.getElementById(hideId);
+  if (show) show.style.display = '';
+  if (hide) hide.style.display = 'none';
 }
 
 // Settings-Panel öffnen/schließen
