@@ -38,10 +38,16 @@
     /* ── Hintergrund-Ebene ──────────────────────────────────────────────────── */
     #bg-layer {
       position: fixed;
-      inset: 0;
+      top: 0; left: 0; width: 100%; height: 100%; /* explizit statt inset:0 – besser auf iOS 14 */
       z-index: 0;
       pointer-events: none;
       overflow: clip; /* overflow:clip statt hidden – iOS WebKit rendert filter:blur sonst nicht */
+    }
+
+    /* PWA Standalone: sicherstellen dass Blobs gerendert werden */
+    @media (display-mode: standalone) {
+      #bg-layer { opacity: 1; }
+      .aurora-blob, .corner-blob { display: block; }
     }
 
     .aurora-blob {
@@ -50,20 +56,20 @@
       pointer-events: none;
     }
     .blob-left {
-      width: 560px; height: 560px;
-      background: radial-gradient(ellipse at center, rgba(16,185,129,.38) 0%, transparent 70%);
-      left: -120px; top: 5%;
+      width: 580px; height: 580px;
+      background: radial-gradient(ellipse at center, rgba(74,222,128,.35) 0%, transparent 70%);
+      left: -140px; top: 5%;
       animation: blob-drift-l 10s ease-in-out infinite alternate;
     }
     .blob-right {
-      width: 520px; height: 520px;
-      background: radial-gradient(ellipse at center, rgba(249,115,22,.32) 0%, transparent 70%);
-      right: -100px; top: 0%;
+      width: 540px; height: 540px;
+      background: radial-gradient(ellipse at center, rgba(251,146,60,.30) 0%, transparent 70%);
+      right: -120px; top: 0%;
       animation: blob-drift-r 12s ease-in-out infinite alternate-reverse;
     }
     .blob-center {
-      width: 320px; height: 320px;
-      background: radial-gradient(ellipse at center, rgba(99,102,241,.22) 0%, transparent 70%);
+      width: 340px; height: 340px;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,.20) 0%, transparent 70%);
       left: 50%; bottom: 5%;
       transform: translateX(-50%);
       animation: blob-drift-c 8s ease-in-out infinite alternate;
@@ -1951,7 +1957,7 @@
         min-height: 64px;
         background: rgba(8,8,16,.96);
         border-top: 0.5px solid rgba(255,255,255,.09);
-        z-index: 100;
+        z-index: 200; /* 200 > settings-overlay (149) und ptr-indicator (200) → immer oben */
         align-items: stretch;
         backdrop-filter: blur(14px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -1977,10 +1983,11 @@
   <div class="scan-lines"></div>
   <div class="diagonal-split"></div>
   <div class="diagonal-line"></div>
-  <div class="corner-blob" style="width:280px;height:280px;background:radial-gradient(ellipse at center,rgba(16,185,129,.22) 0%,transparent 70%);top:-80px;left:-80px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:260px;height:260px;background:radial-gradient(ellipse at center,rgba(249,115,22,.18) 0%,transparent 70%);top:-70px;right:-70px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
-  <div class="corner-blob" style="width:220px;height:220px;background:radial-gradient(ellipse at center,rgba(16,185,129,.14) 0%,transparent 70%);bottom:-60px;left:-50px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
-  <div class="corner-blob" style="width:240px;height:240px;background:radial-gradient(ellipse at center,rgba(249,115,22,.14) 0%,transparent 70%);bottom:-60px;right:-50px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
+  <!-- Corner-Blobs: grün oben-links + unten-rechts, orange oben-rechts + unten-links -->
+  <div class="corner-blob" style="width:460px;height:460px;background:radial-gradient(ellipse at center,rgba(74,222,128,.15) 0%,transparent 65%);top:-160px;left:-160px;animation:corner-pulse 5s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:440px;height:440px;background:radial-gradient(ellipse at center,rgba(251,146,60,.15) 0%,transparent 65%);top:-150px;right:-150px;animation:corner-pulse 6s ease-in-out infinite alternate-reverse"></div>
+  <div class="corner-blob" style="width:400px;height:400px;background:radial-gradient(ellipse at center,rgba(251,146,60,.13) 0%,transparent 65%);bottom:-140px;left:-140px;animation:corner-pulse 7s ease-in-out infinite alternate"></div>
+  <div class="corner-blob" style="width:420px;height:420px;background:radial-gradient(ellipse at center,rgba(74,222,128,.13) 0%,transparent 65%);bottom:-150px;right:-150px;animation:corner-pulse 4s ease-in-out infinite alternate-reverse"></div>
 </div>
 
 <!-- Partikel -->
@@ -3210,7 +3217,11 @@ function zeigeTeamDetail(teamId) {
   if (!sel) return;
   sel.value = String(teamId);
   zeigeTab('detail');
-  renderDetail();
+  try { renderDetail(); } catch(e) {
+    console.error('renderDetail Fehler:', e);
+    const el = document.getElementById('content-detail');
+    if (el) el.innerHTML = `<div class="error-box">Fehler beim Laden der Teamdaten: ${e.message}</div>`;
+  }
 }
 
 function renderDetail() {
@@ -4792,7 +4803,10 @@ async function zeigSpielDetail(gameId) {
     const g = await fetchJSON(`${API_BASE}/api/v2/games/${gameId}.json`);
     contentEl.innerHTML = renderSpielDetail(g);
   } catch(e) {
-    contentEl.innerHTML = `<div class="error-box">Fehler beim Laden: ${e.message}</div>`;
+    // Im Fehlerfall: Zurück-Button anzeigen damit der Nutzer nicht festhängt
+    contentEl.innerHTML = `
+      <button class="sd-back-btn" onclick="zeigSpielplan()">← Zurück</button>
+      <div class="error-box">Fehler beim Laden: ${e.message}</div>`;
   }
 }
 
@@ -5711,9 +5725,8 @@ function setMeinTeam(team) {
 // Init
 // ─────────────────────────────────────────────────────────────────────────────
 ladeOverviewSettings();
-aktualisiereDropdownStatus(); // Dropdowns direkt korrekt grau/aktiv setzen
-ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden
-ladeOverview();               // Overview parallel starten (wartet intern per Polling auf alleligen)
+zeigeTab('overview');         // Starttab setzen: synchronisiert Desktop-Tabs, Bottom-Nav UND Dropdown-Status
+ladeLigen();                  // Ligen + Tabelle/Spielplan/Scorer laden (Overview wird per Polling gestartet)
 </script>
 
 <!-- Service Worker registrieren -->
@@ -5729,14 +5742,14 @@ ladeOverview();               // Overview parallel starten (wartet intern per Po
 
 <!-- Bottom Navigation Bar (nur Mobile) -->
 <nav id="bottom-nav">
-  <button class="bnav-item" id="bnav-overview" onclick="zeigeTab('overview')">
+  <button class="bnav-item active" id="bnav-overview" onclick="zeigeTab('overview')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
       <polyline points="9 22 9 12 15 12 15 22"/>
     </svg>
     <span>Home</span>
   </button>
-  <button class="bnav-item active" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
+  <button class="bnav-item" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
       <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
