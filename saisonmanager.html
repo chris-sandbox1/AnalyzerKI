@@ -1670,6 +1670,11 @@
       /* ── Spalten verstecken ── */
       .col-hide-mob { display: none !important; }
 
+      /* Tabelle: alle Spalten zeigen, horizontal scrollbar */
+      .tabelle-table .col-hide-mob { display: table-cell !important; }
+      .tabelle-wrap .glass { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .tabelle-table { min-width: 640px; }
+
       /* ── Ligatabelle kompakter ── */
       .tabelle-table th,
       .tabelle-table td { padding: 7px 5px; font-size: .74rem; }
@@ -1751,6 +1756,10 @@
     /* ── Hintergrund im Browser etwas dunkler als PWA (mehr Fläche sichtbar) ── */
     @media (display-mode: browser) {
       html, body { background: linear-gradient(to right, #152a18 0%, #141422 40%, #141422 60%, #2a1508 100%); }
+    }
+    /* ── PWA: gedämpfterer Verlauf, weniger Farbintensität ────────────────── */
+    @media (display-mode: standalone) {
+      html, body { background: linear-gradient(to right, #12161a 0%, #141422 40%, #141422 60%, #1a120e 100%); }
     }
 
     /* ── Live-Badge & Stream-Button ──────────────────────────────────────────── */
@@ -1962,8 +1971,8 @@
     <div class="logo-text"><span class="logo-full">Floorball</span><span class="logo-iq">IQ</span></div>
   </a>
   <nav class="tabs">
-    <button class="tab"        onclick="zeigeTab('overview')">Übersicht</button>
-    <button class="tab active" onclick="zeigeTab('tabelle')">Tabelle</button>
+    <button class="tab active" onclick="zeigeTab('overview')">Übersicht</button>
+    <button class="tab"        onclick="zeigeTab('tabelle')">Tabelle</button>
     <button class="tab"        onclick="zeigeTab('spielplan')">Spielplan</button>
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
@@ -2359,6 +2368,9 @@ async function ladeLigen() {
 
   // Daten laden
   await ladeDaten();
+
+  // Default-Tab: Übersicht
+  zeigeTab('overview');
 }
 
 // Liga-Dropdown für gewählten Verband neu befüllen
@@ -2367,18 +2379,39 @@ function befuelleLigaDropdown(verband) {
     .filter(l => l.game_operation === verband)
     .sort((a, b) => a.name.localeCompare(b.name, 'de'));
   const lSel = document.getElementById('liga-select');
-  lSel.innerHTML = ligen.map(l => {
+
+  // Höchste Saison-Nummer ermitteln → Aktuelle Saison vs. Archiv
+  const maxSeason = ligen.reduce((m, l) => Math.max(m, parseInt(l.season) || 0), 0);
+  const aktuell = ligen.filter(l => (parseInt(l.season) || 0) === maxSeason);
+  const archiv  = ligen.filter(l => (parseInt(l.season) || 0) !== maxSeason);
+
+  const optHtml = (l) => {
     const jahr = l.season ? ` (${saisonJahr(l.season)})` : '';
     return `<option value="${l.id}">${l.name}${jahr}</option>`;
-  }).join('');
+  };
 
-  // Aktuellste Liga vorauswählen: höchste season-Nummer gewinnt
+  let html = '';
+  if (aktuell.length) {
+    html += `<optgroup label="Aktuelle Saison">${aktuell.map(optHtml).join('')}</optgroup>`;
+  }
+  if (archiv.length) {
+    html += `<optgroup label="Archiv">${archiv.map(optHtml).join('')}</optgroup>`;
+  }
+  lSel.innerHTML = html;
+
+  // Default-Liga: Score-basiert (Nicht-Damen +2, Name beginnt mit „1." +1)
+  // unter Ligen der aktuellen Saison → höchster Score gewinnt
   if (ligen.length) {
-    const neueste = ligen.reduce((best, l) =>
-      (parseInt(l.season) || 0) > (parseInt(best.season) || 0) ? l : best
-    , ligen[0]);
-    aktiveLigaId = neueste.id;
-    lSel.value   = String(neueste.id);
+    const score = (l) => {
+      let s = 0;
+      if (!/damen/i.test(l.name)) s += 2;
+      if (/^1\./.test(l.name.trim())) s += 1;
+      return s;
+    };
+    const pool = aktuell.length ? aktuell : ligen;
+    const best = pool.reduce((b, l) => score(l) > score(b) ? l : b, pool[0]);
+    aktiveLigaId = best.id;
+    lSel.value   = String(best.id);
   }
 
   // Mobile-Select synchronisieren
@@ -5537,14 +5570,14 @@ ladeLigen();
 
 <!-- Bottom Navigation Bar (nur Mobile) -->
 <nav id="bottom-nav">
-  <button class="bnav-item" id="bnav-overview" onclick="zeigeTab('overview')">
+  <button class="bnav-item active" id="bnav-overview" onclick="zeigeTab('overview')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
       <polyline points="9 22 9 12 15 12 15 22"/>
     </svg>
     <span>Home</span>
   </button>
-  <button class="bnav-item active" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
+  <button class="bnav-item" id="bnav-tabelle" onclick="zeigeTab('tabelle')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
       <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
