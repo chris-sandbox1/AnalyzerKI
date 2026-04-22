@@ -209,6 +209,7 @@ const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
 - `alltimeDaten` — aggregierte Spieler + Teams; wird aus `alltimeRohdaten` durch `aggregiereAlltime()` berechnet
 - `alltimeLigaFilter` (Set) — ausgewählte Liga-IDs; leer = alle (außer `alltimeLigaNoneMode`)
 - `alltimeGender` — `'alle'` / `'herren'` / `'damen'`
+- `alltimeNurAktuell` — `true` = nur Ligen der aktuellen Saison geladen (Default), `false` = alle Archiv-Saisons; wird bei Verbandswechsel auf `true` zurückgesetzt
 - `alltimeSubTab` — `'verband'` | `'deutschland'` — aktives Sub-Panel im Alltime-Tab
 - `vorherTab` — merkt sich den Tab vor einer Spiel-Detail-Navigation, damit Zurück-Taste stimmt
 
@@ -263,6 +264,8 @@ function serienKey(s) {
 - **`inset: 0` ist auf iOS 14 nicht vollständig unterstützt:** Für `#bg-layer` und andere Full-Screen-Fixed-Elemente immer `top:0; left:0; width:100%; height:100%` statt `inset:0` verwenden. `inset` wurde erst in iOS 15 vollständig unterstützt.
 - **Aurora-Blob-Farben müssen die App-CSS-Variablen widerspiegeln:** `--color-a: #4ade80` = `rgba(74,222,128,...)`, `--color-b: #fb923c` = `rgba(251,146,60,...)`. Nicht `#10b981` (Tailwind green-500) oder `#f97316` (orange-500) verwenden — diese sehen anders aus. Corner-Blob-Positionen: grün oben-links + unten-rechts, orange oben-rechts + unten-links.
 - **`@media (display-mode: standalone)` für PWA-spezifische Fixes:** Wenn ein Element in der installierten PWA nicht sichtbar ist aber im Browser schon, `@media (display-mode: standalone) { ... }` nutzen um PWA-spezifische Overrides zu setzen (z.B. `display: block !important` auf Blobs, `opacity: 1` auf bg-layer).
+- **Alltime lädt nur aktuelle Saison (Default) — Archiv per Klick:** `getAktivVerbandSaisons(nurAktuell)` filtert bei `nurAktuell=true` auf die höchste `season`-Nummer. `ladeAlltimeDaten()` startet immer mit `alltimeNurAktuell=true`. Nach dem Laden erscheint ein Banner „X weitere Saisons im Archiv. [Alle Saisons laden]". Klick ruft `ladeAlleAlltimeSaisons()` auf, das `alltimeNurAktuell=false` setzt und neu lädt. Bei Verbandswechsel (`onVerband()`) immer `alltimeNurAktuell = true` zurücksetzen.
+- **HTTP-500-Fehler von inaktiven Ligen lautlos ignorieren:** `fetchJSON(...).catch(() => [])` reicht — kein `console.warn` und kein `console.error` auf API-Fehler im Alltime-Batch. Die Ligen existieren in `leagues.json` aber die API liefert 500 wenn die Liga inaktiv ist. Erwartetes Verhalten, kein Bug. KEIN Logging.
 - **Block-4-Verband-IDs sind Index-basiert:** `vb0`, `vb1` etc. (Index in der `verbände`-Array). Die Reihenfolge ist deterministisch (Floorball Deutschland zuerst, dann alphabetisch). Aber die IDs ändern sich wenn Verbände hinzukommen/wegfallen — kein Problem da sie bei jedem `renderOverview()` neu generiert werden.
 - **`gruppiereNachDatum()` nutzt Objekt-Einfüge-Reihenfolge:** Modernes JS/V8 preserviert die Einfüge-Reihenfolge von String-Schlüsseln in Objekten. Wenn das Input-Array nach Datum aufsteigend sortiert ist, ist auch das Output-Objekt aufsteigend. Für Block 3 (neueste zuerst) Input bereits absteigend sortieren.
 
