@@ -1910,6 +1910,35 @@
     .detail-scorer-table tr:last-child td { border-bottom: none; }
     .detail-scorer-table tr:hover td { background: rgba(255,255,255,.025); }
 
+    /* ── International Tab ──────────────────────────────────────────────────── */
+    .intl-liga-badge {
+      font-size: .62rem;
+      color: rgba(255,255,255,.38);
+      display: block;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95px;
+    }
+    .intl-footer {
+      padding: 16px 20px 28px;
+      text-align: center;
+    }
+    .intl-hinweis {
+      font-size: .66rem;
+      color: rgba(255,255,255,.18);
+      line-height: 1.6;
+    }
+    .intl-update-hint {
+      font-size: .66rem;
+      color: rgba(255,255,255,.2);
+      margin-bottom: 6px;
+    }
+    @media (max-width: 768px) {
+      .intl-liga-badge { max-width: 56px; font-size: .58rem; }
+    }
+
     /* ── Bottom Navigation Bar (Mobile) ────────────────────────────────────── */
     #bottom-nav { display: none; }
 
@@ -1995,6 +2024,7 @@
     <button class="tab"        onclick="zeigeTab('scorer')">Scorer</button>
     <button class="tab"        onclick="zeigeTab('detail')">Team-Detail</button>
     <button class="tab"        onclick="zeigeTab('alltime')">Alltime</button>
+    <button class="tab"        onclick="zeigeTab('international')">International</button>
   </nav>
   <div class="hd-space"></div>
   <button class="btn-topbar btn-refresh" onclick="datenGeladen=false;ladeDaten()" title="Aktualisieren">↺</button>
@@ -2165,6 +2195,13 @@
 
 </section>
 
+<!-- TAB 6: INTERNATIONAL -->
+<section id="tab-international" class="tab-content">
+  <div id="content-international">
+    <div class="lade-info"><div class="spinner"></div><span>Internationale Spiele laden…</span></div>
+  </div>
+</section>
+
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
 // Konstanten
@@ -2310,7 +2347,7 @@ let staticPerGame         = false;
 function zeigeTab(id) {
   aktiverTab = id;
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-  const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime'];
+  const tabIds = ['overview','tabelle','spielplan','scorer','detail','alltime','international'];
   document.querySelectorAll('header .tab').forEach((b, i) => {
     b.classList.toggle('active', tabIds[i] === id);
   });
@@ -2332,6 +2369,12 @@ function zeigeTab(id) {
     if (!overviewGeladen) ladeOverview();
     else renderOverview();
   }
+  // Beim International-Tab: Polling starten
+  if (id === 'international') {
+    startIntlPolling();
+  } else {
+    stopIntlPolling();
+  }
 }
 
 // Dropdown-Sperrlogik je nach aktuellem Tab / Sub-Tab
@@ -2343,7 +2386,7 @@ function aktualisiereDropdownStatus() {
   const lSelMob = document.getElementById('liga-select-mob');
 
   let vLock = false, lLock = false;
-  if (aktiverTab === 'overview') {
+  if (aktiverTab === 'overview' || aktiverTab === 'international') {
     vLock = true; lLock = true;
   } else if (aktiverTab === 'alltime') {
     lLock = true;
@@ -5688,6 +5731,448 @@ function setMeinTeam(team) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// INTERNATIONAL TAB — Sofascore API
+// Discovery: 7 Kategorien, 12 Ligen, Standings + Spielplan verifiziert
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SOFASCORE_BASE = 'https://api.sofascore.com/api/v1';
+const CORS_PROXY     = 'https://corsproxy.io/?';
+
+// Alle via API-Discovery verifizierten Floorball-Ligen mit aktueller Saison-ID
+const INTL_LIGEN = [
+  { id: 617,   saison: 64366, name: 'WM Männer',             flag: 'int', kat: 'International' },
+  { id: 762,   saison: 85669, name: 'WM Frauen',              flag: 'int', kat: 'International' },
+  { id: 961,   saison: 80598, name: 'Champions Cup',          flag: 'int', kat: 'International' },
+  { id: 255,   saison: 78217, name: 'Svenska Superligan',     flag: 'se',  kat: 'Schweden' },
+  { id: 1428,  saison: 78233, name: 'SSL Frauen',             flag: 'se',  kat: 'Schweden' },
+  { id: 306,   saison: 77638, name: 'F-Liiga',                flag: 'fi',  kat: 'Finnland' },
+  { id: 20021, saison: 76917, name: 'F-Liiga Frauen',         flag: 'fi',  kat: 'Finnland' },
+  { id: 313,   saison: 78896, name: 'Unihockey Prime League', flag: 'ch',  kat: 'Schweiz' },
+  { id: 19990, saison: 78897, name: 'UPL Frauen',             flag: 'ch',  kat: 'Schweiz' },
+  { id: 829,   saison: 76918, name: 'Extraliga',              flag: 'cz',  kat: 'Tschechien' },
+  { id: 318,   saison: 78716, name: 'Eliteserien',            flag: 'no',  kat: 'Norwegen' },
+  { id: 1436,  saison: 80599, name: 'Floorball League',       flag: 'dk',  kat: 'Dänemark' },
+];
+
+// Bekannte Nationalmannschafts-Team-IDs (via API-Discovery verifiziert)
+const INTL_NATIONEN = [
+  { teamId: 7559,  name: 'Deutschland',     flag: 'de' },
+  { teamId: 25912, name: 'Schweden',        flag: 'se' },
+  { teamId: 25906, name: 'Finnland',        flag: 'fi' },
+  { teamId: 7558,  name: 'Finnland Frauen', flag: 'fi' },
+];
+
+// State
+let intlPollingTimer     = null;
+let intlSubTab           = 'spielplan'; // 'spielplan' | 'tabelle' | 'laenderspiele'
+let intlAktiveLiga       = null;        // null = alle, sonst INTL_LIGEN-Objekt
+let intlSpielplanDaten   = { live: [], upcoming: [], recent: [] };
+let intlSpielplanGeladen = false;
+let intlLadezeit         = null;
+let intlTabelleCache     = {};          // `intl_tabelle_${id}_${saison}` → rows
+let intlLaenderCache     = null;
+let intlLaenderGeladen   = false;
+
+async function intlFetch(endpoint) {
+  const direct = `${SOFASCORE_BASE}${endpoint}`;
+  try {
+    const r = await fetch(direct, { headers: { 'Accept': 'application/json' } });
+    if (r.ok) return await r.json();
+    throw new Error(`${r.status}`);
+  } catch (e) {
+    const proxy = `${CORS_PROXY}${encodeURIComponent(direct)}`;
+    const r2 = await fetch(proxy);
+    if (!r2.ok) throw new Error(`Proxy ${r2.status}`);
+    return await r2.json();
+  }
+}
+
+function intlGetCached(key, maxSek = 60) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts > maxSek * 1000) return null;
+    return data;
+  } catch { return null; }
+}
+
+function intlSetCached(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() }));
+  } catch {}
+}
+
+function startIntlPolling() {
+  if (intlPollingTimer) return;
+  ladeInternationaleDaten();
+  intlPollingTimer = setInterval(ladeInternationaleDaten, 60000);
+}
+
+function stopIntlPolling() {
+  if (intlPollingTimer) { clearInterval(intlPollingTimer); intlPollingTimer = null; }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopIntlPolling();
+  else if (aktiverTab === 'international') startIntlPolling();
+});
+
+function intlDatumStr(offsetTage = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetTage);
+  return d.toISOString().slice(0, 10);
+}
+
+// ── Länder-Name → Alpha2 für Emoji-Flags ─────────────────────────────────────
+const INTL_FLAG_MAP = {
+  'international':'int','finland':'fi','sweden':'se','norway':'no',
+  'switzerland':'ch','czech-republic':'cz','denmark':'dk','germany':'de',
+  'latvia':'lv','slovakia':'sk','estonia':'ee','poland':'pl',
+  'slovenia':'si','austria':'at','hungary':'hu','russia':'ru',
+  'usa':'us','canada':'ca','australia':'au','philippines':'ph',
+  'thailand':'th','japan':'jp'
+};
+
+function intlFlag(flagCode) {
+  if (!flagCode) return '🌍';
+  const mapped = INTL_FLAG_MAP[flagCode.toLowerCase()] || flagCode;
+  if (mapped === 'int' || mapped === 'international') return '🌍';
+  const code = mapped.toUpperCase();
+  if (code.length !== 2) return '🌍';
+  try {
+    return String.fromCodePoint(0x1F1E6 + code.charCodeAt(0) - 65)
+         + String.fromCodePoint(0x1F1E6 + code.charCodeAt(1) - 65);
+  } catch { return '🌍'; }
+}
+
+function intlFormatZeit(ts) {
+  if (!ts) return '–';
+  return new Date(ts * 1000).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+}
+
+function intlFormatDatum(ts) {
+  if (!ts) return '–';
+  const d   = new Date(ts * 1000);
+  const tag = new Date(d); tag.setHours(0,0,0,0);
+  const heute   = new Date(); heute.setHours(0,0,0,0);
+  const morgen  = new Date(heute); morgen.setDate(heute.getDate() + 1);
+  const gestern = new Date(heute); gestern.setDate(heute.getDate() - 1);
+  if (tag.getTime() === heute.getTime())   return 'Heute';
+  if (tag.getTime() === morgen.getTime())  return 'Morgen';
+  if (tag.getTime() === gestern.getTime()) return 'Gestern';
+  return d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+}
+
+function intlMatchCard(ev) {
+  const status   = ev.status?.type || 'notstarted';
+  const isLive   = status === 'inprogress';
+  const isEnded  = status === 'finished';
+  const heimName = ev.homeTeam?.name  || '–';
+  const gastName = ev.awayTeam?.name  || '–';
+  const ts       = ev.startTimestamp;
+  const ligaName = ev.tournament?.uniqueTournament?.name || ev.tournament?.name || '–';
+  const flag     = intlFlag(ev.tournament?.category?.flag);
+  const periode  = ev.status?.description || '';
+  const hs = ev.homeScore, gs = ev.awayScore;
+  const heimScore = hs?.current ?? '';
+  const gastScore = gs?.current ?? '';
+
+  let periodenStr = '';
+  if (isEnded && hs) {
+    const parts = [];
+    if (hs.period1 != null) parts.push(hs.period1 + ':' + gs.period1);
+    if (hs.period2 != null) parts.push(hs.period2 + ':' + gs.period2);
+    if (hs.period3 != null) parts.push(hs.period3 + ':' + gs.period3);
+    if (hs.overtime != null && (hs.overtime > 0 || gs.overtime > 0)) parts.push('VL ' + hs.overtime + ':' + gs.overtime);
+    if (hs.shootout != null && (hs.shootout > 0 || gs.shootout > 0)) parts.push('PS ' + hs.shootout + ':' + gs.shootout);
+    if (parts.length) periodenStr = '<div class="spiel-drittel">' + parts.join(' · ') + '</div>';
+  }
+
+  let mitteHTML;
+  if (isEnded) {
+    mitteHTML = '<div class="spiel-ergebnis">' + heimScore + ':' + gastScore + '</div>' + periodenStr;
+  } else if (isLive) {
+    mitteHTML = '<div class="live-badge"><span class="live-dot"></span> LIVE</div>'
+      + '<div class="spiel-ergebnis" style="margin-top:2px">' + (heimScore !== '' ? heimScore + ':' + gastScore : '–') + '</div>'
+      + (periode ? '<div class="spiel-drittel">' + esc(periode) + '</div>' : '');
+  } else {
+    mitteHTML = '<div class="spiel-uhrzeit">' + intlFormatZeit(ts) + '</div>';
+  }
+
+  return '<div class="glass spiel-item ' + (isEnded ? 'vergangen' : '') + ' ' + (isLive ? 'spiel-item-live' : '') + '">'
+    + '<div class="spiel-datum"><strong>' + intlFormatDatum(ts) + '</strong>'
+    + '<span class="intl-liga-badge">' + flag + ' ' + esc(ligaName) + '</span></div>'
+    + '<div class="spiel-team spiel-team-heim"><span class="spiel-team-name">' + esc(heimName) + '</span></div>'
+    + '<div class="spiel-mid">' + mitteHTML + '</div>'
+    + '<div class="spiel-team spiel-team-gast"><span class="spiel-team-name">' + esc(gastName) + '</span></div>'
+    + '<div class="spiel-item-arena"></div></div>';
+}
+
+// ── Spielplan laden (Datum-Range) ─────────────────────────────────────────────
+async function ladeInternationaleDaten() {
+  const cacheKey = 'intl_spielplan_v3';
+  const cached = intlGetCached(cacheKey, 60);
+  if (cached) {
+    intlSpielplanDaten = cached; intlSpielplanGeladen = true; intlLadezeit = Date.now();
+    renderInternationalTab(); return;
+  }
+
+  if (!intlSpielplanGeladen) {
+    const c = document.getElementById('content-international');
+    if (c) c.innerHTML = '<div class="lade-info"><div class="spinner"></div><span>Internationale Spiele laden…</span></div>';
+  }
+
+  try {
+    const offsets = [-3,-2,-1,0,1,2,3,4,5,6,7];
+    const [liveResp, ...scheduledResps] = await Promise.all([
+      intlFetch('/sport/floorball/events/live').catch(() => ({ events: [] })),
+      ...offsets.map(i => intlFetch('/sport/floorball/scheduled-events/' + intlDatumStr(i)).catch(() => ({ events: [] })))
+    ]);
+
+    // Deduplication nach Event-ID
+    const seen = new Set();
+    const alle = [];
+    for (const ev of [...(liveResp.events || []), ...scheduledResps.flatMap(r => r.events || [])]) {
+      if (ev?.id && !seen.has(ev.id)) { seen.add(ev.id); alle.push(ev); }
+    }
+
+    const jetzt = Date.now() / 1000;
+    intlSpielplanDaten = {
+      live:     alle.filter(e => e.status?.type === 'inprogress'),
+      upcoming: alle.filter(e => e.status?.type === 'notstarted' && (e.startTimestamp || 0) >= jetzt - 3600)
+                    .sort((a,b) => (a.startTimestamp||0) - (b.startTimestamp||0)),
+      recent:   alle.filter(e => e.status?.type === 'finished')
+                    .sort((a,b) => (b.startTimestamp||0) - (a.startTimestamp||0))
+    };
+    intlSetCached(cacheKey, intlSpielplanDaten);
+    intlSpielplanGeladen = true;
+    intlLadezeit = Date.now();
+  } catch (err) {
+    if (!intlSpielplanGeladen) {
+      const c = document.getElementById('content-international');
+      if (c) c.innerHTML = '<div class="lade-info" style="gap:14px;padding:80px 20px">'
+        + '<div style="font-size:1.6rem">🌐</div>'
+        + '<div style="color:rgba(255,255,255,.45);text-align:center;max-width:280px;line-height:1.6">Internationale Daten nicht verfügbar.<br>Evtl. blockiert ein Browser-Plugin die API.</div>'
+        + '<button class="filter-btn" onclick="intlSpielplanGeladen=false;ladeInternationaleDaten()">↺ Erneut versuchen</button></div>';
+      return;
+    }
+  }
+  renderInternationalTab();
+}
+
+// ── Tabelle laden ─────────────────────────────────────────────────────────────
+async function ladeIntlTabelle(liga) {
+  const key = 'intl_tab_' + liga.id + '_' + liga.saison;
+  if (intlTabelleCache[key]) { renderInternationalTab(); return; }
+  const cached = intlGetCached(key, 1800);
+  if (cached) { intlTabelleCache[key] = cached; renderInternationalTab(); return; }
+
+  try {
+    const data = await intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/standings/total');
+    // Mehrere Gruppen möglich (z.B. WM-Gruppen) → alle Rows mit Gruppen-Label mergen
+    const rows = (data.standings || []).flatMap((s, si) =>
+      (s.rows || []).map(r => Object.assign({}, r, { gruppenName: data.standings.length > 1 ? (s.name || ('Gruppe ' + (si+1))) : null }))
+    );
+    intlTabelleCache[key] = rows;
+    intlSetCached(key, rows);
+  } catch {
+    intlTabelleCache[key] = [];
+  }
+  renderInternationalTab();
+}
+
+// ── Länderspiele laden ────────────────────────────────────────────────────────
+async function ladeIntlLaenderspiele() {
+  if (intlLaenderGeladen) { renderInternationalTab(); return; }
+  const key = 'intl_laender_v2';
+  const cached = intlGetCached(key, 3600);
+  if (cached) { intlLaenderCache = cached; intlLaenderGeladen = true; renderInternationalTab(); return; }
+
+  const results = await Promise.all(
+    INTL_NATIONEN.map(n => intlFetch('/team/' + n.teamId + '/events/last/0').catch(() => ({ events: [] })))
+  );
+  const seen = new Set(); const alle = [];
+  results.forEach(r => (r.events || []).forEach(ev => {
+    if (ev?.id && !seen.has(ev.id)) { seen.add(ev.id); alle.push(ev); }
+  }));
+  alle.sort((a,b) => (b.startTimestamp||0) - (a.startTimestamp||0));
+  intlLaenderCache = alle; intlLaenderGeladen = true;
+  intlSetCached(key, alle);
+  renderInternationalTab();
+}
+
+// ── Liga-Selector HTML ────────────────────────────────────────────────────────
+function intlLigaSelectorHTML() {
+  const katOrder = ['International','Schweden','Finnland','Schweiz','Tschechien','Norwegen','Dänemark'];
+  const byKat = {};
+  INTL_LIGEN.forEach(l => { if (!byKat[l.kat]) byKat[l.kat] = []; byKat[l.kat].push(l); });
+  let html = '<button class="filter-btn ' + (!intlAktiveLiga ? 'active' : '') + '" onclick="setIntlLiga(null)">Alle</button>';
+  katOrder.forEach(kat => {
+    if (!byKat[kat]) return;
+    byKat[kat].forEach(l => {
+      html += '<button class="filter-btn ' + (intlAktiveLiga?.id === l.id ? 'active' : '') + '" onclick="setIntlLiga(' + l.id + ')">'
+            + intlFlag(l.flag) + ' ' + esc(l.name) + '</button>';
+    });
+  });
+  return html;
+}
+
+// ── Haupt-Render ──────────────────────────────────────────────────────────────
+function renderInternationalTab() {
+  const container = document.getElementById('content-international');
+  if (!container) return;
+
+  const vorSek = intlLadezeit ? Math.round((Date.now() - intlLadezeit) / 1000) : null;
+  const updateHint = vorSek != null
+    ? '<div class="intl-update-hint">Aktualisiert vor ' + (vorSek < 5 ? 'wenigen Sekunden' : vorSek + ' Sek') + ' · Auto-Refresh 60s</div>'
+    : '';
+
+  const subNavHTML = '<div style="display:flex;gap:6px;padding:10px 20px 0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch">'
+    + '<button class="filter-btn ' + (intlSubTab==='spielplan'     ?'active':'') + '" onclick="setIntlSubTab(\'spielplan\')">📅 Spielplan</button>'
+    + '<button class="filter-btn ' + (intlSubTab==='tabelle'       ?'active':'') + '" onclick="setIntlSubTab(\'tabelle\')">📊 Tabelle</button>'
+    + '<button class="filter-btn ' + (intlSubTab==='laenderspiele' ?'active':'') + '" onclick="setIntlSubTab(\'laenderspiele\')">🏳 Länderspiele</button>'
+    + '</div>'
+    + '<div class="filters" style="flex-wrap:wrap;padding-top:6px">' + intlLigaSelectorHTML() + '</div>';
+
+  let subContent = '';
+  if      (intlSubTab === 'spielplan')     subContent = renderIntlSpielplan();
+  else if (intlSubTab === 'tabelle')       subContent = renderIntlTabelle();
+  else if (intlSubTab === 'laenderspiele') subContent = renderIntlLaenderinhalt();
+
+  container.innerHTML = subNavHTML
+    + '<div id="intl-sub-content" class="spielplan-wrap">' + subContent + '</div>'
+    + '<div class="intl-footer">' + updateHint
+    + '<div class="intl-hinweis">ℹ️ Daten von Sofascore (inoffizielle API) — nicht mit Sofascore oder der IFF affiliiert.</div></div>';
+}
+
+function renderIntlSpielplan() {
+  if (!intlSpielplanGeladen) return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
+
+  function filterLiga(events) {
+    if (!intlAktiveLiga) return events;
+    return events.filter(e => e.tournament?.uniqueTournament?.id === intlAktiveLiga.id);
+  }
+  const live     = filterLiga(intlSpielplanDaten.live     || []);
+  const upcoming = filterLiga(intlSpielplanDaten.upcoming  || []);
+  const cutoff   = Date.now() / 1000 - 3 * 86400;
+  const recent   = filterLiga((intlSpielplanDaten.recent || []).filter(e => (e.startTimestamp||0) >= cutoff));
+
+  let html = '';
+
+  if (live.length) {
+    html += '<div class="spieltag-gruppe"><div class="spieltag-header">'
+          + '<span class="live-badge" style="font-size:.58rem;padding:2px 8px"><span class="live-dot" style="width:5px;height:5px"></span>LIVE JETZT</span></div>'
+          + live.map(e => intlMatchCard(e)).join('') + '</div>';
+  }
+
+  function gruppeRender(events, titel) {
+    const gruppen = {};
+    events.forEach(e => { const l=intlFormatDatum(e.startTimestamp); if(!gruppen[l]) gruppen[l]=[]; gruppen[l].push(e); });
+    let h = '<div class="spieltag-gruppe"><div class="spieltag-header">' + titel + '</div>';
+    Object.entries(gruppen).forEach(([label,evs]) => {
+      h += '<div class="spieltag-header" style="font-size:.72rem;padding:8px 0 4px;opacity:.55;text-transform:none;letter-spacing:0">' + label + '</div>';
+      h += evs.map(e => intlMatchCard(e)).join('');
+    });
+    return h + '</div>';
+  }
+
+  if (upcoming.length) html += gruppeRender(upcoming, '📅 Nächste Spiele');
+  if (recent.length)   html += gruppeRender(recent,   '✅ Letzte Ergebnisse');
+
+  if (!live.length && !upcoming.length && !recent.length) {
+    html += '<div class="lade-info" style="padding:60px 20px"><div style="font-size:1.6rem">🏒</div>'
+          + '<span>Keine Spiele in diesem Zeitraum' + (intlAktiveLiga ? ' für diese Liga' : '') + '.</span></div>';
+  }
+  return html;
+}
+
+function renderIntlTabelle() {
+  if (!intlAktiveLiga) {
+    return '<div class="lade-info" style="padding:60px 20px">'
+         + '<span style="opacity:.5">Wähle eine Liga aus um die Tabelle zu sehen.</span></div>';
+  }
+  const liga = intlAktiveLiga;
+  const key  = 'intl_tab_' + liga.id + '_' + liga.saison;
+  if (!intlTabelleCache[key]) {
+    ladeIntlTabelle(liga);
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
+  }
+  const rows = intlTabelleCache[key];
+  if (!rows.length) return '<div class="lade-info" style="padding:40px"><span style="opacity:.4">Keine Tabellendaten verfügbar.</span></div>';
+
+  // Gruppen ermitteln
+  const gruppenMap = {};
+  rows.forEach(r => { const g = r.gruppenName || '__'; if(!gruppenMap[g]) gruppenMap[g]=[]; gruppenMap[g].push(r); });
+  const mehrereGruppen = Object.keys(gruppenMap).length > 1;
+
+  let html = '<div class="tabelle-wrap"><div style="margin-bottom:10px;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.6)">'
+           + intlFlag(liga.flag) + ' ' + esc(liga.name) + '</div>';
+
+  Object.entries(gruppenMap).forEach(([gName, gRows]) => {
+    if (mehrereGruppen) html += '<div class="spieltag-header" style="margin-bottom:6px">' + esc(gName) + '</div>';
+    html += '<div class="glass" style="overflow-x:auto;margin-bottom:16px"><table class="tabelle-table"><thead><tr>'
+          + '<th>#</th><th style="text-align:left">Team</th>'
+          + '<th title="Spiele">Sp</th><th title="Siege">S</th>'
+          + '<th title="Niederlagen">N</th><th>T:G</th><th>+/-</th><th>Pkt</th>'
+          + '</tr></thead><tbody>';
+    gRows.forEach(r => {
+      const promo = r.promotion?.text || '';
+      const bar = promo ? '<span style="display:inline-block;width:3px;height:14px;background:'
+        + (promo === 'Playoffs' ? 'var(--color-a)' : 'rgba(251,146,60,.8)')
+        + ';border-radius:2px;margin-right:6px;vertical-align:middle"></span>' : '';
+      html += '<tr><td class="t-pos">' + r.position + '</td>'
+            + '<td><div class="t-team">' + bar + '<span class="t-name">' + esc(r.team?.name || '–') + '</span></div></td>'
+            + '<td>' + (r.matches ?? '–') + '</td><td>' + (r.wins ?? '–') + '</td><td>' + (r.losses ?? '–') + '</td>'
+            + '<td>' + (r.scoresFor ?? '–') + ':' + (r.scoresAgainst ?? '–') + '</td>'
+            + '<td>' + (r.scoreDiffFormatted ?? '–') + '</td>'
+            + '<td style="font-weight:700;color:#f1f5f9">' + (r.points ?? '–') + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  });
+  return html + '</div>';
+}
+
+function renderIntlLaenderinhalt() {
+  if (!intlLaenderGeladen) {
+    ladeIntlLaenderspiele();
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
+  }
+  let events = intlLaenderCache || [];
+  if (intlAktiveLiga) events = events.filter(e => e.tournament?.uniqueTournament?.id === intlAktiveLiga.id);
+  if (!events.length) {
+    return '<div class="lade-info" style="padding:60px 20px">'
+         + '<span style="opacity:.5">Keine Länderspiele gefunden' + (intlAktiveLiga ? ' für diese Liga' : '') + '.</span></div>';
+  }
+  const gruppen = {};
+  events.forEach(e => {
+    const y = e.startTimestamp ? new Date(e.startTimestamp * 1000).getFullYear() : '?';
+    if (!gruppen[y]) gruppen[y] = [];
+    gruppen[y].push(e);
+  });
+  let html = '';
+  Object.entries(gruppen).sort((a,b) => Number(b[0]) - Number(a[0])).forEach(([year, evs]) => {
+    html += '<div class="spieltag-gruppe"><div class="spieltag-header">' + year + '</div>'
+          + evs.map(e => intlMatchCard(e)).join('') + '</div>';
+  });
+  return html;
+}
+
+// ── Sub-Tab & Liga-Umschalter ─────────────────────────────────────────────────
+function setIntlSubTab(sub) {
+  intlSubTab = sub;
+  renderInternationalTab();
+}
+
+function setIntlLiga(id) {
+  intlAktiveLiga = (id === null) ? null : (INTL_LIGEN.find(l => l.id === id) || null);
+  renderInternationalTab();
+  if (intlSubTab === 'tabelle' && intlAktiveLiga) ladeIntlTabelle(intlAktiveLiga);
+}
+
+function setIntlFilter(id) { setIntlLiga(id); }
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Pull-to-Refresh (nur auf Touch-Geräten)
 // ─────────────────────────────────────────────────────────────────────────────
 (function() {
@@ -5778,6 +6263,13 @@ ladeLigen();
       <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/>
     </svg>
     <span>Alltime</span>
+  </button>
+  <button class="bnav-item" id="bnav-international" onclick="zeigeTab('international')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+    <span>Intl.</span>
   </button>
 </nav>
 

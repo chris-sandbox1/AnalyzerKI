@@ -1,7 +1,7 @@
 // FloorballIQ Service Worker
 // Strategie: Cache-first für App-Shell (HTML + Icons), Network-first für API
 
-const CACHE_NAME = 'floorballiq-v1';
+const CACHE_NAME = 'floorballiq-v2';
 
 // Dateien die beim Installieren sofort gecacht werden
 const PRECACHE_URLS = [
