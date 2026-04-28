@@ -1911,6 +1911,65 @@
     .detail-scorer-table tr:hover td { background: rgba(255,255,255,.025); }
 
     /* ── International Tab ──────────────────────────────────────────────────── */
+    .intl-header {
+      position: sticky;
+      top: var(--topbar-h);
+      z-index: 10;
+      background: rgba(20,20,34,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 10px 12px 8px;
+    }
+    .intl-verband-row,
+    .intl-subtab-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 6px;
+    }
+    .intl-verband-row::-webkit-scrollbar,
+    .intl-subtab-row::-webkit-scrollbar { display: none; }
+    .intl-liga-row {
+      padding: 4px 0 6px;
+    }
+    .intl-liga-select {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.20);
+      color: #e2e8f0;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .83rem;
+      cursor: pointer;
+      width: 100%;
+      max-width: 320px;
+    }
+    .intl-runden-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 14px 12px 6px;
+    }
+    .intl-runden-btn {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.18);
+      color: #e2e8f0;
+      border-radius: 50%;
+      width: 34px; height: 34px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .intl-runden-btn:hover:not(:disabled) { background: rgba(255,255,255,.2); }
+    .intl-runden-btn:disabled { opacity: .3; cursor: default; }
+    .intl-runden-label {
+      font-size: .9rem;
+      font-weight: 600;
+      min-width: 120px;
+      text-align: center;
+    }
     .intl-liga-badge {
       font-size: .62rem;
       color: rgba(255,255,255,.38);
@@ -1930,11 +1989,18 @@
       color: rgba(255,255,255,.18);
       line-height: 1.6;
     }
-    .intl-update-hint {
-      font-size: .66rem;
-      color: rgba(255,255,255,.2);
-      margin-bottom: 6px;
+    /* Playoff CupTree */
+    .intl-cup-round { margin: 0 12px 20px; }
+    .intl-cup-serie {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,.06);
     }
+    .intl-cup-serie:first-child { border-top: none; }
+    .intl-cup-winner { color: var(--color-a); font-weight: 700; }
     @media (max-width: 768px) {
       .intl-liga-badge { max-width: 56px; font-size: .58rem; }
     }
@@ -5738,23 +5804,35 @@ function setMeinTeam(team) {
 const SOFASCORE_BASE = 'https://api.sofascore.com/api/v1';
 const CORS_PROXY     = 'https://corsproxy.io/?';
 
-// Alle via API-Discovery verifizierten Floorball-Ligen mit aktueller Saison-ID
-const INTL_LIGEN = [
-  { id: 617,   saison: 64366, name: 'WM Männer',             flag: 'int', kat: 'International' },
-  { id: 762,   saison: 85669, name: 'WM Frauen',              flag: 'int', kat: 'International' },
-  { id: 961,   saison: 80598, name: 'Champions Cup',          flag: 'int', kat: 'International' },
-  { id: 255,   saison: 78217, name: 'Svenska Superligan',     flag: 'se',  kat: 'Schweden' },
-  { id: 1428,  saison: 78233, name: 'SSL Frauen',             flag: 'se',  kat: 'Schweden' },
-  { id: 306,   saison: 77638, name: 'F-Liiga',                flag: 'fi',  kat: 'Finnland' },
-  { id: 20021, saison: 76917, name: 'F-Liiga Frauen',         flag: 'fi',  kat: 'Finnland' },
-  { id: 313,   saison: 78896, name: 'Unihockey Prime League', flag: 'ch',  kat: 'Schweiz' },
-  { id: 19990, saison: 78897, name: 'UPL Frauen',             flag: 'ch',  kat: 'Schweiz' },
-  { id: 829,   saison: 76918, name: 'Extraliga',              flag: 'cz',  kat: 'Tschechien' },
-  { id: 318,   saison: 78716, name: 'Eliteserien',            flag: 'no',  kat: 'Norwegen' },
-  { id: 1436,  saison: 80599, name: 'Floorball League',       flag: 'dk',  kat: 'Dänemark' },
+// ─────────────────────────────────────────────────────────────────────────────
+// INTERNATIONAL TAB – Konfiguration (via API-Discovery verifiziert)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const INTL_VERBÄNDE = [
+  { id: 'international', name: '🌍 International' },
+  { id: 'schweden',      name: '🇸🇪 Schweden'      },
+  { id: 'finnland',      name: '🇫🇮 Finnland'       },
+  { id: 'schweiz',       name: '🇨🇭 Schweiz'        },
+  { id: 'tschechien',    name: '🇨🇿 Tschechien'     },
+  { id: 'norwegen',      name: '🇳🇴 Norwegen'       },
+  { id: 'daenemark',     name: '🇩🇰 Dänemark'       },
 ];
 
-// Bekannte Nationalmannschafts-Team-IDs (via API-Discovery verifiziert)
+const INTL_LIGEN = [
+  { id: 617,   saison: 64366, name: 'WM Männer',             flag: 'int', verband: 'international' },
+  { id: 762,   saison: 85669, name: 'WM Frauen',             flag: 'int', verband: 'international' },
+  { id: 961,   saison: 80598, name: 'Champions Cup',         flag: 'int', verband: 'international' },
+  { id: 255,   saison: 78217, name: 'Svenska Superligan',    flag: 'se',  verband: 'schweden'      },
+  { id: 1428,  saison: 78233, name: 'SSL Frauen',            flag: 'se',  verband: 'schweden'      },
+  { id: 306,   saison: 77638, name: 'F-Liiga',               flag: 'fi',  verband: 'finnland'      },
+  { id: 20021, saison: 76917, name: 'F-Liiga Frauen',        flag: 'fi',  verband: 'finnland'      },
+  { id: 313,   saison: 78896, name: 'Unihockey Prime League',flag: 'ch',  verband: 'schweiz'       },
+  { id: 19990, saison: 78897, name: 'UPL Frauen',            flag: 'ch',  verband: 'schweiz'       },
+  { id: 829,   saison: 76918, name: 'Extraliga',             flag: 'cz',  verband: 'tschechien'    },
+  { id: 318,   saison: 78716, name: 'Eliteserien',           flag: 'no',  verband: 'norwegen'      },
+  { id: 1436,  saison: 80599, name: 'Floorball League',      flag: 'dk',  verband: 'daenemark'     },
+];
+
 const INTL_NATIONEN = [
   { teamId: 7559,  name: 'Deutschland',     flag: 'de' },
   { teamId: 25912, name: 'Schweden',        flag: 'se' },
@@ -5762,51 +5840,69 @@ const INTL_NATIONEN = [
   { teamId: 7558,  name: 'Finnland Frauen', flag: 'fi' },
 ];
 
+const INTL_FLAG_MAP = {
+  'international':'int','finland':'fi','sweden':'se','norway':'no',
+  'switzerland':'ch','czech-republic':'cz','denmark':'dk','germany':'de',
+  'latvia':'lv','slovakia':'sk','estonia':'ee','poland':'pl',
+  'slovenia':'si','austria':'at','hungary':'hu','russia':'ru',
+  'usa':'us','canada':'ca','australia':'au'
+};
+
 // State
-let intlPollingTimer     = null;
-let intlSubTab           = 'spielplan'; // 'spielplan' | 'tabelle' | 'laenderspiele'
-let intlAktiveLiga       = null;        // null = alle, sonst INTL_LIGEN-Objekt
-let intlSpielplanDaten   = { live: [], upcoming: [], recent: [] };
-let intlSpielplanGeladen = false;
-let intlLadezeit         = null;
-let intlTabelleCache     = {};          // `intl_tabelle_${id}_${saison}` → rows
-let intlLaenderCache     = null;
-let intlLaenderGeladen   = false;
+let intlPollingTimer  = null;
+let intlAktVerband    = 'schweden';
+let intlAktLigaId     = 255;          // Svenska Superligan als Default
+let intlSubTab        = 'uebersicht'; // 'uebersicht'|'spielplan'|'tabelle'|'playoffs'|'laenderspiele'
+let intlAktRunde      = null;         // null = auto (currentRound)
+// Caches (in-memory + localStorage)
+let intlUebersichtCache = {};   // ligaId → { last, next }
+let intlRundenCache     = {};   // ligaId → { rounds, currentRound }
+let intlRundeCache      = {};   // `${ligaId}_r${n}` → events[]
+let intlTabelleCache    = {};   // ligaId → groups[]
+let intlCuptreeCache    = {};   // ligaId → cuptree data (undefined=ungeladen, null=n.v.)
+let intlLaenderCache    = null;
+let intlLaenderGeladen  = false;
+
+// ── Basis-Helpers ─────────────────────────────────────────────────────────────
 
 async function intlFetch(endpoint) {
-  const direct = `${SOFASCORE_BASE}${endpoint}`;
+  const direct = SOFASCORE_BASE + endpoint;
   try {
     const r = await fetch(direct, { headers: { 'Accept': 'application/json' } });
     if (r.ok) return await r.json();
-    throw new Error(`${r.status}`);
-  } catch (e) {
-    const proxy = `${CORS_PROXY}${encodeURIComponent(direct)}`;
-    const r2 = await fetch(proxy);
-    if (!r2.ok) throw new Error(`Proxy ${r2.status}`);
+    throw new Error(r.status);
+  } catch {
+    const r2 = await fetch(CORS_PROXY + encodeURIComponent(direct));
+    if (!r2.ok) throw new Error('Proxy ' + r2.status);
     return await r2.json();
   }
 }
 
 function intlGetCached(key, maxSek = 60) {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem('intl_' + key);
     if (!raw) return null;
     const { data, ts } = JSON.parse(raw);
-    if (Date.now() - ts > maxSek * 1000) return null;
+    if ((Date.now() - ts) / 1000 > maxSek) return null;
     return data;
   } catch { return null; }
 }
 
 function intlSetCached(key, data) {
-  try {
-    localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() }));
-  } catch {}
+  try { localStorage.setItem('intl_' + key, JSON.stringify({ data, ts: Date.now() })); } catch {}
 }
+
+function intlGetLiga() {
+  return INTL_LIGEN.find(l => l.id === intlAktLigaId) || INTL_LIGEN[0];
+}
+
+// ── Polling ────────────────────────────────────────────────────────────────────
 
 function startIntlPolling() {
   if (intlPollingTimer) return;
-  ladeInternationaleDaten();
-  intlPollingTimer = setInterval(ladeInternationaleDaten, 60000);
+  renderInternationalTab(); // Header sofort zeigen, Content-Spinner folgt
+  ladeIntlUebersicht();
+  intlPollingTimer = setInterval(ladeIntlUebersicht, 60000);
 }
 
 function stopIntlPolling() {
@@ -5818,32 +5914,17 @@ document.addEventListener('visibilitychange', () => {
   else if (aktiverTab === 'international') startIntlPolling();
 });
 
-function intlDatumStr(offsetTage = 0) {
-  const d = new Date();
-  d.setDate(d.getDate() + offsetTage);
-  return d.toISOString().slice(0, 10);
-}
-
-// ── Länder-Name → Alpha2 für Emoji-Flags ─────────────────────────────────────
-const INTL_FLAG_MAP = {
-  'international':'int','finland':'fi','sweden':'se','norway':'no',
-  'switzerland':'ch','czech-republic':'cz','denmark':'dk','germany':'de',
-  'latvia':'lv','slovakia':'sk','estonia':'ee','poland':'pl',
-  'slovenia':'si','austria':'at','hungary':'hu','russia':'ru',
-  'usa':'us','canada':'ca','australia':'au','philippines':'ph',
-  'thailand':'th','japan':'jp'
-};
+// ── Emoji-Flags ────────────────────────────────────────────────────────────────
 
 function intlFlag(flagCode) {
-  if (!flagCode) return '🌍';
-  const mapped = INTL_FLAG_MAP[flagCode.toLowerCase()] || flagCode;
+  if (!flagCode) return '🏳️';
+  const mapped = INTL_FLAG_MAP[flagCode.toLowerCase()] || flagCode.toLowerCase();
   if (mapped === 'int' || mapped === 'international') return '🌍';
-  const code = mapped.toUpperCase();
-  if (code.length !== 2) return '🌍';
+  if (mapped.length !== 2) return '🏳️';
   try {
-    return String.fromCodePoint(0x1F1E6 + code.charCodeAt(0) - 65)
-         + String.fromCodePoint(0x1F1E6 + code.charCodeAt(1) - 65);
-  } catch { return '🌍'; }
+    return String.fromCodePoint(0x1F1E6 + mapped.charCodeAt(0) - 97)
+         + String.fromCodePoint(0x1F1E6 + mapped.charCodeAt(1) - 97);
+  } catch { return '🏳️'; }
 }
 
 function intlFormatZeit(ts) {
@@ -5853,30 +5934,33 @@ function intlFormatZeit(ts) {
 
 function intlFormatDatum(ts) {
   if (!ts) return '–';
-  const d   = new Date(ts * 1000);
+  const d = new Date(ts * 1000);
   const tag = new Date(d); tag.setHours(0,0,0,0);
-  const heute   = new Date(); heute.setHours(0,0,0,0);
-  const morgen  = new Date(heute); morgen.setDate(heute.getDate() + 1);
+  const heute = new Date(); heute.setHours(0,0,0,0);
+  const morgen = new Date(heute); morgen.setDate(heute.getDate() + 1);
   const gestern = new Date(heute); gestern.setDate(heute.getDate() - 1);
-  if (tag.getTime() === heute.getTime())   return 'Heute';
-  if (tag.getTime() === morgen.getTime())  return 'Morgen';
-  if (tag.getTime() === gestern.getTime()) return 'Gestern';
+  if (+tag === +heute)   return 'Heute';
+  if (+tag === +morgen)  return 'Morgen';
+  if (+tag === +gestern) return 'Gestern';
   return d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
 }
 
-function intlMatchCard(ev) {
-  const status   = ev.status?.type || 'notstarted';
-  const isLive   = status === 'inprogress';
-  const isEnded  = status === 'finished';
-  const heimName = ev.homeTeam?.name  || '–';
-  const gastName = ev.awayTeam?.name  || '–';
-  const ts       = ev.startTimestamp;
-  const ligaName = ev.tournament?.uniqueTournament?.name || ev.tournament?.name || '–';
-  const flag     = intlFlag(ev.tournament?.category?.flag);
-  const periode  = ev.status?.description || '';
-  const hs = ev.homeScore, gs = ev.awayScore;
-  const heimScore = hs?.current ?? '';
-  const gastScore = gs?.current ?? '';
+// ── Match-Card ─────────────────────────────────────────────────────────────────
+
+function intlMatchCard(ev, showLiga = false) {
+  const status  = ev.status?.type || 'notstarted';
+  const isLive  = status === 'inprogress';
+  const isEnded = status === 'finished';
+  const heim = esc(ev.homeTeam?.name || '–');
+  const gast = esc(ev.awayTeam?.name || '–');
+  const ts   = ev.startTimestamp;
+  const hs   = ev.homeScore, gs = ev.awayScore;
+  const hS   = hs?.current ?? '';
+  const gS   = gs?.current ?? '';
+  const flag = intlFlag(ev.tournament?.category?.flag);
+  const ligaName  = esc(ev.tournament?.uniqueTournament?.name || ev.tournament?.name || '');
+  const rundeName = ev.roundInfo?.name ? esc(ev.roundInfo.name)
+                  : ev.roundInfo?.round ? 'Runde ' + ev.roundInfo.round : '';
 
   let periodenStr = '';
   if (isEnded && hs) {
@@ -5884,266 +5968,353 @@ function intlMatchCard(ev) {
     if (hs.period1 != null) parts.push(hs.period1 + ':' + gs.period1);
     if (hs.period2 != null) parts.push(hs.period2 + ':' + gs.period2);
     if (hs.period3 != null) parts.push(hs.period3 + ':' + gs.period3);
-    if (hs.overtime != null && (hs.overtime > 0 || gs.overtime > 0)) parts.push('VL ' + hs.overtime + ':' + gs.overtime);
-    if (hs.shootout != null && (hs.shootout > 0 || gs.shootout > 0)) parts.push('PS ' + hs.shootout + ':' + gs.shootout);
+    if (hs.overtime > 0 || gs?.overtime > 0) parts.push('VL ' + (hs.overtime||0) + ':' + (gs?.overtime||0));
+    if (hs.shootout > 0 || gs?.shootout > 0) parts.push('PS ' + (hs.shootout||0) + ':' + (gs?.shootout||0));
     if (parts.length) periodenStr = '<div class="spiel-drittel">' + parts.join(' · ') + '</div>';
   }
 
   let mitteHTML;
   if (isEnded) {
-    mitteHTML = '<div class="spiel-ergebnis">' + heimScore + ':' + gastScore + '</div>' + periodenStr;
+    mitteHTML = '<div class="spiel-ergebnis">' + hS + ':' + gS + '</div>' + periodenStr;
   } else if (isLive) {
+    const per = esc(ev.status?.description || '');
     mitteHTML = '<div class="live-badge"><span class="live-dot"></span> LIVE</div>'
-      + '<div class="spiel-ergebnis" style="margin-top:2px">' + (heimScore !== '' ? heimScore + ':' + gastScore : '–') + '</div>'
-      + (periode ? '<div class="spiel-drittel">' + esc(periode) + '</div>' : '');
+      + '<div class="spiel-ergebnis" style="margin-top:2px">' + (hS !== '' ? hS + ':' + gS : '–') + '</div>'
+      + (per ? '<div class="spiel-drittel">' + per + '</div>' : '');
   } else {
     mitteHTML = '<div class="spiel-uhrzeit">' + intlFormatZeit(ts) + '</div>';
   }
 
-  return '<div class="glass spiel-item ' + (isEnded ? 'vergangen' : '') + ' ' + (isLive ? 'spiel-item-live' : '') + '">'
-    + '<div class="spiel-datum"><strong>' + intlFormatDatum(ts) + '</strong>'
-    + '<span class="intl-liga-badge">' + flag + ' ' + esc(ligaName) + '</span></div>'
-    + '<div class="spiel-team spiel-team-heim"><span class="spiel-team-name">' + esc(heimName) + '</span></div>'
+  const badge = showLiga
+    ? '<span class="intl-liga-badge">' + flag + ' ' + ligaName + '</span>'
+    : (rundeName ? '<span class="intl-liga-badge">' + rundeName + '</span>' : '');
+
+  return '<div class="glass spiel-item' + (isLive ? ' spiel-item-live' : '') + (isEnded ? ' vergangen' : '') + '">'
+    + '<div class="spiel-datum"><strong>' + intlFormatDatum(ts) + '</strong>' + badge + '</div>'
+    + '<div class="spiel-team spiel-team-heim"><span class="spiel-team-name">' + heim + '</span></div>'
     + '<div class="spiel-mid">' + mitteHTML + '</div>'
-    + '<div class="spiel-team spiel-team-gast"><span class="spiel-team-name">' + esc(gastName) + '</span></div>'
+    + '<div class="spiel-team spiel-team-gast"><span class="spiel-team-name">' + gast + '</span></div>'
     + '<div class="spiel-item-arena"></div></div>';
 }
 
-// ── Spielplan laden (Datum-Range) ─────────────────────────────────────────────
-async function ladeInternationaleDaten() {
-  const cacheKey = 'intl_spielplan_v3';
-  const cached = intlGetCached(cacheKey, 60);
-  if (cached) {
-    intlSpielplanDaten = cached; intlSpielplanGeladen = true; intlLadezeit = Date.now();
-    renderInternationalTab(); return;
-  }
+// ── Daten laden ────────────────────────────────────────────────────────────────
 
-  if (!intlSpielplanGeladen) {
-    const c = document.getElementById('content-international');
-    if (c) c.innerHTML = '<div class="lade-info"><div class="spinner"></div><span>Internationale Spiele laden…</span></div>';
+async function ladeIntlUebersicht(force = false) {
+  const liga = intlGetLiga();
+  const cKey = 'ueb_' + liga.id;
+  if (!force) {
+    const cached = intlGetCached(cKey, 60);
+    if (cached) { intlUebersichtCache[liga.id] = cached; renderInternationalTab(); return; }
   }
-
   try {
-    const offsets = [-3,-2,-1,0,1,2,3,4,5,6,7];
-    const [liveResp, ...scheduledResps] = await Promise.all([
-      intlFetch('/sport/floorball/events/live').catch(() => ({ events: [] })),
-      ...offsets.map(i => intlFetch('/sport/floorball/scheduled-events/' + intlDatumStr(i)).catch(() => ({ events: [] })))
+    const [lastR, nextR] = await Promise.all([
+      intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/events/last/0').catch(() => ({ events: [] })),
+      intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/events/next/0').catch(() => ({ events: [] }))
     ]);
-
-    // Deduplication nach Event-ID
-    const seen = new Set();
-    const alle = [];
-    for (const ev of [...(liveResp.events || []), ...scheduledResps.flatMap(r => r.events || [])]) {
-      if (ev?.id && !seen.has(ev.id)) { seen.add(ev.id); alle.push(ev); }
-    }
-
-    const jetzt = Date.now() / 1000;
-    intlSpielplanDaten = {
-      live:     alle.filter(e => e.status?.type === 'inprogress'),
-      upcoming: alle.filter(e => e.status?.type === 'notstarted' && (e.startTimestamp || 0) >= jetzt - 3600)
-                    .sort((a,b) => (a.startTimestamp||0) - (b.startTimestamp||0)),
-      recent:   alle.filter(e => e.status?.type === 'finished')
-                    .sort((a,b) => (b.startTimestamp||0) - (a.startTimestamp||0))
+    const data = {
+      last: (lastR.events || []).slice(0, 5).reverse(),
+      next: (nextR.events || []).slice(0, 5)
     };
-    intlSetCached(cacheKey, intlSpielplanDaten);
-    intlSpielplanGeladen = true;
-    intlLadezeit = Date.now();
-  } catch (err) {
-    if (!intlSpielplanGeladen) {
-      const c = document.getElementById('content-international');
-      if (c) c.innerHTML = '<div class="lade-info" style="gap:14px;padding:80px 20px">'
-        + '<div style="font-size:1.6rem">🌐</div>'
-        + '<div style="color:rgba(255,255,255,.45);text-align:center;max-width:280px;line-height:1.6">Internationale Daten nicht verfügbar.<br>Evtl. blockiert ein Browser-Plugin die API.</div>'
-        + '<button class="filter-btn" onclick="intlSpielplanGeladen=false;ladeInternationaleDaten()">↺ Erneut versuchen</button></div>';
-      return;
-    }
-  }
+    intlUebersichtCache[liga.id] = data;
+    intlSetCached(cKey, data);
+  } catch {}
   renderInternationalTab();
 }
 
-// ── Tabelle laden ─────────────────────────────────────────────────────────────
-async function ladeIntlTabelle(liga) {
-  const key = 'intl_tab_' + liga.id + '_' + liga.saison;
-  if (intlTabelleCache[key]) { renderInternationalTab(); return; }
-  const cached = intlGetCached(key, 1800);
-  if (cached) { intlTabelleCache[key] = cached; renderInternationalTab(); return; }
+async function ladeIntlRunden(liga) {
+  const cKey = 'runden_' + liga.id;
+  const cached = intlGetCached(cKey, 3600);
+  if (cached) { intlRundenCache[liga.id] = cached; return cached; }
+  try {
+    const data = await intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/rounds');
+    const result = { rounds: data.rounds || [], currentRound: data.currentRound?.round ?? data.rounds?.[0]?.round };
+    intlRundenCache[liga.id] = result;
+    intlSetCached(cKey, result);
+    return result;
+  } catch { return { rounds: [], currentRound: null }; }
+}
 
+async function ladeIntlRunde(liga, roundN) {
+  const cKey = 'runde_' + liga.id + '_r' + roundN;
+  const cached = intlGetCached(cKey, 300);
+  if (cached) { intlRundeCache[cKey] = cached; return cached; }
+  try {
+    const data = await intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/events/round/' + roundN);
+    const events = data.events || [];
+    intlRundeCache[cKey] = events;
+    intlSetCached(cKey, events);
+    return events;
+  } catch { intlRundeCache[cKey] = []; return []; }
+}
+
+async function ladeIntlTabelle(liga) {
+  if (intlTabelleCache[liga.id] !== undefined) { renderInternationalTab(); return; }
+  const cached = intlGetCached('tab_' + liga.id, 1800);
+  if (cached) { intlTabelleCache[liga.id] = cached; renderInternationalTab(); return; }
   try {
     const data = await intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/standings/total');
-    // Mehrere Gruppen möglich (z.B. WM-Gruppen) → alle Rows mit Gruppen-Label mergen
-    const rows = (data.standings || []).flatMap((s, si) =>
-      (s.rows || []).map(r => Object.assign({}, r, { gruppenName: data.standings.length > 1 ? (s.name || ('Gruppe ' + (si+1))) : null }))
-    );
-    intlTabelleCache[key] = rows;
-    intlSetCached(key, rows);
-  } catch {
-    intlTabelleCache[key] = [];
-  }
+    const groups = (data.standings || []).map((s, si) => ({
+      name: data.standings.length > 1 ? (s.name || ('Gruppe ' + (si + 1))) : '',
+      rows: (s.rows || []).map(r => ({
+        pos: r.position, team: r.team?.name || '–',
+        m: r.matches || 0, w: r.wins || 0, l: r.losses || 0,
+        gf: r.scoresFor || 0, ga: r.scoresAgainst || 0,
+        diff: r.scoreDiffFormatted || '', pts: r.points || 0,
+        promo: r.promotion || ''
+      }))
+    }));
+    intlTabelleCache[liga.id] = groups;
+    intlSetCached('tab_' + liga.id, groups);
+  } catch { intlTabelleCache[liga.id] = []; }
   renderInternationalTab();
 }
 
-// ── Länderspiele laden ────────────────────────────────────────────────────────
+async function ladeIntlCuptree(liga) {
+  if (liga.id in intlCuptreeCache) { renderInternationalTab(); return; }
+  const cKey = 'cup_' + liga.id;
+  const raw  = intlGetCached(cKey, 1800);
+  if (raw !== null) { intlCuptreeCache[liga.id] = raw; renderInternationalTab(); return; }
+  try {
+    const data = await intlFetch('/unique-tournament/' + liga.id + '/season/' + liga.saison + '/cuptrees');
+    intlCuptreeCache[liga.id] = data;
+    intlSetCached(cKey, data);
+  } catch { intlCuptreeCache[liga.id] = null; }
+  renderInternationalTab();
+}
+
 async function ladeIntlLaenderspiele() {
   if (intlLaenderGeladen) { renderInternationalTab(); return; }
-  const key = 'intl_laender_v2';
-  const cached = intlGetCached(key, 3600);
+  const cached = intlGetCached('laender_v3', 3600);
   if (cached) { intlLaenderCache = cached; intlLaenderGeladen = true; renderInternationalTab(); return; }
-
-  const results = await Promise.all(
-    INTL_NATIONEN.map(n => intlFetch('/team/' + n.teamId + '/events/last/0').catch(() => ({ events: [] })))
-  );
-  const seen = new Set(); const alle = [];
-  results.forEach(r => (r.events || []).forEach(ev => {
-    if (ev?.id && !seen.has(ev.id)) { seen.add(ev.id); alle.push(ev); }
-  }));
-  alle.sort((a,b) => (b.startTimestamp||0) - (a.startTimestamp||0));
-  intlLaenderCache = alle; intlLaenderGeladen = true;
-  intlSetCached(key, alle);
+  try {
+    const results = await Promise.all(
+      INTL_NATIONEN.map(n => intlFetch('/team/' + n.teamId + '/events/last/0').catch(() => ({ events: [] })))
+    );
+    const seen = new Set(), alle = [];
+    results.forEach(r => (r.events || []).forEach(ev => {
+      if (ev?.id && !seen.has(ev.id)) { seen.add(ev.id); alle.push(ev); }
+    }));
+    alle.sort((a, b) => (b.startTimestamp || 0) - (a.startTimestamp || 0));
+    intlLaenderCache = alle;
+    intlLaenderGeladen = true;
+    intlSetCached('laender_v3', alle);
+  } catch {}
   renderInternationalTab();
 }
 
-// ── Liga-Selector HTML ────────────────────────────────────────────────────────
-function intlLigaSelectorHTML() {
-  const katOrder = ['International','Schweden','Finnland','Schweiz','Tschechien','Norwegen','Dänemark'];
-  const byKat = {};
-  INTL_LIGEN.forEach(l => { if (!byKat[l.kat]) byKat[l.kat] = []; byKat[l.kat].push(l); });
-  let html = '<button class="filter-btn ' + (!intlAktiveLiga ? 'active' : '') + '" onclick="setIntlLiga(null)">Alle</button>';
-  katOrder.forEach(kat => {
-    if (!byKat[kat]) return;
-    byKat[kat].forEach(l => {
-      html += '<button class="filter-btn ' + (intlAktiveLiga?.id === l.id ? 'active' : '') + '" onclick="setIntlLiga(' + l.id + ')">'
-            + intlFlag(l.flag) + ' ' + esc(l.name) + '</button>';
-    });
-  });
-  return html;
-}
+// ── Haupt-Render ───────────────────────────────────────────────────────────────
 
-// ── Haupt-Render ──────────────────────────────────────────────────────────────
 function renderInternationalTab() {
   const container = document.getElementById('content-international');
   if (!container) return;
+  const liga = intlGetLiga();
+  const isIntl = intlAktVerband === 'international';
+  const verbandLigen = INTL_LIGEN.filter(l => l.verband === intlAktVerband);
 
-  const vorSek = intlLadezeit ? Math.round((Date.now() - intlLadezeit) / 1000) : null;
-  const updateHint = vorSek != null
-    ? '<div class="intl-update-hint">Aktualisiert vor ' + (vorSek < 5 ? 'wenigen Sekunden' : vorSek + ' Sek') + ' · Auto-Refresh 60s</div>'
-    : '';
+  const subTabs = [
+    { id: 'uebersicht',    label: '⬤ Übersicht'   },
+    { id: 'spielplan',     label: '📅 Spielplan'   },
+    { id: 'tabelle',       label: '📊 Tabelle'     },
+    { id: 'playoffs',      label: '🏆 Playoffs'    },
+    ...(isIntl ? [{ id: 'laenderspiele', label: '🌍 Länderspiele' }] : [])
+  ];
 
-  const subNavHTML = '<div style="display:flex;gap:6px;padding:10px 20px 0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch">'
-    + '<button class="filter-btn ' + (intlSubTab==='spielplan'     ?'active':'') + '" onclick="setIntlSubTab(\'spielplan\')">📅 Spielplan</button>'
-    + '<button class="filter-btn ' + (intlSubTab==='tabelle'       ?'active':'') + '" onclick="setIntlSubTab(\'tabelle\')">📊 Tabelle</button>'
-    + '<button class="filter-btn ' + (intlSubTab==='laenderspiele' ?'active':'') + '" onclick="setIntlSubTab(\'laenderspiele\')">🏳 Länderspiele</button>'
-    + '</div>'
-    + '<div class="filters" style="flex-wrap:wrap;padding-top:6px">' + intlLigaSelectorHTML() + '</div>';
+  // Header
+  let html = '<div class="intl-header">';
+  html += '<div class="intl-verband-row">'
+    + INTL_VERBÄNDE.map(v =>
+        '<button class="filter-btn' + (v.id === intlAktVerband ? ' active' : '')
+        + '" onclick="setIntlVerband(\'' + v.id + '\')">' + v.name + '</button>'
+      ).join('') + '</div>';
 
-  let subContent = '';
-  if      (intlSubTab === 'spielplan')     subContent = renderIntlSpielplan();
-  else if (intlSubTab === 'tabelle')       subContent = renderIntlTabelle();
-  else if (intlSubTab === 'laenderspiele') subContent = renderIntlLaenderinhalt();
+  if (verbandLigen.length > 1) {
+    html += '<div class="intl-liga-row"><select class="intl-liga-select" onchange="setIntlLiga(+this.value)">'
+      + verbandLigen.map(l =>
+          '<option value="' + l.id + '"' + (l.id === intlAktLigaId ? ' selected' : '') + '>'
+          + intlFlag(l.flag) + ' ' + l.name + '</option>'
+        ).join('')
+      + '</select></div>';
+  }
 
-  container.innerHTML = subNavHTML
-    + '<div id="intl-sub-content" class="spielplan-wrap">' + subContent + '</div>'
-    + '<div class="intl-footer">' + updateHint
-    + '<div class="intl-hinweis">ℹ️ Daten von Sofascore (inoffizielle API) — nicht mit Sofascore oder der IFF affiliiert.</div></div>';
+  html += '<div class="intl-subtab-row">'
+    + subTabs.map(s =>
+        '<button class="filter-btn' + (s.id === intlSubTab ? ' active' : '')
+        + '" onclick="setIntlSubTab(\'' + s.id + '\')">' + s.label + '</button>'
+      ).join('') + '</div>';
+  html += '</div>';
+
+  // Sub-Content
+  html += '<div class="spielplan-wrap" id="intl-sub-content">';
+  if      (intlSubTab === 'uebersicht')    html += renderIntlUebersicht(liga);
+  else if (intlSubTab === 'spielplan')     html += renderIntlSpielplanWrapper(liga);
+  else if (intlSubTab === 'tabelle')       html += renderIntlTabelle(liga);
+  else if (intlSubTab === 'playoffs')      html += renderIntlPlayoffs(liga);
+  else if (intlSubTab === 'laenderspiele') html += renderIntlLaenderspiele();
+  html += '</div>';
+
+  html += '<div class="intl-footer"><div class="intl-hinweis">ℹ️ Daten von Sofascore (inoffizielle API) · kein offizieller IFF/Sofascore-Partner</div></div>';
+  container.innerHTML = html;
 }
 
-function renderIntlSpielplan() {
-  if (!intlSpielplanGeladen) return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
+// ── Render: Übersicht ──────────────────────────────────────────────────────────
 
-  function filterLiga(events) {
-    if (!intlAktiveLiga) return events;
-    return events.filter(e => e.tournament?.uniqueTournament?.id === intlAktiveLiga.id);
+function renderIntlUebersicht(liga) {
+  const data = intlUebersichtCache[liga.id];
+  if (!data) {
+    ladeIntlUebersicht();
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade…</span></div>';
   }
-  const live     = filterLiga(intlSpielplanDaten.live     || []);
-  const upcoming = filterLiga(intlSpielplanDaten.upcoming  || []);
-  const cutoff   = Date.now() / 1000 - 3 * 86400;
-  const recent   = filterLiga((intlSpielplanDaten.recent || []).filter(e => (e.startTimestamp||0) >= cutoff));
-
   let html = '';
+  if (data.next?.length) {
+    html += '<div class="spieltag-gruppe"><div class="spieltag-header">📅 Nächste Spiele</div>'
+      + data.next.map(e => intlMatchCard(e)).join('') + '</div>';
+  }
+  if (data.last?.length) {
+    html += '<div class="spieltag-gruppe"><div class="spieltag-header">✅ Letzte Ergebnisse</div>'
+      + data.last.map(e => intlMatchCard(e)).join('') + '</div>';
+  }
+  if (!html) html = '<div class="lade-info" style="padding:40px"><span style="opacity:.5">Keine Spiele verfügbar.</span></div>';
+  return html;
+}
 
-  if (live.length) {
-    html += '<div class="spieltag-gruppe"><div class="spieltag-header">'
-          + '<span class="live-badge" style="font-size:.58rem;padding:2px 8px"><span class="live-dot" style="width:5px;height:5px"></span>LIVE JETZT</span></div>'
-          + live.map(e => intlMatchCard(e)).join('') + '</div>';
+// ── Render: Spielplan (runden-basiert) ────────────────────────────────────────
+
+function renderIntlSpielplanWrapper(liga) {
+  const rd = intlRundenCache[liga.id];
+  if (!rd) {
+    ladeIntlRunden(liga).then(r => {
+      intlRundenCache[liga.id] = r;
+      if (intlAktRunde === null && r.currentRound) intlAktRunde = r.currentRound;
+      return ladeIntlRunde(liga, intlAktRunde || r.rounds?.[0]?.round || 1);
+    }).then(() => renderInternationalTab());
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade Runden…</span></div>';
   }
 
-  function gruppeRender(events, titel) {
+  const { rounds, currentRound } = rd;
+  const aktRunde = intlAktRunde ?? currentRound ?? rounds[0]?.round;
+  const cKey     = 'runde_' + liga.id + '_r' + aktRunde;
+  const events   = intlRundeCache[cKey];
+  if (events === undefined) {
+    ladeIntlRunde(liga, aktRunde).then(() => renderInternationalTab());
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade Runde ' + aktRunde + '…</span></div>';
+  }
+
+  const idx     = rounds.findIndex(r => r.round === aktRunde);
+  const prevR   = idx > 0 ? rounds[idx - 1] : null;
+  const nextR   = idx < rounds.length - 1 ? rounds[idx + 1] : null;
+  const rdName  = rounds[idx]?.name || ('Runde ' + aktRunde);
+
+  let html = '<div class="intl-runden-nav">'
+    + '<button class="intl-runden-btn" onclick="navigateIntlRunde(' + (prevR?.round ?? 'null') + ')"'
+    + (!prevR ? ' disabled' : '') + '>‹</button>'
+    + '<span class="intl-runden-label">' + esc(rdName) + '</span>'
+    + '<button class="intl-runden-btn" onclick="navigateIntlRunde(' + (nextR?.round ?? 'null') + ')"'
+    + (!nextR ? ' disabled' : '') + '>›</button>'
+    + '</div>';
+
+  if (!events.length) {
+    html += '<div class="lade-info" style="padding:30px"><span style="opacity:.5">Keine Spiele in dieser Runde.</span></div>';
+  } else {
     const gruppen = {};
-    events.forEach(e => { const l=intlFormatDatum(e.startTimestamp); if(!gruppen[l]) gruppen[l]=[]; gruppen[l].push(e); });
-    let h = '<div class="spieltag-gruppe"><div class="spieltag-header">' + titel + '</div>';
-    Object.entries(gruppen).forEach(([label,evs]) => {
-      h += '<div class="spieltag-header" style="font-size:.72rem;padding:8px 0 4px;opacity:.55;text-transform:none;letter-spacing:0">' + label + '</div>';
-      h += evs.map(e => intlMatchCard(e)).join('');
+    events.forEach(e => { const l = intlFormatDatum(e.startTimestamp); if (!gruppen[l]) gruppen[l] = []; gruppen[l].push(e); });
+    html += '<div class="spieltag-gruppe">';
+    Object.entries(gruppen).forEach(([datum, evs]) => {
+      html += '<div class="spieltag-header" style="font-size:.75rem;opacity:.5;text-transform:none">' + datum + '</div>'
+        + evs.map(e => intlMatchCard(e)).join('');
     });
-    return h + '</div>';
-  }
-
-  if (upcoming.length) html += gruppeRender(upcoming, '📅 Nächste Spiele');
-  if (recent.length)   html += gruppeRender(recent,   '✅ Letzte Ergebnisse');
-
-  if (!live.length && !upcoming.length && !recent.length) {
-    html += '<div class="lade-info" style="padding:60px 20px"><div style="font-size:1.6rem">🏒</div>'
-          + '<span>Keine Spiele in diesem Zeitraum' + (intlAktiveLiga ? ' für diese Liga' : '') + '.</span></div>';
+    html += '</div>';
   }
   return html;
 }
 
-function renderIntlTabelle() {
-  if (!intlAktiveLiga) {
-    return '<div class="lade-info" style="padding:60px 20px">'
-         + '<span style="opacity:.5">Wähle eine Liga aus um die Tabelle zu sehen.</span></div>';
+function navigateIntlRunde(roundN) {
+  if (roundN == null) return;
+  intlAktRunde = roundN;
+  const liga = intlGetLiga();
+  const cKey = 'runde_' + liga.id + '_r' + roundN;
+  if (intlRundeCache[cKey] === undefined) {
+    ladeIntlRunde(liga, roundN).then(() => renderInternationalTab());
   }
-  const liga = intlAktiveLiga;
-  const key  = 'intl_tab_' + liga.id + '_' + liga.saison;
-  if (!intlTabelleCache[key]) {
-    ladeIntlTabelle(liga);
-    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
-  }
-  const rows = intlTabelleCache[key];
-  if (!rows.length) return '<div class="lade-info" style="padding:40px"><span style="opacity:.4">Keine Tabellendaten verfügbar.</span></div>';
-
-  // Gruppen ermitteln
-  const gruppenMap = {};
-  rows.forEach(r => { const g = r.gruppenName || '__'; if(!gruppenMap[g]) gruppenMap[g]=[]; gruppenMap[g].push(r); });
-  const mehrereGruppen = Object.keys(gruppenMap).length > 1;
-
-  let html = '<div class="tabelle-wrap"><div style="margin-bottom:10px;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.6)">'
-           + intlFlag(liga.flag) + ' ' + esc(liga.name) + '</div>';
-
-  Object.entries(gruppenMap).forEach(([gName, gRows]) => {
-    if (mehrereGruppen) html += '<div class="spieltag-header" style="margin-bottom:6px">' + esc(gName) + '</div>';
-    html += '<div class="glass" style="overflow-x:auto;margin-bottom:16px"><table class="tabelle-table"><thead><tr>'
-          + '<th>#</th><th style="text-align:left">Team</th>'
-          + '<th title="Spiele">Sp</th><th title="Siege">S</th>'
-          + '<th title="Niederlagen">N</th><th>T:G</th><th>+/-</th><th>Pkt</th>'
-          + '</tr></thead><tbody>';
-    gRows.forEach(r => {
-      const promo = r.promotion?.text || '';
-      const bar = promo ? '<span style="display:inline-block;width:3px;height:14px;background:'
-        + (promo === 'Playoffs' ? 'var(--color-a)' : 'rgba(251,146,60,.8)')
-        + ';border-radius:2px;margin-right:6px;vertical-align:middle"></span>' : '';
-      html += '<tr><td class="t-pos">' + r.position + '</td>'
-            + '<td><div class="t-team">' + bar + '<span class="t-name">' + esc(r.team?.name || '–') + '</span></div></td>'
-            + '<td>' + (r.matches ?? '–') + '</td><td>' + (r.wins ?? '–') + '</td><td>' + (r.losses ?? '–') + '</td>'
-            + '<td>' + (r.scoresFor ?? '–') + ':' + (r.scoresAgainst ?? '–') + '</td>'
-            + '<td>' + (r.scoreDiffFormatted ?? '–') + '</td>'
-            + '<td style="font-weight:700;color:#f1f5f9">' + (r.points ?? '–') + '</td></tr>';
-    });
-    html += '</tbody></table></div>';
-  });
-  return html + '</div>';
+  renderInternationalTab();
 }
 
-function renderIntlLaenderinhalt() {
+// ── Render: Tabelle ────────────────────────────────────────────────────────────
+
+function renderIntlTabelle(liga) {
+  const groups = intlTabelleCache[liga.id];
+  if (groups === undefined) {
+    ladeIntlTabelle(liga);
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade Tabelle…</span></div>';
+  }
+  if (!groups.length) return '<div class="lade-info" style="padding:30px"><span style="opacity:.5">Keine Tabellendaten verfügbar.</span></div>';
+
+  let html = '';
+  groups.forEach(g => {
+    if (g.name) html += '<div class="spieltag-header">' + esc(g.name) + '</div>';
+    html += '<div style="overflow-x:auto;margin:0 0 20px"><div class="glass" style="min-width:360px"><table class="tabelle-table"><thead><tr>'
+      + '<th>#</th><th style="text-align:left">Team</th>'
+      + '<th title="Spiele">Sp</th><th title="Siege">S</th><th title="Niederlagen">N</th>'
+      + '<th>T:G</th><th>+/-</th><th>Pkt</th>'
+      + '</tr></thead><tbody>';
+    g.rows.forEach(r => {
+      const promo = typeof r.promo === 'string' ? r.promo : (r.promo?.text || '');
+      const bar = promo ? '<span style="display:inline-block;width:3px;height:14px;border-radius:2px;margin-right:6px;vertical-align:middle;background:'
+        + (promo === 'Playoffs' ? 'var(--color-a)' : 'rgba(251,146,60,.8)') + '"></span>' : '';
+      html += '<tr><td class="t-pos">' + r.pos + '</td>'
+        + '<td><div class="t-team">' + bar + '<span class="t-name">' + esc(r.team) + '</span></div></td>'
+        + '<td>' + r.m + '</td><td>' + r.w + '</td><td>' + r.l + '</td>'
+        + '<td>' + r.gf + ':' + r.ga + '</td><td>' + r.diff + '</td>'
+        + '<td style="font-weight:700;color:var(--color-a)">' + r.pts + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+  });
+  return html;
+}
+
+// ── Render: Playoffs (CupTree) ─────────────────────────────────────────────────
+
+function renderIntlPlayoffs(liga) {
+  if (!(liga.id in intlCuptreeCache)) {
+    ladeIntlCuptree(liga);
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade Playoffs…</span></div>';
+  }
+  const data = intlCuptreeCache[liga.id];
+  if (!data || !data.rounds?.length) {
+    return '<div class="lade-info" style="padding:30px"><span style="opacity:.5">Keine Playoff-Daten verfügbar.</span></div>';
+  }
+
+  let html = '';
+  data.rounds.forEach(rnd => {
+    html += '<div class="spieltag-gruppe"><div class="spieltag-header">' + esc(rnd.name || 'Runde ' + rnd.round) + '</div>'
+      + '<div class="glass">';
+    (rnd.series || []).forEach(s => {
+      const hN   = esc(s.home?.name || '?');
+      const aN   = esc(s.away?.name || '?');
+      const hW   = s.homeWins ?? 0;
+      const aW   = s.awayWins ?? 0;
+      const hWin = s.winner === 'home';
+      const aWin = s.winner === 'away';
+      html += '<div class="intl-cup-serie">'
+        + '<div style="text-align:right" class="' + (hWin ? 'intl-cup-winner' : '') + '">' + hN + '</div>'
+        + '<div style="text-align:center;font-weight:700;font-size:1.05rem;min-width:52px">' + hW + ' – ' + aW + '</div>'
+        + '<div class="' + (aWin ? 'intl-cup-winner' : '') + '">' + aN + '</div>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  return html;
+}
+
+// ── Render: Länderspiele ───────────────────────────────────────────────────────
+
+function renderIntlLaenderspiele() {
   if (!intlLaenderGeladen) {
     ladeIntlLaenderspiele();
-    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div></div>';
+    return '<div class="lade-info" style="padding:40px"><div class="spinner"></div><span>Lade Länderspiele…</span></div>';
   }
-  let events = intlLaenderCache || [];
-  if (intlAktiveLiga) events = events.filter(e => e.tournament?.uniqueTournament?.id === intlAktiveLiga.id);
-  if (!events.length) {
-    return '<div class="lade-info" style="padding:60px 20px">'
-         + '<span style="opacity:.5">Keine Länderspiele gefunden' + (intlAktiveLiga ? ' für diese Liga' : '') + '.</span></div>';
-  }
+  const events = intlLaenderCache || [];
+  if (!events.length) return '<div class="lade-info" style="padding:30px"><span style="opacity:.5">Keine Länderspiele gefunden.</span></div>';
+
   const gruppen = {};
   events.forEach(e => {
     const y = e.startTimestamp ? new Date(e.startTimestamp * 1000).getFullYear() : '?';
@@ -6151,26 +6322,58 @@ function renderIntlLaenderinhalt() {
     gruppen[y].push(e);
   });
   let html = '';
-  Object.entries(gruppen).sort((a,b) => Number(b[0]) - Number(a[0])).forEach(([year, evs]) => {
+  Object.entries(gruppen).sort((a, b) => Number(b[0]) - Number(a[0])).forEach(([year, evs]) => {
     html += '<div class="spieltag-gruppe"><div class="spieltag-header">' + year + '</div>'
-          + evs.map(e => intlMatchCard(e)).join('') + '</div>';
+      + evs.slice(0, 30).map(e => intlMatchCard(e, true)).join('') + '</div>';
   });
   return html;
 }
 
-// ── Sub-Tab & Liga-Umschalter ─────────────────────────────────────────────────
+// ── State-Wechsel ──────────────────────────────────────────────────────────────
+
+function setIntlVerband(verbandId) {
+  intlAktVerband = verbandId;
+  const ligen = INTL_LIGEN.filter(l => l.verband === verbandId);
+  intlAktLigaId = ligen[0]?.id || INTL_LIGEN[0].id;
+  intlAktRunde  = null;
+  if (intlSubTab === 'laenderspiele' && verbandId !== 'international') intlSubTab = 'uebersicht';
+  renderInternationalTab();
+  ladeIntlUebersicht();
+}
+
+function setIntlLiga(ligaId) {
+  intlAktLigaId = ligaId;
+  intlAktRunde  = null;
+  renderInternationalTab();
+  const liga = intlGetLiga();
+  ladeIntlUebersicht();
+  if (intlSubTab === 'tabelle')   ladeIntlTabelle(liga);
+  if (intlSubTab === 'playoffs')  ladeIntlCuptree(liga);
+  if (intlSubTab === 'spielplan') {
+    ladeIntlRunden(liga).then(rd => {
+      intlRundenCache[liga.id] = rd;
+      if (rd.currentRound) intlAktRunde = rd.currentRound;
+      return ladeIntlRunde(liga, intlAktRunde || rd.rounds?.[0]?.round || 1);
+    }).then(() => renderInternationalTab());
+  }
+}
+
 function setIntlSubTab(sub) {
   intlSubTab = sub;
   renderInternationalTab();
+  const liga = intlGetLiga();
+  if (sub === 'uebersicht')    ladeIntlUebersicht();
+  if (sub === 'tabelle')       ladeIntlTabelle(liga);
+  if (sub === 'playoffs')      ladeIntlCuptree(liga);
+  if (sub === 'laenderspiele') ladeIntlLaenderspiele();
+  if (sub === 'spielplan') {
+    ladeIntlRunden(liga).then(rd => {
+      intlRundenCache[liga.id] = rd;
+      if (intlAktRunde === null && rd.currentRound) intlAktRunde = rd.currentRound;
+      return ladeIntlRunde(liga, intlAktRunde || rd.rounds?.[0]?.round || 1);
+    }).then(() => renderInternationalTab());
+  }
 }
-
-function setIntlLiga(id) {
-  intlAktiveLiga = (id === null) ? null : (INTL_LIGEN.find(l => l.id === id) || null);
-  renderInternationalTab();
-  if (intlSubTab === 'tabelle' && intlAktiveLiga) ladeIntlTabelle(intlAktiveLiga);
-}
-
-function setIntlFilter(id) { setIntlLiga(id); }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Pull-to-Refresh (nur auf Touch-Geräten)
